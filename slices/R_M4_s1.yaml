@@ -1,0 +1,238 @@
+meta:
+  graph_id: microwave_base_v1
+  base_product: ~20 L, 700 W output, 230 V/50 Hz countertop microwave with mechanical clockwork timer knob (0-30 min, bell at end), 5-step power knob (duty-cycle cam), door push-release button, 20-25 W interior incandescent lamp, glass turntable.
+  layers:
+  - Field
+  - Technology
+  - Component
+  - Function
+  - MarketNeed
+  cross_cutting:
+  - Product
+  - Actor
+  - Constraint
+  edge_types:
+    has_component: Product -> Component
+    enabled_by: Component|Function -> Technology
+    rooted_in: Technology -> Field
+    performs_function: Component -> Function
+    enables_function: Function -> Function (derived/secondary function)
+    addresses_need: Function -> MarketNeed
+    feeds: Component -> Component (energy / signal flow)
+    actuates: Component -> Component (mechanical action)
+    relevant_to: any -> any (weak association)
+    causes: any -> Constraint
+    contradicts: Constraint -> any
+    partially_mitigates: Component -> Constraint
+    resolves: new node -> node it replaces/solves (used by agents)
+nodes:
+- id: P1
+  type: Product
+  label: Basic countertop microwave oven (timer knob, power knob, door button, lamp)
+- id: D1
+  type: Field
+  label: Radio-frequency & microwave engineering
+- id: D3
+  type: Field
+  label: Power electronics & electrical engineering
+- id: D4
+  type: Field
+  label: Electromechanics & mechanisms
+- id: D5
+  type: Field
+  label: Thermal engineering & heat transfer
+- id: D6
+  type: Field
+  label: Materials science (metals, ceramics, glass, polymers)
+- id: D9
+  type: Field
+  label: Manufacturing engineering (stamping, molding, assembly)
+- id: D10
+  type: Field
+  label: Food science (dielectric properties of food)
+- id: T2
+  type: Technology
+  label: Magnetic-shunt leakage HV transformer
+  detail: Step-up transformer with shunts that self-limit current; also supplies ~3 V magnetron filament winding.
+- id: T3
+  type: Technology
+  label: Half-wave voltage doubler (capacitor + diode)
+  detail: Turns ~2 kV AC from the transformer into ~4 kV pulsating negative DC for the magnetron cathode.
+- id: T4
+  type: Technology
+  label: Rectangular waveguide TE10 mode propagation
+  detail: Hollow metal duct sized for 12.2 cm wavelength carries RF from magnetron antenna to the cavity.
+- id: T7
+  type: Technology
+  label: Shaded-pole / synchronous AC micro-motor (electromagnetic induction)
+  detail: Low-cost AC motor giving steady low-rpm torque from mains frequency.
+- id: T8
+  type: Technology
+  label: Motor-driven cam timer with spring-return mechanism
+  detail: Synchronous motor turns a cam shaft back to zero; cam opens the circuit and trips the bell.
+- id: T12
+  type: Technology
+  label: Incandescent tungsten-filament lamp
+  detail: Heated filament emits visible light; 20-25 W, also a cheap 'cooking in progress' indicator.
+- id: T15
+  type: Technology
+  label: Tempered / borosilicate glass forming
+  detail: Microwave-transparent, thermal-shock-resistant glass for turntable and door window.
+- id: T16
+  type: Technology
+  label: Mica sheet dielectric (muscovite laminate)
+  detail: Microwave-transparent, heat-resistant cover that keeps splatter out of the waveguide.
+- id: T18
+  type: Technology
+  label: Spring-loaded lever latch mechanics
+  detail: Push button drives a lever that lifts door hooks out of the latch and opens the interlocks.
+- id: T19
+  type: Technology
+  label: Mechanical bell striker
+  detail: Spring hammer released by the timer cam strikes a metal bell — the classic 'ding'.
+- id: T21
+  type: Technology
+  label: Sintered ferrite permanent magnets
+  detail: Ring magnets supplying the axial magnetic field of the magnetron.
+- id: T22
+  type: Technology
+  label: Injection-molded engineering thermoplastics (PP, PBT, PPS)
+  detail: Knobs, fascia, roller ring and coupler molded in heat-resistant polymers.
+- id: T23
+  type: Technology
+  label: Sheet-steel stamping & spot welding
+  detail: Cavity, wrapper, hinges and vent louvres stamped from cold-rolled steel.
+- id: C5
+  type: Component
+  label: Waveguide duct
+- id: C6
+  type: Component
+  label: Mica waveguide cover
+- id: C9
+  type: Component
+  label: Door choke seal (quarter-wave rim)
+- id: C10
+  type: Component
+  label: Rotating glass turntable tray
+- id: C14
+  type: Component
+  label: Power-level knob (5-step duty-cycle cam switch)
+- id: C16
+  type: Component
+  label: Door interlock microswitches (primary, secondary, monitor)
+- id: C18
+  type: Component
+  label: Cooling fan and fan motor
+- id: C21
+  type: Component
+  label: Main ceramic fuse
+- id: C22
+  type: Component
+  label: End-of-cycle bell (mechanical 'ding')
+- id: C23
+  type: Component
+  label: Outer steel cabinet (wrapper)
+- id: C28
+  type: Component
+  label: Mains EMI noise filter
+- id: F3
+  type: Function
+  label: Guides microwave energy into the cavity
+- id: F4
+  type: Function
+  label: Heats food via dielectric water-molecule vibration (FastHeating)
+- id: F6
+  type: Function
+  label: Contains microwave radiation inside the appliance
+- id: F7
+  type: Function
+  label: Sets and counts down cooking duration
+- id: F14
+  type: Function
+  label: Protects against overheating
+- id: F15
+  type: Function
+  label: Protects against overcurrent and electrical faults
+- id: F17
+  type: Function
+  label: Melts / softens butter, chocolate, etc.
+- id: M4
+  type: MarketNeed
+  label: Defrost frozen food quickly
+- id: A7
+  type: Actor
+  label: Repair technician
+- id: X1
+  type: Constraint
+  label: Microwaves can't brown or crisp food surfaces
+- id: X4
+  type: Constraint
+  label: Metal objects in cavity cause arcing
+- id: X5
+  type: Constraint
+  label: Mechanical timer imprecise for short (<1 min) durations
+- id: X6
+  type: Constraint
+  label: Power only adjustable by on/off cycling, not continuously
+- id: X7
+  type: Constraint
+  label: HV capacitor can hold a lethal charge after unplugging
+- id: X9
+  type: Constraint
+  label: Superheating of liquids — risk of eruptive boiling
+- id: X12
+  type: Constraint
+  label: Low BOM target for entry-level price segment
+- id: X13
+  type: Constraint
+  label: No food-state sensing — open-loop cooking
+- id: X14
+  type: Constraint
+  label: Interior lamp burns out and is hard to replace
+- id: X15
+  type: Constraint
+  label: Regional mains variants (230 V/50 Hz vs 120 V/60 Hz)
+edges:
+- {from: P1, to: C5, type: has_component}
+- {from: P1, to: C6, type: has_component}
+- {from: P1, to: C9, type: has_component}
+- {from: P1, to: C10, type: has_component}
+- {from: P1, to: C14, type: has_component}
+- {from: P1, to: C16, type: has_component}
+- {from: P1, to: C18, type: has_component}
+- {from: P1, to: C21, type: has_component}
+- {from: P1, to: C22, type: has_component}
+- {from: P1, to: C23, type: has_component}
+- {from: P1, to: C28, type: has_component}
+- {from: T2, to: D3, type: rooted_in}
+- {from: T3, to: D3, type: rooted_in}
+- {from: T4, to: D1, type: rooted_in}
+- {from: T7, to: D4, type: rooted_in}
+- {from: T8, to: D4, type: rooted_in}
+- {from: T15, to: D6, type: rooted_in}
+- {from: T16, to: D6, type: rooted_in}
+- {from: T18, to: D4, type: rooted_in}
+- {from: T21, to: D6, type: rooted_in}
+- {from: T22, to: D6, type: rooted_in}
+- {from: T22, to: D9, type: rooted_in}
+- {from: T23, to: D9, type: rooted_in}
+- {from: C5, to: T4, type: enabled_by}
+- {from: C6, to: T16, type: enabled_by}
+- {from: C10, to: T15, type: enabled_by}
+- {from: C18, to: T7, type: enabled_by}
+- {from: C22, to: T19, type: enabled_by}
+- {from: C23, to: T23, type: enabled_by}
+- {from: C5, to: F3, type: performs_function}
+- {from: C6, to: F3, type: performs_function}
+- {from: C9, to: F6, type: performs_function}
+- {from: C21, to: F15, type: performs_function}
+- {from: C23, to: F6, type: performs_function}
+- {from: F3, to: F4, type: enables_function}
+- {from: F4, to: F17, type: enables_function}
+- {from: C28, to: C21, type: feeds}
+- {from: C21, to: C16, type: feeds}
+- {from: A7, to: X7, type: relevant_to}
+- {from: A7, to: X14, type: relevant_to}
+- {from: X1, to: P1, type: relevant_to}
+- {from: C14, to: X6, type: causes}
+- {from: X13, to: F7, type: relevant_to}

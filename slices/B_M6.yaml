@@ -1,0 +1,155 @@
+meta:
+  graph_id: microwave_base_v1
+  base_product: ~20 L, 700 W output, 230 V/50 Hz countertop microwave with mechanical clockwork timer knob (0-30 min, bell at end), 5-step power knob (duty-cycle cam), door push-release button, 20-25 W interior incandescent lamp, glass turntable.
+  layers:
+  - Field
+  - Technology
+  - Component
+  - Function
+  - MarketNeed
+  cross_cutting:
+  - Product
+  - Actor
+  - Constraint
+  edge_types:
+    has_component: Product -> Component
+    enabled_by: Component|Function -> Technology
+    rooted_in: Technology -> Field
+    performs_function: Component -> Function
+    enables_function: Function -> Function (derived/secondary function)
+    addresses_need: Function -> MarketNeed
+    feeds: Component -> Component (energy / signal flow)
+    actuates: Component -> Component (mechanical action)
+    relevant_to: any -> any (weak association)
+    causes: any -> Constraint
+    contradicts: Constraint -> any
+    partially_mitigates: Component -> Constraint
+    resolves: new node -> node it replaces/solves (used by agents)
+nodes:
+- id: P1
+  type: Product
+  label: Basic countertop microwave oven (timer knob, power knob, door button, lamp)
+- id: D1
+  type: Field
+  label: Radio-frequency & microwave engineering
+- id: D3
+  type: Field
+  label: Power electronics & electrical engineering
+- id: D4
+  type: Field
+  label: Electromechanics & mechanisms
+- id: D6
+  type: Field
+  label: Materials science (metals, ceramics, glass, polymers)
+- id: D9
+  type: Field
+  label: Manufacturing engineering (stamping, molding, assembly)
+- id: T5
+  type: Technology
+  label: Sub-wavelength aperture shielding (Faraday cage effect)
+  detail: Holes much smaller than 12.2 cm block microwaves while passing visible light.
+- id: T8
+  type: Technology
+  label: Motor-driven cam timer with spring-return mechanism
+  detail: Synchronous motor turns a cam shaft back to zero; cam opens the circuit and trips the bell.
+- id: T11
+  type: Technology
+  label: Duty-cycle power modulation (on/off cycling)
+  detail: Magnetron runs at full power; average power is set by the on/off ratio over a ~30 s period.
+- id: T15
+  type: Technology
+  label: Tempered / borosilicate glass forming
+  detail: Microwave-transparent, thermal-shock-resistant glass for turntable and door window.
+- id: T18
+  type: Technology
+  label: Spring-loaded lever latch mechanics
+  detail: Push button drives a lever that lifts door hooks out of the latch and opens the interlocks.
+- id: T23
+  type: Technology
+  label: Sheet-steel stamping & spot welding
+  detail: Cavity, wrapper, hinges and vent louvres stamped from cold-rolled steel.
+- id: C8
+  type: Component
+  label: Hinged door with perforated metal mesh window
+- id: C13
+  type: Component
+  label: Mechanical timer knob & cam switch (0-30 min)
+- id: C14
+  type: Component
+  label: Power-level knob (5-step duty-cycle cam switch)
+- id: C15
+  type: Component
+  label: Door-release push button & latch lever
+- id: C26
+  type: Component
+  label: Door hinges
+- id: F7
+  type: Function
+  label: Sets and counts down cooking duration
+- id: F8
+  type: Function
+  label: Sets average heating power level
+- id: F9
+  type: Function
+  label: Opens and closes the door to access the cavity
+- id: M6
+  type: MarketNeed
+  label: Simple operation with no learning curve
+- id: A4
+  type: Actor
+  label: Elderly user
+- id: X2
+  type: Constraint
+  label: FCC/FDA radiation-leakage safety limits (21 CFR 1030.10, 5 mW/cm² at 5 cm)
+- id: X5
+  type: Constraint
+  label: Mechanical timer imprecise for short (<1 min) durations
+- id: X6
+  type: Constraint
+  label: Power only adjustable by on/off cycling, not continuously
+- id: X12
+  type: Constraint
+  label: Low BOM target for entry-level price segment
+- id: X13
+  type: Constraint
+  label: No food-state sensing — open-loop cooking
+- id: X15
+  type: Constraint
+  label: Regional mains variants (230 V/50 Hz vs 120 V/60 Hz)
+edges:
+- {from: P1, to: C8, type: has_component}
+- {from: P1, to: C13, type: has_component}
+- {from: P1, to: C14, type: has_component}
+- {from: P1, to: C15, type: has_component}
+- {from: P1, to: C26, type: has_component}
+- {from: T5, to: D1, type: rooted_in}
+- {from: T8, to: D4, type: rooted_in}
+- {from: T11, to: D3, type: rooted_in}
+- {from: T15, to: D6, type: rooted_in}
+- {from: T18, to: D4, type: rooted_in}
+- {from: T23, to: D9, type: rooted_in}
+- {from: C8, to: T5, type: enabled_by}
+- {from: C8, to: T15, type: enabled_by}
+- {from: C13, to: T8, type: enabled_by}
+- {from: C14, to: T11, type: enabled_by}
+- {from: C15, to: T18, type: enabled_by}
+- {from: C26, to: T23, type: enabled_by}
+- {from: C8, to: F9, type: performs_function}
+- {from: C13, to: F7, type: performs_function}
+- {from: C14, to: F8, type: performs_function}
+- {from: C15, to: F9, type: performs_function}
+- {from: C26, to: F9, type: performs_function}
+- {from: F7, to: M6, type: addresses_need}
+- {from: F8, to: M6, type: addresses_need}
+- {from: F9, to: M6, type: addresses_need}
+- {from: C13, to: C14, type: feeds}
+- {from: C15, to: C8, type: actuates}
+- {from: A4, to: M6, type: relevant_to}
+- {from: C8, to: X2, type: partially_mitigates}
+- {from: C13, to: X5, type: causes}
+- {from: C14, to: X6, type: causes}
+- {from: X6, to: T11, type: relevant_to}
+- {from: X12, to: C13, type: relevant_to}
+- {from: C13, to: X13, type: causes}
+- {from: X13, to: F7, type: relevant_to}
+- {from: X15, to: C13, type: relevant_to}

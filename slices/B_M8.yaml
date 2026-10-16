@@ -1,0 +1,141 @@
+meta:
+  graph_id: microwave_base_v1
+  base_product: ~20 L, 700 W output, 230 V/50 Hz countertop microwave with mechanical clockwork timer knob (0-30 min, bell at end), 5-step power knob (duty-cycle cam), door push-release button, 20-25 W interior incandescent lamp, glass turntable.
+  layers:
+  - Field
+  - Technology
+  - Component
+  - Function
+  - MarketNeed
+  cross_cutting:
+  - Product
+  - Actor
+  - Constraint
+  edge_types:
+    has_component: Product -> Component
+    enabled_by: Component|Function -> Technology
+    rooted_in: Technology -> Field
+    performs_function: Component -> Function
+    enables_function: Function -> Function (derived/secondary function)
+    addresses_need: Function -> MarketNeed
+    feeds: Component -> Component (energy / signal flow)
+    actuates: Component -> Component (mechanical action)
+    relevant_to: any -> any (weak association)
+    causes: any -> Constraint
+    contradicts: Constraint -> any
+    partially_mitigates: Component -> Constraint
+    resolves: new node -> node it replaces/solves (used by agents)
+nodes:
+- id: P1
+  type: Product
+  label: Basic countertop microwave oven (timer knob, power knob, door button, lamp)
+- id: D1
+  type: Field
+  label: Radio-frequency & microwave engineering
+- id: D4
+  type: Field
+  label: Electromechanics & mechanisms
+- id: D6
+  type: Field
+  label: Materials science (metals, ceramics, glass, polymers)
+- id: D7
+  type: Field
+  label: Lighting & optics
+- id: D8
+  type: Field
+  label: Sound engineering
+- id: T5
+  type: Technology
+  label: Sub-wavelength aperture shielding (Faraday cage effect)
+  detail: Holes much smaller than 12.2 cm block microwaves while passing visible light.
+- id: T8
+  type: Technology
+  label: Motor-driven cam timer with spring-return mechanism
+  detail: Synchronous motor turns a cam shaft back to zero; cam opens the circuit and trips the bell.
+- id: T12
+  type: Technology
+  label: Incandescent tungsten-filament lamp
+  detail: Heated filament emits visible light; 20-25 W, also a cheap 'cooking in progress' indicator.
+- id: T15
+  type: Technology
+  label: Tempered / borosilicate glass forming
+  detail: Microwave-transparent, thermal-shock-resistant glass for turntable and door window.
+- id: T19
+  type: Technology
+  label: Mechanical bell striker
+  detail: Spring hammer released by the timer cam strikes a metal bell — the classic 'ding'.
+- id: C8
+  type: Component
+  label: Hinged door with perforated metal mesh window
+- id: C13
+  type: Component
+  label: Mechanical timer knob & cam switch (0-30 min)
+- id: C17
+  type: Component
+  label: Interior lamp (20-25 W incandescent)
+- id: C22
+  type: Component
+  label: End-of-cycle bell (mechanical 'ding')
+- id: F7
+  type: Function
+  label: Sets and counts down cooking duration
+- id: F11
+  type: Function
+  label: Illuminates cavity so the user can watch the food
+- id: F12
+  type: Function
+  label: Signals end of cooking (audible alert)
+- id: M8
+  type: MarketNeed
+  label: Human need for feedback (know when food is ready)
+- id: X2
+  type: Constraint
+  label: FCC/FDA radiation-leakage safety limits (21 CFR 1030.10, 5 mW/cm² at 5 cm)
+- id: X5
+  type: Constraint
+  label: Mechanical timer imprecise for short (<1 min) durations
+- id: X12
+  type: Constraint
+  label: Low BOM target for entry-level price segment
+- id: X13
+  type: Constraint
+  label: No food-state sensing — open-loop cooking
+- id: X14
+  type: Constraint
+  label: Interior lamp burns out and is hard to replace
+- id: X15
+  type: Constraint
+  label: Regional mains variants (230 V/50 Hz vs 120 V/60 Hz)
+edges:
+- {from: P1, to: C8, type: has_component}
+- {from: P1, to: C13, type: has_component}
+- {from: P1, to: C17, type: has_component}
+- {from: P1, to: C22, type: has_component}
+- {from: T5, to: D1, type: rooted_in}
+- {from: T8, to: D4, type: rooted_in}
+- {from: T12, to: D7, type: rooted_in}
+- {from: T15, to: D6, type: rooted_in}
+- {from: T19, to: D8, type: rooted_in}
+- {from: C8, to: T5, type: enabled_by}
+- {from: C8, to: T15, type: enabled_by}
+- {from: C13, to: T8, type: enabled_by}
+- {from: C17, to: T12, type: enabled_by}
+- {from: C22, to: T19, type: enabled_by}
+- {from: C8, to: F11, type: performs_function}
+- {from: C13, to: F7, type: performs_function}
+- {from: C17, to: F11, type: performs_function}
+- {from: C22, to: F12, type: performs_function}
+- {from: F7, to: F12, type: enables_function}
+- {from: F11, to: M8, type: addresses_need}
+- {from: F12, to: M8, type: addresses_need}
+- {from: C13, to: C17, type: feeds}
+- {from: C13, to: C22, type: actuates}
+- {from: C8, to: X2, type: partially_mitigates}
+- {from: C13, to: X5, type: causes}
+- {from: X12, to: C13, type: relevant_to}
+- {from: X12, to: C17, type: relevant_to}
+- {from: C13, to: X13, type: causes}
+- {from: X13, to: F7, type: relevant_to}
+- {from: C17, to: X14, type: causes}
+- {from: X14, to: F11, type: relevant_to}
+- {from: X15, to: C13, type: relevant_to}

@@ -1,0 +1,120 @@
+meta:
+  graph_id: microwave_base_v1
+  base_product: ~20 L, 700 W output, 230 V/50 Hz countertop microwave with mechanical clockwork timer knob (0-30 min, bell at end), 5-step power knob (duty-cycle cam), door push-release button, 20-25 W interior incandescent lamp, glass turntable.
+  layers:
+  - Field
+  - Technology
+  - Component
+  - Function
+  - MarketNeed
+  cross_cutting:
+  - Product
+  - Actor
+  - Constraint
+  edge_types:
+    has_component: Product -> Component
+    enabled_by: Component|Function -> Technology
+    rooted_in: Technology -> Field
+    performs_function: Component -> Function
+    enables_function: Function -> Function (derived/secondary function)
+    addresses_need: Function -> MarketNeed
+    feeds: Component -> Component (energy / signal flow)
+    actuates: Component -> Component (mechanical action)
+    relevant_to: any -> any (weak association)
+    causes: any -> Constraint
+    contradicts: Constraint -> any
+    partially_mitigates: Component -> Constraint
+    resolves: new node -> node it replaces/solves (used by agents)
+nodes:
+- id: P1
+  type: Product
+  label: Basic countertop microwave oven (timer knob, power knob, door button, lamp)
+- id: D4
+  type: Field
+  label: Electromechanics & mechanisms
+- id: D6
+  type: Field
+  label: Materials science (metals, ceramics, glass, polymers)
+- id: D7
+  type: Field
+  label: Lighting & optics
+- id: D9
+  type: Field
+  label: Manufacturing engineering (stamping, molding, assembly)
+- id: D10
+  type: Field
+  label: Food science (dielectric properties of food)
+- id: T1
+  type: Technology
+  label: Electron cyclotron motion in crossed E×B fields (cavity magnetron)
+  detail: Electrons from a heated cathode spiral under radial E-field + axial B-field, bunching and inducing RF currents in resonant anode cavities.
+- id: T5
+  type: Technology
+  label: Sub-wavelength aperture shielding (Faraday cage effect)
+  detail: Holes much smaller than 12.2 cm block microwaves while passing visible light.
+- id: T8
+  type: Technology
+  label: Motor-driven cam timer with spring-return mechanism
+  detail: Synchronous motor turns a cam shaft back to zero; cam opens the circuit and trips the bell.
+- id: T9
+  type: Technology
+  label: Bimetallic snap-disc thermostat
+  detail: Two bonded metals with different thermal expansion snap open a contact at a set temperature.
+- id: T11
+  type: Technology
+  label: Duty-cycle power modulation (on/off cycling)
+  detail: Magnetron runs at full power; average power is set by the on/off ratio over a ~30 s period.
+- id: C3
+  type: Component
+  label: High-voltage capacitor (~1 µF, 2.1 kV) with internal bleeder resistor
+- id: C5
+  type: Component
+  label: Waveguide duct
+- id: C13
+  type: Component
+  label: Mechanical timer knob & cam switch (0-30 min)
+- id: C23
+  type: Component
+  label: Outer steel cabinet (wrapper)
+- id: F4
+  type: Function
+  label: Heats food via dielectric water-molecule vibration (FastHeating)
+- id: F11
+  type: Function
+  label: Illuminates cavity so the user can watch the food
+- id: F19
+  type: Function
+  label: Suppresses electrical noise conducted back to mains
+- id: M8
+  type: MarketNeed
+  label: Human need for feedback (know when food is ready)
+- id: X1
+  type: Constraint
+  label: Microwaves can't brown or crisp food surfaces
+- id: X4
+  type: Constraint
+  label: Metal objects in cavity cause arcing
+- id: X6
+  type: Constraint
+  label: Power only adjustable by on/off cycling, not continuously
+- id: X7
+  type: Constraint
+  label: HV capacitor can hold a lethal charge after unplugging
+- id: X9
+  type: Constraint
+  label: Superheating of liquids — risk of eruptive boiling
+- id: X13
+  type: Constraint
+  label: No food-state sensing — open-loop cooking
+edges:
+- {from: P1, to: C3, type: has_component}
+- {from: P1, to: C5, type: has_component}
+- {from: P1, to: C13, type: has_component}
+- {from: P1, to: C23, type: has_component}
+- {from: T8, to: D4, type: rooted_in}
+- {from: C13, to: T8, type: enabled_by}
+- {from: F11, to: M8, type: addresses_need}
+- {from: X1, to: P1, type: relevant_to}
+- {from: X6, to: T11, type: relevant_to}
+- {from: C3, to: X7, type: causes}
+- {from: C13, to: X13, type: causes}

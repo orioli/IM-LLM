@@ -1,0 +1,72 @@
+meta:
+  graph_id: microwave_base_v1
+  base_product: ~20 L, 700 W output, 230 V/50 Hz countertop microwave with mechanical clockwork timer knob (0-30 min, bell at end), 5-step power knob (duty-cycle cam), door push-release button, 20-25 W interior incandescent lamp, glass turntable.
+  layers:
+  - Field
+  - Technology
+  - Component
+  - Function
+  - MarketNeed
+  cross_cutting:
+  - Product
+  - Actor
+  - Constraint
+  edge_types:
+    has_component: Product -> Component
+    enabled_by: Component|Function -> Technology
+    rooted_in: Technology -> Field
+    performs_function: Component -> Function
+    enables_function: Function -> Function (derived/secondary function)
+    addresses_need: Function -> MarketNeed
+    feeds: Component -> Component (energy / signal flow)
+    actuates: Component -> Component (mechanical action)
+    relevant_to: any -> any (weak association)
+    causes: any -> Constraint
+    contradicts: Constraint -> any
+    partially_mitigates: Component -> Constraint
+    resolves: new node -> node it replaces/solves (used by agents)
+nodes:
+- id: P1
+  type: Product
+  label: Basic countertop microwave oven (timer knob, power knob, door button, lamp)
+- id: D6
+  type: Field
+  label: Materials science (metals, ceramics, glass, polymers)
+- id: T15
+  type: Technology
+  label: Tempered / borosilicate glass forming
+  detail: Microwave-transparent, thermal-shock-resistant glass for turntable and door window.
+- id: T16
+  type: Technology
+  label: Mica sheet dielectric (muscovite laminate)
+  detail: Microwave-transparent, heat-resistant cover that keeps splatter out of the waveguide.
+- id: C6
+  type: Component
+  label: Mica waveguide cover
+- id: C10
+  type: Component
+  label: Rotating glass turntable tray
+- id: F18
+  type: Function
+  label: Contains spills and allows cleaning
+- id: M11
+  type: MarketNeed
+  label: Easy to clean
+- id: A6
+  type: Actor
+  label: Office worker using a shared kitchen
+- id: X3
+  type: Constraint
+  label: Uneven heating — standing-wave hot and cold spots
+edges:
+- {from: P1, to: C6, type: has_component}
+- {from: P1, to: C10, type: has_component}
+- {from: T15, to: D6, type: rooted_in}
+- {from: T16, to: D6, type: rooted_in}
+- {from: C6, to: T16, type: enabled_by}
+- {from: C10, to: T15, type: enabled_by}
+- {from: C6, to: F18, type: performs_function}
+- {from: C10, to: F18, type: performs_function}
+- {from: F18, to: M11, type: addresses_need}
+- {from: A6, to: M11, type: relevant_to}
+- {from: C10, to: X3, type: partially_mitigates}

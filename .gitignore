@@ -1,0 +1,33 @@
+.env
+*.key
+__pycache__/
+.DS_Store
+**/runs/dry_run/
+persona_as_factor_update/
+*.zip
+# secrets
+.env
+*.key
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# LaTeX build files
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.blg
+paper/*.synctex.gz
+
+# scratch and copies
+results/paper_drafts/
+results/_persona_copy/
+results/*.zip
+*.zip
+.DS_Store
+.Rhistory
+runs/dry_run/

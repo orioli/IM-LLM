@@ -1,0 +1,78 @@
+meta:
+  graph_id: microwave_base_v1
+  base_product: ~20 L, 700 W output, 230 V/50 Hz countertop microwave with mechanical clockwork timer knob (0-30 min, bell at end), 5-step power knob (duty-cycle cam), door push-release button, 20-25 W interior incandescent lamp, glass turntable.
+  layers:
+  - Field
+  - Technology
+  - Component
+  - Function
+  - MarketNeed
+  cross_cutting:
+  - Product
+  - Actor
+  - Constraint
+  edge_types:
+    has_component: Product -> Component
+    enabled_by: Component|Function -> Technology
+    rooted_in: Technology -> Field
+    performs_function: Component -> Function
+    enables_function: Function -> Function (derived/secondary function)
+    addresses_need: Function -> MarketNeed
+    feeds: Component -> Component (energy / signal flow)
+    actuates: Component -> Component (mechanical action)
+    relevant_to: any -> any (weak association)
+    causes: any -> Constraint
+    contradicts: Constraint -> any
+    partially_mitigates: Component -> Constraint
+    resolves: new node -> node it replaces/solves (used by agents)
+nodes:
+- id: P1
+  type: Product
+  label: Basic countertop microwave oven (timer knob, power knob, door button, lamp)
+- id: D1
+  type: Field
+  label: Radio-frequency & microwave engineering
+- id: D4
+  type: Field
+  label: Electromechanics & mechanisms
+- id: T19
+  type: Technology
+  label: Mechanical bell striker
+  detail: Spring hammer released by the timer cam strikes a metal bell — the classic 'ding'.
+- id: T20
+  type: Technology
+  label: Ceramic cartridge fuse (fusible-link overcurrent protection)
+  detail: Sand-filled ceramic body fuse rated ~10-15 A, opens on short or interlock monitor action.
+- id: C12
+  type: Component
+  label: Turntable motor (~5 rpm)
+- id: C20
+  type: Component
+  label: Cavity thermal cutout
+- id: F1
+  type: Function
+  label: Generates microwave energy at 2.45 GHz
+- id: F8
+  type: Function
+  label: Sets average heating power level
+- id: M16
+  type: MarketNeed
+  label: Need for mobility (not having to stand by the appliance)
+- id: A1
+  type: Actor
+  label: Time-pressed home cook
+- id: X2
+  type: Constraint
+  label: FCC/FDA radiation-leakage safety limits (21 CFR 1030.10, 5 mW/cm² at 5 cm)
+- id: X6
+  type: Constraint
+  label: Power only adjustable by on/off cycling, not continuously
+- id: X9
+  type: Constraint
+  label: Superheating of liquids — risk of eruptive boiling
+- id: X13
+  type: Constraint
+  label: No food-state sensing — open-loop cooking
+edges:
+- {from: P1, to: C12, type: has_component}
+- {from: P1, to: C20, type: has_component}

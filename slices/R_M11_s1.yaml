@@ -1,0 +1,64 @@
+meta:
+  graph_id: microwave_base_v1
+  base_product: ~20 L, 700 W output, 230 V/50 Hz countertop microwave with mechanical clockwork timer knob (0-30 min, bell at end), 5-step power knob (duty-cycle cam), door push-release button, 20-25 W interior incandescent lamp, glass turntable.
+  layers:
+  - Field
+  - Technology
+  - Component
+  - Function
+  - MarketNeed
+  cross_cutting:
+  - Product
+  - Actor
+  - Constraint
+  edge_types:
+    has_component: Product -> Component
+    enabled_by: Component|Function -> Technology
+    rooted_in: Technology -> Field
+    performs_function: Component -> Function
+    enables_function: Function -> Function (derived/secondary function)
+    addresses_need: Function -> MarketNeed
+    feeds: Component -> Component (energy / signal flow)
+    actuates: Component -> Component (mechanical action)
+    relevant_to: any -> any (weak association)
+    causes: any -> Constraint
+    contradicts: Constraint -> any
+    partially_mitigates: Component -> Constraint
+    resolves: new node -> node it replaces/solves (used by agents)
+nodes:
+- id: P1
+  type: Product
+  label: Basic countertop microwave oven (timer knob, power knob, door button, lamp)
+- id: D2
+  type: Field
+  label: Vacuum electronics
+- id: T3
+  type: Technology
+  label: Half-wave voltage doubler (capacitor + diode)
+  detail: Turns ~2 kV AC from the transformer into ~4 kV pulsating negative DC for the magnetron cathode.
+- id: T5
+  type: Technology
+  label: Sub-wavelength aperture shielding (Faraday cage effect)
+  detail: Holes much smaller than 12.2 cm block microwaves while passing visible light.
+- id: C6
+  type: Component
+  label: Mica waveguide cover
+- id: C13
+  type: Component
+  label: Mechanical timer knob & cam switch (0-30 min)
+- id: F15
+  type: Function
+  label: Protects against overcurrent and electrical faults
+- id: M11
+  type: MarketNeed
+  label: Easy to clean
+- id: A6
+  type: Actor
+  label: Office worker using a shared kitchen
+- id: X14
+  type: Constraint
+  label: Interior lamp burns out and is hard to replace
+edges:
+- {from: P1, to: C6, type: has_component}
+- {from: P1, to: C13, type: has_component}
+- {from: A6, to: M11, type: relevant_to}

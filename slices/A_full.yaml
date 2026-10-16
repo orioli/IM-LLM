@@ -1,0 +1,668 @@
+meta:
+  graph_id: microwave_base_v1
+  base_product: ~20 L, 700 W output, 230 V/50 Hz countertop microwave with mechanical clockwork timer knob (0-30 min, bell at end), 5-step power knob (duty-cycle cam), door push-release button, 20-25 W interior incandescent lamp, glass turntable.
+  layers:
+  - Field
+  - Technology
+  - Component
+  - Function
+  - MarketNeed
+  cross_cutting:
+  - Product
+  - Actor
+  - Constraint
+  edge_types:
+    has_component: Product -> Component
+    enabled_by: Component|Function -> Technology
+    rooted_in: Technology -> Field
+    performs_function: Component -> Function
+    enables_function: Function -> Function (derived/secondary function)
+    addresses_need: Function -> MarketNeed
+    feeds: Component -> Component (energy / signal flow)
+    actuates: Component -> Component (mechanical action)
+    relevant_to: any -> any (weak association)
+    causes: any -> Constraint
+    contradicts: Constraint -> any
+    partially_mitigates: Component -> Constraint
+    resolves: new node -> node it replaces/solves (used by agents)
+nodes:
+- id: P1
+  type: Product
+  label: Basic countertop microwave oven (timer knob, power knob, door button, lamp)
+- id: D1
+  type: Field
+  label: Radio-frequency & microwave engineering
+- id: D2
+  type: Field
+  label: Vacuum electronics
+- id: D3
+  type: Field
+  label: Power electronics & electrical engineering
+- id: D4
+  type: Field
+  label: Electromechanics & mechanisms
+- id: D5
+  type: Field
+  label: Thermal engineering & heat transfer
+- id: D6
+  type: Field
+  label: Materials science (metals, ceramics, glass, polymers)
+- id: D7
+  type: Field
+  label: Lighting & optics
+- id: D8
+  type: Field
+  label: Sound engineering
+- id: D9
+  type: Field
+  label: Manufacturing engineering (stamping, molding, assembly)
+- id: D10
+  type: Field
+  label: Food science (dielectric properties of food)
+- id: T1
+  type: Technology
+  label: Electron cyclotron motion in crossed E×B fields (cavity magnetron)
+  detail: Electrons from a heated cathode spiral under radial E-field + axial B-field, bunching and inducing RF currents in resonant anode cavities.
+- id: T2
+  type: Technology
+  label: Magnetic-shunt leakage HV transformer
+  detail: Step-up transformer with shunts that self-limit current; also supplies ~3 V magnetron filament winding.
+- id: T3
+  type: Technology
+  label: Half-wave voltage doubler (capacitor + diode)
+  detail: Turns ~2 kV AC from the transformer into ~4 kV pulsating negative DC for the magnetron cathode.
+- id: T4
+  type: Technology
+  label: Rectangular waveguide TE10 mode propagation
+  detail: Hollow metal duct sized for 12.2 cm wavelength carries RF from magnetron antenna to the cavity.
+- id: T5
+  type: Technology
+  label: Sub-wavelength aperture shielding (Faraday cage effect)
+  detail: Holes much smaller than 12.2 cm block microwaves while passing visible light.
+- id: T6
+  type: Technology
+  label: Quarter-wave choke seal
+  detail: λ/4 slot structure in the door rim presents high impedance to leaking RF at the door gap.
+- id: T7
+  type: Technology
+  label: Shaded-pole / synchronous AC micro-motor (electromagnetic induction)
+  detail: Low-cost AC motor giving steady low-rpm torque from mains frequency.
+- id: T8
+  type: Technology
+  label: Motor-driven cam timer with spring-return mechanism
+  detail: Synchronous motor turns a cam shaft back to zero; cam opens the circuit and trips the bell.
+- id: T9
+  type: Technology
+  label: Bimetallic snap-disc thermostat
+  detail: Two bonded metals with different thermal expansion snap open a contact at a set temperature.
+- id: T10
+  type: Technology
+  label: Redundant interlock microswitch logic (primary / secondary / monitor)
+  detail: Three switches in series/shunt so that a welded switch blows the fuse instead of leaving RF on.
+- id: T11
+  type: Technology
+  label: Duty-cycle power modulation (on/off cycling)
+  detail: Magnetron runs at full power; average power is set by the on/off ratio over a ~30 s period.
+- id: T12
+  type: Technology
+  label: Incandescent tungsten-filament lamp
+  detail: Heated filament emits visible light; 20-25 W, also a cheap 'cooking in progress' indicator.
+- id: T13
+  type: Technology
+  label: Forced-air convection cooling
+  detail: Axial fan pushes air over magnetron fins and transformer, then vents through the cavity.
+- id: T14
+  type: Technology
+  label: Dielectric heating (dipolar rotation of water molecules)
+  detail: Polar molecules realign with the 2.45 GHz field; friction converts RF energy to heat inside food.
+- id: T15
+  type: Technology
+  label: Tempered / borosilicate glass forming
+  detail: Microwave-transparent, thermal-shock-resistant glass for turntable and door window.
+- id: T16
+  type: Technology
+  label: Mica sheet dielectric (muscovite laminate)
+  detail: Microwave-transparent, heat-resistant cover that keeps splatter out of the waveguide.
+- id: T17
+  type: Technology
+  label: Enamel / epoxy powder coating of steel
+  detail: Reflective conductive steel walls coated for corrosion resistance and easy cleaning.
+- id: T18
+  type: Technology
+  label: Spring-loaded lever latch mechanics
+  detail: Push button drives a lever that lifts door hooks out of the latch and opens the interlocks.
+- id: T19
+  type: Technology
+  label: Mechanical bell striker
+  detail: Spring hammer released by the timer cam strikes a metal bell — the classic 'ding'.
+- id: T20
+  type: Technology
+  label: Ceramic cartridge fuse (fusible-link overcurrent protection)
+  detail: Sand-filled ceramic body fuse rated ~10-15 A, opens on short or interlock monitor action.
+- id: T21
+  type: Technology
+  label: Sintered ferrite permanent magnets
+  detail: Ring magnets supplying the axial magnetic field of the magnetron.
+- id: T22
+  type: Technology
+  label: Injection-molded engineering thermoplastics (PP, PBT, PPS)
+  detail: Knobs, fascia, roller ring and coupler molded in heat-resistant polymers.
+- id: T23
+  type: Technology
+  label: Sheet-steel stamping & spot welding
+  detail: Cavity, wrapper, hinges and vent louvres stamped from cold-rolled steel.
+- id: T24
+  type: Technology
+  label: Passive LC EMI line filtering
+  detail: X/Y capacitors and choke block conducted RF noise from reaching the mains.
+- id: C1
+  type: Component
+  label: Magnetron tube (2.45 GHz, ~700 W output)
+- id: C2
+  type: Component
+  label: High-voltage transformer
+- id: C3
+  type: Component
+  label: High-voltage capacitor (~1 µF, 2.1 kV) with internal bleeder resistor
+- id: C4
+  type: Component
+  label: High-voltage rectifier diode
+- id: C5
+  type: Component
+  label: Waveguide duct
+- id: C6
+  type: Component
+  label: Mica waveguide cover
+- id: C7
+  type: Component
+  label: Enamelled steel cooking cavity (~20 L)
+- id: C8
+  type: Component
+  label: Hinged door with perforated metal mesh window
+- id: C9
+  type: Component
+  label: Door choke seal (quarter-wave rim)
+- id: C10
+  type: Component
+  label: Rotating glass turntable tray
+- id: C11
+  type: Component
+  label: Roller ring and coupler (turntable support)
+- id: C12
+  type: Component
+  label: Turntable motor (~5 rpm)
+- id: C13
+  type: Component
+  label: Mechanical timer knob & cam switch (0-30 min)
+- id: C14
+  type: Component
+  label: Power-level knob (5-step duty-cycle cam switch)
+- id: C15
+  type: Component
+  label: Door-release push button & latch lever
+- id: C16
+  type: Component
+  label: Door interlock microswitches (primary, secondary, monitor)
+- id: C17
+  type: Component
+  label: Interior lamp (20-25 W incandescent)
+- id: C18
+  type: Component
+  label: Cooling fan and fan motor
+- id: C19
+  type: Component
+  label: Magnetron thermal cutout
+- id: C20
+  type: Component
+  label: Cavity thermal cutout
+- id: C21
+  type: Component
+  label: Main ceramic fuse
+- id: C22
+  type: Component
+  label: End-of-cycle bell (mechanical 'ding')
+- id: C23
+  type: Component
+  label: Outer steel cabinet (wrapper)
+- id: C24
+  type: Component
+  label: Control panel fascia
+- id: C25
+  type: Component
+  label: Mains power cord and plug
+- id: C26
+  type: Component
+  label: Door hinges
+- id: C27
+  type: Component
+  label: Ventilation louvres
+- id: C28
+  type: Component
+  label: Mains EMI noise filter
+- id: F1
+  type: Function
+  label: Generates microwave energy at 2.45 GHz
+- id: F2
+  type: Function
+  label: Converts mains voltage to ~4 kV DC for the magnetron
+- id: F3
+  type: Function
+  label: Guides microwave energy into the cavity
+- id: F4
+  type: Function
+  label: Heats food via dielectric water-molecule vibration (FastHeating)
+- id: F5
+  type: Function
+  label: Distributes heat evenly by rotating food through the field
+- id: F6
+  type: Function
+  label: Contains microwave radiation inside the appliance
+- id: F7
+  type: Function
+  label: Sets and counts down cooking duration
+- id: F8
+  type: Function
+  label: Sets average heating power level
+- id: F9
+  type: Function
+  label: Opens and closes the door to access the cavity
+- id: F10
+  type: Function
+  label: Cuts RF power instantly when the door opens
+- id: F11
+  type: Function
+  label: Illuminates cavity so the user can watch the food
+- id: F12
+  type: Function
+  label: Signals end of cooking (audible alert)
+- id: F13
+  type: Function
+  label: Cools magnetron and electronics
+- id: F14
+  type: Function
+  label: Protects against overheating
+- id: F15
+  type: Function
+  label: Protects against overcurrent and electrical faults
+- id: F16
+  type: Function
+  label: Defrosts frozen food (low-power cycling)
+- id: F17
+  type: Function
+  label: Melts / softens butter, chocolate, etc.
+- id: F18
+  type: Function
+  label: Contains spills and allows cleaning
+- id: F19
+  type: Function
+  label: Suppresses electrical noise conducted back to mains
+- id: F20
+  type: Function
+  label: Discharges stored high voltage after switch-off
+- id: M1
+  type: MarketNeed
+  label: Fast reheating for busy households
+- id: M2
+  type: MarketNeed
+  label: Crispy, browned texture like conventional oven
+- id: M3
+  type: MarketNeed
+  label: Hot milk / drink ready for breakfast
+- id: M4
+  type: MarketNeed
+  label: Defrost frozen food quickly
+- id: M5
+  type: MarketNeed
+  label: Save time in the kitchen
+- id: M6
+  type: MarketNeed
+  label: Simple operation with no learning curve
+- id: M7
+  type: MarketNeed
+  label: Safe for family use (radiation, burns, electric shock)
+- id: M8
+  type: MarketNeed
+  label: Human need for feedback (know when food is ready)
+- id: M9
+  type: MarketNeed
+  label: Low purchase price
+- id: M10
+  type: MarketNeed
+  label: Small kitchen footprint
+- id: M11
+  type: MarketNeed
+  label: Easy to clean
+- id: M12
+  type: MarketNeed
+  label: Healthy diet (nutrient retention, less fat)
+- id: M13
+  type: MarketNeed
+  label: Energy efficiency
+- id: M14
+  type: MarketNeed
+  label: Accessible for elderly / visually impaired users
+- id: M15
+  type: MarketNeed
+  label: Appliances that make you feel better (latent need)
+- id: M16
+  type: MarketNeed
+  label: Need for mobility (not having to stand by the appliance)
+- id: M17
+  type: MarketNeed
+  label: Bake a birthday cake (prep tasks like melting butter)
+- id: A1
+  type: Actor
+  label: Time-pressed home cook
+- id: A2
+  type: Actor
+  label: Appliance safety regulator/inspector
+- id: A3
+  type: Actor
+  label: Student / single-person household
+- id: A4
+  type: Actor
+  label: Elderly user
+- id: A5
+  type: Actor
+  label: Parent with young children
+- id: A6
+  type: Actor
+  label: Office worker using a shared kitchen
+- id: A7
+  type: Actor
+  label: Repair technician
+- id: A8
+  type: Actor
+  label: OEM manufacturer / cost engineer
+- id: X1
+  type: Constraint
+  label: Microwaves can't brown or crisp food surfaces
+- id: X2
+  type: Constraint
+  label: FCC/FDA radiation-leakage safety limits (21 CFR 1030.10, 5 mW/cm² at 5 cm)
+- id: X3
+  type: Constraint
+  label: Uneven heating — standing-wave hot and cold spots
+- id: X4
+  type: Constraint
+  label: Metal objects in cavity cause arcing
+- id: X5
+  type: Constraint
+  label: Mechanical timer imprecise for short (<1 min) durations
+- id: X6
+  type: Constraint
+  label: Power only adjustable by on/off cycling, not continuously
+- id: X7
+  type: Constraint
+  label: HV capacitor can hold a lethal charge after unplugging
+- id: X8
+  type: Constraint
+  label: Limited magnetron lifetime (cathode/filament wear)
+- id: X9
+  type: Constraint
+  label: Superheating of liquids — risk of eruptive boiling
+- id: X10
+  type: Constraint
+  label: Electrical safety standards (IEC 60335-2-25 / UL 923)
+- id: X11
+  type: Constraint
+  label: Cavity volume limited by countertop size
+- id: X12
+  type: Constraint
+  label: Low BOM target for entry-level price segment
+- id: X13
+  type: Constraint
+  label: No food-state sensing — open-loop cooking
+- id: X14
+  type: Constraint
+  label: Interior lamp burns out and is hard to replace
+- id: X15
+  type: Constraint
+  label: Regional mains variants (230 V/50 Hz vs 120 V/60 Hz)
+edges:
+- {from: P1, to: C1, type: has_component}
+- {from: P1, to: C2, type: has_component}
+- {from: P1, to: C3, type: has_component}
+- {from: P1, to: C4, type: has_component}
+- {from: P1, to: C5, type: has_component}
+- {from: P1, to: C6, type: has_component}
+- {from: P1, to: C7, type: has_component}
+- {from: P1, to: C8, type: has_component}
+- {from: P1, to: C9, type: has_component}
+- {from: P1, to: C10, type: has_component}
+- {from: P1, to: C11, type: has_component}
+- {from: P1, to: C12, type: has_component}
+- {from: P1, to: C13, type: has_component}
+- {from: P1, to: C14, type: has_component}
+- {from: P1, to: C15, type: has_component}
+- {from: P1, to: C16, type: has_component}
+- {from: P1, to: C17, type: has_component}
+- {from: P1, to: C18, type: has_component}
+- {from: P1, to: C19, type: has_component}
+- {from: P1, to: C20, type: has_component}
+- {from: P1, to: C21, type: has_component}
+- {from: P1, to: C22, type: has_component}
+- {from: P1, to: C23, type: has_component}
+- {from: P1, to: C24, type: has_component}
+- {from: P1, to: C25, type: has_component}
+- {from: P1, to: C26, type: has_component}
+- {from: P1, to: C27, type: has_component}
+- {from: P1, to: C28, type: has_component}
+- {from: T1, to: D2, type: rooted_in}
+- {from: T1, to: D1, type: rooted_in}
+- {from: T2, to: D3, type: rooted_in}
+- {from: T3, to: D3, type: rooted_in}
+- {from: T4, to: D1, type: rooted_in}
+- {from: T5, to: D1, type: rooted_in}
+- {from: T6, to: D1, type: rooted_in}
+- {from: T7, to: D4, type: rooted_in}
+- {from: T8, to: D4, type: rooted_in}
+- {from: T9, to: D5, type: rooted_in}
+- {from: T10, to: D4, type: rooted_in}
+- {from: T10, to: D3, type: rooted_in}
+- {from: T11, to: D3, type: rooted_in}
+- {from: T12, to: D7, type: rooted_in}
+- {from: T13, to: D5, type: rooted_in}
+- {from: T14, to: D1, type: rooted_in}
+- {from: T14, to: D10, type: rooted_in}
+- {from: T15, to: D6, type: rooted_in}
+- {from: T16, to: D6, type: rooted_in}
+- {from: T17, to: D6, type: rooted_in}
+- {from: T18, to: D4, type: rooted_in}
+- {from: T19, to: D8, type: rooted_in}
+- {from: T20, to: D3, type: rooted_in}
+- {from: T21, to: D6, type: rooted_in}
+- {from: T22, to: D6, type: rooted_in}
+- {from: T22, to: D9, type: rooted_in}
+- {from: T23, to: D9, type: rooted_in}
+- {from: T24, to: D3, type: rooted_in}
+- {from: C1, to: T1, type: enabled_by}
+- {from: C1, to: T21, type: enabled_by}
+- {from: C2, to: T2, type: enabled_by}
+- {from: C3, to: T3, type: enabled_by}
+- {from: C4, to: T3, type: enabled_by}
+- {from: C5, to: T4, type: enabled_by}
+- {from: C6, to: T16, type: enabled_by}
+- {from: C7, to: T17, type: enabled_by}
+- {from: C7, to: T23, type: enabled_by}
+- {from: C8, to: T5, type: enabled_by}
+- {from: C8, to: T15, type: enabled_by}
+- {from: C9, to: T6, type: enabled_by}
+- {from: C10, to: T15, type: enabled_by}
+- {from: C11, to: T22, type: enabled_by}
+- {from: C12, to: T7, type: enabled_by}
+- {from: C13, to: T8, type: enabled_by}
+- {from: C14, to: T11, type: enabled_by}
+- {from: C15, to: T18, type: enabled_by}
+- {from: C16, to: T10, type: enabled_by}
+- {from: C17, to: T12, type: enabled_by}
+- {from: C18, to: T13, type: enabled_by}
+- {from: C18, to: T7, type: enabled_by}
+- {from: C19, to: T9, type: enabled_by}
+- {from: C20, to: T9, type: enabled_by}
+- {from: C21, to: T20, type: enabled_by}
+- {from: C22, to: T19, type: enabled_by}
+- {from: C23, to: T23, type: enabled_by}
+- {from: C24, to: T22, type: enabled_by}
+- {from: C26, to: T23, type: enabled_by}
+- {from: C27, to: T23, type: enabled_by}
+- {from: C28, to: T24, type: enabled_by}
+- {from: F4, to: T14, type: enabled_by}
+- {from: C1, to: F1, type: performs_function}
+- {from: C2, to: F2, type: performs_function}
+- {from: C3, to: F2, type: performs_function}
+- {from: C4, to: F2, type: performs_function}
+- {from: C3, to: F20, type: performs_function}
+- {from: C5, to: F3, type: performs_function}
+- {from: C6, to: F3, type: performs_function}
+- {from: C6, to: F18, type: performs_function}
+- {from: C7, to: F6, type: performs_function}
+- {from: C7, to: F4, type: performs_function}
+- {from: C8, to: F6, type: performs_function}
+- {from: C8, to: F11, type: performs_function}
+- {from: C8, to: F9, type: performs_function}
+- {from: C9, to: F6, type: performs_function}
+- {from: C10, to: F5, type: performs_function}
+- {from: C10, to: F18, type: performs_function}
+- {from: C11, to: F5, type: performs_function}
+- {from: C12, to: F5, type: performs_function}
+- {from: C13, to: F7, type: performs_function}
+- {from: C14, to: F8, type: performs_function}
+- {from: C15, to: F9, type: performs_function}
+- {from: C16, to: F10, type: performs_function}
+- {from: C17, to: F11, type: performs_function}
+- {from: C18, to: F13, type: performs_function}
+- {from: C19, to: F14, type: performs_function}
+- {from: C20, to: F14, type: performs_function}
+- {from: C21, to: F15, type: performs_function}
+- {from: C22, to: F12, type: performs_function}
+- {from: C23, to: F6, type: performs_function}
+- {from: C26, to: F9, type: performs_function}
+- {from: C27, to: F13, type: performs_function}
+- {from: C28, to: F19, type: performs_function}
+- {from: F2, to: F1, type: enables_function}
+- {from: F1, to: F3, type: enables_function}
+- {from: F3, to: F4, type: enables_function}
+- {from: F5, to: F4, type: enables_function}
+- {from: F4, to: F16, type: enables_function}
+- {from: F4, to: F17, type: enables_function}
+- {from: F8, to: F16, type: enables_function}
+- {from: F8, to: F17, type: enables_function}
+- {from: F7, to: F12, type: enables_function}
+- {from: F13, to: F14, type: enables_function}
+- {from: F4, to: M1, type: addresses_need}
+- {from: F4, to: M3, type: addresses_need}
+- {from: F4, to: M5, type: addresses_need}
+- {from: F4, to: M12, type: addresses_need}
+- {from: F4, to: M13, type: addresses_need}
+- {from: F5, to: M1, type: addresses_need}
+- {from: F16, to: M4, type: addresses_need}
+- {from: F16, to: M5, type: addresses_need}
+- {from: F17, to: M17, type: addresses_need}
+- {from: F7, to: M6, type: addresses_need}
+- {from: F7, to: M14, type: addresses_need}
+- {from: F8, to: M6, type: addresses_need}
+- {from: F9, to: M6, type: addresses_need}
+- {from: F6, to: M7, type: addresses_need}
+- {from: F10, to: M7, type: addresses_need}
+- {from: F14, to: M7, type: addresses_need}
+- {from: F15, to: M7, type: addresses_need}
+- {from: F20, to: M7, type: addresses_need}
+- {from: F11, to: M8, type: addresses_need}
+- {from: F12, to: M8, type: addresses_need}
+- {from: F12, to: M14, type: addresses_need}
+- {from: F12, to: M16, type: addresses_need}
+- {from: F18, to: M11, type: addresses_need}
+- {from: C25, to: C28, type: feeds}
+- {from: C28, to: C21, type: feeds}
+- {from: C21, to: C16, type: feeds}
+- {from: C16, to: C13, type: feeds}
+- {from: C13, to: C14, type: feeds}
+- {from: C14, to: C2, type: feeds}
+- {from: C2, to: C3, type: feeds}
+- {from: C3, to: C1, type: feeds}
+- {from: C4, to: C1, type: feeds}
+- {from: C1, to: C5, type: feeds}
+- {from: C5, to: C7, type: feeds}
+- {from: C13, to: C12, type: feeds}
+- {from: C13, to: C17, type: feeds}
+- {from: C13, to: C18, type: feeds}
+- {from: C13, to: C22, type: actuates}
+- {from: C15, to: C8, type: actuates}
+- {from: C8, to: C16, type: actuates}
+- {from: C12, to: C10, type: actuates}
+- {from: C11, to: C10, type: relevant_to}
+- {from: C19, to: C1, type: relevant_to}
+- {from: C20, to: C7, type: relevant_to}
+- {from: C24, to: C13, type: relevant_to}
+- {from: C24, to: C14, type: relevant_to}
+- {from: C24, to: C15, type: relevant_to}
+- {from: C27, to: C23, type: relevant_to}
+- {from: A1, to: M1, type: relevant_to}
+- {from: A1, to: M2, type: relevant_to}
+- {from: A1, to: M3, type: relevant_to}
+- {from: A1, to: M5, type: relevant_to}
+- {from: A1, to: M15, type: relevant_to}
+- {from: A2, to: X2, type: relevant_to}
+- {from: A2, to: X10, type: relevant_to}
+- {from: A3, to: M9, type: relevant_to}
+- {from: A3, to: M10, type: relevant_to}
+- {from: A3, to: M1, type: relevant_to}
+- {from: A4, to: M6, type: relevant_to}
+- {from: A4, to: M14, type: relevant_to}
+- {from: A4, to: M7, type: relevant_to}
+- {from: A5, to: M7, type: relevant_to}
+- {from: A5, to: M17, type: relevant_to}
+- {from: A5, to: M4, type: relevant_to}
+- {from: A5, to: M12, type: relevant_to}
+- {from: A6, to: M1, type: relevant_to}
+- {from: A6, to: M11, type: relevant_to}
+- {from: A6, to: M16, type: relevant_to}
+- {from: A7, to: X7, type: relevant_to}
+- {from: A7, to: X8, type: relevant_to}
+- {from: A7, to: X14, type: relevant_to}
+- {from: A8, to: X12, type: relevant_to}
+- {from: A8, to: M9, type: relevant_to}
+- {from: A8, to: X15, type: relevant_to}
+- {from: T14, to: X1, type: causes}
+- {from: X1, to: M2, type: contradicts}
+- {from: X1, to: P1, type: relevant_to}
+- {from: X2, to: C1, type: causes}
+- {from: C8, to: X2, type: partially_mitigates}
+- {from: C9, to: X2, type: partially_mitigates}
+- {from: C16, to: X2, type: partially_mitigates}
+- {from: C23, to: X2, type: partially_mitigates}
+- {from: C7, to: X3, type: causes}
+- {from: C10, to: X3, type: partially_mitigates}
+- {from: X3, to: M4, type: contradicts}
+- {from: X3, to: F5, type: relevant_to}
+- {from: X4, to: C7, type: relevant_to}
+- {from: X4, to: M7, type: contradicts}
+- {from: C13, to: X5, type: causes}
+- {from: X5, to: M3, type: contradicts}
+- {from: C14, to: X6, type: causes}
+- {from: X6, to: T11, type: relevant_to}
+- {from: X6, to: F16, type: relevant_to}
+- {from: C3, to: X7, type: causes}
+- {from: X7, to: M7, type: contradicts}
+- {from: C1, to: X8, type: causes}
+- {from: T14, to: X9, type: causes}
+- {from: X9, to: M3, type: relevant_to}
+- {from: X9, to: M7, type: contradicts}
+- {from: C16, to: X10, type: partially_mitigates}
+- {from: C19, to: X10, type: partially_mitigates}
+- {from: C20, to: X10, type: partially_mitigates}
+- {from: C21, to: X10, type: partially_mitigates}
+- {from: X11, to: C7, type: relevant_to}
+- {from: X11, to: M10, type: relevant_to}
+- {from: X12, to: C13, type: relevant_to}
+- {from: X12, to: C17, type: relevant_to}
+- {from: X12, to: M9, type: relevant_to}
+- {from: C13, to: X13, type: causes}
+- {from: X13, to: F7, type: relevant_to}
+- {from: X13, to: M12, type: contradicts}
+- {from: C17, to: X14, type: causes}
+- {from: X14, to: F11, type: relevant_to}
+- {from: X15, to: C2, type: relevant_to}
+- {from: X15, to: C12, type: relevant_to}
+- {from: X15, to: C13, type: relevant_to}

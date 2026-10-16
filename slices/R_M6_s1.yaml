@@ -1,0 +1,133 @@
+meta:
+  graph_id: microwave_base_v1
+  base_product: ~20 L, 700 W output, 230 V/50 Hz countertop microwave with mechanical clockwork timer knob (0-30 min, bell at end), 5-step power knob (duty-cycle cam), door push-release button, 20-25 W interior incandescent lamp, glass turntable.
+  layers:
+  - Field
+  - Technology
+  - Component
+  - Function
+  - MarketNeed
+  cross_cutting:
+  - Product
+  - Actor
+  - Constraint
+  edge_types:
+    has_component: Product -> Component
+    enabled_by: Component|Function -> Technology
+    rooted_in: Technology -> Field
+    performs_function: Component -> Function
+    enables_function: Function -> Function (derived/secondary function)
+    addresses_need: Function -> MarketNeed
+    feeds: Component -> Component (energy / signal flow)
+    actuates: Component -> Component (mechanical action)
+    relevant_to: any -> any (weak association)
+    causes: any -> Constraint
+    contradicts: Constraint -> any
+    partially_mitigates: Component -> Constraint
+    resolves: new node -> node it replaces/solves (used by agents)
+nodes:
+- id: P1
+  type: Product
+  label: Basic countertop microwave oven (timer knob, power knob, door button, lamp)
+- id: D4
+  type: Field
+  label: Electromechanics & mechanisms
+- id: D6
+  type: Field
+  label: Materials science (metals, ceramics, glass, polymers)
+- id: D7
+  type: Field
+  label: Lighting & optics
+- id: D8
+  type: Field
+  label: Sound engineering
+- id: D9
+  type: Field
+  label: Manufacturing engineering (stamping, molding, assembly)
+- id: T3
+  type: Technology
+  label: Half-wave voltage doubler (capacitor + diode)
+  detail: Turns ~2 kV AC from the transformer into ~4 kV pulsating negative DC for the magnetron cathode.
+- id: T9
+  type: Technology
+  label: Bimetallic snap-disc thermostat
+  detail: Two bonded metals with different thermal expansion snap open a contact at a set temperature.
+- id: T10
+  type: Technology
+  label: Redundant interlock microswitch logic (primary / secondary / monitor)
+  detail: Three switches in series/shunt so that a welded switch blows the fuse instead of leaving RF on.
+- id: T15
+  type: Technology
+  label: Tempered / borosilicate glass forming
+  detail: Microwave-transparent, thermal-shock-resistant glass for turntable and door window.
+- id: T16
+  type: Technology
+  label: Mica sheet dielectric (muscovite laminate)
+  detail: Microwave-transparent, heat-resistant cover that keeps splatter out of the waveguide.
+- id: T18
+  type: Technology
+  label: Spring-loaded lever latch mechanics
+  detail: Push button drives a lever that lifts door hooks out of the latch and opens the interlocks.
+- id: C4
+  type: Component
+  label: High-voltage rectifier diode
+- id: C9
+  type: Component
+  label: Door choke seal (quarter-wave rim)
+- id: C12
+  type: Component
+  label: Turntable motor (~5 rpm)
+- id: C16
+  type: Component
+  label: Door interlock microswitches (primary, secondary, monitor)
+- id: C25
+  type: Component
+  label: Mains power cord and plug
+- id: F8
+  type: Function
+  label: Sets average heating power level
+- id: F14
+  type: Function
+  label: Protects against overheating
+- id: F20
+  type: Function
+  label: Discharges stored high voltage after switch-off
+- id: M6
+  type: MarketNeed
+  label: Simple operation with no learning curve
+- id: A3
+  type: Actor
+  label: Student / single-person household
+- id: X1
+  type: Constraint
+  label: Microwaves can't brown or crisp food surfaces
+- id: X4
+  type: Constraint
+  label: Metal objects in cavity cause arcing
+- id: X5
+  type: Constraint
+  label: Mechanical timer imprecise for short (<1 min) durations
+- id: X7
+  type: Constraint
+  label: HV capacitor can hold a lethal charge after unplugging
+- id: X9
+  type: Constraint
+  label: Superheating of liquids — risk of eruptive boiling
+- id: X10
+  type: Constraint
+  label: Electrical safety standards (IEC 60335-2-25 / UL 923)
+edges:
+- {from: P1, to: C4, type: has_component}
+- {from: P1, to: C9, type: has_component}
+- {from: P1, to: C12, type: has_component}
+- {from: P1, to: C16, type: has_component}
+- {from: P1, to: C25, type: has_component}
+- {from: T10, to: D4, type: rooted_in}
+- {from: T15, to: D6, type: rooted_in}
+- {from: T16, to: D6, type: rooted_in}
+- {from: T18, to: D4, type: rooted_in}
+- {from: C4, to: T3, type: enabled_by}
+- {from: C16, to: T10, type: enabled_by}
+- {from: F8, to: M6, type: addresses_need}
+- {from: X1, to: P1, type: relevant_to}
+- {from: C16, to: X10, type: partially_mitigates}

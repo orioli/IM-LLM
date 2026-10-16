@@ -1,0 +1,19 @@
+persona,effort,measure,yield_B,yield_C,ratio_B_over_C,ratio_lo,ratio_hi
+engineer,medium,top ideas,6.385,10.0077,0.638,0.3934,1.0739
+engineer,medium,patentable ideas,0.2456,0.8702,0.2822,0.0,1.6588
+engineer,high,top ideas,5.6229,5.1613,1.0894,0.6907,1.8755
+engineer,high,patentable ideas,0.1704,0.5433,0.3136,0.0,1.3004
+engineer,pooled,top ideas,5.9351,7.024,0.845,0.5993,1.2216
+engineer,pooled,patentable ideas,0.2012,0.669,0.3008,0.0,1.7257
+lateral,medium,top ideas,5.3942,3.8918,1.3861,0.7586,3.3522
+lateral,medium,patentable ideas,0.7036,0.8648,0.8136,0.0,3.2853
+lateral,high,top ideas,4.008,3.9764,1.0079,0.6606,1.6857
+lateral,high,patentable ideas,0.0,0.2485,0.0,0.0,0.0
+lateral,pooled,top ideas,4.5708,3.9455,1.1585,0.8035,1.7618
+lateral,pooled,patentable ideas,0.2857,0.4735,0.6034,0.0,3.0356
+patent,medium,top ideas,5.8992,7.1598,0.8239,0.5111,1.4043
+patent,medium,patentable ideas,0.4538,1.1933,0.3803,0.0,2.2211
+patent,high,top ideas,5.6863,3.6742,1.5476,1.0346,2.6078
+patent,high,patentable ideas,0.1537,0.6889,0.2231,0.0,1.3296
+patent,pooled,top ideas,5.7722,4.95,1.1661,0.8627,1.6644
+patent,pooled,patentable ideas,0.2749,0.8735,0.3147,0.0,1.2062

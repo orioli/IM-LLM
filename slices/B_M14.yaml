@@ -1,0 +1,94 @@
+meta:
+  graph_id: microwave_base_v1
+  base_product: ~20 L, 700 W output, 230 V/50 Hz countertop microwave with mechanical clockwork timer knob (0-30 min, bell at end), 5-step power knob (duty-cycle cam), door push-release button, 20-25 W interior incandescent lamp, glass turntable.
+  layers:
+  - Field
+  - Technology
+  - Component
+  - Function
+  - MarketNeed
+  cross_cutting:
+  - Product
+  - Actor
+  - Constraint
+  edge_types:
+    has_component: Product -> Component
+    enabled_by: Component|Function -> Technology
+    rooted_in: Technology -> Field
+    performs_function: Component -> Function
+    enables_function: Function -> Function (derived/secondary function)
+    addresses_need: Function -> MarketNeed
+    feeds: Component -> Component (energy / signal flow)
+    actuates: Component -> Component (mechanical action)
+    relevant_to: any -> any (weak association)
+    causes: any -> Constraint
+    contradicts: Constraint -> any
+    partially_mitigates: Component -> Constraint
+    resolves: new node -> node it replaces/solves (used by agents)
+nodes:
+- id: P1
+  type: Product
+  label: Basic countertop microwave oven (timer knob, power knob, door button, lamp)
+- id: D4
+  type: Field
+  label: Electromechanics & mechanisms
+- id: D8
+  type: Field
+  label: Sound engineering
+- id: T8
+  type: Technology
+  label: Motor-driven cam timer with spring-return mechanism
+  detail: Synchronous motor turns a cam shaft back to zero; cam opens the circuit and trips the bell.
+- id: T19
+  type: Technology
+  label: Mechanical bell striker
+  detail: Spring hammer released by the timer cam strikes a metal bell — the classic 'ding'.
+- id: C13
+  type: Component
+  label: Mechanical timer knob & cam switch (0-30 min)
+- id: C22
+  type: Component
+  label: End-of-cycle bell (mechanical 'ding')
+- id: F7
+  type: Function
+  label: Sets and counts down cooking duration
+- id: F12
+  type: Function
+  label: Signals end of cooking (audible alert)
+- id: M14
+  type: MarketNeed
+  label: Accessible for elderly / visually impaired users
+- id: A4
+  type: Actor
+  label: Elderly user
+- id: X5
+  type: Constraint
+  label: Mechanical timer imprecise for short (<1 min) durations
+- id: X12
+  type: Constraint
+  label: Low BOM target for entry-level price segment
+- id: X13
+  type: Constraint
+  label: No food-state sensing — open-loop cooking
+- id: X15
+  type: Constraint
+  label: Regional mains variants (230 V/50 Hz vs 120 V/60 Hz)
+edges:
+- {from: P1, to: C13, type: has_component}
+- {from: P1, to: C22, type: has_component}
+- {from: T8, to: D4, type: rooted_in}
+- {from: T19, to: D8, type: rooted_in}
+- {from: C13, to: T8, type: enabled_by}
+- {from: C22, to: T19, type: enabled_by}
+- {from: C13, to: F7, type: performs_function}
+- {from: C22, to: F12, type: performs_function}
+- {from: F7, to: F12, type: enables_function}
+- {from: F7, to: M14, type: addresses_need}
+- {from: F12, to: M14, type: addresses_need}
+- {from: C13, to: C22, type: actuates}
+- {from: A4, to: M14, type: relevant_to}
+- {from: C13, to: X5, type: causes}
+- {from: X12, to: C13, type: relevant_to}
+- {from: C13, to: X13, type: causes}
+- {from: X13, to: F7, type: relevant_to}
+- {from: X15, to: C13, type: relevant_to}

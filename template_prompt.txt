@@ -1,0 +1,46 @@
+=== SYSTEM ===
+{persona} You read product graphs and propose radical
+product innovations. Respond with valid JSON only, no prose outside the JSON.
+
+=== USER ===
+Innovate the following {product_name} based on the graph given.
+Encourage radical and wild ideas.
+
+TARGET MARKET NEED
+{target_need_id}: {target_need_label}
+Favour innovations that serve this market need.
+
+INNOVATION OPERATOR: {operator_name}
+{operator_definition}
+
+EXAMPLE OF AN INNOVATION WE LIKE
+A microwave has a door with holes, a light, and other components and
+functions, so the user can see inside: they need to check for mistakes
+(perhaps there is also entertainment value).
+Applying the operator: replace the light and the holes with something
+that fulfils the same function equally well or better, or more cheaply.
+  - e.g. 1: a webcam
+  - e.g. 2: a fully transparent microwave casing that needs no light bulb inside
+
+GRAPH OF THE {product_name}
+{graph_yaml}
+
+OUTPUT
+Return exactly {n_ideas} ideas as JSON:
+{
+  "ideas": [
+    {
+      "title": "short name",
+      "anchors": ["existing node ids the operator was applied to"],
+      "new_nodes": [
+        {"type": "Field|Technology|Component|Function|MarketNeed|Constraint",
+         "label": "...", "detail": "one line"}
+      ],
+      "new_edges": [
+        {"from": "node id or new node label", "to": "node id or new node label",
+         "type": "one of the graph's edge_types, e.g. resolves"}
+      ],
+      "rationale": "one sentence: how this serves {target_need_id}"
+    }
+  ]
+}
