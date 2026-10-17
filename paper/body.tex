@@ -156,10 +156,16 @@ Product (P) & 1 & the microwave oven \\
 
 Each node has an identifier, type, label and a one-line detail. The file begins with a meta block that names the layers and defines the edge types.
 
-\hypertarget{representations}{%
+\hypertarget{representations}{
 \subsection{Representations}\label{representations}}
 
-Every prompt contains a graph file produced by one serializer from the base graph. Fields, ordering and the meta block are the same in every file; only \emph{which} nodes and edges are present differs. No file states which condition it belongs to. For each target market need \(M_k\) (\texttt{slicer.py}):
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\textwidth]{figures/0b_slices_grid.pdf}
+\caption{What each prompt contains. Every panel is the whole microwave innovation matrix (rows are the layers, bottom to top: constraints, fields, technologies, components, functions, market needs, actors); coloured nodes and edges are what the model sees. Top row: the full graph (A), no graph (C, only the market need), a random slice of the same size as the M8 slice (R), and the smallest market-need slice (M11). The other panels are the market-need slices (B) for the remaining 12 needs, ordered by size (10 to 51 nodes, 8--41\% of the graph).}
+\label{fig:slices_grid}
+\end{figure}
+Figure~\ref{fig:slices_grid} shows what the model sees in each condition. Every prompt contains a graph file produced by one serializer from the base graph. Fields, ordering and the meta block are the same in every file; only \emph{which} nodes and edges are present differs. No file states which condition it belongs to. For each target market need \(M_k\) (\texttt{slicer.py}):
 
 \begin{itemize}
 \tightlist
