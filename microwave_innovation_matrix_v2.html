@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Microwave Innovation Matrix v2</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: Helvetica, Arial, sans-serif; margin: 0; padding: 24px; background: #fafafa; color: #212529; }
+h1 { font-size: 18px; margin: 0 0 4px; }
+p.subtitle { font-size: 13px; color: #666; margin: 0 0 18px; max-width: 1100px; line-height: 1.45; }
+.panel { border: 1px solid #dee2e6; border-radius: 10px; background: white; padding: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); max-width: 1800px; margin: 0 auto; }
+.panel h2 { font-size: 13px; margin: 0 0 8px; color: #495057; text-transform: uppercase; letter-spacing: 0.04em; }
+.scroll { overflow-x: auto; }
+.panel svg { width: 100%; min-width: 1100px; height: auto; display: block; }
+.legend { font-size: 12px; color: #555; margin: 14px auto 0; max-width: 1800px; display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.lg { display: inline-flex; align-items: center; gap: 6px; }
+.lg i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.ln { display: inline-block; width: 26px; border-top: 2px solid #999; vertical-align: middle; margin-right: 6px; }
+.e { opacity: var(--o); transition: opacity .25s, stroke-width .25s; }
+.n { pointer-events: bounding-box; cursor: pointer; transition: opacity .25s; outline: none; }
+.n circle { transition: stroke-width .2s; }
+.n:hover circle, .n:focus-visible circle { stroke: #212529; stroke-width: 2; }
+#G.focus .n { opacity: .3; }
+#G.focus .e { opacity: calc(var(--o) * .3); }
+#G.focus .n.on { opacity: 1; }
+#G.focus .n.sel circle { stroke: #212529; stroke-width: 3; }
+#G.focus .e.on { opacity: 1; stroke-width: 2; }
+.info { max-width: 1800px; margin: 0 auto 12px; min-height: 44px; font-size: 13px; background: white; border: 1px solid #dee2e6; border-radius: 10px; padding: 10px 14px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.info b { color: #212529; } .info .muted { color: #868e96; }
+.info button { margin-left: auto; font: inherit; font-size: 12px; border: 1px solid #ced4da; background: #f8f9fa; border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+.chip { display: inline-block; padding: 1px 7px; border-radius: 10px; color: white; font-size: 11px; font-weight: bold; margin: 1px; }
+.note { font-size: 12px; color: #868e96; text-align: center; margin-top: 10px; }
+</style></head><body>
+<h1>Innovation matrix: basic countertop microwave oven</h1>
+<p class="subtitle">Seed graph G (<code>microwave_base_v1</code>) laid out in Bernegger's layers: Field &rarr; Technology &rarr; Component &rarr; Function &rarr; Market need, with Actors on the left and Constraints on the right. 123 nodes, 246 edges. Click a node to isolate its chain; hover for full labels.</p>
+<div class="info" id="info"><span class="muted">Click any node to trace its chain: down to the nearest Technology node, up to the Market needs. Click it again, the background, or press Esc to reset.</span></div>
+<div class="panel"><h2>Graph G &mdash; Basic countertop microwave oven (timer knob, power knob, door button, lamp)</h2><div class="scroll">
+<svg viewBox="0 0 1820 1040" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica,Arial,sans-serif" id="G" role="img" aria-label="Innovation matrix graph">
+<defs><marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#999"/></marker><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B22222"/></marker><marker id="at" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2f9e44"/></marker></defs>
+<rect width="1820" height="1040" fill="white"/>
+<rect x="170" y="90" width="1460" height="170" fill="#f4f1fa" rx="6"/>
+<text x="178" y="106" font-size="13" font-weight="bold" fill="#444">Market needs / wants</text>
+<rect x="170" y="290" width="1460" height="170" fill="#fbeeee" rx="6"/>
+<text x="178" y="306" font-size="13" font-weight="bold" fill="#444">Product function</text>
+<rect x="170" y="490" width="1460" height="170" fill="#eef6ef" rx="6"/>
+<text x="178" y="506" font-size="13" font-weight="bold" fill="#444">Component</text>
+<rect x="170" y="690" width="1460" height="170" fill="#fdf1e8" rx="6"/>
+<text x="178" y="706" font-size="13" font-weight="bold" fill="#444">Technology</text>
+<rect x="170" y="890" width="1460" height="110" fill="#f3efea" rx="6"/>
+<text x="178" y="906" font-size="13" font-weight="bold" fill="#444">Field</text>
+<text x="90" y="100" font-size="13" font-weight="bold" fill="#444" text-anchor="middle">Actors</text>
+<text x="1720" y="100" font-size="13" font-weight="bold" fill="#444" text-anchor="middle">Constraints</text>
+<line x1="900.9" y1="51.3" x2="435.5" y2="524.3" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C1" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C1</title></line>
+<line x1="900.1" y1="50.4" x2="336.5" y2="525.3" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C2" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C2</title></line>
+<line x1="901.0" y1="51.3" x2="385.4" y2="584.2" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C3" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C3</title></line>
+<line x1="899.4" y1="49.6" x2="237.2" y2="526.2" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C4" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C4</title></line>
+<line x1="900.2" y1="50.5" x2="286.3" y2="585.1" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C5" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C5</title></line>
+<line x1="902.0" y1="52.2" x2="484.3" y2="583.2" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C6" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C6</title></line>
+<line x1="909.2" y1="55.0" x2="875.9" y2="580.0" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C7" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C7</title></line>
+<line x1="906.9" y1="54.6" x2="778.6" y2="580.4" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C8" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C8</title></line>
+<line x1="902.0" y1="52.2" x2="534.2" y2="523.2" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C9" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C9</title></line>
+<line x1="903.5" y1="53.3" x2="632.5" y2="522.0" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C10" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C10</title></line>
+<line x1="907.8" y1="54.8" x2="827.5" y2="520.2" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C11" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C11</title></line>
+<line x1="911.5" y1="54.9" x2="973.2" y2="580.1" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C12" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C12</title></line>
+<line x1="915.6" y1="53.7" x2="1168.5" y2="581.5" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C13" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C13</title></line>
+<line x1="905.4" y1="54.2" x2="730.3" y2="521.0" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C14" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C14</title></line>
+<line x1="913.0" y1="54.7" x2="1021.6" y2="520.4" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C15" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C15</title></line>
+<line x1="904.9" y1="54.0" x2="680.9" y2="581.2" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C16" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C16</title></line>
+<line x1="917.2" y1="52.8" x2="1266.7" y2="582.5" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C17" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C17</title></line>
+<line x1="918.4" y1="51.9" x2="1315.3" y2="523.5" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C18" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C18</title></line>
+<line x1="919.4" y1="51.0" x2="1414.2" y2="524.6" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C19" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C19</title></line>
+<line x1="919.3" y1="51.1" x2="1464.3" y2="584.5" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C20" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C20</title></line>
+<line x1="903.3" y1="53.1" x2="582.8" y2="582.2" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C21" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C21</title></line>
+<line x1="920.0" y1="50.3" x2="1563.5" y2="585.4" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C22" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C22</title></line>
+<line x1="913.7" y1="54.5" x2="1070.7" y2="580.6" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C23" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C23</title></line>
+<line x1="910.4" y1="55.0" x2="924.5" y2="520.0" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C24" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C24</title></line>
+<line x1="920.1" y1="50.1" x2="1513.3" y2="525.6" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C25" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C25</title></line>
+<line x1="915.2" y1="53.9" x2="1119.0" y2="521.3" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C26" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C26</title></line>
+<line x1="918.4" y1="51.9" x2="1365.3" y2="583.5" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C27" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C27</title></line>
+<line x1="917.0" y1="53.0" x2="1216.9" y2="522.4" stroke="#c5ccd3" stroke-width="1" class="e" data-k="P1|C28" style="--o:0.35" marker-end="url(#ag)"><title>P1 has_component C28</title></line>
+<line x1="285.8" y1="807.9" x2="271.9" y2="915.1" stroke="#999" stroke-width="1" class="e" data-k="T1|D2" style="--o:0.6" marker-end="url(#ag)"><title>T1 rooted_in D2</title></line>
+<line x1="296.2" y1="804.6" x2="399.9" y2="918.9" stroke="#999" stroke-width="1" class="e" data-k="T1|D1" style="--o:0.6" marker-end="url(#ag)"><title>T1 rooted_in D1</title></line>
+<line x1="472.4" y1="743.5" x2="678.6" y2="920.2" stroke="#999" stroke-width="1" class="e" data-k="T2|D3" style="--o:0.6" marker-end="url(#ag)"><title>T2 rooted_in D3</title></line>
+<line x1="357.1" y1="741.4" x2="676.9" y2="922.6" stroke="#999" stroke-width="1" class="e" data-k="T3|D3" style="--o:0.6" marker-end="url(#ag)"><title>T3 rooted_in D3</title></line>
+<line x1="238.0" y1="744.5" x2="399.8" y2="919.0" stroke="#999" stroke-width="1" class="e" data-k="T4|D1" style="--o:0.6" marker-end="url(#ag)"><title>T4 rooted_in D1</title></line>
+<line x1="570.6" y1="744.8" x2="419.8" y2="918.7" stroke="#999" stroke-width="1" class="e" data-k="T5|D1" style="--o:0.6" marker-end="url(#ag)"><title>T5 rooted_in D1</title></line>
+<line x1="404.7" y1="808.0" x2="409.4" y2="915.0" stroke="#999" stroke-width="1" class="e" data-k="T6|D1" style="--o:0.6" marker-end="url(#ag)"><title>T6 rooted_in D1</title></line>
+<line x1="1268.2" y1="741.9" x2="982.7" y2="922.0" stroke="#999" stroke-width="1" class="e" data-k="T7|D4" style="--o:0.6" marker-end="url(#ag)"><title>T7 rooted_in D4</title></line>
+<line x1="1209.4" y1="801.2" x2="983.2" y2="922.9" stroke="#999" stroke-width="1" class="e" data-k="T8|D4" style="--o:0.6" marker-end="url(#ag)"><title>T8 rooted_in D4</title></line>
+<line x1="1502.1" y1="742.8" x2="1262.0" y2="921.1" stroke="#999" stroke-width="1" class="e" data-k="T9|D5" style="--o:0.6" marker-end="url(#ag)"><title>T9 rooted_in D5</title></line>
+<line x1="931.8" y1="747.7" x2="966.9" y2="915.3" stroke="#999" stroke-width="1" class="e" data-k="T10|D4" style="--o:0.6" marker-end="url(#ag)"><title>T10 rooted_in D4</title></line>
+<line x1="919.1" y1="743.2" x2="701.6" y2="920.5" stroke="#999" stroke-width="1" class="e" data-k="T10|D3" style="--o:0.6" marker-end="url(#ag)"><title>T10 rooted_in D3</title></line>
+<line x1="805.6" y1="746.0" x2="698.0" y2="917.3" stroke="#999" stroke-width="1" class="e" data-k="T11|D3" style="--o:0.6" marker-end="url(#ag)"><title>T11 rooted_in D3</title></line>
+<line x1="1448.6" y1="806.7" x2="1396.4" y2="916.5" stroke="#999" stroke-width="1" class="e" data-k="T12|D7" style="--o:0.6" marker-end="url(#ag)"><title>T12 rooted_in D7</title></line>
+<line x1="1388.0" y1="745.4" x2="1259.0" y2="918.0" stroke="#999" stroke-width="1" class="e" data-k="T13|D5" style="--o:0.6" marker-end="url(#ag)"><title>T13 rooted_in D5</title></line>
+<line x1="512.6" y1="805.0" x2="419.5" y2="918.4" stroke="#999" stroke-width="1" class="e" data-k="T14|D1" style="--o:0.6" marker-end="url(#ag)"><title>T14 rooted_in D1</title></line>
+<line x1="523.6" y1="807.7" x2="546.8" y2="915.3" stroke="#999" stroke-width="1" class="e" data-k="T14|D10" style="--o:0.6" marker-end="url(#ag)"><title>T14 rooted_in D10</title></line>
+<line x1="867.1" y1="807.4" x2="834.3" y2="915.6" stroke="#999" stroke-width="1" class="e" data-k="T15|D6" style="--o:0.6" marker-end="url(#ag)"><title>T15 rooted_in D6</title></line>
+<line x1="760.5" y1="806.3" x2="822.7" y2="916.9" stroke="#999" stroke-width="1" class="e" data-k="T16|D6" style="--o:0.6" marker-end="url(#ag)"><title>T16 rooted_in D6</title></line>
+<line x1="977.6" y1="803.5" x2="841.4" y2="920.2" stroke="#999" stroke-width="1" class="e" data-k="T17|D6" style="--o:0.6" marker-end="url(#ag)"><title>T17 rooted_in D6</title></line>
+<line x1="1095.0" y1="804.2" x2="980.6" y2="919.4" stroke="#999" stroke-width="1" class="e" data-k="T18|D4" style="--o:0.6" marker-end="url(#ag)"><title>T18 rooted_in D4</title></line>
+<line x1="1567.1" y1="807.4" x2="1534.3" y2="915.6" stroke="#999" stroke-width="1" class="e" data-k="T19|D8" style="--o:0.6" marker-end="url(#ag)"><title>T19 rooted_in D8</title></line>
+<line x1="695.4" y1="748.0" x2="690.4" y2="915.0" stroke="#999" stroke-width="1" class="e" data-k="T20|D3" style="--o:0.6" marker-end="url(#ag)"><title>T20 rooted_in D3</title></line>
+<line x1="648.1" y1="802.5" x2="817.7" y2="921.4" stroke="#999" stroke-width="1" class="e" data-k="T21|D6" style="--o:0.6" marker-end="url(#ag)"><title>T21 rooted_in D6</title></line>
+<line x1="1036.2" y1="743.7" x2="841.1" y2="919.9" stroke="#999" stroke-width="1" class="e" data-k="T22|D6" style="--o:0.6" marker-end="url(#ag)"><title>T22 rooted_in D6</title></line>
+<line x1="1049.9" y1="747.3" x2="1105.3" y2="915.8" stroke="#999" stroke-width="1" class="e" data-k="T22|D9" style="--o:0.6" marker-end="url(#ag)"><title>T22 rooted_in D9</title></line>
+<line x1="1326.3" y1="801.6" x2="1122.9" y2="922.3" stroke="#999" stroke-width="1" class="e" data-k="T23|D9" style="--o:0.6" marker-end="url(#ag)"><title>T23 rooted_in D9</title></line>
+<line x1="1150.5" y1="740.0" x2="703.9" y2="924.3" stroke="#999" stroke-width="1" class="e" data-k="T24|D3" style="--o:0.6" marker-end="url(#ag)"><title>T24 rooted_in D3</title></line>
+<line x1="418.9" y1="546.5" x2="294.5" y2="781.7" stroke="#999" stroke-width="1" class="e" data-k="C1|T1" style="--o:0.6" marker-end="url(#ag)"><title>C1 enabled_by T1</title></line>
+<line x1="433.2" y1="545.1" x2="628.0" y2="783.4" stroke="#999" stroke-width="1" class="e" data-k="C1|T21" style="--o:0.6" marker-end="url(#ag)"><title>C1 enabled_by T21</title></line>
+<line x1="332.4" y1="545.7" x2="454.0" y2="722.6" stroke="#999" stroke-width="1" class="e" data-k="C2|T2" style="--o:0.6" marker-end="url(#ag)"><title>C2 enabled_by T2</title></line>
+<line x1="372.3" y1="607.7" x2="348.9" y2="720.3" stroke="#999" stroke-width="1" class="e" data-k="C3|T3" style="--o:0.6" marker-end="url(#ag)"><title>C3 enabled_by T3</title></line>
+<line x1="231.7" y1="546.1" x2="338.1" y2="722.2" stroke="#999" stroke-width="1" class="e" data-k="C4|T3" style="--o:0.6" marker-end="url(#ag)"><title>C4 enabled_by T3</title></line>
+<line x1="271.0" y1="607.4" x2="233.8" y2="720.7" stroke="#999" stroke-width="1" class="e" data-k="C5|T4" style="--o:0.6" marker-end="url(#ag)"><title>C5 enabled_by T4</title></line>
+<line x1="485.6" y1="602.6" x2="742.0" y2="786.3" stroke="#999" stroke-width="1" class="e" data-k="C6|T16" style="--o:0.6" marker-end="url(#ag)"><title>C6 enabled_by T16</title></line>
+<line x1="881.4" y1="606.3" x2="980.1" y2="781.9" stroke="#999" stroke-width="1" class="e" data-k="C7|T17" style="--o:0.6" marker-end="url(#ag)"><title>C7 enabled_by T17</title></line>
+<line x1="886.9" y1="600.2" x2="1323.7" y2="789.0" stroke="#999" stroke-width="1" class="e" data-k="C7|T23" style="--o:0.6" marker-end="url(#ag)"><title>C7 enabled_by T23</title></line>
+<line x1="764.4" y1="602.6" x2="591.4" y2="726.3" stroke="#999" stroke-width="1" class="e" data-k="C8|T5" style="--o:0.6" marker-end="url(#ag)"><title>C8 enabled_by T5</title></line>
+<line x1="780.6" y1="606.7" x2="864.4" y2="781.5" stroke="#999" stroke-width="1" class="e" data-k="C8|T15" style="--o:0.6" marker-end="url(#ag)"><title>C8 enabled_by T15</title></line>
+<line x1="519.5" y1="546.8" x2="410.5" y2="781.4" stroke="#999" stroke-width="1" class="e" data-k="C9|T6" style="--o:0.6" marker-end="url(#ag)"><title>C9 enabled_by T6</title></line>
+<line x1="633.9" y1="544.4" x2="860.5" y2="784.1" stroke="#999" stroke-width="1" class="e" data-k="C10|T15" style="--o:0.6" marker-end="url(#ag)"><title>C10 enabled_by T15</title></line>
+<line x1="834.6" y1="543.7" x2="1034.7" y2="724.9" stroke="#999" stroke-width="1" class="e" data-k="C11|T22" style="--o:0.6" marker-end="url(#ag)"><title>C11 enabled_by T22</title></line>
+<line x1="986.8" y1="600.4" x2="1265.5" y2="728.7" stroke="#999" stroke-width="1" class="e" data-k="C12|T7" style="--o:0.6" marker-end="url(#ag)"><title>C12 enabled_by T7</title></line>
+<line x1="1177.9" y1="607.7" x2="1217.5" y2="780.4" stroke="#999" stroke-width="1" class="e" data-k="C13|T8" style="--o:0.6" marker-end="url(#ag)"><title>C13 enabled_by T8</title></line>
+<line x1="730.2" y1="546.9" x2="806.5" y2="721.3" stroke="#999" stroke-width="1" class="e" data-k="C14|T11" style="--o:0.6" marker-end="url(#ag)"><title>C14 enabled_by T11</title></line>
+<line x1="1028.8" y1="547.4" x2="1099.8" y2="780.7" stroke="#999" stroke-width="1" class="e" data-k="C15|T18" style="--o:0.6" marker-end="url(#ag)"><title>C15 enabled_by T18</title></line>
+<line x1="686.4" y1="601.3" x2="916.0" y2="727.8" stroke="#999" stroke-width="1" class="e" data-k="C16|T10" style="--o:0.6" marker-end="url(#ag)"><title>C16 enabled_by T10</title></line>
+<line x1="1283.7" y1="604.7" x2="1444.2" y2="783.8" stroke="#999" stroke-width="1" class="e" data-k="C17|T12" style="--o:0.6" marker-end="url(#ag)"><title>C17 enabled_by T12</title></line>
+<line x1="1329.3" y1="547.3" x2="1390.8" y2="720.9" stroke="#999" stroke-width="1" class="e" data-k="C18|T13" style="--o:0.6" marker-end="url(#ag)"><title>C18 enabled_by T13</title></line>
+<line x1="1322.1" y1="547.7" x2="1282.5" y2="720.4" stroke="#999" stroke-width="1" class="e" data-k="C18|T7" style="--o:0.6" marker-end="url(#ag)"><title>C18 enabled_by T7</title></line>
+<line x1="1430.2" y1="546.9" x2="1506.5" y2="721.3" stroke="#999" stroke-width="1" class="e" data-k="C19|T9" style="--o:0.6" marker-end="url(#ag)"><title>C19 enabled_by T9</title></line>
+<line x1="1478.4" y1="607.6" x2="1508.6" y2="720.5" stroke="#999" stroke-width="1" class="e" data-k="C20|T9" style="--o:0.6" marker-end="url(#ag)"><title>C20 enabled_by T9</title></line>
+<line x1="583.5" y1="604.8" x2="686.0" y2="723.6" stroke="#999" stroke-width="1" class="e" data-k="C21|T20" style="--o:0.6" marker-end="url(#ag)"><title>C21 enabled_by T20</title></line>
+<line x1="1574.7" y1="608.0" x2="1571.1" y2="780.0" stroke="#999" stroke-width="1" class="e" data-k="C22|T19" style="--o:0.6" marker-end="url(#ag)"><title>C22 enabled_by T19</title></line>
+<line x1="1085.3" y1="602.9" x2="1325.6" y2="785.9" stroke="#999" stroke-width="1" class="e" data-k="C23|T23" style="--o:0.6" marker-end="url(#ag)"><title>C23 enabled_by T23</title></line>
+<line x1="931.7" y1="546.1" x2="1038.1" y2="722.2" stroke="#999" stroke-width="1" class="e" data-k="C24|T22" style="--o:0.6" marker-end="url(#ag)"><title>C24 enabled_by T22</title></line>
+<line x1="1133.2" y1="545.1" x2="1328.0" y2="783.4" stroke="#999" stroke-width="1" class="e" data-k="C26|T23" style="--o:0.6" marker-end="url(#ag)"><title>C26 enabled_by T23</title></line>
+<line x1="1372.6" y1="607.8" x2="1340.3" y2="780.3" stroke="#999" stroke-width="1" class="e" data-k="C27|T23" style="--o:0.6" marker-end="url(#ag)"><title>C27 enabled_by T23</title></line>
+<line x1="1221.1" y1="547.4" x2="1167.0" y2="720.7" stroke="#999" stroke-width="1" class="e" data-k="C28|T24" style="--o:0.6" marker-end="url(#ag)"><title>C28 enabled_by T24</title></line>
+<line x1="651.4" y1="347.5" x2="525.0" y2="780.6" stroke="#999" stroke-width="1" class="e" data-k="F4|T14" style="--o:0.6" marker-end="url(#ag)"><title>F4 enabled_by T14</title></line>
+<line x1="426.8" y1="522.1" x2="442.9" y2="409.8" stroke="#999" stroke-width="1" class="e" data-k="C1|F1" style="--o:0.6" marker-end="url(#ag)"><title>C1 performs_function F1</title></line>
+<line x1="319.7" y1="523.1" x2="241.2" y2="348.7" stroke="#999" stroke-width="1" class="e" data-k="C2|F2" style="--o:0.6" marker-end="url(#ag)"><title>C2 performs_function F2</title></line>
+<line x1="368.8" y1="583.6" x2="242.1" y2="348.2" stroke="#999" stroke-width="1" class="e" data-k="C3|F2" style="--o:0.6" marker-end="url(#ag)"><title>C3 performs_function F2</title></line>
+<line x1="225.6" y1="522.0" x2="234.3" y2="350.0" stroke="#999" stroke-width="1" class="e" data-k="C4|F2" style="--o:0.6" marker-end="url(#ag)"><title>C4 performs_function F2</title></line>
+<line x1="384.4" y1="586.0" x2="574.1" y2="405.3" stroke="#999" stroke-width="1" class="e" data-k="C3|F20" style="--o:0.6" marker-end="url(#ag)"><title>C3 performs_function F20</title></line>
+<line x1="279.7" y1="582.9" x2="369.6" y2="349.0" stroke="#999" stroke-width="1" class="e" data-k="C5|F3" style="--o:0.6" marker-end="url(#ag)"><title>C5 performs_function F3</title></line>
+<line x1="470.3" y1="582.9" x2="380.4" y2="349.0" stroke="#999" stroke-width="1" class="e" data-k="C6|F3" style="--o:0.6" marker-end="url(#ag)"><title>C6 performs_function F3</title></line>
+<line x1="477.0" y1="582.2" x2="512.7" y2="349.8" stroke="#999" stroke-width="1" class="e" data-k="C6|F18" style="--o:0.6" marker-end="url(#ag)"><title>C6 performs_function F18</title></line>
+<line x1="877.9" y1="582.3" x2="931.6" y2="349.6" stroke="#999" stroke-width="1" class="e" data-k="C7|F6" style="--o:0.6" marker-end="url(#ag)"><title>C7 performs_function F6</title></line>
+<line x1="866.6" y1="585.1" x2="664.7" y2="346.5" stroke="#999" stroke-width="1" class="e" data-k="C7|F4" style="--o:0.6" marker-end="url(#ag)"><title>C7 performs_function F4</title></line>
+<line x1="781.8" y1="583.9" x2="927.1" y2="347.8" stroke="#999" stroke-width="1" class="e" data-k="C8|F6" style="--o:0.6" marker-end="url(#ag)"><title>C8 performs_function F6</title></line>
+<line x1="786.4" y1="588.8" x2="1131.8" y2="402.1" stroke="#999" stroke-width="1" class="e" data-k="C8|F11" style="--o:0.6" marker-end="url(#ag)"><title>C8 performs_function F11</title></line>
+<line x1="784.8" y1="586.5" x2="1063.7" y2="344.8" stroke="#999" stroke-width="1" class="e" data-k="C8|F9" style="--o:0.6" marker-end="url(#ag)"><title>C8 performs_function F9</title></line>
+<line x1="536.7" y1="529.3" x2="921.5" y2="341.6" stroke="#999" stroke-width="1" class="e" data-k="C9|F6" style="--o:0.6" marker-end="url(#ag)"><title>C9 performs_function F6</title></line>
+<line x1="636.2" y1="528.4" x2="852.0" y2="402.6" stroke="#999" stroke-width="1" class="e" data-k="C10|F5" style="--o:0.6" marker-end="url(#ag)"><title>C10 performs_function F5</title></line>
+<line x1="618.7" y1="523.6" x2="522.2" y2="348.1" stroke="#999" stroke-width="1" class="e" data-k="C10|F18" style="--o:0.6" marker-end="url(#ag)"><title>C10 performs_function F18</title></line>
+<line x1="828.6" y1="522.5" x2="860.9" y2="409.4" stroke="#999" stroke-width="1" class="e" data-k="C11|F5" style="--o:0.6" marker-end="url(#ag)"><title>C11 performs_function F5</title></line>
+<line x1="968.7" y1="583.6" x2="872.2" y2="408.1" stroke="#999" stroke-width="1" class="e" data-k="C12|F5" style="--o:0.6" marker-end="url(#ag)"><title>C12 performs_function F5</title></line>
+<line x1="1177.0" y1="582.2" x2="1212.7" y2="349.8" stroke="#999" stroke-width="1" class="e" data-k="C13|F7" style="--o:0.6" marker-end="url(#ag)"><title>C13 performs_function F7</title></line>
+<line x1="736.6" y1="529.2" x2="991.6" y2="401.7" stroke="#999" stroke-width="1" class="e" data-k="C14|F8" style="--o:0.6" marker-end="url(#ag)"><title>C14 performs_function F8</title></line>
+<line x1="1028.2" y1="522.4" x2="1071.4" y2="349.6" stroke="#999" stroke-width="1" class="e" data-k="C15|F9" style="--o:0.6" marker-end="url(#ag)"><title>C15 performs_function F9</title></line>
+<line x1="680.4" y1="583.2" x2="788.7" y2="348.6" stroke="#999" stroke-width="1" class="e" data-k="C16|F10" style="--o:0.6" marker-end="url(#ag)"><title>C16 performs_function F10</title></line>
+<line x1="1267.9" y1="584.1" x2="1153.2" y2="407.6" stroke="#999" stroke-width="1" class="e" data-k="C17|F11" style="--o:0.6" marker-end="url(#ag)"><title>C17 performs_function F11</title></line>
+<line x1="1332.6" y1="524.4" x2="1416.3" y2="407.2" stroke="#999" stroke-width="1" class="e" data-k="C18|F13" style="--o:0.6" marker-end="url(#ag)"><title>C18 performs_function F13</title></line>
+<line x1="1420.7" y1="522.7" x2="1360.0" y2="349.2" stroke="#999" stroke-width="1" class="e" data-k="C19|F14" style="--o:0.6" marker-end="url(#ag)"><title>C19 performs_function F14</title></line>
+<line x1="1469.6" y1="583.2" x2="1361.3" y2="348.6" stroke="#999" stroke-width="1" class="e" data-k="C20|F14" style="--o:0.6" marker-end="url(#ag)"><title>C20 performs_function F14</title></line>
+<line x1="582.8" y1="584.6" x2="716.0" y2="407.0" stroke="#999" stroke-width="1" class="e" data-k="C21|F15" style="--o:0.6" marker-end="url(#ag)"><title>C21 performs_function F15</title></line>
+<line x1="1571.2" y1="582.6" x2="1499.4" y2="349.3" stroke="#999" stroke-width="1" class="e" data-k="C22|F12" style="--o:0.6" marker-end="url(#ag)"><title>C22 performs_function F12</title></line>
+<line x1="1068.8" y1="583.6" x2="942.1" y2="348.2" stroke="#999" stroke-width="1" class="e" data-k="C23|F6" style="--o:0.6" marker-end="url(#ag)"><title>C23 performs_function F6</title></line>
+<line x1="1121.8" y1="522.4" x2="1078.6" y2="349.6" stroke="#999" stroke-width="1" class="e" data-k="C26|F9" style="--o:0.6" marker-end="url(#ag)"><title>C26 performs_function F9</title></line>
+<line x1="1378.2" y1="582.4" x2="1421.4" y2="409.6" stroke="#999" stroke-width="1" class="e" data-k="C27|F13" style="--o:0.6" marker-end="url(#ag)"><title>C27 performs_function F13</title></line>
+<line x1="1230.1" y1="523.1" x2="1279.1" y2="408.8" stroke="#999" stroke-width="1" class="e" data-k="C28|F19" style="--o:0.6" marker-end="url(#ag)"><title>C28 performs_function F19</title></line>
+<path d="M247.5,338.6 Q339.0,295.4 430.6,390.9" fill="none" stroke="#999" stroke-width="1" class="e" data-k="F2|F1" style="--o:0.6" marker-end="url(#ag)"><title>F2 enables_function F1</title></path>
+<path d="M435.1,386.5 Q410.8,318.4 386.4,344.8" fill="none" stroke="#999" stroke-width="1" class="e" data-k="F1|F3" style="--o:0.6" marker-end="url(#ag)"><title>F1 enables_function F3</title></path>
+<path d="M388.0,335.0 Q514.0,283.4 640.0,335.0" fill="none" stroke="#999" stroke-width="1" class="e" data-k="F3|F4" style="--o:0.6" marker-end="url(#ag)"><title>F3 enables_function F4</title></path>
+<path d="M852.5,391.4 Q761.0,295.9 669.4,339.1" fill="none" stroke="#999" stroke-width="1" class="e" data-k="F5|F4" style="--o:0.6" marker-end="url(#ag)"><title>F5 enables_function F4</title></path>
+<path d="M642.2,337.2 Q481.0,277.2 319.8,392.5" fill="none" stroke="#999" stroke-width="1" class="e" data-k="F4|F16" style="--o:0.6" marker-end="url(#ag)"><title>F4 enables_function F16</title></path>
+<path d="M668.0,335.9 Q1109.0,265.9 1550.0,394.0" fill="none" stroke="#999" stroke-width="1" class="e" data-k="F4|F17" style="--o:0.6" marker-end="url(#ag)"><title>F4 enables_function F17</title></path>
+<path d="M992.0,395.0 Q656.0,325.0 320.0,395.0" fill="none" stroke="#999" stroke-width="1" class="e" data-k="F8|F16" style="--o:0.6" marker-end="url(#ag)"><title>F8 enables_function F16</title></path>
+<path d="M1018.0,395.0 Q1284.0,325.0 1550.0,395.0" fill="none" stroke="#999" stroke-width="1" class="e" data-k="F8|F17" style="--o:0.6" marker-end="url(#ag)"><title>F8 enables_function F17</title></path>
+<path d="M1228.0,335.0 Q1354.0,283.4 1480.0,335.0" fill="none" stroke="#999" stroke-width="1" class="e" data-k="F7|F12" style="--o:0.6" marker-end="url(#ag)"><title>F7 enables_function F12</title></path>
+<path d="M1415.1,386.5 Q1390.8,318.4 1366.4,344.8" fill="none" stroke="#999" stroke-width="1" class="e" data-k="F13|F14" style="--o:0.6" marker-end="url(#ag)"><title>F13 enables_function F14</title></path>
+<line x1="664.9" y1="326.5" x2="806.3" y2="204.8" stroke="#999" stroke-width="1" class="e" data-k="F4|M1" style="--o:0.6" marker-end="url(#ag)"><title>F4 addresses_need M1</title></line>
+<line x1="649.9" y1="323.0" x2="576.4" y2="148.8" stroke="#999" stroke-width="1" class="e" data-k="F4|M3" style="--o:0.6" marker-end="url(#ag)"><title>F4 addresses_need M3</title></line>
+<line x1="644.9" y1="326.9" x2="417.6" y2="144.4" stroke="#999" stroke-width="1" class="e" data-k="F4|M5" style="--o:0.6" marker-end="url(#ag)"><title>F4 addresses_need M5</title></line>
+<line x1="654.8" y1="322.0" x2="653.2" y2="210.0" stroke="#999" stroke-width="1" class="e" data-k="F4|M12" style="--o:0.6" marker-end="url(#ag)"><title>F4 addresses_need M12</title></line>
+<line x1="659.8" y1="322.9" x2="729.7" y2="148.9" stroke="#999" stroke-width="1" class="e" data-k="F4|M13" style="--o:0.6" marker-end="url(#ag)"><title>F4 addresses_need M13</title></line>
+<line x1="862.0" y1="382.3" x2="821.1" y2="209.6" stroke="#999" stroke-width="1" class="e" data-k="F5|M1" style="--o:0.6" marker-end="url(#ag)"><title>F5 addresses_need M1</title></line>
+<line x1="306.2" y1="382.1" x2="322.1" y2="209.9" stroke="#999" stroke-width="1" class="e" data-k="F16|M4" style="--o:0.6" marker-end="url(#ag)"><title>F16 addresses_need M4</title></line>
+<line x1="309.7" y1="382.9" x2="400.5" y2="149.0" stroke="#999" stroke-width="1" class="e" data-k="F16|M5" style="--o:0.6" marker-end="url(#ag)"><title>F16 addresses_need M5</title></line>
+<line x1="1564.7" y1="382.0" x2="1559.2" y2="150.0" stroke="#999" stroke-width="1" class="e" data-k="F17|M17" style="--o:0.6" marker-end="url(#ag)"><title>F17 addresses_need M17</title></line>
+<line x1="1209.3" y1="323.3" x2="1153.6" y2="208.5" stroke="#999" stroke-width="1" class="e" data-k="F7|M6" style="--o:0.6" marker-end="url(#ag)"><title>F7 addresses_need M6</title></line>
+<line x1="1222.4" y1="324.3" x2="1303.2" y2="207.3" stroke="#999" stroke-width="1" class="e" data-k="F7|M14" style="--o:0.6" marker-end="url(#ag)"><title>F7 addresses_need M14</title></line>
+<line x1="1012.5" y1="384.4" x2="1138.4" y2="207.2" stroke="#999" stroke-width="1" class="e" data-k="F8|M6" style="--o:0.6" marker-end="url(#ag)"><title>F8 addresses_need M6</title></line>
+<line x1="1080.9" y1="323.4" x2="1140.2" y2="208.3" stroke="#999" stroke-width="1" class="e" data-k="F9|M6" style="--o:0.6" marker-end="url(#ag)"><title>F9 addresses_need M6</title></line>
+<line x1="932.8" y1="322.2" x2="902.6" y2="149.8" stroke="#999" stroke-width="1" class="e" data-k="F6|M7" style="--o:0.6" marker-end="url(#ag)"><title>F6 addresses_need M7</title></line>
+<line x1="801.0" y1="323.5" x2="893.0" y2="148.3" stroke="#999" stroke-width="1" class="e" data-k="F10|M7" style="--o:0.6" marker-end="url(#ag)"><title>F10 addresses_need M7</title></line>
+<line x1="1343.1" y1="329.8" x2="913.7" y2="141.0" stroke="#999" stroke-width="1" class="e" data-k="F14|M7" style="--o:0.6" marker-end="url(#ag)"><title>F14 addresses_need M7</title></line>
+<line x1="732.3" y1="384.2" x2="891.6" y2="147.4" stroke="#999" stroke-width="1" class="e" data-k="F15|M7" style="--o:0.6" marker-end="url(#ag)"><title>F15 addresses_need M7</title></line>
+<line x1="595.0" y1="386.7" x2="888.4" y2="144.5" stroke="#999" stroke-width="1" class="e" data-k="F20|M7" style="--o:0.6" marker-end="url(#ag)"><title>F20 addresses_need M7</title></line>
+<line x1="1149.0" y1="382.6" x2="1224.8" y2="149.3" stroke="#999" stroke-width="1" class="e" data-k="F11|M8" style="--o:0.6" marker-end="url(#ag)"><title>F11 addresses_need M8</title></line>
+<line x1="1484.6" y1="327.2" x2="1241.4" y2="144.0" stroke="#999" stroke-width="1" class="e" data-k="F12|M8" style="--o:0.6" marker-end="url(#ag)"><title>F12 addresses_need M8</title></line>
+<line x1="1484.7" y1="327.1" x2="1323.7" y2="204.1" stroke="#999" stroke-width="1" class="e" data-k="F12|M14" style="--o:0.6" marker-end="url(#ag)"><title>F12 addresses_need M14</title></line>
+<line x1="1493.3" y1="322.1" x2="1478.4" y2="209.9" stroke="#999" stroke-width="1" class="e" data-k="F12|M16" style="--o:0.6" marker-end="url(#ag)"><title>F12 addresses_need M16</title></line>
+<line x1="512.6" y1="322.2" x2="491.1" y2="209.7" stroke="#999" stroke-width="1" class="e" data-k="F18|M11" style="--o:0.6" marker-end="url(#ag)"><title>F18 addresses_need M11</title></line>
+<path d="M1512.0,535.0 Q1376.0,481.0 1240.0,535.0" fill="none" stroke="#999" stroke-width="1" class="e" data-k="C25|C28" style="--o:0.6" marker-end="url(#ag)"><title>C25 feeds C28</title></path>
+<path d="M1212.1,536.2 Q901.0,466.2 589.9,593.6" fill="none" stroke="#999" stroke-width="1" class="e" data-k="C28|C21" style="--o:0.6" marker-end="url(#ag)"><title>C28 feeds C21</title></path>
+<path d="M588.0,595.0 Q624.0,565.0 660.0,595.0" fill="none" stroke="#999" stroke-width="1" class="e" data-k="C21|C16" style="--o:0.6" marker-end="url(#ag)"><title>C21 feeds C16</title></path>
+<path d="M688.0,595.0 Q924.0,525.0 1160.0,595.0" fill="none" stroke="#999" stroke-width="1" class="e" data-k="C16|C13" style="--o:0.6" marker-end="url(#ag)"><title>C16 feeds C13</title></path>
+<path d="M1162.1,593.3 Q951.0,467.0 739.9,537.0" fill="none" stroke="#999" stroke-width="1" class="e" data-k="C13|C14" style="--o:0.6" marker-end="url(#ag)"><title>C13 feeds C14</title></path>
+<path d="M712.0,535.0 Q526.0,469.0 340.0,535.0" fill="none" stroke="#999" stroke-width="1" class="e" data-k="C14|C2" style="--o:0.6" marker-end="url(#ag)"><title>C14 feeds C2</title></path>
+<path d="M333.3,545.0 Q349.4,521.0 365.4,583.5" fill="none" stroke="#999" stroke-width="1" class="e" data-k="C2|C3" style="--o:0.6" marker-end="url(#ag)"><title>C2 feeds C3</title></path>
+<path d="M383.3,585.0 Q399.4,522.5 415.4,546.5" fill="none" stroke="#999" stroke-width="1" class="e" data-k="C3|C1" style="--o:0.6" marker-end="url(#ag)"><title>C3 feeds C1</title></path>
+<path d="M238.0,535.0 Q324.0,493.0 410.0,535.0" fill="none" stroke="#999" stroke-width="1" class="e" data-k="C4|C1" style="--o:0.6" marker-end="url(#ag)"><title>C4 feeds C1</title></path>
+<path d="M412.9,539.8 Q350.9,503.8 288.9,589.4" fill="none" stroke="#999" stroke-width="1" class="e" data-k="C1|C5" style="--o:0.6" marker-end="url(#ag)"><title>C1 feeds C5</title></path>
+<path d="M288.0,595.0 Q574.0,525.0 860.0,595.0" fill="none" stroke="#999" stroke-width="1" class="e" data-k="C5|C7" style="--o:0.6" marker-end="url(#ag)"><title>C5 feeds C7</title></path>
+<path d="M1162.0,595.0 Q1076.0,553.0 990.0,595.0" fill="none" stroke="#999" stroke-width="1" class="e" data-k="C13|C12" style="--o:0.6" marker-end="url(#ag)"><title>C13 feeds C12</title></path>
+<path d="M1188.0,595.0 Q1224.0,565.0 1260.0,595.0" fill="none" stroke="#999" stroke-width="1" class="e" data-k="C13|C17" style="--o:0.6" marker-end="url(#ag)"><title>C13 feeds C17</title></path>
+<path d="M1187.1,590.2 Q1249.1,504.6 1311.1,540.6" fill="none" stroke="#999" stroke-width="1" class="e" data-k="C13|C18" style="--o:0.6" marker-end="url(#ag)"><title>C13 feeds C18</title></path>
+<path d="M1188.0,595.0 Q1374.0,529.0 1560.0,595.0" fill="none" stroke="#999" stroke-width="1" class="e" data-k="C13|C22" style="--o:0.6" marker-end="url(#ag)"><title>C13 actuates C22</title></path>
+<path d="M1012.4,538.0 Q901.0,490.0 789.6,591.5" fill="none" stroke="#999" stroke-width="1" class="e" data-k="C15|C8" style="--o:0.6" marker-end="url(#ag)"><title>C15 actuates C8</title></path>
+<path d="M762.0,595.0 Q726.0,565.0 690.0,595.0" fill="none" stroke="#999" stroke-width="1" class="e" data-k="C8|C16" style="--o:0.6" marker-end="url(#ag)"><title>C8 actuates C16</title></path>
+<path d="M962.2,592.8 Q801.0,477.5 639.8,537.5" fill="none" stroke="#999" stroke-width="1" class="e" data-k="C12|C10" style="--o:0.6" marker-end="url(#ag)"><title>C12 actuates C10</title></path>
+<path d="M812.0,535.0 Q726.0,493.0 640.0,535.0" fill="none" stroke="#adb5bd" stroke-width="1" class="e" data-k="C11|C10" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>C11 relevant_to C10</title></path>
+<path d="M1412.0,535.0 Q926.0,465.0 440.0,535.0" fill="none" stroke="#adb5bd" stroke-width="1" class="e" data-k="C19|C1" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>C19 relevant_to C1</title></path>
+<path d="M1462.0,595.0 Q1176.0,525.0 890.0,595.0" fill="none" stroke="#adb5bd" stroke-width="1" class="e" data-k="C20|C7" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>C20 relevant_to C7</title></path>
+<path d="M937.6,538.0 Q1049.0,490.0 1160.4,591.5" fill="none" stroke="#adb5bd" stroke-width="1" class="e" data-k="C24|C13" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>C24 relevant_to C13</title></path>
+<path d="M912.0,535.0 Q826.0,493.0 740.0,535.0" fill="none" stroke="#adb5bd" stroke-width="1" class="e" data-k="C24|C14" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>C24 relevant_to C14</title></path>
+<path d="M938.0,535.0 Q974.0,505.0 1010.0,535.0" fill="none" stroke="#adb5bd" stroke-width="1" class="e" data-k="C24|C15" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>C24 relevant_to C15</title></path>
+<path d="M1362.0,595.0 Q1226.0,541.0 1090.0,595.0" fill="none" stroke="#adb5bd" stroke-width="1" class="e" data-k="C27|C23" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>C27 relevant_to C23</title></path>
+<line x1="103.0" y1="166.1" x2="802.7" y2="194.4" stroke="#adb5bd" stroke-width="1" class="e" data-k="A1|M1" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A1 relevant_to M1</title></line>
+<line x1="102.7" y1="163.0" x2="226.5" y2="138.0" stroke="#adb5bd" stroke-width="1" class="e" data-k="A1|M2" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A1 relevant_to M2</title></line>
+<line x1="103.0" y1="164.8" x2="555.6" y2="136.0" stroke="#adb5bd" stroke-width="1" class="e" data-k="A1|M3" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A1 relevant_to M3</title></line>
+<line x1="102.9" y1="164.4" x2="391.0" y2="136.4" stroke="#adb5bd" stroke-width="1" class="e" data-k="A1|M5" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A1 relevant_to M5</title></line>
+<line x1="103.0" y1="165.3" x2="1379.1" y2="135.4" stroke="#adb5bd" stroke-width="1" class="e" data-k="A1|M15" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A1 relevant_to M15</title></line>
+<line x1="102.6" y1="279.9" x2="1705.4" y2="670.1" stroke="#adb5bd" stroke-width="1" class="e" data-k="A2|X2" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A2 relevant_to X2</title></line>
+<line x1="102.8" y1="279.1" x2="1705.2" y2="552.5" stroke="#adb5bd" stroke-width="1" class="e" data-k="A2|X10" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A2 relevant_to X10</title></line>
+<line x1="102.7" y1="385.4" x2="967.7" y2="198.2" stroke="#adb5bd" stroke-width="1" class="e" data-k="A3|M9" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A3 relevant_to M9</title></line>
+<line x1="102.6" y1="384.9" x2="1050.2" y2="138.8" stroke="#adb5bd" stroke-width="1" class="e" data-k="A3|M10" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A3 relevant_to M10</title></line>
+<line x1="102.6" y1="384.8" x2="803.1" y2="198.8" stroke="#adb5bd" stroke-width="1" class="e" data-k="A3|M1" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A3 relevant_to M1</title></line>
+<line x1="102.5" y1="495.8" x2="1132.6" y2="199.2" stroke="#adb5bd" stroke-width="1" class="e" data-k="A4|M6" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A4 relevant_to M6</title></line>
+<line x1="102.6" y1="496.2" x2="1297.2" y2="198.6" stroke="#adb5bd" stroke-width="1" class="e" data-k="A4|M14" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A4 relevant_to M14</title></line>
+<line x1="101.9" y1="494.0" x2="886.3" y2="141.2" stroke="#adb5bd" stroke-width="1" class="e" data-k="A4|M7" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A4 relevant_to M7</title></line>
+<line x1="101.2" y1="604.0" x2="887.1" y2="142.6" stroke="#adb5bd" stroke-width="1" class="e" data-k="A5|M7" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A5 relevant_to M7</title></line>
+<line x1="102.4" y1="606.6" x2="1544.6" y2="139.6" stroke="#adb5bd" stroke-width="1" class="e" data-k="A5|M17" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A5 relevant_to M17</title></line>
+<line x1="96.4" y1="599.3" x2="316.2" y2="208.1" stroke="#adb5bd" stroke-width="1" class="e" data-k="A5|M4" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A5 relevant_to M4</title></line>
+<line x1="100.5" y1="602.9" x2="640.9" y2="203.9" stroke="#adb5bd" stroke-width="1" class="e" data-k="A5|M12" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A5 relevant_to M12</title></line>
+<line x1="100.5" y1="714.3" x2="805.5" y2="203.8" stroke="#adb5bd" stroke-width="1" class="e" data-k="A6|M1" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A6 relevant_to M1</title></line>
+<line x1="97.8" y1="711.5" x2="479.2" y2="207.0" stroke="#adb5bd" stroke-width="1" class="e" data-k="A6|M11" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A6 relevant_to M11</title></line>
+<line x1="102.2" y1="717.3" x2="1462.4" y2="200.3" stroke="#adb5bd" stroke-width="1" class="e" data-k="A6|M16" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A6 relevant_to M16</title></line>
+<line x1="102.9" y1="831.4" x2="1705.1" y2="616.3" stroke="#adb5bd" stroke-width="1" class="e" data-k="A7|X7" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A7 relevant_to X7</title></line>
+<line x1="103.0" y1="834.2" x2="1705.1" y2="969.1" stroke="#adb5bd" stroke-width="1" class="e" data-k="A7|X8" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A7 relevant_to X8</title></line>
+<line x1="103.0" y1="833.3" x2="1705.0" y2="851.5" stroke="#adb5bd" stroke-width="1" class="e" data-k="A7|X14" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A7 relevant_to X14</title></line>
+<line x1="102.9" y1="943.2" x2="1705.1" y2="793.7" stroke="#adb5bd" stroke-width="1" class="e" data-k="A8|X12" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A8 relevant_to X12</title></line>
+<line x1="100.0" y1="936.0" x2="970.9" y2="204.6" stroke="#adb5bd" stroke-width="1" class="e" data-k="A8|M9" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A8 relevant_to M9</title></line>
+<line x1="103.0" y1="944.1" x2="1705.0" y2="911.3" stroke="#adb5bd" stroke-width="1" class="e" data-k="A8|X15" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>A8 relevant_to X15</title></line>
+<line x1="532.2" y1="788.8" x2="1706.8" y2="146.9" stroke="#B22222" stroke-width="1" class="e" data-k="T14|X1" style="--o:0.7" stroke-dasharray="5,4" marker-end="url(#ar)"><title>T14 causes X1</title></line>
+<line x1="1707.0" y1="139.6" x2="256.2" y2="135.0" stroke="#B22222" stroke-width="1" class="e" data-k="X1|M2" style="--o:0.85" stroke-dasharray="5,4" marker-end="url(#ar)"><title>X1 contradicts M2</title></line>
+<line x1="1707.1" y1="138.1" x2="924.9" y2="43.8" stroke="#adb5bd" stroke-width="1" class="e" data-k="X1|P1" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>X1 relevant_to P1</title></line>
+<line x1="1707.1" y1="672.3" x2="439.9" y2="536.6" stroke="#B22222" stroke-width="1" class="e" data-k="X2|C1" style="--o:0.7" stroke-dasharray="5,4" marker-end="url(#ar)"><title>X2 causes C1</title></line>
+<line x1="788.0" y1="596.1" x2="1705.1" y2="672.4" stroke="#2f9e44" stroke-width="1" class="e" data-k="C8|X2" style="--o:0.75" stroke-dasharray="4,3" marker-end="url(#at)"><title>C8 partially_mitigates X2</title></line>
+<line x1="537.9" y1="536.5" x2="1705.1" y2="671.9" stroke="#2f9e44" stroke-width="1" class="e" data-k="C9|X2" style="--o:0.75" stroke-dasharray="4,3" marker-end="url(#at)"><title>C9 partially_mitigates X2</title></line>
+<line x1="688.0" y1="596.0" x2="1705.0" y2="672.5" stroke="#2f9e44" stroke-width="1" class="e" data-k="C16|X2" style="--o:0.75" stroke-dasharray="4,3" marker-end="url(#at)"><title>C16 partially_mitigates X2</title></line>
+<line x1="1087.9" y1="596.6" x2="1705.1" y2="671.9" stroke="#2f9e44" stroke-width="1" class="e" data-k="C23|X2" style="--o:0.75" stroke-dasharray="4,3" marker-end="url(#at)"><title>C23 partially_mitigates X2</title></line>
+<line x1="887.9" y1="593.5" x2="1705.1" y2="497.4" stroke="#B22222" stroke-width="1" class="e" data-k="C7|X3" style="--o:0.7" stroke-dasharray="5,4" marker-end="url(#ar)"><title>C7 causes X3</title></line>
+<line x1="638.0" y1="534.5" x2="1705.0" y2="496.2" stroke="#2f9e44" stroke-width="1" class="e" data-k="C10|X3" style="--o:0.75" stroke-dasharray="4,3" marker-end="url(#at)"><title>C10 partially_mitigates X3</title></line>
+<line x1="1707.3" y1="492.9" x2="338.2" y2="198.2" stroke="#B22222" stroke-width="1" class="e" data-k="X3|M4" style="--o:0.85" stroke-dasharray="5,4" marker-end="url(#ar)"><title>X3 contradicts M4</title></line>
+<line x1="1707.1" y1="494.1" x2="879.9" y2="396.8" stroke="#adb5bd" stroke-width="1" class="e" data-k="X3|F5" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>X3 relevant_to F5</title></line>
+<line x1="1707.9" y1="263.1" x2="888.9" y2="589.4" stroke="#adb5bd" stroke-width="1" class="e" data-k="X4|C7" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>X4 relevant_to C7</title></line>
+<line x1="1707.1" y1="256.4" x2="914.8" y2="137.2" stroke="#B22222" stroke-width="1" class="e" data-k="X4|M7" style="--o:0.85" stroke-dasharray="5,4" marker-end="url(#ar)"><title>X4 contradicts M7</title></line>
+<line x1="1186.6" y1="589.1" x2="1706.6" y2="324.5" stroke="#B22222" stroke-width="1" class="e" data-k="C13|X5" style="--o:0.7" stroke-dasharray="5,4" marker-end="url(#ar)"><title>C13 causes X5</title></line>
+<line x1="1707.2" y1="315.6" x2="585.4" y2="137.4" stroke="#B22222" stroke-width="1" class="e" data-k="X5|M3" style="--o:0.85" stroke-dasharray="5,4" marker-end="url(#ar)"><title>X5 contradicts M3</title></line>
+<line x1="737.8" y1="537.5" x2="1705.3" y2="730.1" stroke="#B22222" stroke-width="1" class="e" data-k="C14|X6" style="--o:0.7" stroke-dasharray="5,4" marker-end="url(#ar)"><title>C14 causes X6</title></line>
+<line x1="1707.0" y1="733.0" x2="827.5" y2="735.0" stroke="#adb5bd" stroke-width="1" class="e" data-k="X6|T11" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>X6 relevant_to T11</title></line>
+<line x1="1707.4" y1="730.0" x2="319.6" y2="398.5" stroke="#adb5bd" stroke-width="1" class="e" data-k="X6|F16" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>X6 relevant_to F16</title></line>
+<line x1="388.0" y1="595.2" x2="1705.0" y2="614.1" stroke="#B22222" stroke-width="1" class="e" data-k="C3|X7" style="--o:0.7" stroke-dasharray="5,4" marker-end="url(#ar)"><title>C3 causes X7</title></line>
+<line x1="1708.8" y1="607.8" x2="912.9" y2="142.6" stroke="#B22222" stroke-width="1" class="e" data-k="X7|M7" style="--o:0.85" stroke-dasharray="5,4" marker-end="url(#ar)"><title>X7 contradicts M7</title></line>
+<line x1="437.3" y1="539.1" x2="1705.8" y2="965.6" stroke="#B22222" stroke-width="1" class="e" data-k="C1|X8" style="--o:0.7" stroke-dasharray="5,4" marker-end="url(#ar)"><title>C1 causes X8</title></line>
+<line x1="532.5" y1="789.2" x2="1706.6" y2="205.7" stroke="#B22222" stroke-width="1" class="e" data-k="T14|X9" style="--o:0.7" stroke-dasharray="5,4" marker-end="url(#ar)"><title>T14 causes X9</title></line>
+<line x1="1707.0" y1="198.3" x2="585.6" y2="135.8" stroke="#adb5bd" stroke-width="1" class="e" data-k="X9|M3" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>X9 relevant_to M3</title></line>
+<line x1="1707.0" y1="198.0" x2="915.0" y2="136.2" stroke="#B22222" stroke-width="1" class="e" data-k="X9|M7" style="--o:0.85" stroke-dasharray="5,4" marker-end="url(#ar)"><title>X9 contradicts M7</title></line>
+<line x1="688.0" y1="594.5" x2="1705.0" y2="555.6" stroke="#2f9e44" stroke-width="1" class="e" data-k="C16|X10" style="--o:0.75" stroke-dasharray="4,3" marker-end="url(#at)"><title>C16 partially_mitigates X10</title></line>
+<line x1="1438.0" y1="535.9" x2="1705.0" y2="554.0" stroke="#2f9e44" stroke-width="1" class="e" data-k="C19|X10" style="--o:0.75" stroke-dasharray="4,3" marker-end="url(#at)"><title>C19 partially_mitigates X10</title></line>
+<line x1="1487.8" y1="592.9" x2="1705.2" y2="557.4" stroke="#2f9e44" stroke-width="1" class="e" data-k="C20|X10" style="--o:0.75" stroke-dasharray="4,3" marker-end="url(#at)"><title>C20 partially_mitigates X10</title></line>
+<line x1="588.0" y1="594.5" x2="1705.0" y2="555.5" stroke="#2f9e44" stroke-width="1" class="e" data-k="C21|X10" style="--o:0.75" stroke-dasharray="4,3" marker-end="url(#at)"><title>C21 partially_mitigates X10</title></line>
+<line x1="1707.4" y1="380.2" x2="889.5" y2="591.3" stroke="#adb5bd" stroke-width="1" class="e" data-k="X11|C7" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>X11 relevant_to C7</title></line>
+<line x1="1707.8" y1="372.5" x2="1078.8" y2="140.2" stroke="#adb5bd" stroke-width="1" class="e" data-k="X11|M10" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>X11 relevant_to M10</title></line>
+<line x1="1707.8" y1="787.9" x2="1189.1" y2="600.1" stroke="#adb5bd" stroke-width="1" class="e" data-k="X12|C13" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>X12 relevant_to C13</title></line>
+<line x1="1708.1" y1="787.1" x2="1288.7" y2="601.1" stroke="#adb5bd" stroke-width="1" class="e" data-k="X12|C17" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>X12 relevant_to C17</title></line>
+<line x1="1709.9" y1="784.2" x2="994.0" y2="204.4" stroke="#adb5bd" stroke-width="1" class="e" data-k="X12|M9" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>X12 relevant_to M9</title></line>
+<line x1="1187.5" y1="591.4" x2="1705.6" y2="440.5" stroke="#B22222" stroke-width="1" class="e" data-k="C13|X13" style="--o:0.7" stroke-dasharray="5,4" marker-end="url(#ar)"><title>C13 causes X13</title></line>
+<line x1="1707.3" y1="433.8" x2="1229.7" y2="338.0" stroke="#adb5bd" stroke-width="1" class="e" data-k="X13|F7" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>X13 relevant_to F7</title></line>
+<line x1="1707.3" y1="433.5" x2="667.6" y2="198.3" stroke="#B22222" stroke-width="1" class="e" data-k="X13|M12" style="--o:0.85" stroke-dasharray="5,4" marker-end="url(#ar)"><title>X13 contradicts M12</title></line>
+<line x1="1286.3" y1="601.5" x2="1707.0" y2="844.2" stroke="#B22222" stroke-width="1" class="e" data-k="C17|X14" style="--o:0.7" stroke-dasharray="5,4" marker-end="url(#ar)"><title>C17 causes X14</title></line>
+<line x1="1709.8" y1="843.6" x2="1156.7" y2="404.3" stroke="#adb5bd" stroke-width="1" class="e" data-k="X14|F11" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>X14 relevant_to F11</title></line>
+<line x1="1707.4" y1="907.6" x2="339.5" y2="538.9" stroke="#adb5bd" stroke-width="1" class="e" data-k="X15|C2" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>X15 relevant_to C2</title></line>
+<line x1="1708.0" y1="905.9" x2="988.8" y2="600.9" stroke="#adb5bd" stroke-width="1" class="e" data-k="X15|C12" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>X15 relevant_to C12</title></line>
+<line x1="1708.8" y1="904.5" x2="1188.0" y2="602.5" stroke="#adb5bd" stroke-width="1" class="e" data-k="X15|C13" style="--o:0.5" stroke-dasharray="2,3" marker-end="url(#ag)"><title>X15 relevant_to C13</title></line>
+<g class="n" data-id="P1" tabindex="0" role="button" aria-label="P1"><title>P1: Basic countertop microwave oven (timer knob, power knob, door button, lamp)</title><circle cx="910.0" cy="42.0" r="18" fill="#4C72B0"/>
+<text x="910.0" y="46.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">P1</text>
+<text x="938.0" y="47.0" font-size="13" font-weight="bold" fill="#212529">Basic countertop microwave oven (timer knob, power knob, door button, lamp)</text>
+</g>
+<g class="n" data-id="D1" tabindex="0" role="button" aria-label="D1"><title>D1: Radio-frequency &amp; microwave engineering</title><circle cx="410.0" cy="930.0" r="12" fill="#937860"/>
+<text x="410.0" y="934.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">D1</text>
+<text x="410.0" y="954.0" font-size="9" fill="#333" text-anchor="middle">Radio-frequency &amp;</text>
+<text x="410.0" y="964.5" font-size="9" fill="#333" text-anchor="middle">microwave</text>
+<text x="410.0" y="975.0" font-size="9" fill="#333" text-anchor="middle">engineering</text>
+</g>
+<g class="n" data-id="D2" tabindex="0" role="button" aria-label="D2"><title>D2: Vacuum electronics</title><circle cx="270.0" cy="930.0" r="12" fill="#937860"/>
+<text x="270.0" y="934.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">D2</text>
+<text x="270.0" y="954.0" font-size="9" fill="#333" text-anchor="middle">Vacuum electronics</text>
+</g>
+<g class="n" data-id="D3" tabindex="0" role="button" aria-label="D3"><title>D3: Power electronics &amp; electrical engineering</title><circle cx="690.0" cy="930.0" r="12" fill="#937860"/>
+<text x="690.0" y="934.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">D3</text>
+<text x="690.0" y="954.0" font-size="9" fill="#333" text-anchor="middle">Power electronics</text>
+<text x="690.0" y="964.5" font-size="9" fill="#333" text-anchor="middle">&amp; electrical</text>
+<text x="690.0" y="975.0" font-size="9" fill="#333" text-anchor="middle">engineering</text>
+</g>
+<g class="n" data-id="D4" tabindex="0" role="button" aria-label="D4"><title>D4: Electromechanics &amp; mechanisms</title><circle cx="970.0" cy="930.0" r="12" fill="#937860"/>
+<text x="970.0" y="934.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">D4</text>
+<text x="970.0" y="954.0" font-size="9" fill="#333" text-anchor="middle">Electromechanics &amp;</text>
+<text x="970.0" y="964.5" font-size="9" fill="#333" text-anchor="middle">mechanisms</text>
+</g>
+<g class="n" data-id="D5" tabindex="0" role="button" aria-label="D5"><title>D5: Thermal engineering &amp; heat transfer</title><circle cx="1250.0" cy="930.0" r="12" fill="#937860"/>
+<text x="1250.0" y="934.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">D5</text>
+<text x="1250.0" y="954.0" font-size="9" fill="#333" text-anchor="middle">Thermal</text>
+<text x="1250.0" y="964.5" font-size="9" fill="#333" text-anchor="middle">engineering &amp; heat</text>
+<text x="1250.0" y="975.0" font-size="9" fill="#333" text-anchor="middle">transfer</text>
+</g>
+<g class="n" data-id="D6" tabindex="0" role="button" aria-label="D6"><title>D6: Materials science (metals, ceramics, glass, polymers)</title><circle cx="830.0" cy="930.0" r="12" fill="#937860"/>
+<text x="830.0" y="934.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">D6</text>
+<text x="830.0" y="954.0" font-size="9" fill="#333" text-anchor="middle">Materials science</text>
+<text x="830.0" y="964.5" font-size="9" fill="#333" text-anchor="middle">(metals, ceramics,</text>
+<text x="830.0" y="975.0" font-size="9" fill="#333" text-anchor="middle">glass, polymers)</text>
+</g>
+<g class="n" data-id="D7" tabindex="0" role="button" aria-label="D7"><title>D7: Lighting &amp; optics</title><circle cx="1390.0" cy="930.0" r="12" fill="#937860"/>
+<text x="1390.0" y="934.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">D7</text>
+<text x="1390.0" y="954.0" font-size="9" fill="#333" text-anchor="middle">Lighting &amp; optics</text>
+</g>
+<g class="n" data-id="D8" tabindex="0" role="button" aria-label="D8"><title>D8: Sound engineering</title><circle cx="1530.0" cy="930.0" r="12" fill="#937860"/>
+<text x="1530.0" y="934.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">D8</text>
+<text x="1530.0" y="954.0" font-size="9" fill="#333" text-anchor="middle">Sound engineering</text>
+</g>
+<g class="n" data-id="D9" tabindex="0" role="button" aria-label="D9"><title>D9: Manufacturing engineering (stamping, molding, assembly)</title><circle cx="1110.0" cy="930.0" r="12" fill="#937860"/>
+<text x="1110.0" y="934.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">D9</text>
+<text x="1110.0" y="954.0" font-size="9" fill="#333" text-anchor="middle">Manufacturing</text>
+<text x="1110.0" y="964.5" font-size="9" fill="#333" text-anchor="middle">engineering</text>
+<text x="1110.0" y="975.0" font-size="9" fill="#333" text-anchor="middle">(stamping…</text>
+</g>
+<g class="n" data-id="D10" tabindex="0" role="button" aria-label="D10"><title>D10: Food science (dielectric properties of food)</title><circle cx="550.0" cy="930.0" r="12" fill="#937860"/>
+<text x="550.0" y="934.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">D10</text>
+<text x="550.0" y="954.0" font-size="9" fill="#333" text-anchor="middle">Food science</text>
+<text x="550.0" y="964.5" font-size="9" fill="#333" text-anchor="middle">(dielectric</text>
+<text x="550.0" y="975.0" font-size="9" fill="#333" text-anchor="middle">properties of…</text>
+</g>
+<g class="n" data-id="T1" tabindex="0" role="button" aria-label="T1"><title>T1: Electron cyclotron motion in crossed E×B fields (cavity magnetron) — Electrons from a heated cathode spiral under radial E-field + axial B-field, bunching and inducing RF currents in resonant anode cavities.</title><circle cx="287.5" cy="795.0" r="12" fill="#DD8452"/>
+<text x="287.5" y="799.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T1</text>
+<text x="287.5" y="819.0" font-size="9" fill="#333" text-anchor="middle">Electron</text>
+<text x="287.5" y="829.5" font-size="9" fill="#333" text-anchor="middle">cyclotron</text>
+<text x="287.5" y="840.0" font-size="9" fill="#333" text-anchor="middle">motion in…</text>
+</g>
+<g class="n" data-id="T2" tabindex="0" role="button" aria-label="T2"><title>T2: Magnetic-shunt leakage HV transformer — Step-up transformer with shunts that self-limit current; also supplies ~3 V magnetron filament winding.</title><circle cx="462.5" cy="735.0" r="12" fill="#DD8452"/>
+<text x="462.5" y="739.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T2</text>
+<text x="462.5" y="759.0" font-size="9" fill="#333" text-anchor="middle">Magnetic-shunt</text>
+<text x="462.5" y="769.5" font-size="9" fill="#333" text-anchor="middle">leakage HV</text>
+<text x="462.5" y="780.0" font-size="9" fill="#333" text-anchor="middle">transformer</text>
+</g>
+<g class="n" data-id="T3" tabindex="0" role="button" aria-label="T3"><title>T3: Half-wave voltage doubler (capacitor + diode) — Turns ~2 kV AC from the transformer into ~4 kV pulsating negative DC for the magnetron cathode.</title><circle cx="345.8" cy="735.0" r="12" fill="#DD8452"/>
+<text x="345.8" y="739.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T3</text>
+<text x="345.8" y="759.0" font-size="9" fill="#333" text-anchor="middle">Half-wave</text>
+<text x="345.8" y="769.5" font-size="9" fill="#333" text-anchor="middle">voltage doubler</text>
+<text x="345.8" y="780.0" font-size="9" fill="#333" text-anchor="middle">(capacitor +…</text>
+</g>
+<g class="n" data-id="T4" tabindex="0" role="button" aria-label="T4"><title>T4: Rectangular waveguide TE10 mode propagation — Hollow metal duct sized for 12.2 cm wavelength carries RF from magnetron antenna to the cavity.</title><circle cx="229.2" cy="735.0" r="12" fill="#DD8452"/>
+<text x="229.2" y="739.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T4</text>
+<text x="229.2" y="759.0" font-size="9" fill="#333" text-anchor="middle">Rectangular</text>
+<text x="229.2" y="769.5" font-size="9" fill="#333" text-anchor="middle">waveguide TE10</text>
+<text x="229.2" y="780.0" font-size="9" fill="#333" text-anchor="middle">mode…</text>
+</g>
+<g class="n" data-id="T5" tabindex="0" role="button" aria-label="T5"><title>T5: Sub-wavelength aperture shielding (Faraday cage effect) — Holes much smaller than 12.2 cm block microwaves while passing visible light.</title><circle cx="579.2" cy="735.0" r="12" fill="#DD8452"/>
+<text x="579.2" y="739.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T5</text>
+<text x="579.2" y="759.0" font-size="9" fill="#333" text-anchor="middle">Sub-wavelength</text>
+<text x="579.2" y="769.5" font-size="9" fill="#333" text-anchor="middle">aperture</text>
+<text x="579.2" y="780.0" font-size="9" fill="#333" text-anchor="middle">shielding…</text>
+</g>
+<g class="n" data-id="T6" tabindex="0" role="button" aria-label="T6"><title>T6: Quarter-wave choke seal — λ/4 slot structure in the door rim presents high impedance to leaking RF at the door gap.</title><circle cx="404.2" cy="795.0" r="12" fill="#DD8452"/>
+<text x="404.2" y="799.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T6</text>
+<text x="404.2" y="819.0" font-size="9" fill="#333" text-anchor="middle">Quarter-wave</text>
+<text x="404.2" y="829.5" font-size="9" fill="#333" text-anchor="middle">choke seal</text>
+</g>
+<g class="n" data-id="T7" tabindex="0" role="button" aria-label="T7"><title>T7: Shaded-pole / synchronous AC micro-motor (electromagnetic induction) — Low-cost AC motor giving steady low-rpm torque from mains frequency.</title><circle cx="1279.2" cy="735.0" r="12" fill="#DD8452"/>
+<text x="1279.2" y="739.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T7</text>
+<text x="1279.2" y="759.0" font-size="9" fill="#333" text-anchor="middle">Shaded-pole /</text>
+<text x="1279.2" y="769.5" font-size="9" fill="#333" text-anchor="middle">synchronous AC</text>
+<text x="1279.2" y="780.0" font-size="9" fill="#333" text-anchor="middle">micro-motor (el…</text>
+</g>
+<g class="n" data-id="T8" tabindex="0" role="button" aria-label="T8"><title>T8: Motor-driven cam timer with spring-return mechanism — Synchronous motor turns a cam shaft back to zero; cam opens the circuit and trips the bell.</title><circle cx="1220.8" cy="795.0" r="12" fill="#DD8452"/>
+<text x="1220.8" y="799.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T8</text>
+<text x="1220.8" y="819.0" font-size="9" fill="#333" text-anchor="middle">Motor-driven</text>
+<text x="1220.8" y="829.5" font-size="9" fill="#333" text-anchor="middle">cam timer with</text>
+<text x="1220.8" y="840.0" font-size="9" fill="#333" text-anchor="middle">spring-return…</text>
+</g>
+<g class="n" data-id="T9" tabindex="0" role="button" aria-label="T9"><title>T9: Bimetallic snap-disc thermostat — Two bonded metals with different thermal expansion snap open a contact at a set temperature.</title><circle cx="1512.5" cy="735.0" r="12" fill="#DD8452"/>
+<text x="1512.5" y="739.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T9</text>
+<text x="1512.5" y="759.0" font-size="9" fill="#333" text-anchor="middle">Bimetallic</text>
+<text x="1512.5" y="769.5" font-size="9" fill="#333" text-anchor="middle">snap-disc</text>
+<text x="1512.5" y="780.0" font-size="9" fill="#333" text-anchor="middle">thermostat</text>
+</g>
+<g class="n" data-id="T10" tabindex="0" role="button" aria-label="T10"><title>T10: Redundant interlock microswitch logic (primary / secondary / monitor) — Three switches in series/shunt so that a welded switch blows the fuse instead of leaving RF on.</title><circle cx="929.2" cy="735.0" r="12" fill="#DD8452"/>
+<text x="929.2" y="739.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T10</text>
+<text x="929.2" y="759.0" font-size="9" fill="#333" text-anchor="middle">Redundant</text>
+<text x="929.2" y="769.5" font-size="9" fill="#333" text-anchor="middle">interlock</text>
+<text x="929.2" y="780.0" font-size="9" fill="#333" text-anchor="middle">microswitch…</text>
+</g>
+<g class="n" data-id="T11" tabindex="0" role="button" aria-label="T11"><title>T11: Duty-cycle power modulation (on/off cycling) — Magnetron runs at full power; average power is set by the on/off ratio over a ~30 s period.</title><circle cx="812.5" cy="735.0" r="12" fill="#DD8452"/>
+<text x="812.5" y="739.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T11</text>
+<text x="812.5" y="759.0" font-size="9" fill="#333" text-anchor="middle">Duty-cycle</text>
+<text x="812.5" y="769.5" font-size="9" fill="#333" text-anchor="middle">power</text>
+<text x="812.5" y="780.0" font-size="9" fill="#333" text-anchor="middle">modulation…</text>
+</g>
+<g class="n" data-id="T12" tabindex="0" role="button" aria-label="T12"><title>T12: Incandescent tungsten-filament lamp — Heated filament emits visible light; 20-25 W, also a cheap &#x27;cooking in progress&#x27; indicator.</title><circle cx="1454.2" cy="795.0" r="12" fill="#DD8452"/>
+<text x="1454.2" y="799.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T12</text>
+<text x="1454.2" y="819.0" font-size="9" fill="#333" text-anchor="middle">Incandescent</text>
+<text x="1454.2" y="829.5" font-size="9" fill="#333" text-anchor="middle">tungsten-</text>
+<text x="1454.2" y="840.0" font-size="9" fill="#333" text-anchor="middle">filament lamp</text>
+</g>
+<g class="n" data-id="T13" tabindex="0" role="button" aria-label="T13"><title>T13: Forced-air convection cooling — Axial fan pushes air over magnetron fins and transformer, then vents through the cavity.</title><circle cx="1395.8" cy="735.0" r="12" fill="#DD8452"/>
+<text x="1395.8" y="739.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T13</text>
+<text x="1395.8" y="759.0" font-size="9" fill="#333" text-anchor="middle">Forced-air</text>
+<text x="1395.8" y="769.5" font-size="9" fill="#333" text-anchor="middle">convection</text>
+<text x="1395.8" y="780.0" font-size="9" fill="#333" text-anchor="middle">cooling</text>
+</g>
+<g class="n" data-id="T14" tabindex="0" role="button" aria-label="T14"><title>T14: Dielectric heating (dipolar rotation of water molecules) — Polar molecules realign with the 2.45 GHz field; friction converts RF energy to heat inside food.</title><circle cx="520.8" cy="795.0" r="12" fill="#DD8452"/>
+<text x="520.8" y="799.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T14</text>
+<text x="520.8" y="819.0" font-size="9" fill="#333" text-anchor="middle">Dielectric</text>
+<text x="520.8" y="829.5" font-size="9" fill="#333" text-anchor="middle">heating</text>
+<text x="520.8" y="840.0" font-size="9" fill="#333" text-anchor="middle">(dipolar…</text>
+</g>
+<g class="n" data-id="T15" tabindex="0" role="button" aria-label="T15"><title>T15: Tempered / borosilicate glass forming — Microwave-transparent, thermal-shock-resistant glass for turntable and door window.</title><circle cx="870.8" cy="795.0" r="12" fill="#DD8452"/>
+<text x="870.8" y="799.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T15</text>
+<text x="870.8" y="819.0" font-size="9" fill="#333" text-anchor="middle">Tempered /</text>
+<text x="870.8" y="829.5" font-size="9" fill="#333" text-anchor="middle">borosilicate</text>
+<text x="870.8" y="840.0" font-size="9" fill="#333" text-anchor="middle">glass forming</text>
+</g>
+<g class="n" data-id="T16" tabindex="0" role="button" aria-label="T16"><title>T16: Mica sheet dielectric (muscovite laminate) — Microwave-transparent, heat-resistant cover that keeps splatter out of the waveguide.</title><circle cx="754.2" cy="795.0" r="12" fill="#DD8452"/>
+<text x="754.2" y="799.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T16</text>
+<text x="754.2" y="819.0" font-size="9" fill="#333" text-anchor="middle">Mica sheet</text>
+<text x="754.2" y="829.5" font-size="9" fill="#333" text-anchor="middle">dielectric</text>
+<text x="754.2" y="840.0" font-size="9" fill="#333" text-anchor="middle">(muscovite…</text>
+</g>
+<g class="n" data-id="T17" tabindex="0" role="button" aria-label="T17"><title>T17: Enamel / epoxy powder coating of steel — Reflective conductive steel walls coated for corrosion resistance and easy cleaning.</title><circle cx="987.5" cy="795.0" r="12" fill="#DD8452"/>
+<text x="987.5" y="799.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T17</text>
+<text x="987.5" y="819.0" font-size="9" fill="#333" text-anchor="middle">Enamel / epoxy</text>
+<text x="987.5" y="829.5" font-size="9" fill="#333" text-anchor="middle">powder coating</text>
+<text x="987.5" y="840.0" font-size="9" fill="#333" text-anchor="middle">of steel</text>
+</g>
+<g class="n" data-id="T18" tabindex="0" role="button" aria-label="T18"><title>T18: Spring-loaded lever latch mechanics — Push button drives a lever that lifts door hooks out of the latch and opens the interlocks.</title><circle cx="1104.2" cy="795.0" r="12" fill="#DD8452"/>
+<text x="1104.2" y="799.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T18</text>
+<text x="1104.2" y="819.0" font-size="9" fill="#333" text-anchor="middle">Spring-loaded</text>
+<text x="1104.2" y="829.5" font-size="9" fill="#333" text-anchor="middle">lever latch</text>
+<text x="1104.2" y="840.0" font-size="9" fill="#333" text-anchor="middle">mechanics</text>
+</g>
+<g class="n" data-id="T19" tabindex="0" role="button" aria-label="T19"><title>T19: Mechanical bell striker — Spring hammer released by the timer cam strikes a metal bell — the classic &#x27;ding&#x27;.</title><circle cx="1570.8" cy="795.0" r="12" fill="#DD8452"/>
+<text x="1570.8" y="799.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T19</text>
+<text x="1570.8" y="819.0" font-size="9" fill="#333" text-anchor="middle">Mechanical bell</text>
+<text x="1570.8" y="829.5" font-size="9" fill="#333" text-anchor="middle">striker</text>
+</g>
+<g class="n" data-id="T20" tabindex="0" role="button" aria-label="T20"><title>T20: Ceramic cartridge fuse (fusible-link overcurrent protection) — Sand-filled ceramic body fuse rated ~10-15 A, opens on short or interlock monitor action.</title><circle cx="695.8" cy="735.0" r="12" fill="#DD8452"/>
+<text x="695.8" y="739.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T20</text>
+<text x="695.8" y="759.0" font-size="9" fill="#333" text-anchor="middle">Ceramic</text>
+<text x="695.8" y="769.5" font-size="9" fill="#333" text-anchor="middle">cartridge fuse</text>
+<text x="695.8" y="780.0" font-size="9" fill="#333" text-anchor="middle">(fusible-link…</text>
+</g>
+<g class="n" data-id="T21" tabindex="0" role="button" aria-label="T21"><title>T21: Sintered ferrite permanent magnets — Ring magnets supplying the axial magnetic field of the magnetron.</title><circle cx="637.5" cy="795.0" r="12" fill="#DD8452"/>
+<text x="637.5" y="799.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T21</text>
+<text x="637.5" y="819.0" font-size="9" fill="#333" text-anchor="middle">Sintered</text>
+<text x="637.5" y="829.5" font-size="9" fill="#333" text-anchor="middle">ferrite</text>
+<text x="637.5" y="840.0" font-size="9" fill="#333" text-anchor="middle">permanent…</text>
+</g>
+<g class="n" data-id="T22" tabindex="0" role="button" aria-label="T22"><title>T22: Injection-molded engineering thermoplastics (PP, PBT, PPS) — Knobs, fascia, roller ring and coupler molded in heat-resistant polymers.</title><circle cx="1045.8" cy="735.0" r="12" fill="#DD8452"/>
+<text x="1045.8" y="739.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T22</text>
+<text x="1045.8" y="759.0" font-size="9" fill="#333" text-anchor="middle">Injection-</text>
+<text x="1045.8" y="769.5" font-size="9" fill="#333" text-anchor="middle">molded</text>
+<text x="1045.8" y="780.0" font-size="9" fill="#333" text-anchor="middle">engineering…</text>
+</g>
+<g class="n" data-id="T23" tabindex="0" role="button" aria-label="T23"><title>T23: Sheet-steel stamping &amp; spot welding — Cavity, wrapper, hinges and vent louvres stamped from cold-rolled steel.</title><circle cx="1337.5" cy="795.0" r="12" fill="#DD8452"/>
+<text x="1337.5" y="799.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T23</text>
+<text x="1337.5" y="819.0" font-size="9" fill="#333" text-anchor="middle">Sheet-steel</text>
+<text x="1337.5" y="829.5" font-size="9" fill="#333" text-anchor="middle">stamping &amp; spot</text>
+<text x="1337.5" y="840.0" font-size="9" fill="#333" text-anchor="middle">welding</text>
+</g>
+<g class="n" data-id="T24" tabindex="0" role="button" aria-label="T24"><title>T24: Passive LC EMI line filtering — X/Y capacitors and choke block conducted RF noise from reaching the mains.</title><circle cx="1162.5" cy="735.0" r="12" fill="#DD8452"/>
+<text x="1162.5" y="739.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">T24</text>
+<text x="1162.5" y="759.0" font-size="9" fill="#333" text-anchor="middle">Passive LC EMI</text>
+<text x="1162.5" y="769.5" font-size="9" fill="#333" text-anchor="middle">line filtering</text>
+</g>
+<g class="n" data-id="C1" tabindex="0" role="button" aria-label="C1"><title>C1: Magnetron tube (2.45 GHz, ~700 W output)</title><circle cx="425.0" cy="535.0" r="12" fill="#55A868"/>
+<text x="425.0" y="539.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C1</text>
+<text x="425.0" y="559.0" font-size="9" fill="#333" text-anchor="middle">Magnetron tube</text>
+<text x="425.0" y="569.5" font-size="9" fill="#333" text-anchor="middle">(2.45 GHz, ~700</text>
+<text x="425.0" y="580.0" font-size="9" fill="#333" text-anchor="middle">W output)</text>
+</g>
+<g class="n" data-id="C2" tabindex="0" role="button" aria-label="C2"><title>C2: High-voltage transformer</title><circle cx="325.0" cy="535.0" r="12" fill="#55A868"/>
+<text x="325.0" y="539.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C2</text>
+<text x="325.0" y="559.0" font-size="9" fill="#333" text-anchor="middle">High-voltage</text>
+<text x="325.0" y="569.5" font-size="9" fill="#333" text-anchor="middle">transformer</text>
+</g>
+<g class="n" data-id="C3" tabindex="0" role="button" aria-label="C3"><title>C3: High-voltage capacitor (~1 µF, 2.1 kV) with internal bleeder resistor</title><circle cx="375.0" cy="595.0" r="12" fill="#55A868"/>
+<text x="375.0" y="599.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C3</text>
+<text x="375.0" y="619.0" font-size="9" fill="#333" text-anchor="middle">High-voltage</text>
+<text x="375.0" y="629.5" font-size="9" fill="#333" text-anchor="middle">capacitor (~1</text>
+<text x="375.0" y="640.0" font-size="9" fill="#333" text-anchor="middle">µF, 2.1 kV)…</text>
+</g>
+<g class="n" data-id="C4" tabindex="0" role="button" aria-label="C4"><title>C4: High-voltage rectifier diode</title><circle cx="225.0" cy="535.0" r="12" fill="#55A868"/>
+<text x="225.0" y="539.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C4</text>
+<text x="225.0" y="559.0" font-size="9" fill="#333" text-anchor="middle">High-voltage</text>
+<text x="225.0" y="569.5" font-size="9" fill="#333" text-anchor="middle">rectifier diode</text>
+</g>
+<g class="n" data-id="C5" tabindex="0" role="button" aria-label="C5"><title>C5: Waveguide duct</title><circle cx="275.0" cy="595.0" r="12" fill="#55A868"/>
+<text x="275.0" y="599.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C5</text>
+<text x="275.0" y="619.0" font-size="9" fill="#333" text-anchor="middle">Waveguide duct</text>
+</g>
+<g class="n" data-id="C6" tabindex="0" role="button" aria-label="C6"><title>C6: Mica waveguide cover</title><circle cx="475.0" cy="595.0" r="12" fill="#55A868"/>
+<text x="475.0" y="599.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C6</text>
+<text x="475.0" y="619.0" font-size="9" fill="#333" text-anchor="middle">Mica waveguide</text>
+<text x="475.0" y="629.5" font-size="9" fill="#333" text-anchor="middle">cover</text>
+</g>
+<g class="n" data-id="C7" tabindex="0" role="button" aria-label="C7"><title>C7: Enamelled steel cooking cavity (~20 L)</title><circle cx="875.0" cy="595.0" r="12" fill="#55A868"/>
+<text x="875.0" y="599.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C7</text>
+<text x="875.0" y="619.0" font-size="9" fill="#333" text-anchor="middle">Enamelled steel</text>
+<text x="875.0" y="629.5" font-size="9" fill="#333" text-anchor="middle">cooking cavity</text>
+<text x="875.0" y="640.0" font-size="9" fill="#333" text-anchor="middle">(~20 L)</text>
+</g>
+<g class="n" data-id="C8" tabindex="0" role="button" aria-label="C8"><title>C8: Hinged door with perforated metal mesh window</title><circle cx="775.0" cy="595.0" r="12" fill="#55A868"/>
+<text x="775.0" y="599.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C8</text>
+<text x="775.0" y="619.0" font-size="9" fill="#333" text-anchor="middle">Hinged door</text>
+<text x="775.0" y="629.5" font-size="9" fill="#333" text-anchor="middle">with perforated</text>
+<text x="775.0" y="640.0" font-size="9" fill="#333" text-anchor="middle">metal mesh…</text>
+</g>
+<g class="n" data-id="C9" tabindex="0" role="button" aria-label="C9"><title>C9: Door choke seal (quarter-wave rim)</title><circle cx="525.0" cy="535.0" r="12" fill="#55A868"/>
+<text x="525.0" y="539.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C9</text>
+<text x="525.0" y="559.0" font-size="9" fill="#333" text-anchor="middle">Door choke seal</text>
+<text x="525.0" y="569.5" font-size="9" fill="#333" text-anchor="middle">(quarter-wave</text>
+<text x="525.0" y="580.0" font-size="9" fill="#333" text-anchor="middle">rim)</text>
+</g>
+<g class="n" data-id="C10" tabindex="0" role="button" aria-label="C10"><title>C10: Rotating glass turntable tray</title><circle cx="625.0" cy="535.0" r="12" fill="#55A868"/>
+<text x="625.0" y="539.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C10</text>
+<text x="625.0" y="559.0" font-size="9" fill="#333" text-anchor="middle">Rotating glass</text>
+<text x="625.0" y="569.5" font-size="9" fill="#333" text-anchor="middle">turntable tray</text>
+</g>
+<g class="n" data-id="C11" tabindex="0" role="button" aria-label="C11"><title>C11: Roller ring and coupler (turntable support)</title><circle cx="825.0" cy="535.0" r="12" fill="#55A868"/>
+<text x="825.0" y="539.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C11</text>
+<text x="825.0" y="559.0" font-size="9" fill="#333" text-anchor="middle">Roller ring and</text>
+<text x="825.0" y="569.5" font-size="9" fill="#333" text-anchor="middle">coupler</text>
+<text x="825.0" y="580.0" font-size="9" fill="#333" text-anchor="middle">(turntable…</text>
+</g>
+<g class="n" data-id="C12" tabindex="0" role="button" aria-label="C12"><title>C12: Turntable motor (~5 rpm)</title><circle cx="975.0" cy="595.0" r="12" fill="#55A868"/>
+<text x="975.0" y="599.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C12</text>
+<text x="975.0" y="619.0" font-size="9" fill="#333" text-anchor="middle">Turntable motor</text>
+<text x="975.0" y="629.5" font-size="9" fill="#333" text-anchor="middle">(~5 rpm)</text>
+</g>
+<g class="n" data-id="C13" tabindex="0" role="button" aria-label="C13"><title>C13: Mechanical timer knob &amp; cam switch (0-30 min)</title><circle cx="1175.0" cy="595.0" r="12" fill="#55A868"/>
+<text x="1175.0" y="599.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C13</text>
+<text x="1175.0" y="619.0" font-size="9" fill="#333" text-anchor="middle">Mechanical</text>
+<text x="1175.0" y="629.5" font-size="9" fill="#333" text-anchor="middle">timer knob &amp;</text>
+<text x="1175.0" y="640.0" font-size="9" fill="#333" text-anchor="middle">cam switch…</text>
+</g>
+<g class="n" data-id="C14" tabindex="0" role="button" aria-label="C14"><title>C14: Power-level knob (5-step duty-cycle cam switch)</title><circle cx="725.0" cy="535.0" r="12" fill="#55A868"/>
+<text x="725.0" y="539.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C14</text>
+<text x="725.0" y="559.0" font-size="9" fill="#333" text-anchor="middle">Power-level</text>
+<text x="725.0" y="569.5" font-size="9" fill="#333" text-anchor="middle">knob (5-step</text>
+<text x="725.0" y="580.0" font-size="9" fill="#333" text-anchor="middle">duty-cycle cam…</text>
+</g>
+<g class="n" data-id="C15" tabindex="0" role="button" aria-label="C15"><title>C15: Door-release push button &amp; latch lever</title><circle cx="1025.0" cy="535.0" r="12" fill="#55A868"/>
+<text x="1025.0" y="539.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C15</text>
+<text x="1025.0" y="559.0" font-size="9" fill="#333" text-anchor="middle">Door-release</text>
+<text x="1025.0" y="569.5" font-size="9" fill="#333" text-anchor="middle">push button &amp;</text>
+<text x="1025.0" y="580.0" font-size="9" fill="#333" text-anchor="middle">latch lever</text>
+</g>
+<g class="n" data-id="C16" tabindex="0" role="button" aria-label="C16"><title>C16: Door interlock microswitches (primary, secondary, monitor)</title><circle cx="675.0" cy="595.0" r="12" fill="#55A868"/>
+<text x="675.0" y="599.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C16</text>
+<text x="675.0" y="619.0" font-size="9" fill="#333" text-anchor="middle">Door interlock</text>
+<text x="675.0" y="629.5" font-size="9" fill="#333" text-anchor="middle">microswitches</text>
+<text x="675.0" y="640.0" font-size="9" fill="#333" text-anchor="middle">(primary…</text>
+</g>
+<g class="n" data-id="C17" tabindex="0" role="button" aria-label="C17"><title>C17: Interior lamp (20-25 W incandescent)</title><circle cx="1275.0" cy="595.0" r="12" fill="#55A868"/>
+<text x="1275.0" y="599.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C17</text>
+<text x="1275.0" y="619.0" font-size="9" fill="#333" text-anchor="middle">Interior lamp</text>
+<text x="1275.0" y="629.5" font-size="9" fill="#333" text-anchor="middle">(20-25 W</text>
+<text x="1275.0" y="640.0" font-size="9" fill="#333" text-anchor="middle">incandescent)</text>
+</g>
+<g class="n" data-id="C18" tabindex="0" role="button" aria-label="C18"><title>C18: Cooling fan and fan motor</title><circle cx="1325.0" cy="535.0" r="12" fill="#55A868"/>
+<text x="1325.0" y="539.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C18</text>
+<text x="1325.0" y="559.0" font-size="9" fill="#333" text-anchor="middle">Cooling fan and</text>
+<text x="1325.0" y="569.5" font-size="9" fill="#333" text-anchor="middle">fan motor</text>
+</g>
+<g class="n" data-id="C19" tabindex="0" role="button" aria-label="C19"><title>C19: Magnetron thermal cutout</title><circle cx="1425.0" cy="535.0" r="12" fill="#55A868"/>
+<text x="1425.0" y="539.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C19</text>
+<text x="1425.0" y="559.0" font-size="9" fill="#333" text-anchor="middle">Magnetron</text>
+<text x="1425.0" y="569.5" font-size="9" fill="#333" text-anchor="middle">thermal cutout</text>
+</g>
+<g class="n" data-id="C20" tabindex="0" role="button" aria-label="C20"><title>C20: Cavity thermal cutout</title><circle cx="1475.0" cy="595.0" r="12" fill="#55A868"/>
+<text x="1475.0" y="599.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C20</text>
+<text x="1475.0" y="619.0" font-size="9" fill="#333" text-anchor="middle">Cavity thermal</text>
+<text x="1475.0" y="629.5" font-size="9" fill="#333" text-anchor="middle">cutout</text>
+</g>
+<g class="n" data-id="C21" tabindex="0" role="button" aria-label="C21"><title>C21: Main ceramic fuse</title><circle cx="575.0" cy="595.0" r="12" fill="#55A868"/>
+<text x="575.0" y="599.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C21</text>
+<text x="575.0" y="619.0" font-size="9" fill="#333" text-anchor="middle">Main ceramic</text>
+<text x="575.0" y="629.5" font-size="9" fill="#333" text-anchor="middle">fuse</text>
+</g>
+<g class="n" data-id="C22" tabindex="0" role="button" aria-label="C22"><title>C22: End-of-cycle bell (mechanical &#x27;ding&#x27;)</title><circle cx="1575.0" cy="595.0" r="12" fill="#55A868"/>
+<text x="1575.0" y="599.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C22</text>
+<text x="1575.0" y="619.0" font-size="9" fill="#333" text-anchor="middle">End-of-cycle</text>
+<text x="1575.0" y="629.5" font-size="9" fill="#333" text-anchor="middle">bell</text>
+<text x="1575.0" y="640.0" font-size="9" fill="#333" text-anchor="middle">(mechanical…</text>
+</g>
+<g class="n" data-id="C23" tabindex="0" role="button" aria-label="C23"><title>C23: Outer steel cabinet (wrapper)</title><circle cx="1075.0" cy="595.0" r="12" fill="#55A868"/>
+<text x="1075.0" y="599.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C23</text>
+<text x="1075.0" y="619.0" font-size="9" fill="#333" text-anchor="middle">Outer steel</text>
+<text x="1075.0" y="629.5" font-size="9" fill="#333" text-anchor="middle">cabinet</text>
+<text x="1075.0" y="640.0" font-size="9" fill="#333" text-anchor="middle">(wrapper)</text>
+</g>
+<g class="n" data-id="C24" tabindex="0" role="button" aria-label="C24"><title>C24: Control panel fascia</title><circle cx="925.0" cy="535.0" r="12" fill="#55A868"/>
+<text x="925.0" y="539.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C24</text>
+<text x="925.0" y="559.0" font-size="9" fill="#333" text-anchor="middle">Control panel</text>
+<text x="925.0" y="569.5" font-size="9" fill="#333" text-anchor="middle">fascia</text>
+</g>
+<g class="n" data-id="C25" tabindex="0" role="button" aria-label="C25"><title>C25: Mains power cord and plug</title><circle cx="1525.0" cy="535.0" r="12" fill="#55A868"/>
+<text x="1525.0" y="539.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C25</text>
+<text x="1525.0" y="559.0" font-size="9" fill="#333" text-anchor="middle">Mains power</text>
+<text x="1525.0" y="569.5" font-size="9" fill="#333" text-anchor="middle">cord and plug</text>
+</g>
+<g class="n" data-id="C26" tabindex="0" role="button" aria-label="C26"><title>C26: Door hinges</title><circle cx="1125.0" cy="535.0" r="12" fill="#55A868"/>
+<text x="1125.0" y="539.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C26</text>
+<text x="1125.0" y="559.0" font-size="9" fill="#333" text-anchor="middle">Door hinges</text>
+</g>
+<g class="n" data-id="C27" tabindex="0" role="button" aria-label="C27"><title>C27: Ventilation louvres</title><circle cx="1375.0" cy="595.0" r="12" fill="#55A868"/>
+<text x="1375.0" y="599.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C27</text>
+<text x="1375.0" y="619.0" font-size="9" fill="#333" text-anchor="middle">Ventilation</text>
+<text x="1375.0" y="629.5" font-size="9" fill="#333" text-anchor="middle">louvres</text>
+</g>
+<g class="n" data-id="C28" tabindex="0" role="button" aria-label="C28"><title>C28: Mains EMI noise filter</title><circle cx="1225.0" cy="535.0" r="12" fill="#55A868"/>
+<text x="1225.0" y="539.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">C28</text>
+<text x="1225.0" y="559.0" font-size="9" fill="#333" text-anchor="middle">Mains EMI noise</text>
+<text x="1225.0" y="569.5" font-size="9" fill="#333" text-anchor="middle">filter</text>
+</g>
+<g class="n" data-id="F1" tabindex="0" role="button" aria-label="F1"><title>F1: Generates microwave energy at 2.45 GHz</title><circle cx="445.0" cy="395.0" r="12" fill="#C44E52"/>
+<text x="445.0" y="399.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F1</text>
+<text x="445.0" y="419.0" font-size="9" fill="#333" text-anchor="middle">Generates</text>
+<text x="445.0" y="429.5" font-size="9" fill="#333" text-anchor="middle">microwave</text>
+<text x="445.0" y="440.0" font-size="9" fill="#333" text-anchor="middle">energy at 2.45…</text>
+</g>
+<g class="n" data-id="F2" tabindex="0" role="button" aria-label="F2"><title>F2: Converts mains voltage to ~4 kV DC for the magnetron</title><circle cx="235.0" cy="335.0" r="12" fill="#C44E52"/>
+<text x="235.0" y="339.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F2</text>
+<text x="235.0" y="359.0" font-size="9" fill="#333" text-anchor="middle">Converts mains</text>
+<text x="235.0" y="369.5" font-size="9" fill="#333" text-anchor="middle">voltage to ~4</text>
+<text x="235.0" y="380.0" font-size="9" fill="#333" text-anchor="middle">kV DC for the…</text>
+</g>
+<g class="n" data-id="F3" tabindex="0" role="button" aria-label="F3"><title>F3: Guides microwave energy into the cavity</title><circle cx="375.0" cy="335.0" r="12" fill="#C44E52"/>
+<text x="375.0" y="339.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F3</text>
+<text x="375.0" y="359.0" font-size="9" fill="#333" text-anchor="middle">Guides</text>
+<text x="375.0" y="369.5" font-size="9" fill="#333" text-anchor="middle">microwave</text>
+<text x="375.0" y="380.0" font-size="9" fill="#333" text-anchor="middle">energy into the…</text>
+</g>
+<g class="n" data-id="F4" tabindex="0" role="button" aria-label="F4"><title>F4: Heats food via dielectric water-molecule vibration (FastHeating)</title><circle cx="655.0" cy="335.0" r="12" fill="#C44E52"/>
+<text x="655.0" y="339.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F4</text>
+<text x="655.0" y="359.0" font-size="9" fill="#333" text-anchor="middle">Heats food via</text>
+<text x="655.0" y="369.5" font-size="9" fill="#333" text-anchor="middle">dielectric</text>
+<text x="655.0" y="380.0" font-size="9" fill="#333" text-anchor="middle">water-molecule…</text>
+</g>
+<g class="n" data-id="F5" tabindex="0" role="button" aria-label="F5"><title>F5: Distributes heat evenly by rotating food through the field</title><circle cx="865.0" cy="395.0" r="12" fill="#C44E52"/>
+<text x="865.0" y="399.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F5</text>
+<text x="865.0" y="419.0" font-size="9" fill="#333" text-anchor="middle">Distributes</text>
+<text x="865.0" y="429.5" font-size="9" fill="#333" text-anchor="middle">heat evenly by</text>
+<text x="865.0" y="440.0" font-size="9" fill="#333" text-anchor="middle">rotating food…</text>
+</g>
+<g class="n" data-id="F6" tabindex="0" role="button" aria-label="F6"><title>F6: Contains microwave radiation inside the appliance</title><circle cx="935.0" cy="335.0" r="12" fill="#C44E52"/>
+<text x="935.0" y="339.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F6</text>
+<text x="935.0" y="359.0" font-size="9" fill="#333" text-anchor="middle">Contains</text>
+<text x="935.0" y="369.5" font-size="9" fill="#333" text-anchor="middle">microwave</text>
+<text x="935.0" y="380.0" font-size="9" fill="#333" text-anchor="middle">radiation…</text>
+</g>
+<g class="n" data-id="F7" tabindex="0" role="button" aria-label="F7"><title>F7: Sets and counts down cooking duration</title><circle cx="1215.0" cy="335.0" r="12" fill="#C44E52"/>
+<text x="1215.0" y="339.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F7</text>
+<text x="1215.0" y="359.0" font-size="9" fill="#333" text-anchor="middle">Sets and counts</text>
+<text x="1215.0" y="369.5" font-size="9" fill="#333" text-anchor="middle">down cooking</text>
+<text x="1215.0" y="380.0" font-size="9" fill="#333" text-anchor="middle">duration</text>
+</g>
+<g class="n" data-id="F8" tabindex="0" role="button" aria-label="F8"><title>F8: Sets average heating power level</title><circle cx="1005.0" cy="395.0" r="12" fill="#C44E52"/>
+<text x="1005.0" y="399.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F8</text>
+<text x="1005.0" y="419.0" font-size="9" fill="#333" text-anchor="middle">Sets average</text>
+<text x="1005.0" y="429.5" font-size="9" fill="#333" text-anchor="middle">heating power</text>
+<text x="1005.0" y="440.0" font-size="9" fill="#333" text-anchor="middle">level</text>
+</g>
+<g class="n" data-id="F9" tabindex="0" role="button" aria-label="F9"><title>F9: Opens and closes the door to access the cavity</title><circle cx="1075.0" cy="335.0" r="12" fill="#C44E52"/>
+<text x="1075.0" y="339.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F9</text>
+<text x="1075.0" y="359.0" font-size="9" fill="#333" text-anchor="middle">Opens and</text>
+<text x="1075.0" y="369.5" font-size="9" fill="#333" text-anchor="middle">closes the door</text>
+<text x="1075.0" y="380.0" font-size="9" fill="#333" text-anchor="middle">to access the…</text>
+</g>
+<g class="n" data-id="F10" tabindex="0" role="button" aria-label="F10"><title>F10: Cuts RF power instantly when the door opens</title><circle cx="795.0" cy="335.0" r="12" fill="#C44E52"/>
+<text x="795.0" y="339.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F10</text>
+<text x="795.0" y="359.0" font-size="9" fill="#333" text-anchor="middle">Cuts RF power</text>
+<text x="795.0" y="369.5" font-size="9" fill="#333" text-anchor="middle">instantly when</text>
+<text x="795.0" y="380.0" font-size="9" fill="#333" text-anchor="middle">the door opens</text>
+</g>
+<g class="n" data-id="F11" tabindex="0" role="button" aria-label="F11"><title>F11: Illuminates cavity so the user can watch the food</title><circle cx="1145.0" cy="395.0" r="12" fill="#C44E52"/>
+<text x="1145.0" y="399.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F11</text>
+<text x="1145.0" y="419.0" font-size="9" fill="#333" text-anchor="middle">Illuminates</text>
+<text x="1145.0" y="429.5" font-size="9" fill="#333" text-anchor="middle">cavity so the</text>
+<text x="1145.0" y="440.0" font-size="9" fill="#333" text-anchor="middle">user can watch…</text>
+</g>
+<g class="n" data-id="F12" tabindex="0" role="button" aria-label="F12"><title>F12: Signals end of cooking (audible alert)</title><circle cx="1495.0" cy="335.0" r="12" fill="#C44E52"/>
+<text x="1495.0" y="339.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F12</text>
+<text x="1495.0" y="359.0" font-size="9" fill="#333" text-anchor="middle">Signals end of</text>
+<text x="1495.0" y="369.5" font-size="9" fill="#333" text-anchor="middle">cooking</text>
+<text x="1495.0" y="380.0" font-size="9" fill="#333" text-anchor="middle">(audible alert)</text>
+</g>
+<g class="n" data-id="F13" tabindex="0" role="button" aria-label="F13"><title>F13: Cools magnetron and electronics</title><circle cx="1425.0" cy="395.0" r="12" fill="#C44E52"/>
+<text x="1425.0" y="399.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F13</text>
+<text x="1425.0" y="419.0" font-size="9" fill="#333" text-anchor="middle">Cools magnetron</text>
+<text x="1425.0" y="429.5" font-size="9" fill="#333" text-anchor="middle">and electronics</text>
+</g>
+<g class="n" data-id="F14" tabindex="0" role="button" aria-label="F14"><title>F14: Protects against overheating</title><circle cx="1355.0" cy="335.0" r="12" fill="#C44E52"/>
+<text x="1355.0" y="339.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F14</text>
+<text x="1355.0" y="359.0" font-size="9" fill="#333" text-anchor="middle">Protects</text>
+<text x="1355.0" y="369.5" font-size="9" fill="#333" text-anchor="middle">against</text>
+<text x="1355.0" y="380.0" font-size="9" fill="#333" text-anchor="middle">overheating</text>
+</g>
+<g class="n" data-id="F15" tabindex="0" role="button" aria-label="F15"><title>F15: Protects against overcurrent and electrical faults</title><circle cx="725.0" cy="395.0" r="12" fill="#C44E52"/>
+<text x="725.0" y="399.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F15</text>
+<text x="725.0" y="419.0" font-size="9" fill="#333" text-anchor="middle">Protects</text>
+<text x="725.0" y="429.5" font-size="9" fill="#333" text-anchor="middle">against</text>
+<text x="725.0" y="440.0" font-size="9" fill="#333" text-anchor="middle">overcurrent and…</text>
+</g>
+<g class="n" data-id="F16" tabindex="0" role="button" aria-label="F16"><title>F16: Defrosts frozen food (low-power cycling)</title><circle cx="305.0" cy="395.0" r="12" fill="#C44E52"/>
+<text x="305.0" y="399.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F16</text>
+<text x="305.0" y="419.0" font-size="9" fill="#333" text-anchor="middle">Defrosts frozen</text>
+<text x="305.0" y="429.5" font-size="9" fill="#333" text-anchor="middle">food (low-power</text>
+<text x="305.0" y="440.0" font-size="9" fill="#333" text-anchor="middle">cycling)</text>
+</g>
+<g class="n" data-id="F17" tabindex="0" role="button" aria-label="F17"><title>F17: Melts / softens butter, chocolate, etc.</title><circle cx="1565.0" cy="395.0" r="12" fill="#C44E52"/>
+<text x="1565.0" y="399.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F17</text>
+<text x="1565.0" y="419.0" font-size="9" fill="#333" text-anchor="middle">Melts / softens</text>
+<text x="1565.0" y="429.5" font-size="9" fill="#333" text-anchor="middle">butter,</text>
+<text x="1565.0" y="440.0" font-size="9" fill="#333" text-anchor="middle">chocolate, etc.</text>
+</g>
+<g class="n" data-id="F18" tabindex="0" role="button" aria-label="F18"><title>F18: Contains spills and allows cleaning</title><circle cx="515.0" cy="335.0" r="12" fill="#C44E52"/>
+<text x="515.0" y="339.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F18</text>
+<text x="515.0" y="359.0" font-size="9" fill="#333" text-anchor="middle">Contains spills</text>
+<text x="515.0" y="369.5" font-size="9" fill="#333" text-anchor="middle">and allows</text>
+<text x="515.0" y="380.0" font-size="9" fill="#333" text-anchor="middle">cleaning</text>
+</g>
+<g class="n" data-id="F19" tabindex="0" role="button" aria-label="F19"><title>F19: Suppresses electrical noise conducted back to mains</title><circle cx="1285.0" cy="395.0" r="12" fill="#C44E52"/>
+<text x="1285.0" y="399.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F19</text>
+<text x="1285.0" y="419.0" font-size="9" fill="#333" text-anchor="middle">Suppresses</text>
+<text x="1285.0" y="429.5" font-size="9" fill="#333" text-anchor="middle">electrical</text>
+<text x="1285.0" y="440.0" font-size="9" fill="#333" text-anchor="middle">noise conducted…</text>
+</g>
+<g class="n" data-id="F20" tabindex="0" role="button" aria-label="F20"><title>F20: Discharges stored high voltage after switch-off</title><circle cx="585.0" cy="395.0" r="12" fill="#C44E52"/>
+<text x="585.0" y="399.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">F20</text>
+<text x="585.0" y="419.0" font-size="9" fill="#333" text-anchor="middle">Discharges</text>
+<text x="585.0" y="429.5" font-size="9" fill="#333" text-anchor="middle">stored high</text>
+<text x="585.0" y="440.0" font-size="9" fill="#333" text-anchor="middle">voltage after…</text>
+</g>
+<g class="n" data-id="M1" tabindex="0" role="button" aria-label="M1"><title>M1: Fast reheating for busy households</title><circle cx="817.6" cy="195.0" r="12" fill="#8172B2"/>
+<text x="817.6" y="199.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">M1</text>
+<text x="817.6" y="219.0" font-size="9" fill="#333" text-anchor="middle">Fast reheating</text>
+<text x="817.6" y="229.5" font-size="9" fill="#333" text-anchor="middle">for busy</text>
+<text x="817.6" y="240.0" font-size="9" fill="#333" text-anchor="middle">households</text>
+</g>
+<g class="n" data-id="M2" tabindex="0" role="button" aria-label="M2"><title>M2: Crispy, browned texture like conventional oven</title><circle cx="241.2" cy="135.0" r="12" fill="#8172B2"/>
+<text x="241.2" y="139.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">M2</text>
+<text x="241.2" y="159.0" font-size="9" fill="#333" text-anchor="middle">Crispy, browned</text>
+<text x="241.2" y="169.5" font-size="9" fill="#333" text-anchor="middle">texture like</text>
+<text x="241.2" y="180.0" font-size="9" fill="#333" text-anchor="middle">conventional…</text>
+</g>
+<g class="n" data-id="M3" tabindex="0" role="button" aria-label="M3"><title>M3: Hot milk / drink ready for breakfast</title><circle cx="570.6" cy="135.0" r="12" fill="#8172B2"/>
+<text x="570.6" y="139.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">M3</text>
+<text x="570.6" y="159.0" font-size="9" fill="#333" text-anchor="middle">Hot milk /</text>
+<text x="570.6" y="169.5" font-size="9" fill="#333" text-anchor="middle">drink ready for</text>
+<text x="570.6" y="180.0" font-size="9" fill="#333" text-anchor="middle">breakfast</text>
+</g>
+<g class="n" data-id="M4" tabindex="0" role="button" aria-label="M4"><title>M4: Defrost frozen food quickly</title><circle cx="323.5" cy="195.0" r="12" fill="#8172B2"/>
+<text x="323.5" y="199.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">M4</text>
+<text x="323.5" y="219.0" font-size="9" fill="#333" text-anchor="middle">Defrost frozen</text>
+<text x="323.5" y="229.5" font-size="9" fill="#333" text-anchor="middle">food quickly</text>
+</g>
+<g class="n" data-id="M5" tabindex="0" role="button" aria-label="M5"><title>M5: Save time in the kitchen</title><circle cx="405.9" cy="135.0" r="12" fill="#8172B2"/>
+<text x="405.9" y="139.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">M5</text>
+<text x="405.9" y="159.0" font-size="9" fill="#333" text-anchor="middle">Save time in</text>
+<text x="405.9" y="169.5" font-size="9" fill="#333" text-anchor="middle">the kitchen</text>
+</g>
+<g class="n" data-id="M6" tabindex="0" role="button" aria-label="M6"><title>M6: Simple operation with no learning curve</title><circle cx="1147.1" cy="195.0" r="12" fill="#8172B2"/>
+<text x="1147.1" y="199.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">M6</text>
+<text x="1147.1" y="219.0" font-size="9" fill="#333" text-anchor="middle">Simple</text>
+<text x="1147.1" y="229.5" font-size="9" fill="#333" text-anchor="middle">operation with</text>
+<text x="1147.1" y="240.0" font-size="9" fill="#333" text-anchor="middle">no learning…</text>
+</g>
+<g class="n" data-id="M7" tabindex="0" role="button" aria-label="M7"><title>M7: Safe for family use (radiation, burns, electric shock)</title><circle cx="900.0" cy="135.0" r="12" fill="#8172B2"/>
+<text x="900.0" y="139.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">M7</text>
+<text x="900.0" y="159.0" font-size="9" fill="#333" text-anchor="middle">Safe for family</text>
+<text x="900.0" y="169.5" font-size="9" fill="#333" text-anchor="middle">use (radiation,</text>
+<text x="900.0" y="180.0" font-size="9" fill="#333" text-anchor="middle">burns, electric…</text>
+</g>
+<g class="n" data-id="M8" tabindex="0" role="button" aria-label="M8"><title>M8: Human need for feedback (know when food is ready)</title><circle cx="1229.4" cy="135.0" r="12" fill="#8172B2"/>
+<text x="1229.4" y="139.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">M8</text>
+<text x="1229.4" y="159.0" font-size="9" fill="#333" text-anchor="middle">Human need for</text>
+<text x="1229.4" y="169.5" font-size="9" fill="#333" text-anchor="middle">feedback (know</text>
+<text x="1229.4" y="180.0" font-size="9" fill="#333" text-anchor="middle">when food is…</text>
+</g>
+<g class="n" data-id="M9" tabindex="0" role="button" aria-label="M9"><title>M9: Low purchase price</title><circle cx="982.4" cy="195.0" r="12" fill="#8172B2"/>
+<text x="982.4" y="199.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">M9</text>
+<text x="982.4" y="219.0" font-size="9" fill="#333" text-anchor="middle">Low purchase</text>
+<text x="982.4" y="229.5" font-size="9" fill="#333" text-anchor="middle">price</text>
+</g>
+<g class="n" data-id="M10" tabindex="0" role="button" aria-label="M10"><title>M10: Small kitchen footprint</title><circle cx="1064.7" cy="135.0" r="12" fill="#8172B2"/>
+<text x="1064.7" y="139.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">M10</text>
+<text x="1064.7" y="159.0" font-size="9" fill="#333" text-anchor="middle">Small kitchen</text>
+<text x="1064.7" y="169.5" font-size="9" fill="#333" text-anchor="middle">footprint</text>
+</g>
+<g class="n" data-id="M11" tabindex="0" role="button" aria-label="M11"><title>M11: Easy to clean</title><circle cx="488.2" cy="195.0" r="12" fill="#8172B2"/>
+<text x="488.2" y="199.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">M11</text>
+<text x="488.2" y="219.0" font-size="9" fill="#333" text-anchor="middle">Easy to clean</text>
+</g>
+<g class="n" data-id="M12" tabindex="0" role="button" aria-label="M12"><title>M12: Healthy diet (nutrient retention, less fat)</title><circle cx="652.9" cy="195.0" r="12" fill="#8172B2"/>
+<text x="652.9" y="199.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">M12</text>
+<text x="652.9" y="219.0" font-size="9" fill="#333" text-anchor="middle">Healthy diet</text>
+<text x="652.9" y="229.5" font-size="9" fill="#333" text-anchor="middle">(nutrient</text>
+<text x="652.9" y="240.0" font-size="9" fill="#333" text-anchor="middle">retention, less…</text>
+</g>
+<g class="n" data-id="M13" tabindex="0" role="button" aria-label="M13"><title>M13: Energy efficiency</title><circle cx="735.3" cy="135.0" r="12" fill="#8172B2"/>
+<text x="735.3" y="139.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">M13</text>
+<text x="735.3" y="159.0" font-size="9" fill="#333" text-anchor="middle">Energy</text>
+<text x="735.3" y="169.5" font-size="9" fill="#333" text-anchor="middle">efficiency</text>
+</g>
+<g class="n" data-id="M14" tabindex="0" role="button" aria-label="M14"><title>M14: Accessible for elderly / visually impaired users</title><circle cx="1311.8" cy="195.0" r="12" fill="#8172B2"/>
+<text x="1311.8" y="199.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">M14</text>
+<text x="1311.8" y="219.0" font-size="9" fill="#333" text-anchor="middle">Accessible for</text>
+<text x="1311.8" y="229.5" font-size="9" fill="#333" text-anchor="middle">elderly /</text>
+<text x="1311.8" y="240.0" font-size="9" fill="#333" text-anchor="middle">visually…</text>
+</g>
+<g class="n" data-id="M15" tabindex="0" role="button" aria-label="M15"><title>M15: Appliances that make you feel better (latent need)</title><circle cx="1394.1" cy="135.0" r="12" fill="#8172B2"/>
+<text x="1394.1" y="139.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">M15</text>
+<text x="1394.1" y="159.0" font-size="9" fill="#333" text-anchor="middle">Appliances that</text>
+<text x="1394.1" y="169.5" font-size="9" fill="#333" text-anchor="middle">make you feel</text>
+<text x="1394.1" y="180.0" font-size="9" fill="#333" text-anchor="middle">better (latent…</text>
+</g>
+<g class="n" data-id="M16" tabindex="0" role="button" aria-label="M16"><title>M16: Need for mobility (not having to stand by the appliance)</title><circle cx="1476.5" cy="195.0" r="12" fill="#8172B2"/>
+<text x="1476.5" y="199.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">M16</text>
+<text x="1476.5" y="219.0" font-size="9" fill="#333" text-anchor="middle">Need for</text>
+<text x="1476.5" y="229.5" font-size="9" fill="#333" text-anchor="middle">mobility (not</text>
+<text x="1476.5" y="240.0" font-size="9" fill="#333" text-anchor="middle">having to stand…</text>
+</g>
+<g class="n" data-id="M17" tabindex="0" role="button" aria-label="M17"><title>M17: Bake a birthday cake (prep tasks like melting butter)</title><circle cx="1558.8" cy="135.0" r="12" fill="#8172B2"/>
+<text x="1558.8" y="139.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">M17</text>
+<text x="1558.8" y="159.0" font-size="9" fill="#333" text-anchor="middle">Bake a birthday</text>
+<text x="1558.8" y="169.5" font-size="9" fill="#333" text-anchor="middle">cake (prep</text>
+<text x="1558.8" y="180.0" font-size="9" fill="#333" text-anchor="middle">tasks like…</text>
+</g>
+<g class="n" data-id="A1" tabindex="0" role="button" aria-label="A1"><title>A1: Time-pressed home cook</title><circle cx="90.0" cy="165.6" r="12" fill="#CCB974"/>
+<text x="90.0" y="169.6" font-size="9" font-weight="bold" fill="white" text-anchor="middle">A1</text>
+<text x="90.0" y="189.6" font-size="9" fill="#333" text-anchor="middle">Time-pressed home cook</text>
+</g>
+<g class="n" data-id="A2" tabindex="0" role="button" aria-label="A2"><title>A2: Appliance safety regulator/inspector</title><circle cx="90.0" cy="276.9" r="12" fill="#CCB974"/>
+<text x="90.0" y="280.9" font-size="9" font-weight="bold" fill="white" text-anchor="middle">A2</text>
+<text x="90.0" y="300.9" font-size="9" fill="#333" text-anchor="middle">Appliance safety</text>
+<text x="90.0" y="311.4" font-size="9" fill="#333" text-anchor="middle">regulator/inspector</text>
+</g>
+<g class="n" data-id="A3" tabindex="0" role="button" aria-label="A3"><title>A3: Student / single-person household</title><circle cx="90.0" cy="388.1" r="12" fill="#CCB974"/>
+<text x="90.0" y="392.1" font-size="9" font-weight="bold" fill="white" text-anchor="middle">A3</text>
+<text x="90.0" y="412.1" font-size="9" fill="#333" text-anchor="middle">Student / single-person</text>
+<text x="90.0" y="422.6" font-size="9" fill="#333" text-anchor="middle">household</text>
+</g>
+<g class="n" data-id="A4" tabindex="0" role="button" aria-label="A4"><title>A4: Elderly user</title><circle cx="90.0" cy="499.4" r="12" fill="#CCB974"/>
+<text x="90.0" y="503.4" font-size="9" font-weight="bold" fill="white" text-anchor="middle">A4</text>
+<text x="90.0" y="523.4" font-size="9" fill="#333" text-anchor="middle">Elderly user</text>
+</g>
+<g class="n" data-id="A5" tabindex="0" role="button" aria-label="A5"><title>A5: Parent with young children</title><circle cx="90.0" cy="610.6" r="12" fill="#CCB974"/>
+<text x="90.0" y="614.6" font-size="9" font-weight="bold" fill="white" text-anchor="middle">A5</text>
+<text x="90.0" y="634.6" font-size="9" fill="#333" text-anchor="middle">Parent with young children</text>
+</g>
+<g class="n" data-id="A6" tabindex="0" role="button" aria-label="A6"><title>A6: Office worker using a shared kitchen</title><circle cx="90.0" cy="721.9" r="12" fill="#CCB974"/>
+<text x="90.0" y="725.9" font-size="9" font-weight="bold" fill="white" text-anchor="middle">A6</text>
+<text x="90.0" y="745.9" font-size="9" fill="#333" text-anchor="middle">Office worker using a shared</text>
+<text x="90.0" y="756.4" font-size="9" fill="#333" text-anchor="middle">kitchen</text>
+</g>
+<g class="n" data-id="A7" tabindex="0" role="button" aria-label="A7"><title>A7: Repair technician</title><circle cx="90.0" cy="833.1" r="12" fill="#CCB974"/>
+<text x="90.0" y="837.1" font-size="9" font-weight="bold" fill="white" text-anchor="middle">A7</text>
+<text x="90.0" y="857.1" font-size="9" fill="#333" text-anchor="middle">Repair technician</text>
+</g>
+<g class="n" data-id="A8" tabindex="0" role="button" aria-label="A8"><title>A8: OEM manufacturer / cost engineer</title><circle cx="90.0" cy="944.4" r="12" fill="#CCB974"/>
+<text x="90.0" y="948.4" font-size="9" font-weight="bold" fill="white" text-anchor="middle">A8</text>
+<text x="90.0" y="968.4" font-size="9" fill="#333" text-anchor="middle">OEM manufacturer / cost</text>
+<text x="90.0" y="978.9" font-size="9" fill="#333" text-anchor="middle">engineer</text>
+</g>
+<g class="n" data-id="X1" tabindex="0" role="button" aria-label="X1"><title>X1: Microwaves can&#x27;t brown or crisp food surfaces</title><circle cx="1720.0" cy="139.7" r="12" fill="#64B5CD"/>
+<text x="1720.0" y="143.7" font-size="9" font-weight="bold" fill="white" text-anchor="middle">X1</text>
+<text x="1720.0" y="163.7" font-size="9" fill="#333" text-anchor="middle">Microwaves can&#x27;t brown or</text>
+<text x="1720.0" y="174.2" font-size="9" fill="#333" text-anchor="middle">crisp food surfaces</text>
+</g>
+<g class="n" data-id="X2" tabindex="0" role="button" aria-label="X2"><title>X2: FCC/FDA radiation-leakage safety limits (21 CFR 1030.10, 5 mW/cm² at 5 cm)</title><circle cx="1720.0" cy="673.7" r="12" fill="#64B5CD"/>
+<text x="1720.0" y="677.7" font-size="9" font-weight="bold" fill="white" text-anchor="middle">X2</text>
+<text x="1720.0" y="697.7" font-size="9" fill="#333" text-anchor="middle">FCC/FDA radiation-leakage</text>
+<text x="1720.0" y="708.2" font-size="9" fill="#333" text-anchor="middle">safety limits (21 CFR 1030.10…</text>
+</g>
+<g class="n" data-id="X3" tabindex="0" role="button" aria-label="X3"><title>X3: Uneven heating — standing-wave hot and cold spots</title><circle cx="1720.0" cy="495.7" r="12" fill="#64B5CD"/>
+<text x="1720.0" y="499.7" font-size="9" font-weight="bold" fill="white" text-anchor="middle">X3</text>
+<text x="1720.0" y="519.7" font-size="9" fill="#333" text-anchor="middle">Uneven heating — standing-wave</text>
+<text x="1720.0" y="530.2" font-size="9" fill="#333" text-anchor="middle">hot and cold spots</text>
+</g>
+<g class="n" data-id="X4" tabindex="0" role="button" aria-label="X4"><title>X4: Metal objects in cavity cause arcing</title><circle cx="1720.0" cy="258.3" r="12" fill="#64B5CD"/>
+<text x="1720.0" y="262.3" font-size="9" font-weight="bold" fill="white" text-anchor="middle">X4</text>
+<text x="1720.0" y="282.3" font-size="9" fill="#333" text-anchor="middle">Metal objects in cavity cause</text>
+<text x="1720.0" y="292.8" font-size="9" fill="#333" text-anchor="middle">arcing</text>
+</g>
+<g class="n" data-id="X5" tabindex="0" role="button" aria-label="X5"><title>X5: Mechanical timer imprecise for short (&lt;1 min) durations</title><circle cx="1720.0" cy="317.7" r="12" fill="#64B5CD"/>
+<text x="1720.0" y="321.7" font-size="9" font-weight="bold" fill="white" text-anchor="middle">X5</text>
+<text x="1720.0" y="341.7" font-size="9" fill="#333" text-anchor="middle">Mechanical timer imprecise for</text>
+<text x="1720.0" y="352.2" font-size="9" fill="#333" text-anchor="middle">short (&lt;1 min) durations</text>
+</g>
+<g class="n" data-id="X6" tabindex="0" role="button" aria-label="X6"><title>X6: Power only adjustable by on/off cycling, not continuously</title><circle cx="1720.0" cy="733.0" r="12" fill="#64B5CD"/>
+<text x="1720.0" y="737.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">X6</text>
+<text x="1720.0" y="757.0" font-size="9" fill="#333" text-anchor="middle">Power only adjustable by</text>
+<text x="1720.0" y="767.5" font-size="9" fill="#333" text-anchor="middle">on/off cycling, not…</text>
+</g>
+<g class="n" data-id="X7" tabindex="0" role="button" aria-label="X7"><title>X7: HV capacitor can hold a lethal charge after unplugging</title><circle cx="1720.0" cy="614.3" r="12" fill="#64B5CD"/>
+<text x="1720.0" y="618.3" font-size="9" font-weight="bold" fill="white" text-anchor="middle">X7</text>
+<text x="1720.0" y="638.3" font-size="9" fill="#333" text-anchor="middle">HV capacitor can hold a lethal</text>
+<text x="1720.0" y="648.8" font-size="9" fill="#333" text-anchor="middle">charge after unplugging</text>
+</g>
+<g class="n" data-id="X8" tabindex="0" role="button" aria-label="X8"><title>X8: Limited magnetron lifetime (cathode/filament wear)</title><circle cx="1720.0" cy="970.3" r="12" fill="#64B5CD"/>
+<text x="1720.0" y="974.3" font-size="9" font-weight="bold" fill="white" text-anchor="middle">X8</text>
+<text x="1720.0" y="994.3" font-size="9" fill="#333" text-anchor="middle">Limited magnetron lifetime</text>
+<text x="1720.0" y="1004.8" font-size="9" fill="#333" text-anchor="middle">(cathode/filament wear)</text>
+</g>
+<g class="n" data-id="X9" tabindex="0" role="button" aria-label="X9"><title>X9: Superheating of liquids — risk of eruptive boiling</title><circle cx="1720.0" cy="199.0" r="12" fill="#64B5CD"/>
+<text x="1720.0" y="203.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">X9</text>
+<text x="1720.0" y="223.0" font-size="9" fill="#333" text-anchor="middle">Superheating of liquids — risk</text>
+<text x="1720.0" y="233.5" font-size="9" fill="#333" text-anchor="middle">of eruptive boiling</text>
+</g>
+<g class="n" data-id="X10" tabindex="0" role="button" aria-label="X10"><title>X10: Electrical safety standards (IEC 60335-2-25 / UL 923)</title><circle cx="1720.0" cy="555.0" r="12" fill="#64B5CD"/>
+<text x="1720.0" y="559.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">X10</text>
+<text x="1720.0" y="579.0" font-size="9" fill="#333" text-anchor="middle">Electrical safety standards</text>
+<text x="1720.0" y="589.5" font-size="9" fill="#333" text-anchor="middle">(IEC 60335-2-25 / UL 923)</text>
+</g>
+<g class="n" data-id="X11" tabindex="0" role="button" aria-label="X11"><title>X11: Cavity volume limited by countertop size</title><circle cx="1720.0" cy="377.0" r="12" fill="#64B5CD"/>
+<text x="1720.0" y="381.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">X11</text>
+<text x="1720.0" y="401.0" font-size="9" fill="#333" text-anchor="middle">Cavity volume limited by</text>
+<text x="1720.0" y="411.5" font-size="9" fill="#333" text-anchor="middle">countertop size</text>
+</g>
+<g class="n" data-id="X12" tabindex="0" role="button" aria-label="X12"><title>X12: Low BOM target for entry-level price segment</title><circle cx="1720.0" cy="792.3" r="12" fill="#64B5CD"/>
+<text x="1720.0" y="796.3" font-size="9" font-weight="bold" fill="white" text-anchor="middle">X12</text>
+<text x="1720.0" y="816.3" font-size="9" fill="#333" text-anchor="middle">Low BOM target for entry-level</text>
+<text x="1720.0" y="826.8" font-size="9" fill="#333" text-anchor="middle">price segment</text>
+</g>
+<g class="n" data-id="X13" tabindex="0" role="button" aria-label="X13"><title>X13: No food-state sensing — open-loop cooking</title><circle cx="1720.0" cy="436.3" r="12" fill="#64B5CD"/>
+<text x="1720.0" y="440.3" font-size="9" font-weight="bold" fill="white" text-anchor="middle">X13</text>
+<text x="1720.0" y="460.3" font-size="9" fill="#333" text-anchor="middle">No food-state sensing — open-</text>
+<text x="1720.0" y="470.8" font-size="9" fill="#333" text-anchor="middle">loop cooking</text>
+</g>
+<g class="n" data-id="X14" tabindex="0" role="button" aria-label="X14"><title>X14: Interior lamp burns out and is hard to replace</title><circle cx="1720.0" cy="851.7" r="12" fill="#64B5CD"/>
+<text x="1720.0" y="855.7" font-size="9" font-weight="bold" fill="white" text-anchor="middle">X14</text>
+<text x="1720.0" y="875.7" font-size="9" fill="#333" text-anchor="middle">Interior lamp burns out and is</text>
+<text x="1720.0" y="886.2" font-size="9" fill="#333" text-anchor="middle">hard to replace</text>
+</g>
+<g class="n" data-id="X15" tabindex="0" role="button" aria-label="X15"><title>X15: Regional mains variants (230 V/50 Hz vs 120 V/60 Hz)</title><circle cx="1720.0" cy="911.0" r="12" fill="#64B5CD"/>
+<text x="1720.0" y="915.0" font-size="9" font-weight="bold" fill="white" text-anchor="middle">X15</text>
+<text x="1720.0" y="935.0" font-size="9" fill="#333" text-anchor="middle">Regional mains variants (230</text>
+<text x="1720.0" y="945.5" font-size="9" fill="#333" text-anchor="middle">V/50 Hz vs 120 V/60 Hz)</text>
+</g>
+</svg>
+</div></div>
+<div class="legend"><span class="lg"><i style="background:#937860"></i>Field (10)</span><span class="lg"><i style="background:#DD8452"></i>Technology (24)</span><span class="lg"><i style="background:#55A868"></i>Component (28)</span><span class="lg"><i style="background:#C44E52"></i>Function (20)</span><span class="lg"><i style="background:#8172B2"></i>MarketNeed (17)</span><span class="lg"><i style="background:#CCB974"></i>Actor (8)</span><span class="lg"><i style="background:#64B5CD"></i>Constraint (15)</span><span class="lg"><i style="background:#4C72B0"></i>Product (1)</span>
+<span class="lg"><span class="ln"></span>structural edge</span>
+<span class="lg"><span class="ln" style="border-top:2px dashed #B22222"></span>causes / contradicts</span>
+<span class="lg"><span class="ln" style="border-top:2px dashed #2f9e44"></span>partially mitigates</span>
+<span class="lg"><span class="ln" style="border-top:2px dotted #adb5bd"></span>relevant to</span>
+</div>
+<p class="note">Faint grey lines from P1 are has_component edges.</p>
+<script>
+const NODES = {"P1": {"type": "Product", "label": "Basic countertop microwave oven (timer knob, power knob, door button, lamp)"}, "D1": {"type": "Field", "label": "Radio-frequency & microwave engineering"}, "D2": {"type": "Field", "label": "Vacuum electronics"}, "D3": {"type": "Field", "label": "Power electronics & electrical engineering"}, "D4": {"type": "Field", "label": "Electromechanics & mechanisms"}, "D5": {"type": "Field", "label": "Thermal engineering & heat transfer"}, "D6": {"type": "Field", "label": "Materials science (metals, ceramics, glass, polymers)"}, "D7": {"type": "Field", "label": "Lighting & optics"}, "D8": {"type": "Field", "label": "Sound engineering"}, "D9": {"type": "Field", "label": "Manufacturing engineering (stamping, molding, assembly)"}, "D10": {"type": "Field", "label": "Food science (dielectric properties of food)"}, "T1": {"type": "Technology", "label": "Electron cyclotron motion in crossed E\u00d7B fields (cavity magnetron)"}, "T2": {"type": "Technology", "label": "Magnetic-shunt leakage HV transformer"}, "T3": {"type": "Technology", "label": "Half-wave voltage doubler (capacitor + diode)"}, "T4": {"type": "Technology", "label": "Rectangular waveguide TE10 mode propagation"}, "T5": {"type": "Technology", "label": "Sub-wavelength aperture shielding (Faraday cage effect)"}, "T6": {"type": "Technology", "label": "Quarter-wave choke seal"}, "T7": {"type": "Technology", "label": "Shaded-pole / synchronous AC micro-motor (electromagnetic induction)"}, "T8": {"type": "Technology", "label": "Motor-driven cam timer with spring-return mechanism"}, "T9": {"type": "Technology", "label": "Bimetallic snap-disc thermostat"}, "T10": {"type": "Technology", "label": "Redundant interlock microswitch logic (primary / secondary / monitor)"}, "T11": {"type": "Technology", "label": "Duty-cycle power modulation (on/off cycling)"}, "T12": {"type": "Technology", "label": "Incandescent tungsten-filament lamp"}, "T13": {"type": "Technology", "label": "Forced-air convection cooling"}, "T14": {"type": "Technology", "label": "Dielectric heating (dipolar rotation of water molecules)"}, "T15": {"type": "Technology", "label": "Tempered / borosilicate glass forming"}, "T16": {"type": "Technology", "label": "Mica sheet dielectric (muscovite laminate)"}, "T17": {"type": "Technology", "label": "Enamel / epoxy powder coating of steel"}, "T18": {"type": "Technology", "label": "Spring-loaded lever latch mechanics"}, "T19": {"type": "Technology", "label": "Mechanical bell striker"}, "T20": {"type": "Technology", "label": "Ceramic cartridge fuse (fusible-link overcurrent protection)"}, "T21": {"type": "Technology", "label": "Sintered ferrite permanent magnets"}, "T22": {"type": "Technology", "label": "Injection-molded engineering thermoplastics (PP, PBT, PPS)"}, "T23": {"type": "Technology", "label": "Sheet-steel stamping & spot welding"}, "T24": {"type": "Technology", "label": "Passive LC EMI line filtering"}, "C1": {"type": "Component", "label": "Magnetron tube (2.45 GHz, ~700 W output)"}, "C2": {"type": "Component", "label": "High-voltage transformer"}, "C3": {"type": "Component", "label": "High-voltage capacitor (~1 \u00b5F, 2.1 kV) with internal bleeder resistor"}, "C4": {"type": "Component", "label": "High-voltage rectifier diode"}, "C5": {"type": "Component", "label": "Waveguide duct"}, "C6": {"type": "Component", "label": "Mica waveguide cover"}, "C7": {"type": "Component", "label": "Enamelled steel cooking cavity (~20 L)"}, "C8": {"type": "Component", "label": "Hinged door with perforated metal mesh window"}, "C9": {"type": "Component", "label": "Door choke seal (quarter-wave rim)"}, "C10": {"type": "Component", "label": "Rotating glass turntable tray"}, "C11": {"type": "Component", "label": "Roller ring and coupler (turntable support)"}, "C12": {"type": "Component", "label": "Turntable motor (~5 rpm)"}, "C13": {"type": "Component", "label": "Mechanical timer knob & cam switch (0-30 min)"}, "C14": {"type": "Component", "label": "Power-level knob (5-step duty-cycle cam switch)"}, "C15": {"type": "Component", "label": "Door-release push button & latch lever"}, "C16": {"type": "Component", "label": "Door interlock microswitches (primary, secondary, monitor)"}, "C17": {"type": "Component", "label": "Interior lamp (20-25 W incandescent)"}, "C18": {"type": "Component", "label": "Cooling fan and fan motor"}, "C19": {"type": "Component", "label": "Magnetron thermal cutout"}, "C20": {"type": "Component", "label": "Cavity thermal cutout"}, "C21": {"type": "Component", "label": "Main ceramic fuse"}, "C22": {"type": "Component", "label": "End-of-cycle bell (mechanical 'ding')"}, "C23": {"type": "Component", "label": "Outer steel cabinet (wrapper)"}, "C24": {"type": "Component", "label": "Control panel fascia"}, "C25": {"type": "Component", "label": "Mains power cord and plug"}, "C26": {"type": "Component", "label": "Door hinges"}, "C27": {"type": "Component", "label": "Ventilation louvres"}, "C28": {"type": "Component", "label": "Mains EMI noise filter"}, "F1": {"type": "Function", "label": "Generates microwave energy at 2.45 GHz"}, "F2": {"type": "Function", "label": "Converts mains voltage to ~4 kV DC for the magnetron"}, "F3": {"type": "Function", "label": "Guides microwave energy into the cavity"}, "F4": {"type": "Function", "label": "Heats food via dielectric water-molecule vibration (FastHeating)"}, "F5": {"type": "Function", "label": "Distributes heat evenly by rotating food through the field"}, "F6": {"type": "Function", "label": "Contains microwave radiation inside the appliance"}, "F7": {"type": "Function", "label": "Sets and counts down cooking duration"}, "F8": {"type": "Function", "label": "Sets average heating power level"}, "F9": {"type": "Function", "label": "Opens and closes the door to access the cavity"}, "F10": {"type": "Function", "label": "Cuts RF power instantly when the door opens"}, "F11": {"type": "Function", "label": "Illuminates cavity so the user can watch the food"}, "F12": {"type": "Function", "label": "Signals end of cooking (audible alert)"}, "F13": {"type": "Function", "label": "Cools magnetron and electronics"}, "F14": {"type": "Function", "label": "Protects against overheating"}, "F15": {"type": "Function", "label": "Protects against overcurrent and electrical faults"}, "F16": {"type": "Function", "label": "Defrosts frozen food (low-power cycling)"}, "F17": {"type": "Function", "label": "Melts / softens butter, chocolate, etc."}, "F18": {"type": "Function", "label": "Contains spills and allows cleaning"}, "F19": {"type": "Function", "label": "Suppresses electrical noise conducted back to mains"}, "F20": {"type": "Function", "label": "Discharges stored high voltage after switch-off"}, "M1": {"type": "MarketNeed", "label": "Fast reheating for busy households"}, "M2": {"type": "MarketNeed", "label": "Crispy, browned texture like conventional oven"}, "M3": {"type": "MarketNeed", "label": "Hot milk / drink ready for breakfast"}, "M4": {"type": "MarketNeed", "label": "Defrost frozen food quickly"}, "M5": {"type": "MarketNeed", "label": "Save time in the kitchen"}, "M6": {"type": "MarketNeed", "label": "Simple operation with no learning curve"}, "M7": {"type": "MarketNeed", "label": "Safe for family use (radiation, burns, electric shock)"}, "M8": {"type": "MarketNeed", "label": "Human need for feedback (know when food is ready)"}, "M9": {"type": "MarketNeed", "label": "Low purchase price"}, "M10": {"type": "MarketNeed", "label": "Small kitchen footprint"}, "M11": {"type": "MarketNeed", "label": "Easy to clean"}, "M12": {"type": "MarketNeed", "label": "Healthy diet (nutrient retention, less fat)"}, "M13": {"type": "MarketNeed", "label": "Energy efficiency"}, "M14": {"type": "MarketNeed", "label": "Accessible for elderly / visually impaired users"}, "M15": {"type": "MarketNeed", "label": "Appliances that make you feel better (latent need)"}, "M16": {"type": "MarketNeed", "label": "Need for mobility (not having to stand by the appliance)"}, "M17": {"type": "MarketNeed", "label": "Bake a birthday cake (prep tasks like melting butter)"}, "A1": {"type": "Actor", "label": "Time-pressed home cook"}, "A2": {"type": "Actor", "label": "Appliance safety regulator/inspector"}, "A3": {"type": "Actor", "label": "Student / single-person household"}, "A4": {"type": "Actor", "label": "Elderly user"}, "A5": {"type": "Actor", "label": "Parent with young children"}, "A6": {"type": "Actor", "label": "Office worker using a shared kitchen"}, "A7": {"type": "Actor", "label": "Repair technician"}, "A8": {"type": "Actor", "label": "OEM manufacturer / cost engineer"}, "X1": {"type": "Constraint", "label": "Microwaves can't brown or crisp food surfaces"}, "X2": {"type": "Constraint", "label": "FCC/FDA radiation-leakage safety limits (21 CFR 1030.10, 5 mW/cm\u00b2 at 5 cm)"}, "X3": {"type": "Constraint", "label": "Uneven heating \u2014 standing-wave hot and cold spots"}, "X4": {"type": "Constraint", "label": "Metal objects in cavity cause arcing"}, "X5": {"type": "Constraint", "label": "Mechanical timer imprecise for short (<1 min) durations"}, "X6": {"type": "Constraint", "label": "Power only adjustable by on/off cycling, not continuously"}, "X7": {"type": "Constraint", "label": "HV capacitor can hold a lethal charge after unplugging"}, "X8": {"type": "Constraint", "label": "Limited magnetron lifetime (cathode/filament wear)"}, "X9": {"type": "Constraint", "label": "Superheating of liquids \u2014 risk of eruptive boiling"}, "X10": {"type": "Constraint", "label": "Electrical safety standards (IEC 60335-2-25 / UL 923)"}, "X11": {"type": "Constraint", "label": "Cavity volume limited by countertop size"}, "X12": {"type": "Constraint", "label": "Low BOM target for entry-level price segment"}, "X13": {"type": "Constraint", "label": "No food-state sensing \u2014 open-loop cooking"}, "X14": {"type": "Constraint", "label": "Interior lamp burns out and is hard to replace"}, "X15": {"type": "Constraint", "label": "Regional mains variants (230 V/50 Hz vs 120 V/60 Hz)"}}, EDGES = [["P1", "C1", "has_component"], ["P1", "C2", "has_component"], ["P1", "C3", "has_component"], ["P1", "C4", "has_component"], ["P1", "C5", "has_component"], ["P1", "C6", "has_component"], ["P1", "C7", "has_component"], ["P1", "C8", "has_component"], ["P1", "C9", "has_component"], ["P1", "C10", "has_component"], ["P1", "C11", "has_component"], ["P1", "C12", "has_component"], ["P1", "C13", "has_component"], ["P1", "C14", "has_component"], ["P1", "C15", "has_component"], ["P1", "C16", "has_component"], ["P1", "C17", "has_component"], ["P1", "C18", "has_component"], ["P1", "C19", "has_component"], ["P1", "C20", "has_component"], ["P1", "C21", "has_component"], ["P1", "C22", "has_component"], ["P1", "C23", "has_component"], ["P1", "C24", "has_component"], ["P1", "C25", "has_component"], ["P1", "C26", "has_component"], ["P1", "C27", "has_component"], ["P1", "C28", "has_component"], ["T1", "D2", "rooted_in"], ["T1", "D1", "rooted_in"], ["T2", "D3", "rooted_in"], ["T3", "D3", "rooted_in"], ["T4", "D1", "rooted_in"], ["T5", "D1", "rooted_in"], ["T6", "D1", "rooted_in"], ["T7", "D4", "rooted_in"], ["T8", "D4", "rooted_in"], ["T9", "D5", "rooted_in"], ["T10", "D4", "rooted_in"], ["T10", "D3", "rooted_in"], ["T11", "D3", "rooted_in"], ["T12", "D7", "rooted_in"], ["T13", "D5", "rooted_in"], ["T14", "D1", "rooted_in"], ["T14", "D10", "rooted_in"], ["T15", "D6", "rooted_in"], ["T16", "D6", "rooted_in"], ["T17", "D6", "rooted_in"], ["T18", "D4", "rooted_in"], ["T19", "D8", "rooted_in"], ["T20", "D3", "rooted_in"], ["T21", "D6", "rooted_in"], ["T22", "D6", "rooted_in"], ["T22", "D9", "rooted_in"], ["T23", "D9", "rooted_in"], ["T24", "D3", "rooted_in"], ["C1", "T1", "enabled_by"], ["C1", "T21", "enabled_by"], ["C2", "T2", "enabled_by"], ["C3", "T3", "enabled_by"], ["C4", "T3", "enabled_by"], ["C5", "T4", "enabled_by"], ["C6", "T16", "enabled_by"], ["C7", "T17", "enabled_by"], ["C7", "T23", "enabled_by"], ["C8", "T5", "enabled_by"], ["C8", "T15", "enabled_by"], ["C9", "T6", "enabled_by"], ["C10", "T15", "enabled_by"], ["C11", "T22", "enabled_by"], ["C12", "T7", "enabled_by"], ["C13", "T8", "enabled_by"], ["C14", "T11", "enabled_by"], ["C15", "T18", "enabled_by"], ["C16", "T10", "enabled_by"], ["C17", "T12", "enabled_by"], ["C18", "T13", "enabled_by"], ["C18", "T7", "enabled_by"], ["C19", "T9", "enabled_by"], ["C20", "T9", "enabled_by"], ["C21", "T20", "enabled_by"], ["C22", "T19", "enabled_by"], ["C23", "T23", "enabled_by"], ["C24", "T22", "enabled_by"], ["C26", "T23", "enabled_by"], ["C27", "T23", "enabled_by"], ["C28", "T24", "enabled_by"], ["F4", "T14", "enabled_by"], ["C1", "F1", "performs_function"], ["C2", "F2", "performs_function"], ["C3", "F2", "performs_function"], ["C4", "F2", "performs_function"], ["C3", "F20", "performs_function"], ["C5", "F3", "performs_function"], ["C6", "F3", "performs_function"], ["C6", "F18", "performs_function"], ["C7", "F6", "performs_function"], ["C7", "F4", "performs_function"], ["C8", "F6", "performs_function"], ["C8", "F11", "performs_function"], ["C8", "F9", "performs_function"], ["C9", "F6", "performs_function"], ["C10", "F5", "performs_function"], ["C10", "F18", "performs_function"], ["C11", "F5", "performs_function"], ["C12", "F5", "performs_function"], ["C13", "F7", "performs_function"], ["C14", "F8", "performs_function"], ["C15", "F9", "performs_function"], ["C16", "F10", "performs_function"], ["C17", "F11", "performs_function"], ["C18", "F13", "performs_function"], ["C19", "F14", "performs_function"], ["C20", "F14", "performs_function"], ["C21", "F15", "performs_function"], ["C22", "F12", "performs_function"], ["C23", "F6", "performs_function"], ["C26", "F9", "performs_function"], ["C27", "F13", "performs_function"], ["C28", "F19", "performs_function"], ["F2", "F1", "enables_function"], ["F1", "F3", "enables_function"], ["F3", "F4", "enables_function"], ["F5", "F4", "enables_function"], ["F4", "F16", "enables_function"], ["F4", "F17", "enables_function"], ["F8", "F16", "enables_function"], ["F8", "F17", "enables_function"], ["F7", "F12", "enables_function"], ["F13", "F14", "enables_function"], ["F4", "M1", "addresses_need"], ["F4", "M3", "addresses_need"], ["F4", "M5", "addresses_need"], ["F4", "M12", "addresses_need"], ["F4", "M13", "addresses_need"], ["F5", "M1", "addresses_need"], ["F16", "M4", "addresses_need"], ["F16", "M5", "addresses_need"], ["F17", "M17", "addresses_need"], ["F7", "M6", "addresses_need"], ["F7", "M14", "addresses_need"], ["F8", "M6", "addresses_need"], ["F9", "M6", "addresses_need"], ["F6", "M7", "addresses_need"], ["F10", "M7", "addresses_need"], ["F14", "M7", "addresses_need"], ["F15", "M7", "addresses_need"], ["F20", "M7", "addresses_need"], ["F11", "M8", "addresses_need"], ["F12", "M8", "addresses_need"], ["F12", "M14", "addresses_need"], ["F12", "M16", "addresses_need"], ["F18", "M11", "addresses_need"], ["C25", "C28", "feeds"], ["C28", "C21", "feeds"], ["C21", "C16", "feeds"], ["C16", "C13", "feeds"], ["C13", "C14", "feeds"], ["C14", "C2", "feeds"], ["C2", "C3", "feeds"], ["C3", "C1", "feeds"], ["C4", "C1", "feeds"], ["C1", "C5", "feeds"], ["C5", "C7", "feeds"], ["C13", "C12", "feeds"], ["C13", "C17", "feeds"], ["C13", "C18", "feeds"], ["C13", "C22", "actuates"], ["C15", "C8", "actuates"], ["C8", "C16", "actuates"], ["C12", "C10", "actuates"], ["C11", "C10", "relevant_to"], ["C19", "C1", "relevant_to"], ["C20", "C7", "relevant_to"], ["C24", "C13", "relevant_to"], ["C24", "C14", "relevant_to"], ["C24", "C15", "relevant_to"], ["C27", "C23", "relevant_to"], ["A1", "M1", "relevant_to"], ["A1", "M2", "relevant_to"], ["A1", "M3", "relevant_to"], ["A1", "M5", "relevant_to"], ["A1", "M15", "relevant_to"], ["A2", "X2", "relevant_to"], ["A2", "X10", "relevant_to"], ["A3", "M9", "relevant_to"], ["A3", "M10", "relevant_to"], ["A3", "M1", "relevant_to"], ["A4", "M6", "relevant_to"], ["A4", "M14", "relevant_to"], ["A4", "M7", "relevant_to"], ["A5", "M7", "relevant_to"], ["A5", "M17", "relevant_to"], ["A5", "M4", "relevant_to"], ["A5", "M12", "relevant_to"], ["A6", "M1", "relevant_to"], ["A6", "M11", "relevant_to"], ["A6", "M16", "relevant_to"], ["A7", "X7", "relevant_to"], ["A7", "X8", "relevant_to"], ["A7", "X14", "relevant_to"], ["A8", "X12", "relevant_to"], ["A8", "M9", "relevant_to"], ["A8", "X15", "relevant_to"], ["T14", "X1", "causes"], ["X1", "M2", "contradicts"], ["X1", "P1", "relevant_to"], ["X2", "C1", "causes"], ["C8", "X2", "partially_mitigates"], ["C9", "X2", "partially_mitigates"], ["C16", "X2", "partially_mitigates"], ["C23", "X2", "partially_mitigates"], ["C7", "X3", "causes"], ["C10", "X3", "partially_mitigates"], ["X3", "M4", "contradicts"], ["X3", "F5", "relevant_to"], ["X4", "C7", "relevant_to"], ["X4", "M7", "contradicts"], ["C13", "X5", "causes"], ["X5", "M3", "contradicts"], ["C14", "X6", "causes"], ["X6", "T11", "relevant_to"], ["X6", "F16", "relevant_to"], ["C3", "X7", "causes"], ["X7", "M7", "contradicts"], ["C1", "X8", "causes"], ["T14", "X9", "causes"], ["X9", "M3", "relevant_to"], ["X9", "M7", "contradicts"], ["C16", "X10", "partially_mitigates"], ["C19", "X10", "partially_mitigates"], ["C20", "X10", "partially_mitigates"], ["C21", "X10", "partially_mitigates"], ["X11", "C7", "relevant_to"], ["X11", "M10", "relevant_to"], ["X12", "C13", "relevant_to"], ["X12", "C17", "relevant_to"], ["X12", "M9", "relevant_to"], ["C13", "X13", "causes"], ["X13", "F7", "relevant_to"], ["X13", "M12", "contradicts"], ["C17", "X14", "causes"], ["X14", "F11", "relevant_to"], ["X15", "C2", "relevant_to"], ["X15", "C12", "relevant_to"], ["X15", "C13", "relevant_to"]], COL = {"Product": "#4C72B0", "Component": "#55A868", "Function": "#C44E52", "MarketNeed": "#8172B2", "Actor": "#CCB974", "Constraint": "#64B5CD", "Technology": "#DD8452", "Field": "#937860"};
+const RANK = {Field:0, Technology:1, Component:2, Function:3, MarketNeed:4};
+const adj = {}; Object.keys(NODES).forEach(k => adj[k] = []);
+EDGES.forEach(([a,b,t]) => { adj[a].push({o:b, out:true, t}); adj[b].push({o:a, out:false, t}); });
+function chain(id) {
+  const on = new Set([id]), eon = new Set(), t0 = NODES[id].type;
+  const key = (a,b,out) => out ? a+'|'+b : b+'|'+a;
+  if (!(t0 in RANK)) {               // Product / Actor / Constraint: direct links only
+    adj[id].forEach(x => { on.add(x.o); eon.add(key(id,x.o,x.out)); });
+    return {on, eon};
+  }
+  const walk = up => {
+    const q = [id], seen = new Set([id]);
+    while (q.length) {
+      const c = q.shift(), rc = RANK[NODES[c].type];
+      if (!up && rc <= 1 && c !== id) continue;           // stop at the closest Technology
+      for (const x of adj[c]) {
+        const ro = RANK[NODES[x.o].type]; if (ro === undefined) continue;
+        let ok = up ? ro > rc : (ro < rc && ro >= 1);
+        if (rc === 3 && ro === 3 && x.t === 'enables_function') ok = up ? x.out : !x.out; // function -> derived function
+        if (!ok) continue;
+        on.add(x.o); eon.add(key(c,x.o,x.out));
+        if (!seen.has(x.o)) { seen.add(x.o); q.push(x.o); }
+      }
+    }
+  };
+  walk(true); walk(false);
+  adj[id].forEach(x => { const t = NODES[x.o].type;             // direct actors / constraints
+    if (t === 'Constraint' || t === 'Actor') { on.add(x.o); eon.add(key(id,x.o,x.out)); } });
+  return {on, eon};
+}
+const G = document.getElementById('G'), info = document.getElementById('info'), idle = info.innerHTML;
+const nodeEls = [...G.querySelectorAll('.n')], edgeEls = [...G.querySelectorAll('.e')];
+let cur = null;
+function reset() { cur = null; G.classList.remove('focus'); nodeEls.forEach(n => n.classList.remove('on','sel')); edgeEls.forEach(e => e.classList.remove('on')); info.innerHTML = idle; }
+function select(id) {
+  if (cur === id) return reset();
+  cur = id; const {on, eon} = chain(id);
+  G.classList.add('focus');
+  nodeEls.forEach(n => { n.classList.toggle('on', on.has(n.dataset.id)); n.classList.toggle('sel', n.dataset.id === id); });
+  edgeEls.forEach(e => e.classList.toggle('on', eon.has(e.dataset.k)));
+  const order = ['MarketNeed','Function','Component','Technology','Field','Actor','Constraint','Product'];
+  const chips = [...on].filter(x => x !== id).sort((a,b) => order.indexOf(NODES[a].type) - order.indexOf(NODES[b].type))
+     .map(x => `<span class="chip" style="background:${COL[NODES[x].type]}" title="${NODES[x].label}">${x}</span>`).join('');
+  info.innerHTML = `<span><span class="chip" style="background:${COL[NODES[id].type]}">${id}</span> <b>${NODES[id].label}</b> <span class="muted">· ${NODES[id].type} · ${on.size-1} linked</span></span><span>${chips}</span><button type="button" id="rst">Reset</button>`;
+  document.getElementById('rst').onclick = reset;
+}
+nodeEls.forEach(n => {
+  n.addEventListener('click', ev => { ev.stopPropagation(); select(n.dataset.id); });
+  n.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); select(n.dataset.id); } });
+});
+G.addEventListener('click', reset);
+document.addEventListener('keydown', ev => { if (ev.key === 'Escape') reset(); });
+</script>
+</body></html>

@@ -21,9 +21,9 @@ The model applies the SUBSTITUTE operator to 13 market needs at four levels of t
 
 ### Explore the product graph
 
-[![The microwave innovation matrix: click to open the interactive version](results/charts/0_innovation_matrix_M8.png)](https://GITHUB_USER.github.io/REPO_NAME/)
+[![The microwave innovation matrix: click to open the interactive version](results/charts/0_innovation_matrix_M8.png)](microwave_innovation_matrix_v2)
 
-**[Open the interactive innovation matrix →](https://GITHUB_USER.github.io/REPO_NAME/)** All 123 nodes and 246 edges of the microwave graph, from market needs down to scientific fields.
+**[Open the interactive innovation matrix →](microwave_innovation_matrix_v2.html)** All 123 nodes and 246 edges of the microwave graph, from market needs down to scientific fields.
 
 ## Repository layout
 
