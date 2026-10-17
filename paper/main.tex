@@ -16,6 +16,21 @@
 \usepackage[round,authoryear]{natbib}
 \usepackage[hidelinks]{hyperref}
 
+% --- Title framed by two rules (NeurIPS/ICML preprint look) ---
+\makeatletter
+\renewcommand{\maketitle}{%
+  \begingroup\renewcommand{\thefootnote}{\fnsymbol{footnote}}%
+  \begin{center}
+    \rule{\linewidth}{4pt}\par\vspace{0.35in}
+    {\LARGE\bfseries \@title\par}
+    \vspace{0.25in}\rule{\linewidth}{1pt}\par\vspace{0.3in}
+    {\normalsize \@author\par}
+    \vspace{0.3in}
+  \end{center}
+  \thispagestyle{plain}\@thanks\endgroup
+  \setcounter{footnote}{0}\global\let\@thanks\@empty}
+\makeatother
+
 % ---- helpers that pandoc's LaTeX output expects ----
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \makeatletter
@@ -30,21 +45,17 @@
 \input{unicode_chars}
 
 \title{AI brainstorming: Is less context more?\\[0.4em]
-\large Narrow context is more efficient than full context\\
-for generative ideation with product graphs%
+
+{\large\mdseries Narrow context is more efficient than full context\\
+for generative ideation with product graphs}%
 \thanks{Code, data, prompts and all model outputs: \url{https://github.com/orioli/IM-LLM}}}
 
-\author{
-  Marc Magrans de Abril\textsuperscript{1} \and
-  Almubdi Muitakan\textsuperscript{2} \and
-  Maria Tsakalerou\textsuperscript{3} \and
-  Jose Berengueres\textsuperscript{2} \\[1em]
-  \textsuperscript{1} Independent researcher \\
-  \textsuperscript{2}School of Computing and Artificial Intelligence, Nazarbayev University \\
-  \textsuperscript{3}School of Engineering, Nazarbayev University
-}
+\author{Marc Magrans de Abril$^{1}$ \quad Almubdi Muitakan$^{2}$ \quad
+        Maria Tsakalerou$^{3}$ \quad Jose Berengueres$^{2}$\\[0.6em]
+{\small $^{1}$Independent researcher\\
+        $^{2}$School of Computing and AI, Nazarbayev University\\
+        $^{3}$School of Engineering, Nazarbayev University}}
 \date{}
-
 \begin{document}
 \maketitle
 
