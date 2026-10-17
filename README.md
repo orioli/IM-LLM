@@ -1,7 +1,6 @@
 ### Explore the product graph
 
 ![Microwave innovation matrix demo](demoAB.gif)
-![Microwave innovation matrix demo](innovation_matrix_demo.gif)
 
 
 # Is less more? Narrow context in LLM ideation with product graphs
@@ -23,8 +22,11 @@ The model applies the SUBSTITUTE operator to 13 market needs at four levels of t
 
 ![Yield per arm: top ideas per 100k tokens, with the no-graph control as a dashed line](results/charts/8c_yield_spread_annotated.png)
 
+
 *Top ideas per 100k tokens for each arm (box = middle 50% of 2,000 bootstrap slopes). Arms left of the dashed line, including every full-graph arm, find top ideas less efficiently than giving the model no graph at all.*
 
+
+![Microwave innovation matrix demo](innovation_matrix_demo.gif)
 
 
 ## Repository layout
