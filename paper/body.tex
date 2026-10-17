@@ -107,6 +107,18 @@ The experiment holds the AI model and the prompt fixed, and varies only how much
   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2258}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.0484}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.7258}}@{}}
+\caption{Node types in the microwave innovation matrix (123 nodes): count per type and what each type represents.}\label{tab:node-types}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Type
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Count
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Role
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Type
@@ -177,6 +189,22 @@ Four needs (M2, M9, M10, M15) are not addressed by any function, so their vertic
   >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1000}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.0625}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.3125}}@{}}
+\caption{The four representations of the graph given to the model: size of the graph content in the prompt and mean input tokens per call. Ranges for B and R are across the 13 market needs.}\label{tab:representations}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Condition
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nodes
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Share of graph
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Edges
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Input tokens per call (mean, incl.~prompt)
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Condition
@@ -234,6 +262,12 @@ The prompt is identical across conditions except for the graph file. In conditio
 \end{itemize}
 
 \begin{longtable}[]{@{}llll@{}}
+\caption{Generation design: conditions run at each thinking effort and on how many market needs, with 5 replicate calls per cell (580 calls in total).}\label{tab:design}\tabularnewline
+\toprule\noalign{}
+Conditions & Efforts & Needs & Calls \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 Conditions & Efforts & Needs & Calls \\
 \midrule\noalign{}
@@ -264,6 +298,12 @@ Ideas were judged blind by a second, larger model, \texttt{claude-sonnet-5-5}, a
 \textbf{Pairwise set judging.} Two idea sets for the same market need and replicate, differing in one factor, were shown side by side. The judge scored each set from 1 to 5 on relevance, novelty, feasibility, specificity and diversity (how different the ideas are from each other), and named the better set or a tie (prompt in Appendix C). Every pair was judged twice, once in each presentation order, and the two verdicts were combined into one result per pair: agreeing verdicts count as a win, opposite verdicts as a tie. If one side had no parsed ideas, the other won without a judge call (one pair per affected comparison). The comparisons judged were:
 
 \begin{longtable}[]{@{}lll@{}}
+\caption{Pairwise set comparisons sent to the judge. Each pair is two idea sets for the same market need and replicate that differ in one factor.}\label{tab:pairwise-design}\tabularnewline
+\toprule\noalign{}
+Comparison & Effort & Pairs \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 Comparison & Effort & Pairs \\
 \midrule\noalign{}
@@ -505,6 +545,16 @@ The aim of brainstorming is the rare great idea, not a good average, so the main
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2857}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.7143}}@{}}
+\caption{Experimental setup at a glance.}\label{tab:setup}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Item
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Value
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Item
@@ -559,6 +609,28 @@ Means per call.
   >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1429}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1429}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1633}}@{}}
+\caption{Cost and validity by representation and effort: number of calls, share of responses parsed, mean tokens per call (input, output, total) and mean words per idea.}\label{tab:tokens}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Condition
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Effort
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Calls
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Parse rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Input tokens
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Output tokens
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Total tokens
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Words per idea
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Condition
@@ -619,6 +691,24 @@ xhigh was run on 6 of the 13 market needs; those market needs have larger slices
   >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.17}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.19}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.15}}@{}}
+\caption{How the ideas use the graph, by representation and effort: where ideas anchor, how often they repeat the prompt's worked example, and how many new nodes they propose.}\label{tab:graph-use}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Condition
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Effort
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Anchors outside the market need's own slice
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Anchors to nodes not in the graph
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ideas repeating the worked example (of 5)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+New nodes per idea
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Condition
@@ -686,6 +776,28 @@ Figure \ref{fig:toprate} shows the rates with their intervals.
   >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.13}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.12}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.14}}@{}}
+\caption{Top-idea rate per arm (share of ideas scoring $\geq$ 4.0), averaged over market needs with 95\% bootstrap intervals, with cost per call and per top idea. Bold: lowest cost per top idea.}\label{tab:toprate}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Arm
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Needs
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Top ideas / ideas
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Top-idea rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+95\% CI
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Calls with ≥ 1 top idea
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Tokens per call
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Tokens per top idea
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Arm
@@ -760,6 +872,22 @@ The top-idea rate says how good an arm's ideas are; the yield says how fast it f
   >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1077}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2923}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1231}}@{}}
+\caption{Yield per arm, the main measure: top ideas per 100k tokens with 95\% bootstrap intervals, ranked from most to least efficient.}\label{tab:yield}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Arm
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Top ideas
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Tokens spent
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Yield (top ideas per 100k tokens)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+95\% CI
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Arm
@@ -830,6 +958,26 @@ Yield per market need at high effort (top ideas per 100k tokens; B's slice size 
   >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1778}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1556}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.0889}}@{}}
+\caption{Yield per market need at high effort (top ideas per 100k tokens), ordered by the size of the market-need slice. The last column is the slice's yield divided by the full graph's.}\label{tab:yield-per-need}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Need
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Slice nodes
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+B market-need slice
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+C no graph
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+R random slice
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+A full graph
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+B ÷ A
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Need
@@ -871,6 +1019,22 @@ M17 & 51 & 2.9 & 7.9 & 6.1 & 2.8 & 1.0× \\
   >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1739}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.0435}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.0870}}@{}}
+\caption{Arm-versus-arm comparisons across market needs: number of needs on which each arm has the higher yield, with exact two-sided sign tests (ties excluded). Bold: $p < 0.05$.}\label{tab:sign-tests}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Comparison
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+First arm more efficient
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Second more efficient
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Equal
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sign test p
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Comparison
@@ -925,6 +1089,12 @@ Figure \ref{fig:budget} shows the curves.
 This measure answers a practical question, how likely one budget is to produce at least one top idea, but every arm's chance approaches 100\% as the budget grows, so it compresses differences at large budgets and can suggest that spending alone guarantees a top idea. The yield above is the better basis for comparing arms. For a token budget spent on whole calls of one arm, the chance that at least one idea scores ≥ 4.0, averaged over market needs. Within a market need, calls are treated as independent: k calls succeed with 1 − (1 − p)\^{}k, where p is the market need's share of calls with a top idea, estimated as (hits + ½) / (calls + 1) because 5 calls per market need often give exactly 0 or 1.
 
 \begin{longtable}[]{@{}llll@{}}
+\caption{Chance of at least one top idea for a given token budget, per arm. In brackets: the number of whole calls that budget buys.}\label{tab:budget}\tabularnewline
+\toprule\noalign{}
+Arm & 25k tokens & 50k tokens & 100k tokens \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 Arm & 25k tokens & 50k tokens & 100k tokens \\
 \midrule\noalign{}
@@ -979,6 +1149,12 @@ Figure \ref{fig:costquality} plots tokens per call against mean idea score for t
 Need-balanced mean idea score (1--5) and mean criterion scores:
 
 \begin{longtable}[]{@{}llllll@{}}
+\caption{Mean idea score and mean criterion scores per arm (individual scoring, 1--5, balanced across market needs).}\label{tab:meanscore}\tabularnewline
+\toprule\noalign{}
+Arm & Mean score & Relevance & Novelty & Feasibility & Specificity \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 Arm & Mean score & Relevance & Novelty & Feasibility & Specificity \\
 \midrule\noalign{}
@@ -1038,6 +1214,30 @@ Figure \ref{fig:winrates} shows every pairwise comparison in this and the next t
   >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1395}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1395}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.2093}}@{}}
+\caption{Pairwise set judging, full graph versus market-need slice at equal effort: wins, win rate with 95\% Wilson interval, sign test, and agreement between the two presentation orders.}\label{tab:full-vs-slice}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Effort
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Pairs
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Full graph wins
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Slice wins
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ties
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Full graph win rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+95\% CI
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sign test p
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Order agreement
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Effort
@@ -1069,6 +1269,12 @@ high & 65 & 34 & 16 & 15 & 64\% & 52--74\% & 0.015 & 77\% \\
 Mean score difference, Full graph minus Slice (1--5 scale):
 
 \begin{longtable}[]{@{}llllll@{}}
+\caption{Full graph minus market-need slice: mean difference in set scores per criterion (1--5 scale), by effort.}\label{tab:full-vs-slice-criteria}\tabularnewline
+\toprule\noalign{}
+Effort & Relevance & Novelty & Feasibility & Specificity & Diversity \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 Effort & Relevance & Novelty & Feasibility & Specificity & Diversity \\
 \midrule\noalign{}
@@ -1102,6 +1308,30 @@ high & −0.01 & +0.06 & +0.09 & +0.34 & +0.16 \\
   >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0652}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0761}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0978}}@{}}
+\caption{Pairwise set judging against the controls (no graph and random slice) at high effort.}\label{tab:controls}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Comparison
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Pairs
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+First wins
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Second wins
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ties
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+First-arm win rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+95\% CI
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sign test p
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Order agreement
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Comparison
@@ -1141,6 +1371,24 @@ Mean score difference, first minus second arm (1--5 scale):
   >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1818}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1818}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1515}}@{}}
+\caption{Comparisons with the controls: mean difference in set scores per criterion, first minus second arm (1--5 scale).}\label{tab:controls-criteria}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Comparison
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Relevance
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Novelty
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Feasibility
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Specificity
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Diversity
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Comparison
@@ -1192,6 +1440,32 @@ Slice − Random graph & +0.14 & −0.08 & +0.20 & −0.03 & −0.20 \\
   >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.0845}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.0986}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1268}}@{}}
+\caption{Pairwise set judging between effort levels within the same representation.}\label{tab:effort}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Comparison
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Condition
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Pairs
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Higher wins
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Lower wins
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ties
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Higher-effort win rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+95\% CI
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sign test p
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Order agreement
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Comparison
@@ -1234,6 +1508,26 @@ Mean score difference, higher minus lower effort:
   >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1364}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1364}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1136}}@{}}
+\caption{Effort comparisons: mean difference in set scores per criterion, higher minus lower effort (1--5 scale).}\label{tab:effort-criteria}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Comparison
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Condition
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Relevance
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Novelty
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Feasibility
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Specificity
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Diversity
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Comparison
@@ -1281,6 +1575,30 @@ xhigh − high & Slice & +0.19 & +0.47 & +0.03 & +0.61 & +0.45 \\
   >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0938}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1094}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1406}}@{}}
+\caption{Market-need slice at high effort versus full graph at low effort, two arms of similar cost per call.}\label{tab:slicehigh-vs-fulllow}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Comparison
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Pairs
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Slice-high wins
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Full-graph-low wins
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ties
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Slice-high win rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+95\% CI
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sign test p
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Order agreement
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Comparison
@@ -1318,6 +1636,20 @@ B-high was ahead on every criterion and for all 13 market needs, at 12,407 vs 14
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3286}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1143}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2286}}@{}}
+\caption{Length check: mean words per set in each comparison, how often the longer set won, and the winning arm's win rate.}\label{tab:length}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Comparison
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean words per set (first / second arm)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Longer set won
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Win rate of the winning arm
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Comparison
@@ -1398,6 +1730,22 @@ Ideas were scored with the main study's quality prompt, unchanged, and in a sepa
   >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1781}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2192}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1644}}@{}}
+\caption{Persona follow-up: yield (top ideas per 100k tokens, 95\% bootstrap CI) per persona with the market-need slice (B) and with no graph (C), pooled over three market needs and two efforts.}\label{tab:persona-rep}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Persona
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+B · market-need slice
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+C · no graph
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+B ÷ C {[}95\% CI{]}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Top-idea rate B / C
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Persona
@@ -1433,6 +1781,20 @@ Patent-focused & 5.8 {[}4.8--6.8{]} & 4.9 {[}3.6--6.4{]} & 1.17 {[}0.86--1.66{]}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2241}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1724}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2759}}@{}}
+\caption{Persona follow-up: one yield per persona over all its calls, the chance it beats the innovation engineer, and mean patentability (1--5).}\label{tab:persona}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Persona
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Yield {[}95\% CI{]}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+P(beats engineer)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean patentability {[}95\% CI{]}
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Persona
