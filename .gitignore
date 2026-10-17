@@ -31,3 +31,4 @@ results/*.zip
 .DS_Store
 .Rhistory
 runs/dry_run/
+tmp/
