@@ -21,7 +21,7 @@ The model applies the SUBSTITUTE operator to 13 market needs at four levels of t
 
 ### Explore the product graph
 
-[![Microwave innovation matrix demo](results/charts/innovation_matrix_demo.gif)](https://YOUR_USERNAME.github.io/YOUR_REPO/xx.html)
+[![Microwave innovation matrix demo](results/charts/innovation_matrix_demo.gif)]
 
 
 ## Repository layout
