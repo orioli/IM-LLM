@@ -1,3 +1,9 @@
+### Explore the product graph
+
+![Microwave innovation matrix demo](demoAB.gif)
+![Microwave innovation matrix demo](innovation_matrix_demo.gif)
+
+
 # Is less more? Narrow context in LLM ideation with product graphs
 
 Code, data and paper for **"Is less more? Narrow context is more efficient than full context for generative ideation with product graphs"**.
@@ -19,9 +25,6 @@ The model applies the SUBSTITUTE operator to 13 market needs at four levels of t
 
 *Top ideas per 100k tokens for each arm (box = middle 50% of 2,000 bootstrap slopes). Arms left of the dashed line, including every full-graph arm, find top ideas less efficiently than giving the model no graph at all.*
 
-### Explore the product graph
-
-[![Microwave innovation matrix demo](innovation_matrix_demo.gif)]
 
 
 ## Repository layout
