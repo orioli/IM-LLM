@@ -32,3 +32,4 @@ results/*.zip
 .Rhistory
 runs/dry_run/
 tmp/
+.vscode/
