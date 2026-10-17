@@ -59,6 +59,8 @@ SPREAD_NOTE_WORSE = ("A", "low", 8.0, "Adding the full knowledge graph to the pr
                                       "less efficient than no graph at all")
 SPREAD_NOTE_BETTER = ("B", "low", 2.0, "Giving a partial view of the graph improved top-idea generation efficiency")
 SPREAD_NOTE_WRAP = 30            # characters per line in the notes
+# y-axis names in the slope-spread charts (8b, 8c); other charts keep the letter codes
+SPREAD_NAMES = {"A": "Full graph", "B": "Slice", "C": "No graph", "R": "Random graph"}
 KEY_POS = (1.03, 0.98)        # chart 8: top-left corner of the slope key, in axes fractions (>1 = right of plot)
 CURVE_STYLE = {"low": (0, (1, 2)), "medium": (0, (5, 2)), "high": "-", "xhigh": "-", "max": "-"}
 
@@ -156,6 +158,15 @@ def arm_label(c, e, xhigh_needs):
     return f"{c} · {e}" + (f" ({xhigh_needs} needs)" if xhigh_needs else "")
 
 
+def legend_marker(effort, color):
+    """Line2D marker kwargs matching mark_style: strokes as lines, closed shapes as open outlines."""
+    from charts import LINE_MARKERS, SURFACE as _S
+    m = EFFORT_MARKER.get(effort, "o")
+    if m in LINE_MARKERS:
+        return {"marker": m, "markeredgecolor": color, "markeredgewidth": 1.3}
+    return {"marker": m, "markerfacecolor": _S, "markeredgecolor": color, "markeredgewidth": 1.3}
+
+
 # ── 6. Top-idea rate per arm ────────────────────────────────────────
 def chart_rate(rows, th, kept, sub_note, tag=""):
     fig, ax = plt.subplots(figsize=(8, 0.42 * len(rows) + 1.9))
@@ -171,7 +182,8 @@ def chart_rate(rows, th, kept, sub_note, tag=""):
         ax.text(xmax * 1.01, y, f"{r['idea_rate']:.1%}   {r['hits']}/{r['ideas']}   "
                                 f"{r['tokens_per_hit'] / 1000:.0f}k tok/hit",
                 va="center", fontsize=8.5, color=INK)
-    ax.set_yticks(ys, [r["label"] for r in rows])
+    ax.set_yticks(ys, [r["label"].replace(r["condition"] + " ·", SPREAD_NAMES.get(r["condition"], r["condition"]) + " ·", 1)
+                       for r in rows])
     for lab, r in zip(ax.get_yticklabels(), rows):
         lab.set_color(INK)
     ax.tick_params(axis="y", length=0)
@@ -190,7 +202,7 @@ def chart_rate(rows, th, kept, sub_note, tag=""):
 
 # ── 7. Chance of a top idea vs budget ───────────────────────────────
 def chart_budget(groups, th, kept, sub_note, tag=""):
-    fig, ax = plt.subplots(figsize=(8, 5.4))
+    fig, ax = plt.subplots(figsize=(9, 5.4))
     ends = []
     for c, e in CURVE_ARMS:
         pn = groups.get((c, e))
@@ -205,15 +217,15 @@ def chart_budget(groups, th, kept, sub_note, tag=""):
         ax.plot(xs, ys, color=col, linewidth=1.8, linestyle=CURVE_STYLE.get(e, "-"), zorder=2)
         ax.scatter(xs[1:], ys[1:], s=28, zorder=3, **mark_style(e, col, 1.3, fill=SURFACE))
         most = max(len(v) for v in groups.values())
-        ends.append((ys[-1], f"{c} · {e}" + (f" ({len(pn)} needs)" if len(pn) < most else ""), col, xs[-1]))
+        ends.append((ys[-1], f"{SPREAD_NAMES.get(c, c)} · {e}" + (f" ({len(pn)} needs)" if len(pn) < most else ""), col, xs[-1], e))
     # direct labels at the right edge, nudged apart so they don't overlap
-    ends.sort()
-    placed = []
-    for y, lab, col, x_end in ends:
-        y_txt = max([y] + [p + 0.035 for p in placed[-1:]])
-        placed.append(y_txt)
-        ax.plot([x_end, BUDGET_MAX / 1000], [y, y], color=col, linewidth=0.6, linestyle=":", zorder=1)
-        ax.text(BUDGET_MAX / 1000 * 1.01, y_txt, lab, color=col, fontsize=8.5, va="center", fontweight="bold")
+    # legend outside the plot, in the order the curves end (highest first), with each curve's
+    # colour, line style and effort symbol, so arms of the same colour stay distinguishable
+    ends.sort(key=lambda t: -t[0])
+    handles = [Line2D([], [], color=col, linewidth=1.8, linestyle=CURVE_STYLE.get(eff, "-"),
+                      markersize=6, **legend_marker(eff, col)) for _, _, col, _, eff in ends]
+    ax.legend(handles, [lab for _, lab, _, _, _ in ends], loc="upper left", bbox_to_anchor=(1.02, 1.0),
+              frameon=False, fontsize=8.5, handlelength=2.6, borderaxespad=0)
     ax.set_xlim(0, BUDGET_MAX / 1000)
     ax.set_ylim(0, 1.0)
     ax.yaxis.set_major_formatter(matplotlib.ticker.PercentFormatter(1.0, decimals=0))
@@ -222,7 +234,7 @@ def chart_budget(groups, th, kept, sub_note, tag=""):
     ax.set_ylabel(f"chance of at least one idea scoring ≥ {th:g}")
     ax.set_title("Chance of a top idea for a given budget")
     ax.grid(axis="x", color=GRID, linewidth=0.8)
-    fig.subplots_adjust(right=0.82)
+    fig.subplots_adjust(right=0.74)
     finish(fig, ax, f"7_chance_vs_budget{tag}.png",
            "Each symbol = one more call · chance = 1 − (1 − p)^calls per need, averaged over needs\n"
            "p = that need's share of calls with ≥ 1 top idea, (hits + ½) / (calls + 1)" + sub_note)
@@ -257,7 +269,7 @@ def chart_yield(rows, groups, th, sub_note, tag=""):
         ax.scatter([xs[-1]], [slope * xs[-1] * 10], s=42, zorder=3, **mark_style(e, col, 1.5, fill=SURFACE))
         x_max, y_max = max(x_max, xs[-1]), max(y_max, ys[-1], slope * xs[-1] * 10)
         few = f" ({len(pn)} needs)" if len(pn) < most else ""
-        key.append((slope, f"{c} · {e}{few}", r["yield_lo"], r["yield_hi"], col))
+        key.append((slope, f"{SPREAD_NAMES.get(c, c)} · {e}{few}", r["yield_lo"], r["yield_hi"], col))
 
     # ranked key in the empty lower-right corner (below the shallow lines): steepest line first
     key.sort(reverse=True)
@@ -340,7 +352,8 @@ def chart_yield_spread(rows, th, sub_note, tag="", annotated=False):
             p = sum(x > z for x, z in zip(a, b)) / len(a)
             ax.text(x_right, y - 0.5, f"{p:.2f}", va="center", ha="left", fontsize=8, color=INK2)
     ax.text(x_right, len(arms) - 0.45, "P(higher\nthan next)", va="bottom", ha="left", fontsize=8, color=INK2)
-    ax.set_yticks(ys, [r["label"] for r in arms])
+    ax.set_yticks(ys, [r["label"].replace(r["condition"] + " ·", SPREAD_NAMES.get(r["condition"], r["condition"]) + " ·", 1)
+                       for r in arms])
     for lab in ax.get_yticklabels():
         lab.set_color(INK)
     ax.tick_params(axis="y", length=0)
@@ -354,7 +367,7 @@ def chart_yield_spread(rows, th, sub_note, tag="", annotated=False):
     finish(fig, ax, f"{'8c_yield_spread_annotated' if annotated else '8b_yield_spread'}{tag}.png",
            "Bootstrap slopes (2,000 resamples of calls within need) · box = middle 50% · whiskers = 95% CI\n"
            "Symbol = observed slope · right: chance this arm's slope beats the arm below it"
-           + (" · dashed line = no graph (C)" if annotated else "")
+           + (" · dashed line = no graph" if annotated else "")
            + sub_note)
 
 

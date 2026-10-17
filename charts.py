@@ -14,6 +14,7 @@ Charts
 from __future__ import annotations
 
 import csv
+import re
 import json
 import random
 from collections import defaultdict
@@ -43,6 +44,7 @@ TOKENS = {"input": "#1baf7a", "output": "#eda100"}             # slots 3, 4: kep
 EFFORT_RAMP = {"low": "#86b6ef", "medium": "#3987e5", "high": "#1c5cab", "xhigh": "#0d366b",
                "max": "#0b0b0b"}                         # ordinal blue ramp
 COND_NAME = {"A": "A · full graph", "B": "B · need slice", "R": "R · random slice", "C": "C · no graph"}
+SHORT_NAME = {"A": "Full graph", "B": "Slice", "R": "Random graph", "C": "No graph"}   # axis labels
 CONDITIONS = ["A", "B", "R", "C"]          # display order in charts 1–2
 # ── Chart 4 settings ────────────────────────────────────────────────
 # Symbol per effort level (matplotlib marker codes): "x" cross, "+" plus, "o" circle (drawn open),
@@ -168,7 +170,7 @@ def chart_tokens(rows: list[dict]) -> None:
                 ax.bar(x, i, width=0.7, color=TOKENS["input"], edgecolor=SURFACE, linewidth=2)
                 ax.bar(x, o, bottom=i, width=0.7, color=TOKENS["output"], edgecolor=SURFACE, linewidth=2)
                 ax.text(x, i + o + 300, f"{(i + o) / 1000:.1f}k", ha="center", va="bottom", color=INK, fontsize=9)
-                labels.append(f"{c}\n{e}")
+                labels.append(SHORT_NAME.get(c, c).replace(" ", "\n") + f"\n{e}")
                 pos.append(x)
                 x += 0.9
         x += 0.6
@@ -184,7 +186,7 @@ def chart_tokens(rows: list[dict]) -> None:
     ax.legend(handles, ["input tokens", "output tokens (incl. thinking)"], loc="upper left")
     present = [c for c in CONDITIONS if any(k[0] == c for k in cells)]
     finish(fig, ax, "1_tokens_per_call.png",
-           "Mean per call · " + ", ".join(COND_NAME[c].replace(" · ", " = ") for c in present))
+           "Mean tokens per call, by representation and thinking effort")
 
 
 # ── 2. Win rates for every comparison ───────────────────────────────
@@ -214,6 +216,8 @@ def chart_win_rates(rows: list[dict]) -> None:
     order = {"A over B": 0, "B over R": 1, "B over C": 2, "A over C": 3, "A over R": 4, "R over C": 5,
              "high over low": 6, "xhigh over high": 7}
     items.sort(key=lambda t: (next((v for k, v in order.items() if t[0].startswith(k)), 8), t[0]))
+    # sorted on the letter codes above; shown with readable names
+    items = [(re.sub(r"\b[ABRC]\b", lambda m: SHORT_NAME[m.group(0)], lab), *rest) for lab, *rest in items]
 
     fig, ax = plt.subplots(figsize=(8, 0.55 * len(items) + 1.6))
     ys = list(range(len(items)))[::-1]
@@ -225,7 +229,7 @@ def chart_win_rates(rows: list[dict]) -> None:
         ax.text(1.04, y, f"{rate:.0%}  ({n} pairs)", va="center", color=INK, fontsize=9)
     ax.set_yticks(ys, [t[0] for t in items])
     ax.tick_params(axis="y", colors=INK, length=0)
-    ax.set_xlim(0, 1.18)
+    ax.set_xlim(0, 1.3)
     ax.set_xticks([0, 0.25, 0.5, 0.75, 1.0], ["0%", "25%", "50%", "75%", "100%"])
     ax.set_xlabel("win rate of the first-named arm (ties count half) · bar = 95% CI")
     ax.set_title("Blind pairwise judging: win rate per comparison", pad=10)
@@ -264,10 +268,10 @@ def chart_score_diff(rows: list[dict]) -> None:
     ax.tick_params(axis="y", colors=INK, length=0)
     lim = 1.2
     ax.set_xlim(-lim, lim)
-    ax.text(lim, ys[0] + 0.45, "A better →", ha="right", color=INK2, fontsize=9)
-    ax.text(-lim, ys[0] + 0.45, "← B better", ha="left", color=INK2, fontsize=9)
+    ax.text(lim, ys[0] + 0.45, "Full graph better →", ha="right", color=INK2, fontsize=9)
+    ax.text(-lim, ys[0] + 0.45, "← Slice better", ha="left", color=INK2, fontsize=9)
     ax.set_ylim(ys[-1] - 0.5, ys[0] + 0.7)
-    ax.set_xlabel("mean judge score difference, A minus B (1–5 scale)")
+    ax.set_xlabel("mean judge score difference, Full graph minus Slice (1–5 scale)")
     ax.set_title("Judge scores, full graph minus slice, by criterion", pad=10)
     ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.2), ncol=3)
     ax.grid(axis="x", color=GRID, linewidth=0.8)
