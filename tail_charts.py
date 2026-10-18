@@ -60,6 +60,7 @@ SPREAD_NOTE_WORSE = ("A", "low", 8.0, "Adding the full knowledge graph to the pr
 SPREAD_NOTE_BETTER = ("B", "low", 2.0, "Giving a partial view of the graph improved top-idea generation efficiency")
 SPREAD_NOTE_WRAP = 30            # characters per line in the notes
 # y-axis names in the slope-spread charts (8b, 8c); other charts keep the letter codes
+SPREAD_THUMB_RIGHT = 0.73       # chart 8c: right edge of the plot when the thumbnail column is added
 SPREAD_NAMES = {"A": "Full graph", "B": "Slice", "C": "No graph", "R": "Random graph"}
 KEY_POS = (1.03, 0.98)        # chart 8: top-left corner of the slope key, in axes fractions (>1 = right of plot)
 CURVE_STYLE = {"low": (0, (1, 2)), "medium": (0, (5, 2)), "high": "-", "xhigh": "-", "max": "-"}
@@ -237,10 +238,53 @@ def chart_budget(groups, th, kept, sub_note, tag=""):
     fig.subplots_adjust(right=0.74)
     finish(fig, ax, f"7_chance_vs_budget{tag}.png",
            "Each symbol = one more call · chance = 1 − (1 − p)^calls per need, averaged over needs\n"
-           "p = that need's share of calls with ≥ 1 top idea, (hits + ½) / (calls + 1)" + sub_note)
+           "p = that need's share of calls with ≥ 1 top idea, (hits + ½) / (calls + 1)" + sub_note,
+           after_layout=thumbnail_below_legend if THUMB.exists() else None)
 
 
 # ── 8. Top ideas against tokens spent ───────────────────────────────
+THUMB = OUT / "0b_slices_grid_thumb.png"   # from figure_slices_grid.py; drawn under the key of chart 8 if present
+THUMB_BOX = (0.69, 0.11, 0.28)     # left, bottom, width of the thumbnail, in figure fractions
+
+
+def add_slices_thumbnail(fig, box=None, top=None):
+    """A thumbnail of the 4 x 4 grid of what each prompt contains, so the reader sees what 'full graph',
+    'slice', 'random graph' and 'no graph' mean next to the arms. box = (left, bottom, width) in figure
+    fractions; or give top instead of bottom (box[1] ignored) to hang the thumbnail from that height."""
+    if not THUMB.exists():
+        return
+    img = plt.imread(THUMB)
+    left, bottom, width = box or THUMB_BOX
+    fw, fh = fig.get_size_inches()
+    height = width * fw / fh * img.shape[0] / img.shape[1]
+    if top is not None:
+        bottom = top - (0.035 if width * fw >= 2.6 else 0.06) - height
+    iax = fig.add_axes([left, bottom, width, height])
+    iax.imshow(img, interpolation="lanczos")
+    iax.set_axis_off()
+    label = "What each prompt contains (coloured = what the model sees):"
+    if width * fw < 2.6:                                # narrow column: two lines
+        label = "What each prompt contains\n(coloured = what the model sees):"
+    fig.text(left, bottom + height + 0.012, label, fontsize=7.5, color=INK2, va="bottom", linespacing=1.3)
+
+
+def thumbnail_below_legend(fig, ax):
+    """Chart 7: hang the thumbnail under the legend that sits right of the plot."""
+    leg = ax.get_legend()
+    fig.canvas.draw()
+    bb = leg.get_window_extent(fig.canvas.get_renderer()).transformed(fig.transFigure.inverted())
+    left = bb.x0 + 0.005
+    add_slices_thumbnail(fig, (left, 0, 0.985 - left), top=bb.y0 - 0.03)
+
+
+def thumbnail_right_column(fig, ax):
+    """Chart 8c: make room right of the plot and put the thumbnail there, level with the plot's top."""
+    fig.subplots_adjust(right=SPREAD_THUMB_RIGHT)
+    pos = ax.get_position()
+    left = SPREAD_THUMB_RIGHT + 0.02
+    add_slices_thumbnail(fig, (left, 0, 0.985 - left), top=pos.y1)
+
+
 def chart_yield(rows, groups, th, sub_note, tag=""):
     """Cumulative top ideas vs cumulative tokens. Unlike a probability, a count does not saturate: the
     slope of each arm's line is its yield, top ideas per 100k tokens, and arms are compared by slope."""
@@ -298,6 +342,7 @@ def chart_yield(rows, groups, th, sub_note, tag=""):
     ax.set_axisbelow(True)
     fig.subplots_adjust(left=0.07, right=0.66, top=0.83, bottom=0.11)   # fixed: tight_layout would squeeze
                                                                        # the plot to make room for the key
+    add_slices_thumbnail(fig)
     name = f"8_top_ideas_vs_tokens{tag}.png"
     fig.savefig(OUT / name, dpi=200)
     plt.close(fig)
@@ -311,7 +356,7 @@ def chart_yield_spread(rows, th, sub_note, tag="", annotated=False):
     arms = sorted((r for r in rows if r.get("yield_boot")), key=lambda r: -r["yield_per_100k"])
     if not arms:
         return
-    fig, ax = plt.subplots(figsize=(11 if annotated else 9, 0.6 * len(arms) + 1.9))
+    fig, ax = plt.subplots(figsize=(14 if annotated else 9, 0.6 * len(arms) + 1.9))
     ys = list(range(len(arms)))[::-1]
     y_of = {(r["condition"], r["effort"]): y for y, r in zip(ys, arms)}
     ref = next((r["yield_per_100k"] for r in arms if (r["condition"], r["effort"]) == SPREAD_REFERENCE), None)
@@ -368,7 +413,8 @@ def chart_yield_spread(rows, th, sub_note, tag="", annotated=False):
            "Bootstrap slopes (2,000 resamples of calls within need) · box = middle 50% · whiskers = 95% CI\n"
            "Symbol = observed slope · right: chance this arm's slope beats the arm below it"
            + (" · dashed line = no graph" if annotated else "")
-           + sub_note)
+           + sub_note,
+           after_layout=thumbnail_right_column if annotated and THUMB.exists() else None)
 
 
 # ── 9. Slice size vs the slice's advantage, per market need ─────────

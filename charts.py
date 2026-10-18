@@ -143,16 +143,60 @@ def num(v):
         return None
 
 
-def finish(fig, ax, name: str, subtitle: str = "") -> None:
+def finish(fig, ax, name: str, subtitle: str = "", after_layout=None) -> None:
     if subtitle:
         ax.set_title(ax.get_title(loc="left"), loc="left", pad=24 + 13 * subtitle.count("\n"))
         ax.text(0, 1.015, subtitle, transform=ax.transAxes, color=INK2, fontsize=9, va="bottom")
     ax.grid(axis="y", color=GRID, linewidth=0.8)
     ax.set_axisbelow(True)
     fig.tight_layout()
+    if after_layout:            # e.g. an inset placed relative to the final layout
+        after_layout(fig, ax)
     fig.savefig(OUT / name, dpi=200)
     plt.close(fig)
     print(f"  {OUT / name}")
+
+
+# Thumbnail of the 4 x 4 grid of what each prompt contains (figure_slices_grid.py); charts that have
+# room draw it next to their key, so the arm names are tied to a picture of what the model saw.
+THUMB = OUT / "0b_slices_grid_thumb.png"
+LADDER_WIDTH = 10.5 if THUMB.exists() else 8     # chart 5: wider when the thumbnail column is added
+COSTQ_EXAMPLES = {"B": OUT / "0b_panel_slice_M8.png", "A": OUT / "0b_panel_full.png"}  # chart 4: next to labels
+COSTQ_EXAMPLE_WIDTH = 0.10                      # chart 4: picture width, as a fraction of the plot width
+COSTQ_EXAMPLE_ALPHA = 1.0                       # chart 4: opacity of the pictures
+SCOREDIFF_EXAMPLE_ALPHA = 0.5                   # chart 3: opacity of the example pictures
+SCOREDIFF_EXAMPLES = {                           # chart 3: an example picture on each side, under its arrow
+    "left":  (OUT / "0b_panel_slice_M8_gray.png", "B", "Example: slice for M8 (25 nodes)"),
+    "right": (OUT / "0b_panel_full_gray.png", "A", "Full graph (123 nodes)"),
+}
+LADDER_THUMB_RIGHT = 0.72                        # chart 5: right edge of the plot with the thumbnail
+
+
+def add_slices_thumbnail(fig, box, top=None):
+    """A thumbnail of the 4 x 4 grid of what each prompt contains, so the reader sees what 'full graph',
+    'slice', 'random graph' and 'no graph' mean next to the arms. box = (left, bottom, width) in figure
+    fractions; or give top instead of bottom (box[1] ignored) to hang the label and thumbnail from there."""
+    if not THUMB.exists():
+        return
+    img = plt.imread(THUMB)
+    left, bottom, width = box
+    fw, fh = fig.get_size_inches()
+    height = width * fw / fh * img.shape[0] / img.shape[1]
+    # label on one line if it fits the column, else on two
+    label = "What each prompt contains (coloured = what the model sees):"
+    probe = fig.text(0, 0, label, fontsize=7.5)
+    fig.canvas.draw()
+    if probe.get_window_extent(fig.canvas.get_renderer()).width / (fw * fig.dpi) > width:
+        label = "What each prompt contains\n(coloured = what the model sees):"
+    probe.remove()
+    gap = (0.022 + 0.022 * label.count("\n")) * 5.6 / fh          # room for the label, in figure fractions
+    if top is not None:
+        bottom = top - gap - height
+    iax = fig.add_axes([left, bottom, width, height])
+    iax.imshow(img, interpolation="lanczos")
+    iax.set_axis_off()
+    fig.text(left, bottom + height + 0.012 * 5.6 / fh, label, fontsize=7.5, color=INK2, va="bottom",
+             linespacing=1.3)
 
 
 # ── 1. Tokens per call ──────────────────────────────────────────────
@@ -276,6 +320,21 @@ def chart_score_diff(rows: list[dict]) -> None:
     ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.2), ncol=3)
     ax.grid(axis="x", color=GRID, linewidth=0.8)
     ax.set_axisbelow(True)
+    # example pictures in the empty space on each side: what "slice" and "full graph" look like
+    lo_v = min(v for r in sel.values() for v in (num(r.get(f"{c}_diff_A_minus_B")) for c in CRITERIA) if v is not None)
+    hi_v = max(v for r in sel.values() for v in (num(r.get(f"{c}_diff_A_minus_B")) for c in CRITERIA) if v is not None)
+    right = (max(hi_v, 0) + 0.1, lim - 0.04)                 # space right of the longest bar
+    w = right[1] - right[0]                                   # both pictures the same size
+    boxes = {"left": (-lim + 0.04, -lim + 0.04 + w), "right": right}   # left one against the left edge
+    for side, (path, cond, label) in SCOREDIFF_EXAMPLES.items():
+        if not path.exists():
+            continue
+        x0, x1 = boxes[side]
+        iax = ax.inset_axes([x0, ys[-1] - 0.4, x1 - x0, ys[0] - ys[-1] + 0.25], transform=ax.transData)
+        iax.imshow(plt.imread(path), interpolation="lanczos", aspect="equal", alpha=SCOREDIFF_EXAMPLE_ALPHA)
+        iax.set_anchor("C")
+        iax.set_axis_off()
+        iax.set_title(label, fontsize=8.5, color=INK2, fontweight="bold", pad=4, alpha=SCOREDIFF_EXAMPLE_ALPHA)
     fig.tight_layout()
     fig.savefig(OUT / "3_score_diff_A_minus_B.png", dpi=200)
     plt.close(fig)
@@ -427,6 +486,7 @@ def chart_cost_quality(summary: list[dict], ideas_csv: Path, judgments: Path, ru
     points = [p for p in points if p[2] in CHART4_CONDITIONS]   # R and C ideas belong to chart 5
 
     fig, ax = plt.subplots(figsize=(8, 6.2 if LEGEND_LOC == "below" else 5))
+    pareto_label_art = {}                                   # condition -> its "Narrow/Wide context" label
     # frontiers first, so the ideas they pass through can be drawn exactly on them
     hulls = {}                                              # key: "A", "B" or "all" -> hull points
     if SHOW_FRONTIER and points:
@@ -497,7 +557,7 @@ def chart_cost_quality(summary: list[dict], ideas_csv: Path, judgments: Path, ru
                     x_lo, x_hi = st[0][0], st[-1][0]
                     xm = (x_lo * x_hi) ** 0.5 if LOG_X else (x_lo + x_hi) / 2
                     ym = max(q[1] for q in st if q[0] <= xm)
-                    ax.text(xm + PARETO_OFFSET_X * 1000, ym + PARETO_OFFSET_Y, PARETO_LABELS[key],
+                    pareto_label_art[key] = ax.text(xm + PARETO_OFFSET_X * 1000, ym + PARETO_OFFSET_Y, PARETO_LABELS[key],
                             ha="center", va="center", fontsize=PARETO_LABEL_SIZE, color=INK, zorder=6,
                             bbox=dict(boxstyle="round,pad=0.3", facecolor="white",
                                       edgecolor=COND.get(key, FRONTIER_COLOR), linewidth=1.0))
@@ -547,7 +607,29 @@ def chart_cost_quality(summary: list[dict], ideas_csv: Path, judgments: Path, ru
         ax.legend(handles=handles, loc=LEGEND_LOC, ncol=2, columnspacing=1.6,
                   frameon=True, facecolor=SURFACE, edgecolor="none", framealpha=0.92)
     ax.grid(axis="x", color=GRID, linewidth=0.8)
-    finish(fig, ax, "4_cost_vs_quality.png", sub)
+
+    def examples_beside_labels(fig, ax):
+        """A small picture of what each condition's prompt contains, just right of its context label."""
+        fig.canvas.draw()
+        r = fig.canvas.get_renderer()
+        to_ax = ax.transAxes.inverted()
+        ax_w, ax_h = ax.get_window_extent(r).width, ax.get_window_extent(r).height
+        for key, art in pareto_label_art.items():
+            path = COSTQ_EXAMPLES.get(key)
+            if not path or not path.exists():
+                continue
+            bb = art.get_bbox_patch().get_window_extent(r) if art.get_bbox_patch() else art.get_window_extent(r)
+            (x0, y0), (x1, y1) = to_ax.transform([[bb.x0, bb.y0], [bb.x1, bb.y1]])
+            img = plt.imread(path)
+            w = COSTQ_EXAMPLE_WIDTH
+            h = w * ax_w / ax_h * img.shape[0] / img.shape[1]
+            iax = ax.inset_axes([x1 + 0.012, (y0 + y1) / 2 - h / 2, w, h])
+            iax.imshow(img, interpolation="lanczos", alpha=COSTQ_EXAMPLE_ALPHA)
+            iax.set_axis_off()
+            iax.set_zorder(5)
+
+    finish(fig, ax, "4_cost_vs_quality.png", sub,
+           after_layout=examples_beside_labels if pareto_label_art else None)
 
 
 # ── 5. Context ladder: C → R → B → A at one effort ──────────────────
@@ -590,7 +672,7 @@ def chart_context_ladder(summary: list[dict], pairwise: list[dict], ideas_csv: P
 
     # rungs evenly spaced, least to most context: R and B are size-matched by design, so on a token
     # axis they would sit on top of each other; the token count goes in each rung's label instead
-    fig, ax = plt.subplots(figsize=(8, 5.4))
+    fig, ax = plt.subplots(figsize=(LADDER_WIDTH, 5.4))
     pts = [(k, *quality[(c, LADDER_EFFORT)]) for k, c in enumerate(conds)]     # (x, m, ci, n, q1, q3)
     ax.plot([p[0] for p in pts], [p[1] for p in pts], color=AXIS, linewidth=1.2, zorder=1)
     for c, (x, m, ci, n, q1, q3) in zip(conds, pts):
@@ -635,12 +717,21 @@ def chart_context_ladder(summary: list[dict], pairwise: list[dict], ideas_csv: P
 
     # every judged head-to-head, in full, below the plot
     lines = [fmt(a, b) for a, b in LADDER_PAIRS if (a, b) in h2h and a in conds and b in conds]
+    note = None
     if lines:
-        ax.text(0, -0.24, "Blind pairwise judging (win rate, 95% CI, sign test):\n" + "\n".join(lines),
-                transform=ax.transAxes, va="top", ha="left", fontsize=8.5, color=INK2, linespacing=1.4)
-        fig.set_size_inches(8, 5.4 + 0.19 * (len(lines) + 1))
+        note = ax.text(0, -0.24, "Blind pairwise judging (win rate, 95% CI, sign test):\n" + "\n".join(lines),
+                       transform=ax.transAxes, va="top", ha="left", fontsize=8.5, color=INK2, linespacing=1.4)
+        fig.set_size_inches(LADDER_WIDTH, 5.4 + 0.19 * (len(lines) + 1))
+
+    def thumb_right_column(fig, ax):
+        """Narrow the plot and put the thumbnail in a column on the right, level with the plot's top."""
+        fig.subplots_adjust(right=LADDER_THUMB_RIGHT)
+        left = LADDER_THUMB_RIGHT + 0.03
+        add_slices_thumbnail(fig, (left, 0, 0.985 - left), top=ax.get_position().y1)
+
     finish(fig, ax, name, "Mark = mean over calls · thick bar = 95% CI · thin bracket = middle 50% of ideas\n"
-                          "Boxes between rungs = blind head-to-head win rate of the right-hand condition")
+                          "Boxes between rungs = blind head-to-head win rate of the right-hand condition",
+           after_layout=thumb_right_column if THUMB.exists() else None)
 
 
 def runs_index_from_calls(calls: Path) -> dict:
