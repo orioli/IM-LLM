@@ -98,6 +98,69 @@ def main():
     for ext in ("png", "pdf"):
         fig.savefig(OUT / f"0b_slices_grid.{ext}", dpi=300, facecolor="white")
         print(f"-> {OUT / f'0b_slices_grid.{ext}'}")
+    thumbnail(panels, pos, all_edges, y, OUT / "0b_slices_grid_thumb.png")
+    single_panel("A", set(pos), set(all_edges), pos, all_edges, OUT / "0b_panel_full.png")
+    n8, e8 = load_slice(f"B_{R_NEED}")
+    single_panel("B", n8, e8, pos, all_edges, OUT / f"0b_panel_slice_{R_NEED}.png")
+    single_panel("A", set(pos), set(all_edges), pos, all_edges, OUT / "0b_panel_full_gray.png", gray=True)
+    single_panel("B", n8, e8, pos, all_edges, OUT / f"0b_panel_slice_{R_NEED}_gray.png", gray=True)
+
+
+def single_panel(cond, hot_n, hot_e, pos, all_edges, out, gray=False):
+    """One panel on its own (no title), for use as an example picture inside another chart.
+    gray=True draws it in grey tones, so it stays in the background of a coloured chart."""
+    col = "#4d4d4d" if gray else COND[cond]
+    fig, ax = plt.subplots(figsize=(2.4, 1.8))
+    for u, v in all_edges:
+        hot = (u, v) in hot_e or (v, u) in hot_e
+        ax.plot([pos[u][0], pos[v][0]], [pos[u][1], pos[v][1]], lw=0.8 if hot else 0.25,
+                color=col if hot else FAINT, alpha=0.95 if hot else 0.6, zorder=2 if hot else 1)
+    ax.scatter([pos[i][0] for i in pos], [pos[i][1] for i in pos], s=4, color="white", edgecolors=FAINT,
+               linewidths=0.3, zorder=3)
+    hot_ids = [i for i in pos if i in hot_n]
+    ax.scatter([pos[i][0] for i in hot_ids], [pos[i][1] for i in hot_ids], s=7, color=col,
+               edgecolors=INK, linewidths=0.2, zorder=4)
+    for sp in ax.spines.values():
+        sp.set_edgecolor(col)
+        sp.set_linewidth(1.4)
+    ax.set_xticks([]), ax.set_yticks([])
+    ax.set_xlim(-0.03, 1.03)
+    ax.set_ylim(-0.7, len(ROWS) - 0.3)
+    fig.subplots_adjust(left=0.01, right=0.99, top=0.99, bottom=0.01)
+    fig.savefig(out, dpi=300, facecolor="white")
+    plt.close(fig)
+    print(f"-> {out}")
+
+
+def thumbnail(panels, pos, all_edges, y, out):
+    """Small version without titles, for the corner of the yield chart: borders and short tags only."""
+    tags = {"A": "Full graph", "C": "No graph", "R": "Random graph"}
+    fig, axes = plt.subplots(4, 4, figsize=(4.0, 3.0))
+    for k, (ax, (cond, title, sub, hot_n, hot_e)) in enumerate(zip(axes.flat, panels)):
+        col = COND[cond]
+        for u, v in all_edges:
+            hot = (u, v) in hot_e or (v, u) in hot_e
+            ax.plot([pos[u][0], pos[v][0]], [pos[u][1], pos[v][1]], lw=0.75 if hot else 0.2,
+                    color=col if hot else FAINT, alpha=0.95 if hot else 0.5, zorder=2 if hot else 1)
+        hot_ids = [i for i in pos if i in hot_n]
+        if hot_ids:
+            ax.scatter([pos[i][0] for i in hot_ids], [pos[i][1] for i in hot_ids], s=2.5, color=col,
+                       linewidths=0, zorder=4)
+        tag = tags.get(cond) or ("Slices, one per\nmarket need" if k == 3 else None)
+        if tag:
+            ax.text(0.04, 0.95, tag, transform=ax.transAxes, fontsize=5.6, fontweight="bold", color=col,
+                    va="top", ha="left", zorder=6,
+                    bbox=dict(boxstyle="round,pad=0.15", fc="white", ec="none", alpha=0.85))
+        for sp in ax.spines.values():
+            sp.set_edgecolor(col)
+            sp.set_linewidth(1.2)
+        ax.set_xticks([]), ax.set_yticks([])
+        ax.set_xlim(-0.03, 1.03)
+        ax.set_ylim(-0.7, len(ROWS) - 0.3)
+    fig.subplots_adjust(left=0.01, right=0.99, top=0.99, bottom=0.01, wspace=0.06, hspace=0.06)
+    fig.savefig(out, dpi=200, facecolor="white")
+    plt.close(fig)
+    print(f"-> {out}")
 
 
 if __name__ == "__main__":
