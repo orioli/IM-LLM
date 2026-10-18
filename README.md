@@ -1,7 +1,8 @@
+# AI brainstorming: Is less context more?
+
 ### Explore the product graph
 
 ![Microwave innovation matrix demo](demoAB.gif)
-
 
 # Is less more? Narrow context in LLM ideation with product graphs
 
@@ -9,12 +10,12 @@ Code, data and paper for **"Is less more? Narrow context is more efficient than 
 
 A hand-built innovation matrix of a microwave oven (123 nodes, 246 typed edges) is given to `claude-haiku-5-5` in four forms:
 
-| Condition | What the prompt contains |
-| --- | --- |
-| **A**, full graph | the whole innovation matrix |
+| Condition                      | What the prompt contains                      |
+| ------------------------------ | --------------------------------------------- |
+| **A**, full graph        | the whole innovation matrix                   |
 | **B**, market-need slice | the vertical slice for the target market need |
-| **R**, random slice | a random slice of the same size as B |
-| **C**, no graph | the product and the market need only |
+| **R**, random slice      | a random slice of the same size as B          |
+| **C**, no graph          | the product and the market need only          |
 
 The model applies the SUBSTITUTE operator to 13 market needs at four levels of thinking effort (580 calls, 2,892 ideas). `claude-sonnet-5-5` judges the ideas blind, both as whole sets (pairwise) and one by one. The main measure is **yield**: top ideas (score ≥ 4.0, the top 12%) per 100k tokens.
 
@@ -22,29 +23,26 @@ The model applies the SUBSTITUTE operator to 13 market needs at four levels of t
 
 ![Yield per arm: top ideas per 100k tokens, with the no-graph control as a dashed line](results/charts/8c_yield_spread_annotated.png)
 
-
 *Top ideas per 100k tokens for each arm (box = middle 50% of 2,000 bootstrap slopes). Arms left of the dashed line, including every full-graph arm, find top ideas less efficiently than giving the model no graph at all.*
-
 
 ![Microwave innovation matrix demo](innovation_matrix_demo.gif)
 
-
 ## Repository layout
 
-| Path | Contents |
-| --- | --- |
-| `microwave_base_graph.yaml` | the innovation matrix (product graph) |
-| `slicer.py`, `slices/` | market-need slices (B) and size-matched random slices (R), with `manifest.csv` |
-| `template_prompt.txt` | the generation prompt |
-| `KG_informed_brainstorm_AB_Test.py` | runs the generation calls |
-| `analyze.py` | pairwise set judging and summaries |
-| `top_ideas.py` | individual idea scoring (quality; `--rubric patent` for patentability) and the ranked idea list |
-| `charts.py`, `tail_charts.py`, `figure_innovation_matrix.py` | figures |
-| `human_check.py` | stratified sample for human raters, and agreement statistics |
-| `runs/` | every generation call (prompt metadata, raw response, token counts) |
-| `results/` | judge outputs, tables, charts, results write-up |
-| `persona_as_factor/` | exploratory follow-up: three personas × B, C × 3 market needs × 2 efforts |
-| `paper/` | LaTeX source of the paper (`main.tex`; built from Markdown drafts by `build_paper.py`) |
+| Path                                                               | Contents                                                                                          |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| `microwave_base_graph.yaml`                                      | the innovation matrix (product graph)                                                             |
+| `slicer.py`, `slices/`                                         | market-need slices (B) and size-matched random slices (R), with `manifest.csv`                  |
+| `template_prompt.txt`                                            | the generation prompt                                                                             |
+| `KG_informed_brainstorm_AB_Test.py`                              | runs the generation calls                                                                         |
+| `analyze.py`                                                     | pairwise set judging and summaries                                                                |
+| `top_ideas.py`                                                   | individual idea scoring (quality; `--rubric patent` for patentability) and the ranked idea list |
+| `charts.py`, `tail_charts.py`, `figure_innovation_matrix.py` | figures                                                                                           |
+| `human_check.py`                                                 | stratified sample for human raters, and agreement statistics                                      |
+| `runs/`                                                          | every generation call (prompt metadata, raw response, token counts)                               |
+| `results/`                                                       | judge outputs, tables, charts, results write-up                                                   |
+| `persona_as_factor/`                                             | exploratory follow-up: three personas × B, C × 3 market needs × 2 efforts                      |
+| `paper/`                                                         | LaTeX source of the paper (`main.tex`; built from Markdown drafts by `build_paper.py`)        |
 
 ## Reproducing
 
