@@ -1,79 +1,15 @@
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
-Most research on AI for innovation asks about outcomes. Are LLM ideas as good as human ones \citep{Si2024, Terwiesch2026}? Do people generate better ideas with AI than without it \citep{Doshi2024, Anderson2024}? Does an agentic pipeline beat a single prompt, or a human team \citep{Liu2026, Massoudi2026}? These comparisons expire. Every model generation raises the outcome and lowers its price, so a finding that a model does or does not reach human level says more about the model of the day than about how to innovate with AI. A question that lasts longer is how to \textbf{present the problem} to the model. 
+Most research on AI for innovation asks about outcomes: whether LLM-generated ideas rival human ones \citep{Si2024, Terwiesch2026}, whether AI assistance elevates individual or team creativity \citep{Doshi2024, Anderson2024}, and whether agentic pipelines outperform single prompts or human designers \citep{Liu2026, Massoudi2026}. Yet outcome benchmarks against human baselines expire rapidly as model capabilities expand and token prices fall. A more enduring question is how to \textbf{present the problem} to the model: which representation of a product allows generative AI to turn compute into standout innovation concepts most efficiently.
 
-\subsection{Ways to represent a problem}
-''Asking the right question is half the answer''. When tackling the task of product innovation, product ideation, service design, or design thinking, there are alternative ways to represent the product or service that is the target of the innovation. Popular ones are the business model canvas (favoured for business model innovation), user journey mapping (favoured for UX design), Wardley mapping (adept at undertanding the impact of comoditization trends in a product), knowledge graphs and so on. Some of these are so effective that have become thinking frameworks in their own right. Each has its sweet spot and use cases and they are not mutually exclusive. Here we are interested in  a certain type of map known as innovation matrix (IM) by Leo Tchirsky \citep{berengueres2014}. The IM is  type of typed knwoledge graph similar to \citep{Liu2026, Massoudi2026} that is particularly adept at representing consumer goods made of components such as a car or a microwave oven.
+In product ideation, engineering design, and service innovation, problem representations range from business model canvases and user journey maps to design structure matrices and typed knowledge graphs \citep{ed2024, Steward1981, Gero1990}. Here, we focus on the \emph{innovation matrix} (IM) of Leo Tchirsky \citep{Tchirsky, berengueres2014}---a layered, typed graph connecting market needs to functions, components, enabling technologies, and scientific fields. While cost-aware evaluation is now standard for LLM reasoning and agent benchmarks \citep{Chen2024d, Wang2024, Kapoor2025}, generative ideation is still largely judged by average scores without accounting for token expenditure or the extreme-value nature of brainstorming \citep{Girotra2010, Dahan2001}.
 
+To address this gap, we examine how problem representations and reasoning allocations govern AI brainstorming efficiency across three questions: first, which graph representation yields the most top ideas per token (RQ1); second, whether structural relevance or raw prompt length drives performance (RQ2); and third, how investing tokens in context compares with spending them on thinking effort (RQ3). We test these questions using a countertop microwave oven represented as an innovation matrix with 123 nodes and 246 edges. Using Claude 3.5 Haiku as the ideation model and the \emph{Substitute} operator from the SCAMPER ideation framework \citep{Eberle1971, Osborn1953} across 13 market needs, we evaluate four prompt representations: the full graph (A), a targeted vertical slice containing only direct child nodes of the active market need (B), a size-matched random slice (R), and a no-graph control (C). Each condition is crossed with four thinking-effort levels across 580 API calls, generating 2,892 ideas that are evaluated blind by Claude 3.5 Sonnet and validated by human expert review. We measure \emph{yield}: standout ideas (top $\sim$12\%, score $\ge 4.0/5.0$) per 100k total tokens spent.
 
-Figure~\ref{fig:im_brownbook} shows a microwave oven represented as the \emph{innovation matrix} from a workhop in Tokyo in 2006  \citep{berengueres2014}. The graph is organized as layers: market needs $\rightarrow$ functions $\rightarrow$ components $\rightarrow$ enabling technologies. 
+Our primary finding is that prompting with a targeted market-need slice at medium effort achieves peak yield (8.8 top ideas per 100k tokens), nearly tripling the efficiency of the full graph. Although the full graph produces more specific average sets, it yields no more top-tail ideas while doubling prompt costs. Furthermore, scaling thinking effort raises average linguistic quality but fails to improve token efficiency. Together, these findings make three contributions: they reframe AI ideation around representation efficiency (outcome per token) rather than ephemeral human baselines; they establish yield as a non-saturating tail metric that captures extreme-value creative discovery where mean scores mislead; and they provide an open, controlled empirical comparison of product-graph representations, thinking effort, and prompt personas, with all prompts, calls, and judgments released.
 
-
-Figure~\ref{fig:im_microwave} shows a more elaborate version with two extra layers: constraints and actors (user types).
-
-\begin{figure}[tbp]
-\centering
-\IfFileExists{figures/brown_book_innovation_matrix.jpg}{\includegraphics[width=0.8\textwidth]{figures/brown_book_innovation_matrix.jpg}}{\fbox{\parbox[c][5cm][c]{0.9\textwidth}{\centering\small missing: \texttt{\detokenize{figures/brown_book_innovation_matrix.jpg}}}}}
-\caption{An innovation matrix as drawn in the workshop material \citep{berengueres2014}.}
-\label{fig:im_brownbook}
-\end{figure}
-
-\begin{figure}[tbp]
-\centering
-\IfFileExists{figures/0_innovation_matrix_M8.pdf}{\includegraphics[width=\textwidth]{figures/0_innovation_matrix_M8.pdf}}{\fbox{\parbox[c][5cm][c]{0.9\textwidth}{\centering\small missing: \texttt{\detokenize{figures/0_innovation_matrix_M8.pdf}}}}}
-\caption{A Slice of the graph based on market need M8 is shown highlighted in purple. The microwave innovation matrix used in the experiment. Rows are the layers, bottom to top, with constraints below and actors above. Filled nodes and edges are the market-need slice for M8, \emph{know when food is ready} (25 nodes, 32 edges): what the model sees in condition B for that market need, against the whole graph in condition A.}
-\label{fig:im_microwave}
-\end{figure}
-
-
-\subsection{How effective is the Innovation matrix for brainstorming?}
-LLMs offer a unique opportunity to measure repeatably knowledge outcomes that pre-GPT where only possible to asses via workshops (with humans). Here, we are interested in measuring the effect of using the IM in the brainstorming phase of a product ideation process.
-
-Specifically, how efficiently a way of representing the problem (IM) turns compute (tokens) into useful ideas for innovation (the so-called''great'' ideas or Aha moments). Therefore  we are not about to compare the performance of the AI in absolute terms, as it is a moving target. Additionally, we note that cost-aware evaluation is becoming standard for LLM reasoning and agents \citep{Chen2024d, Wang2024, Kapoor2025}, but not yet for design ideation.
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{RQ1.} When using an LLM to brainstom, which product representation (as a graph) yields more top ideas per token? A full graph, a relevant slice centered arround a market need, or no graph at all? (Section~\ref{rq1})
-\item
-  \textbf{RQ2.} Does the amount or the relevance of the graph matter? (Section~\ref{rq2})
-\item
-  \textbf{RQ3.} How does spending tokens on context compare with spending them on thinking effort? (Section~\ref{rq3})
-\end{itemize}
-
-\subsection{Prompt setup}
-To answer these questions, we chose the microwave oven as a target of the innovation because it is an every day object that readers are familiar with (about 60 million are produced annually). The microwave-oven IM used to test the RQs is the one in Figure~\ref{fig:im_microwave}. It has 123 nodes and 246 edges. For each of the 13 market needs we do an API call with a prompt that asks to braisntomr 5 ideas on the given market need (e.g. M8) using a fixed innovation operator (SUBSTITUTE) with the persona (INNOVATION ENGINEER) fixed and with only the graph (representing the microwave oven) varying as follows:
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{Prompt A, full graph:} the whole microwave oven IM graph with the 128 nodes and 246 edges is attached in the prompt;
-\item
-  \textbf{Prompt B, slice of the graph:} only direct child nodes of the targeted market need are attached;
-\item
-  \textbf{R, random slice:} a size-matched random selection of nodes, separating relevance from size;
-\item
-  \textbf{C, (Control) :} no graph is attached to the prompt.
-\end{itemize}
-
-The exact prompt template is in the Appendix. These calls are repeated  with four levels of thinking effort. In total 580 calls and 2,892 ideas are elecited. These are afterwards judged blind by a second more powerful model, as whole sets and idea by idea. 
-
-As a follow-up (not part of the inital design) we ask whether the answer is influenced by the persona in the prompt \citep{Lu2024}: innovation engineer, lateral thinker \citep{Bono1970} or patent-focused inventor.
-
-\subsection{Findings in brief}
-When looking at the top ideas produced, prompting by attaching only the part of the graph connected to the market need that is being asked to innvoate yields 8.8 top ideas per 100k tokens, about three times more than when the full graph is attached. More thinking effort raises quality but not yield of top ideas when normalizing by token cost.
-
-\textbf{Contributions}
-\begin{itemize}
-\tightlist
-\item
-  A framing of AI-ideation research around representation efficiency, outcome per token, instead of outcome benchmarks against humans or against no AI.
-\item
-  Yield, top ideas per token, as a top-tail measure that does not saturate and leads to different conclusions from mean scores.
-\item
-  A controlled comparison of four representations of one product graph, crossed with thinking effort and, exploratorily, persona, with all prompts, calls and judgements released.
-\end{itemize}
+The remainder of this paper is structured as follows. Section~\ref{related-work} reviews related work on design representations, LLM ideation workflows, and cost-aware evaluation. Section~\ref{methods} details the product graph, prompt representations, experimental design, and scoring metrics. Section~\ref{results} presents empirical findings for RQ1--RQ3, exploratory persona analyses, and robustness checks. Finally, Section~\ref{discussion-and-conclusion} discusses implications for design thinking and outlines directions for graph-guided AI innovation.
 
 \section{Related work}
 \label{related-work}
@@ -84,7 +20,7 @@ Structured descriptions that link what customers want to what a product does and
 
 \subsection{LLMs that innovate with design methods}
 
-Language models were first used as concept generators \citep{Zhu2022,Ma2023} and compared with people: their concepts are less diverse than crowdsourced ones \citep{Ma2025}, their research ideas are judged more novel but slightly less feasible than experts' \citep{Si2024}, and working with them raises individual creativity while narrowing collective diversity \citep{Doshi2024,Anderson2024,Ashkinaze2025,Wadinambiarachchi2024}. Recent systems give the model the structured methods above. An FBS ontology steers concept generation \citep{Chen2024a}; generated text and images enrich concepts \citep{Chen2024}; TRIZ is applied by single models and by agent teams \citep{Chen2024c,Jiang2025,Szczepanik2025}; morphological analysis is automated \citep{Chen2024b}; and agentic workflows chain whole design processes \citep{Ding2023,Massoudi2026}. iDesignGPT \citep{Liu2026} goes furthest: agent clusters run problem definition with QFD and Kano analysis, then functional decomposition, morphological analysis, SCAMPER and TRIZ, and produce a product design specification. Persona prompts are a related device, from role-play that raises the creativity of LLM discussions \citep{Lu2024} to agents that act out a design team \citep{Liu2025}, drawing on ideas about thinking styles in innovation \citep{Bono1970,Kelley2005}.
+Language models were first used as concept generators \citep{Zhu2022,Ma2023} and compared with people: their concepts are less diverse than crowdsourced ones \citep{Ma2025}, their research ideas are judged more novel but slightly less feasible than experts' \citep{Si2024}, and working with them raises individual creativity while narrowing collective diversity \citep{Doshi2024,Anderson2024,Ashkinaze2025,Wadinambiarachchi2024}. Recent systems give the model the structured methods above. An FBS ontology steers concept generation \citep{Chen2024a}; generated text and images enrich concepts \citep{Chen2024}; TRIZ is applied by single models and by agent teams \citep{Chen2024c,Jiang2025,Szczepanik2025}; morphological analysis is automated \citep{Chen2024b}; and agentic workflows chain whole design processes \citep{Ding2023,Massoudi2026}. iDesignGPT \citep{Liu2026} goes furthest: agent clusters run problem definition with QFD and Kano analysis, then functional decomposition, morphological analysis, SCAMPER \citep{Eberle1971} and TRIZ, and produce a product design specification. Persona prompts are a related device, from role-play that raises the creativity of LLM discussions \citep{Lu2024} to agents that act out a design team \citep{Liu2025}, drawing on ideas about thinking styles in innovation \citep{Bono1970,Kelley2005}.
 
 \subsection{What ``innovative'' is checked against}
 
@@ -108,8 +44,21 @@ The experiment holds the AI model and the prompt fixed, and varies only how much
 
 \textbf{The innovation matrix.} The innovation matrix (IM) of Leo Tchirsky \citep{Tchirsky}, as taught in design-thinking workshops \citep{berengueres2014}, describes a product as stacked layers: the \textbf{market needs} it serves, the \textbf{functions} that serve them, the \textbf{components} that perform the functions, the \textbf{technologies} that make the components possible, and the scientific \textbf{fields} behind those technologies (Figure \ref{fig:im_brownbook}). Reading upwards answers \emph{why} a part exists; reading downwards answers \emph{how} a market need is met. Innovation happens by changing a link: a new technology enables a different component, a component takes over another's function, or a function is found to serve a market need nobody had linked it to. In a workshop the matrix is drawn on a wall; here it is a typed graph that a model can read.
 
+\begin{figure}[tbp]
+\centering
+\IfFileExists{figures/brown_book_innovation_matrix.jpg}{\includegraphics[width=0.8\textwidth]{figures/brown_book_innovation_matrix.jpg}}{\fbox{\parbox[c][5cm][c]{0.9\textwidth}{\centering\small missing: \texttt{\detokenize{figures/brown_book_innovation_matrix.jpg}}}}}
+\caption{An innovation matrix as drawn in the workshop material \citep{berengueres2014}.}
+\label{fig:im_brownbook}
+\end{figure}
 
 \textbf{The microwave matrix.} The product is a countertop microwave oven, the simplest mechanical model: a timer knob, a power knob, a door button and an interior lamp. The authors built its IM by hand in a single YAML file (\texttt{microwave\_base\_graph.yaml}), adding two cross-cutting types the workshop matrix keeps beside it, constraints and actors. It has 123 nodes and 246 directed, typed edges (Figure \ref{fig:im_microwave}; all nodes listed in Appendix A).
+
+\begin{figure}[tbp]
+\centering
+\IfFileExists{figures/0_innovation_matrix_M8.pdf}{\includegraphics[width=\textwidth]{figures/0_innovation_matrix_M8.pdf}}{\fbox{\parbox[c][5cm][c]{0.9\textwidth}{\centering\small missing: \texttt{\detokenize{figures/0_innovation_matrix_M8.pdf}}}}}
+\caption{A slice of the graph based on market need M8 is shown highlighted in purple. The microwave innovation matrix used in the experiment. Rows are the layers, bottom to top, with constraints below and actors above. Filled nodes and edges are the market-need slice for M8, \emph{know when food is ready} (25 nodes, 32 edges): what the model sees in condition B for that market need, against the whole graph in condition A.}
+\label{fig:im_microwave}
+\end{figure}
 
 
 \textbf{Nodes} belong to four stacked layers and four cross-cutting types (Table~\ref{tab:node-types}):
@@ -254,7 +203,7 @@ All calls use one prompt template (\texttt{template\_prompt.txt}, Appendix B). I
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Operator.} SCAMPER \emph{Substitute} in every call: ``Identify components and the functions they perform, then replace them with something cheaper or simpler that fulfils the same function equally well or better.''
+  \textbf{Operator.} The \emph{Substitute} operator from SCAMPER \citep{Eberle1971} in every call: ``Identify components and the functions they perform, then replace them with something cheaper or simpler that fulfils the same function equally well or better.''
 \item
   \textbf{Worked example.} One example of an innovation the brief likes, taken from the authors' workshop material \citep{berengueres2014}. The door's mesh and the interior lamp both serve the user's need to see the food, so they can be replaced together by a webcam, or by a transparent casing that needs no lamp.
 \item
@@ -2026,7 +1975,7 @@ In summary, Haiku is a small model, what such a model does superbly is retrieval
   \textbf{Graph-guided search instead of prompts.} 
 
 \item
-  \textbf{Operators as graph transformations.} TRIZ (40) principles and SCAMPER can each be defined as operations on the graph.
+  \textbf{Operators as graph transformations.} TRIZ (40) principles and SCAMPER \citep{Eberle1971} can each be defined as operations on the graph.
 
 \item
   \textbf{Yield as a standard measure.} Top ideas per token is simple, transferable and does not saturate. 
