@@ -7,7 +7,7 @@ Most research on AI for innovation asks about outcomes. Are LLM ideas as good as
 ''Asking the right question is half the answer''. When tackling the task of product innovation, product ideation, service design, or design thinking, there are alternative ways to represent the product or service that is the target of the innovation. Popular ones are the business model canvas (favoured for business model innovation), user journey mapping (favoured for UX design), Wardley mapping (adept at undertanding the impact of comoditization trends in a product), knowledge graphs and so on. Some of these are so effective that have become thinking frameworks in their own right. Each has its sweet spot and use cases and they are not mutually exclusive. Here we are interested in  a certain type of map known as innovation matrix (IM) by Leo Tchirsky \citep{berengueres2014}. The IM is  type of typed knwoledge graph similar to \citep{Liu2026, Massoudi2026} that is particularly adept at representing consumer goods made of components such as a car or a microwave oven.
 
 
-Figure~\ref{fig:im_brownbook} shows a microwave oven represented as the \emph{innovation matrix} from a workhop in Tokyo in 2006  \citep{berengueres2014}. The graph is organized as layers: market needs → functions → components → enabling technologies. 
+Figure~\ref{fig:im_brownbook} shows a microwave oven represented as the \emph{innovation matrix} from a workhop in Tokyo in 2006  \citep{berengueres2014}. The graph is organized as layers: market needs $\rightarrow$ functions $\rightarrow$ components $\rightarrow$ enabling technologies. 
 
 
 Figure~\ref{fig:im_microwave} shows a more elaborate version with two extra layers: constraints and actors (user types).
@@ -538,7 +538,7 @@ The repository (\url{https://github.com/orioli/IM-LLM}) contains the base graph,
 \hypertarget{summary}{%
 \subsection{Summary}\label{summary}}
 
-The aim of brainstorming is the rare great idea, not a good average, so the main measure here is the \textbf{top tail}: how often an arm produces an idea in the top ∼12\% of all ideas, and what each such idea costs.
+The aim of brainstorming is the rare great idea, not a good average, so the main measure here is the \textbf{top tail}: how often an arm produces an idea in the top $\sim$12\% of all ideas, and what each such idea costs.
 
 \textbf{RQ1. Which representation yields the most top ideas per token?} (Section~\ref{rq1})
 
@@ -547,7 +547,7 @@ The aim of brainstorming is the rare great idea, not a good average, so the main
 \item
   \textbf{A relevant slice of the graph finds top ideas fastest per token.} Counted against tokens spent, top ideas accumulate in a straight line for every arm, so each arm has a yield: top ideas per 100k tokens. The market-need slice (B) at medium effort yields 8.8, about three times the full graph (A) at any effort (2.6--3.2). B's top-idea rate is also the highest at equal effort (15\% at medium and high, against 10\% for no graph and for a random slice of the same size).
 \item
-  \textbf{The efficiency gain holds market need by market need, and is largest for small slices.} The slice is more efficient than the full graph on 10 of 13 market needs (sign test p = 0.039), and no graph beats a random slice on 10 of 12. The slice's lead is 3--5× for market needs whose slice has 15--28 nodes, and 1--2× for those with 45--51 nodes (exploratory).
+  \textbf{The efficiency gain holds market need by market need, and is largest for small slices.} The slice is more efficient than the full graph on 10 of 13 market needs (sign test p = 0.039), and no graph beats a random slice on 10 of 12. The slice's lead is 3--5$\times$ for market needs whose slice has 15--28 nodes, and 1--2$\times$ for those with 45--51 nodes (exploratory).
 \item
   \textbf{No graph is surprisingly efficient.} Its calls are the cheapest, so despite a low top-idea rate its yield (6.4) beats the random slice (4.1) and the full graph (3.1), and is close to the slice at high effort (5.9).
 \end{itemize}
@@ -612,16 +612,16 @@ Value
 \endlastfoot
 Product graph & \texttt{microwave\_base\_graph.yaml}: 123 nodes, 246 edges \\
 Target needs & 13: M1, M3, M4, M5, M6, M7, M8, M11, M12, M13, M14, M16, M17 (M2, M9, M10, M15 excluded: no functions address them, so their slice is empty) \\
-Conditions & \textbf{A} = full graph · \textbf{B} = vertical slice of the target market need (functions, components, technologies, fields, linked constraints and actors) · \textbf{R} = random slice with the same number of nodes per layer as B · \textbf{C} = no graph (product description and target market need only) \\
-Thinking effort & A and B: low, medium, high on all 13 market needs, xhigh on 6 market needs (M1, M4, M6, M8, M13, M17) · R and C: high on all 13 market needs \\
+Conditions & \textbf{A} = full graph \textperiodcentered{} \textbf{B} = vertical slice of the target market need (functions, components, technologies, fields, linked constraints and actors) \textperiodcentered{} \textbf{R} = random slice with the same number of nodes per layer as B \textperiodcentered{} \textbf{C} = no graph (product description and target market need only) \\
+Thinking effort & A and B: low, medium, high on all 13 market needs, xhigh on 6 market needs (M1, M4, M6, M8, M13, M17) \textperiodcentered{} R and C: high on all 13 market needs \\
 Replicates & 5 per cell \\
-Generation calls & 580: A and B 450 (13 market needs × 2 conditions × 3 efforts × 5 reps, plus 6 market needs × 2 × 5 at xhigh); R and C 130 (13 × 2 × 5) \\
-Prompt & \texttt{template\_prompt.txt}: 5 radical ideas for the target market need, operator SUBSTITUTE, worked example (door holes + lamp → webcam / transparent casing), JSON output \\
+Generation calls & 580: A and B 450 (13 market needs $\times$ 2 conditions $\times$ 3 efforts $\times$ 5 reps, plus 6 market needs $\times$ 2 $\times$ 5 at xhigh); R and C 130 (13 $\times$ 2 $\times$ 5) \\
+Prompt & \texttt{template\_prompt.txt}: 5 radical ideas for the target market need, operator SUBSTITUTE, worked example (door holes + lamp $\rightarrow$ webcam / transparent casing), JSON output \\
 \texttt{max\_tokens} & 48,000 (64,000 for xhigh); no call was truncated \\
 Sampling & model defaults (Haiku 5.5 accepts no temperature setting) \\
 Pairwise judging & A vs B at low and high effort; B vs R, B vs C, A vs C at high effort; effort steps within A and B; B-high vs A-low. Blind comparison of two idea sets for the same market need and replicate; no condition labels or node IDs shown; each pair judged in both presentation orders and the two verdicts combined (agreeing verdicts = a win, split = a tie); scores 1--5 on relevance, novelty, feasibility, specificity, diversity \\
 Individual scoring & every idea scored on its own, blind, 1--5 on relevance, novelty, feasibility, specificity; idea score = mean of the four (all 2,892 ideas) \\
-Statistics & pairwise: per pair (65 pairs per comparison, 30 for xhigh), ties count half, Wilson 95\% CI, exact sign test · tail: rates averaged over market needs (each market need weighs the same), 95\% CI by resampling calls within each market need (2,000 resamples) \\
+Statistics & pairwise: per pair (65 pairs per comparison, 30 for xhigh), ties count half, Wilson 95\% CI, exact sign test \textperiodcentered{} tail: rates averaged over market needs (each market need weighs the same), 95\% CI by resampling calls within each market need (2,000 resamples) \\
 \end{longtable}
 
 \hypertarget{cost-and-validity}{%
@@ -804,10 +804,10 @@ C (No graph) & high & --- & 48\% & 0.37 & 4.4 \\
 \textbf{Answer.} The market-need slice. At medium effort it yields 8.8 top ideas per 100k tokens, about three times the full graph at any effort (2.6--3.2), and it is more efficient than the full graph on 10 of 13 market needs. At high effort, where all four representations were run, yields rank no graph (6.4) $\approx$ market-need slice (5.9) \textgreater{} random slice (4.1) \textgreater{} full graph (3.1).
 
 
-A \textbf{top idea} scores ≥ 4.0 on the individual blind scoring. Scores move in 0.25 steps, so an exact top 10\% does not exist: ≥ 4.0 keeps the top 12.3\% of all ideas (355 of 2,892), ≥ 4.25 the top 2.4\% (68). Market needs differ a lot in how easy a top idea is (29\% of M14's ideas reach 4.0, 3\% of M11's), so every rate is the mean of per-market-need rates.
+A \textbf{top idea} scores $\ge 4.0$ on the individual blind scoring. Scores move in 0.25 steps, so an exact top 10\% does not exist: $\ge 4.0$ keeps the top 12.3\% of all ideas (355 of 2,892), $\ge 4.25$ the top 2.4\% (68). Market needs differ a lot in how easy a top idea is (29\% of M14's ideas reach 4.0, 3\% of M11's), so every rate is the mean of per-market-need rates.
 
 \hypertarget{top-idea-rate-score-4.0}{%
-\subsubsection{Top-idea rate (score ≥ 4.0)}\label{top-idea-rate-score-4.0}}
+\subsubsection{Top-idea rate (score \texorpdfstring{$\ge$}{>=} 4.0)}\label{top-idea-rate-score-4.0}}
 
 \begin{figure}[tbp]
 \centering
@@ -839,7 +839,7 @@ Top-idea rate
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 95\% CI
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Calls with ≥ 1 top idea
+Calls with $\ge 1$ top idea
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 Tokens per call
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
@@ -860,7 +860,7 @@ Top-idea rate
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 95\% CI
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Calls with ≥ 1 top idea
+Calls with $\ge 1$ top idea
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 Tokens per call
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
@@ -870,16 +870,16 @@ Tokens per top idea
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-C (No graph) · high & 13 & 33 / 325 & 10.2\% & 8.3--12.3\% & 48\% & 7,994 & 15,746 \\
-R (Random graph) · high & 13 & 32 / 325 & 9.8\% & 7.7--12.3\% & 45\% & 11,921 & 24,215 \\
-B (Slice) · low & 13 & 30 / 323 & 9.3\% & 7.4--11.4\% & 37\% & 6,627 & 14,359 \\
-B (Slice) · medium & 13 & 49 / 325 & 15.1\% & 11.7--18.5\% & 52\% & 8,550 & \textbf{11,342} \\
-B (Slice) · high & 13 & 47 / 320 & 14.7\% & 11.9--17.5\% & 56\% & 12,384 & 16,838 \\
-B (Slice) · xhigh & 6 & 28 / 150 & 18.7\% & 14.0--23.3\% & 73\% & 30,020 & 32,164 \\
-A (Full graph) · low & 13 & 27 / 324 & 8.3\% & 6.2--10.5\% & 37\% & 14,243 & 34,289 \\
-A (Full graph) · medium & 13 & 34 / 325 & 10.5\% & 8.0--13.2\% & 45\% & 16,208 & 30,985 \\
-A (Full graph) · high & 13 & 44 / 325 & 13.5\% & 10.5--16.3\% & 57\% & 22,076 & 32,612 \\
-A (Full graph) · xhigh & 6 & 31 / 150 & 20.7\% & 16.7--24.7\% & 80\% & 39,258 & 37,991 \\
+C (No graph) \textperiodcentered{} high & 13 & 33 / 325 & 10.2\% & 8.3--12.3\% & 48\% & 7,994 & 15,746 \\
+R (Random graph) \textperiodcentered{} high & 13 & 32 / 325 & 9.8\% & 7.7--12.3\% & 45\% & 11,921 & 24,215 \\
+B (Slice) \textperiodcentered{} low & 13 & 30 / 323 & 9.3\% & 7.4--11.4\% & 37\% & 6,627 & 14,359 \\
+B (Slice) \textperiodcentered{} medium & 13 & 49 / 325 & 15.1\% & 11.7--18.5\% & 52\% & 8,550 & \textbf{11,342} \\
+B (Slice) \textperiodcentered{} high & 13 & 47 / 320 & 14.7\% & 11.9--17.5\% & 56\% & 12,384 & 16,838 \\
+B (Slice) \textperiodcentered{} xhigh & 6 & 28 / 150 & 18.7\% & 14.0--23.3\% & 73\% & 30,020 & 32,164 \\
+A (Full graph) \textperiodcentered{} low & 13 & 27 / 324 & 8.3\% & 6.2--10.5\% & 37\% & 14,243 & 34,289 \\
+A (Full graph) \textperiodcentered{} medium & 13 & 34 / 325 & 10.5\% & 8.0--13.2\% & 45\% & 16,208 & 30,985 \\
+A (Full graph) \textperiodcentered{} high & 13 & 44 / 325 & 13.5\% & 10.5--16.3\% & 57\% & 22,076 & 32,612 \\
+A (Full graph) \textperiodcentered{} xhigh & 6 & 31 / 150 & 20.7\% & 16.7--24.7\% & 80\% & 39,258 & 37,991 \\
 \end{longtable}
 
 
@@ -948,16 +948,16 @@ Yield (top ideas per 100k tokens)
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-B (Slice) · medium & 49 & 0.56M & \textbf{8.8} & 7.0--10.7 \\
-B (Slice) · low & 30 & 0.43M & 7.0 & 5.4--8.4 \\
-C (No graph) · high & 33 & 0.52M & 6.4 & 5.1--7.7 \\
-B (Slice) · high & 47 & 0.79M & 5.9 & 4.9--7.0 \\
-R (Random graph) · high & 32 & 0.77M & 4.1 & 3.1--5.2 \\
-A (Full graph) · medium & 34 & 1.05M & 3.2 & 2.5--4.1 \\
-B (Slice) · xhigh (6 market needs) & 28 & 0.90M & 3.1 & 2.4--3.9 \\
-A (Full graph) · high & 44 & 1.43M & 3.1 & 2.4--3.7 \\
-A (Full graph) · low & 27 & 0.93M & 2.9 & 2.2--3.7 \\
-A (Full graph) · xhigh (6 market needs) & 31 & 1.18M & 2.6 & 2.1--3.1 \\
+B (Slice) \textperiodcentered{} medium & 49 & 0.56M & \textbf{8.8} & 7.0--10.7 \\
+B (Slice) \textperiodcentered{} low & 30 & 0.43M & 7.0 & 5.4--8.4 \\
+C (No graph) \textperiodcentered{} high & 33 & 0.52M & 6.4 & 5.1--7.7 \\
+B (Slice) \textperiodcentered{} high & 47 & 0.79M & 5.9 & 4.9--7.0 \\
+R (Random graph) \textperiodcentered{} high & 32 & 0.77M & 4.1 & 3.1--5.2 \\
+A (Full graph) \textperiodcentered{} medium & 34 & 1.05M & 3.2 & 2.5--4.1 \\
+B (Slice) \textperiodcentered{} xhigh (6 market needs) & 28 & 0.90M & 3.1 & 2.4--3.9 \\
+A (Full graph) \textperiodcentered{} high & 44 & 1.43M & 3.1 & 2.4--3.7 \\
+A (Full graph) \textperiodcentered{} low & 27 & 0.93M & 2.9 & 2.2--3.7 \\
+A (Full graph) \textperiodcentered{} xhigh (6 market needs) & 31 & 1.18M & 2.6 & 2.1--3.1 \\
 \end{longtable}
 
 \begin{itemize}
@@ -965,13 +965,13 @@ A (Full graph) · xhigh (6 market needs) & 31 & 1.18M & 2.6 & 2.1--3.1 \\
 \item
   \textbf{The market-need slice is the most efficient representation at every effort up to high.} B at medium yields 8.8 top ideas per 100k tokens, 2.8 times A at medium (3.2); at high, 5.9 against 3.1. The intervals do not overlap.
 \item
-  \textbf{How far apart the slopes are} (Figure \ref{fig:spread}, chance that each arm's slope beats the next lower arm's): B·medium over B·low 0.93; B·low over C 0.74; C over B·high 0.69; B·high over R 0.99; R over A·medium 0.91; among the full-graph arms and B·xhigh 0.53--0.73. Four tiers: B at medium (8.8); B at low and high with C (5.9--7.0); R (4.1); all full-graph arms and B·xhigh (2.6--3.2).
+  \textbf{How far apart the slopes are} (Figure \ref{fig:spread}, chance that each arm's slope beats the next lower arm's): B\textperiodcentered{}medium over B\textperiodcentered{}low 0.93; B\textperiodcentered{}low over C 0.74; C over B\textperiodcentered{}high 0.69; B\textperiodcentered{}high over R 0.99; R over A\textperiodcentered{}medium 0.91; among the full-graph arms and B\textperiodcentered{}xhigh 0.53--0.73. Four tiers: B at medium (8.8); B at low and high with C (5.9--7.0); R (4.1); all full-graph arms and B\textperiodcentered{}xhigh (2.6--3.2).
 \item
   \textbf{No graph:} C's low top-idea rate (10.2\%) is offset by its cheap calls (8.0k tokens), giving a yield of 6.4, above R and A and within the interval of B at high effort. Its weakness is coverage: with no graph, M1 produced no top idea in 5 calls (A and B: 2--3).
 \item
-  \textbf{At the stricter threshold (≥ 4.25)} the order is similar but the counts are small (2--11 per arm): B·medium 1.8 per 100k tokens (1.1--2.7), A·medium 1.0, B·low 0.9, B·high 0.9, A·xhigh 0.85, B·xhigh 0.8, C 0.8, A·high 0.7, R 0.4, A·low 0.2.
+  \textbf{At the stricter threshold ($\ge 4.25$)} the order is similar but the counts are small (2--11 per arm): B\textperiodcentered{}medium 1.8 per 100k tokens (1.1--2.7), A\textperiodcentered{}medium 1.0, B\textperiodcentered{}low 0.9, B\textperiodcentered{}high 0.9, A\textperiodcentered{}xhigh 0.85, B\textperiodcentered{}xhigh 0.8, C 0.8, A\textperiodcentered{}high 0.7, R 0.4, A\textperiodcentered{}low 0.2.
 \item
-  \textbf{On the 6 xhigh market needs only:} B·medium 9.0, B·low 7.4, B·high 6.4, C 6.1, R 4.2, A·low 3.3, B·xhigh 3.1, A·medium 2.9, A·high 2.8, A·xhigh 2.6. The ranking is the same as on all market needs.
+  \textbf{On the 6 xhigh market needs only:} B\textperiodcentered{}medium 9.0, B\textperiodcentered{}low 7.4, B\textperiodcentered{}high 6.4, C 6.1, R 4.2, A\textperiodcentered{}low 3.3, B\textperiodcentered{}xhigh 3.1, A\textperiodcentered{}medium 2.9, A\textperiodcentered{}high 2.8, A\textperiodcentered{}xhigh 2.6. The ranking is the same as on all market needs.
 \end{itemize}
 
 \hypertarget{yield-per-market-need}{%
@@ -1004,7 +1004,7 @@ R random slice
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 A full graph
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-B ÷ A
+$B \div A$
 \end{minipage} \\
 \midrule\noalign{}
 \endfirsthead
@@ -1023,25 +1023,25 @@ R random slice
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 A full graph
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-B ÷ A
+$B \div A$
 \end{minipage} \\
 \midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-M11 & 10 & 2.1 & 0.0 & 2.1 & 1.7 & 1.2× \\
-M14 & 15 & 17.9 & 15.5 & 10.6 & 8.2 & 2.2× \\
-M16 & 15 & 9.2 & 5.1 & 2.5 & 3.0 & 3.1× \\
-M8 & 25 & 13.4 & 10.1 & 7.6 & 2.9 & 4.7× \\
-M6 & 28 & 11.8 & 7.4 & 5.8 & 3.4 & 3.5× \\
-M7 & 45 & 5.5 & 12.8 & 5.8 & 2.8 & 2.0× \\
-M13 & 45 & 6.0 & 5.0 & 3.1 & 2.7 & 2.2× \\
-M3 & 47 & 4.1 & 10.0 & 4.8 & 4.5 & 0.9× \\
-M12 & 47 & 3.1 & 2.6 & 1.6 & 2.8 & 1.1× \\
-M1 & 48 & 2.6 & 0.0 & 0.0 & 3.2 & 0.8× \\
-M4 & 51 & 4.3 & 6.8 & 4.1 & 1.9 & 2.3× \\
+M11 & 10 & 2.1 & 0.0 & 2.1 & 1.7 & 1.2$\times$ \\
+M14 & 15 & 17.9 & 15.5 & 10.6 & 8.2 & 2.2$\times$ \\
+M16 & 15 & 9.2 & 5.1 & 2.5 & 3.0 & 3.1$\times$ \\
+M8 & 25 & 13.4 & 10.1 & 7.6 & 2.9 & 4.7$\times$ \\
+M6 & 28 & 11.8 & 7.4 & 5.8 & 3.4 & 3.5$\times$ \\
+M7 & 45 & 5.5 & 12.8 & 5.8 & 2.8 & 2.0$\times$ \\
+M13 & 45 & 6.0 & 5.0 & 3.1 & 2.7 & 2.2$\times$ \\
+M3 & 47 & 4.1 & 10.0 & 4.8 & 4.5 & 0.9$\times$ \\
+M12 & 47 & 3.1 & 2.6 & 1.6 & 2.8 & 1.1$\times$ \\
+M1 & 48 & 2.6 & 0.0 & 0.0 & 3.2 & 0.8$\times$ \\
+M4 & 51 & 4.3 & 6.8 & 4.1 & 1.9 & 2.3$\times$ \\
 M5 & 51 & 0.0 & 0.0 & 1.5 & 0.0 & --- \\
-M17 & 51 & 2.9 & 7.9 & 6.1 & 2.8 & 1.0× \\
+M17 & 51 & 2.9 & 7.9 & 6.1 & 2.8 & 1.0$\times$ \\
 \end{longtable}
 
 \begin{longtable}[]{@{}
@@ -1111,7 +1111,7 @@ B vs C & 8 & 4 & 1 & 0.388 \\
 
 Figure \ref{fig:budget} shows the curves.
 
-This measure answers a practical question, how likely one budget is to produce at least one top idea, but every arm's chance approaches 100\% as the budget grows, so it compresses differences at large budgets and can suggest that spending alone guarantees a top idea. The yield above is the better basis for comparing arms. For a token budget spent on whole calls of one arm, the chance that at least one idea scores ≥ 4.0, averaged over market needs. Within a market need, calls are treated as independent: k calls succeed with 1 − (1 − p)\^{}k, where p is the market need's share of calls with a top idea, estimated as (hits + ½) / (calls + 1) because 5 calls per market need often give exactly 0 or 1.
+This measure answers a practical question, how likely one budget is to produce at least one top idea, but every arm's chance approaches 100\% as the budget grows, so it compresses differences at large budgets and can suggest that spending alone guarantees a top idea. The yield above is the better basis for comparing arms. For a token budget spent on whole calls of one arm, the chance that at least one idea scores $\ge 4.0$, averaged over market needs. Within a market need, calls are treated as independent: $k$ calls succeed with $1 - (1 - p)^k$, where $p$ is the market need's share of calls with a top idea, estimated as $(\text{hits} + \tfrac{1}{2}) / (\text{calls} + 1)$ because 5 calls per market need often give exactly 0 or 1.
 
 Table~\ref{tab:budget} gives the chance at three budgets.
 
@@ -1128,16 +1128,16 @@ Arm & 25k tokens & 50k tokens & 100k tokens \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-No graph · high & 74\% (3 calls) & 84\% (6) & 92\% (12) \\
-Random graph · high & 65\% (2) & 82\% (4) & 93\% (8) \\
-Slice · low & 64\% (3) & 81\% (7) & 91\% (15) \\
-Slice · medium & 70\% (2) & \textbf{89\%} (5) & \textbf{96\%} (11) \\
-Slice · high & 74\% (2) & 88\% (4) & 95\% (8) \\
-Slice · xhigh (6 market needs) & --- (0) & 69\% (1) & 94\% (3) \\
-Full graph · low & 39\% (1) & 67\% (3) & 86\% (7) \\
-Full graph · medium & 46\% (1) & 79\% (3) & 94\% (6) \\
-Full graph · high & 56\% (1) & 76\% (2) & 90\% (4) \\
-Full graph · xhigh (6 market needs) & --- (0) & 75\% (1) & 93\% (2) \\
+No graph \textperiodcentered{} high & 74\% (3 calls) & 84\% (6) & 92\% (12) \\
+Random graph \textperiodcentered{} high & 65\% (2) & 82\% (4) & 93\% (8) \\
+Slice \textperiodcentered{} low & 64\% (3) & 81\% (7) & 91\% (15) \\
+Slice \textperiodcentered{} medium & 70\% (2) & \textbf{89\%} (5) & \textbf{96\%} (11) \\
+Slice \textperiodcentered{} high & 74\% (2) & 88\% (4) & 95\% (8) \\
+Slice \textperiodcentered{} xhigh (6 market needs) & --- (0) & 69\% (1) & 94\% (3) \\
+Full graph \textperiodcentered{} low & 39\% (1) & 67\% (3) & 86\% (7) \\
+Full graph \textperiodcentered{} medium & 46\% (1) & 79\% (3) & 94\% (6) \\
+Full graph \textperiodcentered{} high & 56\% (1) & 76\% (2) & 90\% (4) \\
+Full graph \textperiodcentered{} xhigh (6 market needs) & --- (0) & 75\% (1) & 93\% (2) \\
 \end{longtable}
 
 \begin{itemize}
@@ -1156,15 +1156,15 @@ Full graph · xhigh (6 market needs) & --- (0) & 75\% (1) & 93\% (2) \\
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Score ≥ 4.25 (top 2.4\%):} same direction, too few hits per arm (2--11) to separate arms. A·xhigh 6.7\% and B·xhigh 4.7\% (6 market needs), A·medium 3.4\%, B·medium 3.1\%, A·high 3.1\%, B·high 2.2\%, C 1.2\%, B·low 1.2\%, R 1.0\%, A·low 0.6\%. Tokens per top idea are lowest for B·medium (56k) and highest for R (about 260k) and A·low (463k); yields are listed in the yield section above.
+  \textbf{Score $\ge 4.25$ (top 2.4\%):} same direction, too few hits per arm (2--11) to separate arms. A\textperiodcentered{}xhigh 6.7\% and B\textperiodcentered{}xhigh 4.7\% (6 market needs), A\textperiodcentered{}medium 3.4\%, B\textperiodcentered{}medium 3.1\%, A\textperiodcentered{}high 3.1\%, B\textperiodcentered{}high 2.2\%, C 1.2\%, B\textperiodcentered{}low 1.2\%, R 1.0\%, A\textperiodcentered{}low 0.6\%. Tokens per top idea are lowest for B\textperiodcentered{}medium (56k) and highest for R (about 260k) and A\textperiodcentered{}low (463k); yields are listed in the yield section above.
 \item
-  \textbf{Only the 6 xhigh market needs} (\texttt{-\/-match-needs}): B·medium and B·high 16.7\%, B·xhigh 18.7\%, A·high 12.7\%, A·xhigh 20.7\%, R 10.7\%, C 10.0\%. On equal market needs, B gains little from xhigh over medium or high, while A gains a lot; A needs the extra thinking to make use of its larger context.
+  \textbf{Only the 6 xhigh market needs} (\texttt{-\/-match-needs}): B\textperiodcentered{}medium and B\textperiodcentered{}high 16.7\%, B\textperiodcentered{}xhigh 18.7\%, A\textperiodcentered{}high 12.7\%, A\textperiodcentered{}xhigh 20.7\%, R 10.7\%, C 10.0\%. On equal market needs, B gains little from xhigh over medium or high, while A gains a lot; A needs the extra thinking to make use of its larger context.
 \end{itemize}
 
 \hypertarget{top-ideas}{%
 \subsubsection{The top ideas}\label{top-ideas}}
 
-The 10 highest-scoring of all 2,892 ideas (\texttt{results/top\_ideas.md}), all scoring 4.50: 5 from A (high ×2, medium ×2, xhigh), 4 from B (high ×2, low, xhigh) and 1 from R (high). The bottom 10 are dominated by B at low effort (6 of 10).
+The 10 highest-scoring of all 2,892 ideas (\texttt{results/top\_ideas.md}), all scoring 4.50: 5 from A (high $\times 2$, medium $\times 2$, xhigh), 4 from B (high $\times 2$, low, xhigh) and 1 from R (high). The bottom 10 are dominated by B at low effort (6 of 10).
 
 \begin{itemize}
 \tightlist
@@ -1277,8 +1277,8 @@ Effort & Relevance & Novelty & Feasibility & Specificity & Diversity \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-low & +0.13 & −0.01 & +0.33 & +0.27 & +0.17 \\
-high & −0.01 & +0.06 & +0.09 & +0.34 & +0.16 \\
+low & +0.13 & $-0.01$ & +0.33 & +0.27 & +0.17 \\
+high & $-0.01$ & +0.06 & +0.09 & +0.34 & +0.16 \\
 \end{longtable}
 
 \begin{itemize}
@@ -1301,7 +1301,7 @@ high & −0.01 & +0.06 & +0.09 & +0.34 & +0.16 \\
 \end{figure}
 
 
-\textbf{Slice size (exploratory).} The less of the graph the slice contains, the larger its advantage. B's lead over A is largest where the slice is small: 3--5× for M6, M8 and M16 (15--28 nodes), against 0.8--2.3× for the market needs with 45--51 nodes (Figure \ref{fig:slicesize}). Across market needs, the log of B's yield ratio over A correlates with slice size at r = −0.46 at high effort (n = 12, p ≈ 0.13) and r = −0.61 at medium effort (n = 12, p ≈ 0.04). M11, the smallest slice (10 nodes), is an exception at 1.2×; it is also one of the two hardest market needs for every arm. A smaller slice saves more tokens and is more focused; with 13 market needs and 5 calls each this is a pattern to test, not an established result.
+\textbf{Slice size (exploratory).} The less of the graph the slice contains, the larger its advantage. B's lead over A is largest where the slice is small: 3--5$\times$ for M6, M8 and M16 (15--28 nodes), against 0.8--2.3$\times$ for the market needs with 45--51 nodes (Figure \ref{fig:slicesize}). Across market needs, the log of B's yield ratio over A correlates with slice size at $r = -0.46$ at high effort ($n = 12$, $p \approx 0.13$) and $r = -0.61$ at medium effort ($n = 12$, $p \approx 0.04$). M11, the smallest slice (10 nodes), is an exception at 1.2$\times$; it is also one of the two hardest market needs for every arm. A smaller slice saves more tokens and is more focused; with 13 market needs and 5 calls each this is a pattern to test, not an established result.
 
 \hypertarget{relevance-top-tail}{%
 \subsubsection{Relevance in the top tail: market-need slice, random slice and no graph}\label{relevance-top-tail}}
@@ -1312,7 +1312,7 @@ The market-need slice (B) and the random slice (R) have the same number of nodes
 \item
   \textbf{Top-idea rate, B vs R:} at the same effort and nearly the same size, the market-need slice yields top ideas at 14.7\% against 9.8\% for the random slice; the confidence intervals just touch. The whole-set judging does not confirm this (Section~\ref{pairwise-set-judging-the-controls-high-effort}).
 \item
-  \textbf{Yield, B vs R:} at high effort, B yields 5.9 and R 4.1; the 95\% intervals just touch (4.9--7.0 against 3.1--5.2), but pairing the two arms' bootstrap draws, B's slope is the higher in 99\% of them (Figure \ref{fig:spread}), equivalent to a one-sided bootstrap p ≈ 0.01. R costs about as much per call as B, so the difference is in what the calls find.
+  \textbf{Yield, B vs R:} at high effort, B yields 5.9 and R 4.1; the 95\% intervals just touch (4.9--7.0 against 3.1--5.2), but pairing the two arms' bootstrap draws, B's slope is the higher in 99\% of them (Figure \ref{fig:spread}), equivalent to a one-sided bootstrap $p \approx 0.01$. R costs about as much per call as B, so the difference is in what the calls find.
 \item
   \textbf{Per market need, B vs R is not robust} (9 of 13, p = 0.27), in line with the pooled yield (intervals touching) and the set judging (no difference).
 \item
@@ -1435,9 +1435,9 @@ Diversity
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-Full graph − No graph & +0.21 & +0.24 & +0.29 & +0.88 & −0.11 \\
-Slice − No graph & +0.16 & +0.20 & +0.14 & +0.52 & −0.30 \\
-Slice − Random graph & +0.14 & −0.08 & +0.20 & −0.03 & −0.20 \\
+Full graph $-$ No graph & +0.21 & +0.24 & +0.29 & +0.88 & $-0.11$ \\
+Slice $-$ No graph & +0.16 & +0.20 & +0.14 & +0.52 & $-0.30$ \\
+Slice $-$ Random graph & +0.14 & $-0.08$ & +0.20 & $-0.03$ & $-0.20$ \\
 \end{longtable}
 
 \begin{itemize}
@@ -1445,7 +1445,7 @@ Slice − Random graph & +0.14 & −0.08 & +0.20 & −0.03 & −0.20 \\
 \item
   \textbf{Full graph vs no graph:} a clear win for A on every criterion except diversity, above all specificity (+0.88). R vs C was not judged.
 \item
-  \textbf{Need slice vs no graph:} B wins 62\%, just short of significance (p = 0.053), again mainly through specificity. C's sets are judged the more diverse (−0.30): without a graph, the five ideas range more widely.
+  \textbf{Need slice vs no graph:} B wins 62\%, just short of significance (p = 0.053), again mainly through specificity. C's sets are judged the more diverse ($-0.30$): without a graph, the five ideas range more widely.
 \item
   \textbf{Need slice vs random slice:} no detectable difference. B's sets are slightly more relevant and feasible, R's slightly more diverse; 20 of 65 pairs are ties and the judge agreed with itself across orders for only 68\% of pairs, the lowest of any comparison, so the two kinds of set are hard to tell apart.
 \item
@@ -1472,16 +1472,16 @@ Arm & Mean score & Relevance & Novelty & Feasibility & Specificity \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-No graph · high & 3.44 & 3.49 & 3.29 & 3.21 & 3.78 \\
-Random graph · high & 3.46 & 3.44 & 3.16 & 3.37 & 3.88 \\
-Slice · low & 3.28 & 3.38 & 3.01 & 3.26 & 3.50 \\
-Slice · medium & 3.47 & 3.53 & 3.20 & 3.36 & 3.82 \\
-Slice · high & 3.53 & 3.60 & 3.25 & 3.37 & 3.92 \\
-Slice · xhigh (6 market needs) & 3.54 & 3.47 & 3.38 & 3.29 & 4.03 \\
-Full graph · low & 3.30 & 3.39 & 3.04 & 3.27 & 3.52 \\
-Full graph · medium & 3.44 & 3.42 & 3.10 & 3.42 & 3.83 \\
-Full graph · high & 3.50 & 3.46 & 3.20 & 3.45 & 3.89 \\
-Full graph · xhigh (6 market needs) & 3.52 & 3.42 & 3.33 & 3.29 & 4.03 \\
+No graph \textperiodcentered{} high & 3.44 & 3.49 & 3.29 & 3.21 & 3.78 \\
+Random graph \textperiodcentered{} high & 3.46 & 3.44 & 3.16 & 3.37 & 3.88 \\
+Slice \textperiodcentered{} low & 3.28 & 3.38 & 3.01 & 3.26 & 3.50 \\
+Slice \textperiodcentered{} medium & 3.47 & 3.53 & 3.20 & 3.36 & 3.82 \\
+Slice \textperiodcentered{} high & 3.53 & 3.60 & 3.25 & 3.37 & 3.92 \\
+Slice \textperiodcentered{} xhigh (6 market needs) & 3.54 & 3.47 & 3.38 & 3.29 & 4.03 \\
+Full graph \textperiodcentered{} low & 3.30 & 3.39 & 3.04 & 3.27 & 3.52 \\
+Full graph \textperiodcentered{} medium & 3.44 & 3.42 & 3.10 & 3.42 & 3.83 \\
+Full graph \textperiodcentered{} high & 3.50 & 3.46 & 3.20 & 3.45 & 3.89 \\
+Full graph \textperiodcentered{} xhigh (6 market needs) & 3.52 & 3.42 & 3.33 & 3.29 & 4.03 \\
 \end{longtable}
 
 \begin{itemize}
@@ -1517,7 +1517,7 @@ Figure \ref{fig:costquality} plots tokens per call against mean idea score for t
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Effort:} top-idea rates rise with effort for both A and B, with the largest rates at xhigh. But xhigh costs 2--3× the tokens per top idea of medium or high.
+  \textbf{Effort:} top-idea rates rise with effort for both A and B, with the largest rates at xhigh. But xhigh costs 2--3$\times$ the tokens per top idea of medium or high.
 \item
   \textbf{The full graph's yield is flat across effort} (2.6--3.2). More thinking raises A's top-idea rate from 8\% to 21\%, but the cost per call rises in step, so the full graph buys better calls, not more top ideas per token.
 \item
@@ -1648,10 +1648,10 @@ Diversity
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-high − low & Full graph & +0.48 & +0.71 & +0.52 & +1.14 & +0.63 \\
-high − low & Slice & +0.71 & +0.69 & +0.70 & +1.23 & +0.71 \\
-xhigh − high & Full graph & +0.25 & +0.34 & +0.02 & +0.46 & +0.33 \\
-xhigh − high & Slice & +0.19 & +0.47 & +0.03 & +0.61 & +0.45 \\
+high $-$ low & Full graph & +0.48 & +0.71 & +0.52 & +1.14 & +0.63 \\
+high $-$ low & Slice & +0.71 & +0.69 & +0.70 & +1.23 & +0.71 \\
+xhigh $-$ high & Full graph & +0.25 & +0.34 & +0.02 & +0.46 & +0.33 \\
+xhigh $-$ high & Slice & +0.19 & +0.47 & +0.03 & +0.61 & +0.45 \\
 \end{longtable}
 
 \begin{itemize}
@@ -1659,7 +1659,7 @@ xhigh − high & Slice & +0.19 & +0.47 & +0.03 & +0.61 & +0.45 \\
 \item
   High beats low on every criterion and on all 13 market needs.
 \item
-  xhigh beats high again, mainly through specificity, novelty and diversity, not feasibility, at 1.8× (A) to 2.4× (B) the tokens. Effort had not saturated at the highest level tested.
+  xhigh beats high again, mainly through specificity, novelty and diversity, not feasibility, at 1.8$\times$ (A) to 2.4$\times$ (B) the tokens. Effort had not saturated at the highest level tested.
 \end{itemize}
 
 \hypertarget{pairwise-set-judging-slice-with-high-effort-vs-full-graph-with-low-effort}{%
@@ -1758,11 +1758,11 @@ Table~\ref{tab:persona-rep} gives the \textbf{yield (top ideas per 100k tokens),
 \begin{minipage}[b]{\linewidth}\raggedright
 Persona
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-B · market-need slice
+B \textperiodcentered{} market-need slice
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-C · no graph
+C \textperiodcentered{} no graph
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-B ÷ C {[}95\% CI{]}
+$B \div C$ {[}95\% CI{]}
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 Top-idea rate B / C
 \end{minipage} \\
@@ -1773,11 +1773,11 @@ Top-idea rate B / C
 \begin{minipage}[b]{\linewidth}\raggedright
 Persona
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-B · market-need slice
+B \textperiodcentered{} market-need slice
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-C · no graph
+C \textperiodcentered{} no graph
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-B ÷ C {[}95\% CI{]}
+$B \div C$ {[}95\% CI{]}
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 Top-idea rate B / C
 \end{minipage} \\
@@ -1846,9 +1846,9 @@ P = share of 2,000 paired bootstrap draws (calls resampled within market need) i
 \item
   \textbf{The slice helped every persona's top-idea rate,} and the lateral thinker most: its rate nearly doubles with the slice (5.8\% to 11.0\%). A persona that works by reframing seems to need concrete product structure to anchor on.
 \item
-  \textbf{The best single cell} is the patent persona with the slice at high effort: 18.0\% top ideas, and the only B ÷ C ratio whose interval clears 1 (1.55 {[}1.03--2.61{]}). It is one cell of twelve and is reported as a pattern.
+  \textbf{The best single cell} is the patent persona with the slice at high effort: 18.0\% top ideas, and the only $B \div C$ ratio whose interval clears 1 (1.55 {[}1.03--2.61{]}). It is one cell of twelve and is reported as a pattern.
 \item
-  \textbf{On these three market needs, the engineer's slice does not beat no graph} (B ÷ C 0.84 {[}0.60--1.22{]} pooled; at medium effort no graph is even ahead, 10.0 against 6.4, intervals overlapping). In the main study, too, no graph's yield at high effort (6.4) was close to the slice's (5.9); the slice's clear lead there came at medium effort on all 13 market needs (8.8), and on M4, one of the three market needs here, no graph did well. The slice's efficiency advantage over no graph is therefore market-need-dependent; its advantage over the full graph and the random slice is the robust result.
+  \textbf{On these three market needs, the engineer's slice does not beat no graph} ($B \div C$ 0.84 {[}0.60--1.22{]} pooled; at medium effort no graph is even ahead, 10.0 against 6.4, intervals overlapping). In the main study, too, no graph's yield at high effort (6.4) was close to the slice's (5.9); the slice's clear lead there came at medium effort on all 13 market needs (8.8), and on M4, one of the three market needs here, no graph did well. The slice's efficiency advantage over no graph is therefore market-need-dependent; its advantage over the full graph and the random slice is the robust result.
 \item
   \textbf{The exemplars were not copied:} at most 1.8\% of ideas mention Wi-Fi, the Eurostar or entertainment (engineer baseline 0.7\%), and none mention Dyson, cyclones or bagless designs.
 \end{itemize}
@@ -1858,7 +1858,7 @@ P = share of 2,000 paired bootstrap draws (calls resampled within market need) i
 \begin{itemize}
 \tightlist
 \item
-  \textbf{H5 (the lateral thinker needs the graph less): not supported.} The B ÷ C ratio points the other way (1.16 against the engineer's 0.84), and the intervals overlap.
+  \textbf{H5 (the lateral thinker needs the graph less): not supported.} The $B \div C$ ratio points the other way (1.16 against the engineer's 0.84), and the intervals overlap.
 \item
   \textbf{H6 (the patent persona needs the graph more, for patentable ideas): not testable.} The judge rated almost every idea 2 out of 5 for patentability (means 2.13--2.31 in every cell); only about 1\% of ideas reach the pre-set threshold of 4, 0--2 per cell, so patentable yields are noise.
 \item
@@ -1938,7 +1938,7 @@ Slice vs Random graph, high effort & 492 / 492 & 59\% & 54\% (Slice) \\
 \hypertarget{change-from-the-pilot}{%
 \subsubsection{Change from the pilot}\label{change-from-the-pilot}}
 
-The pilot (2 market needs × 3 replicates) found the full graph winning 17 of 18 set comparisons. At full scale (13 market needs, 65 pairs) A's set-level advantage shrinks to about 64\%, and on the tail measure it disappears. The pilot's ``more novel but less feasible'' pattern for A did not replicate (it now describes no graph, C). The effort effect and the B-high vs A-low result held. Contrary to the pilot's expectation, quality kept rising from high to xhigh.
+The pilot (2 market needs $\times$ 3 replicates) found the full graph winning 17 of 18 set comparisons. At full scale (13 market needs, 65 pairs) A's set-level advantage shrinks to about 64\%, and on the tail measure it disappears. The pilot's ``more novel but less feasible'' pattern for A did not replicate (it now describes no graph, C). The effort effect and the B-high vs A-low result held. Contrary to the pilot's expectation, quality kept rising from high to xhigh.
 
 \hypertarget{caveats}{%
 \subsubsection{Caveats}\label{caveats}}
@@ -1966,7 +1966,7 @@ The pilot (2 market needs × 3 replicates) found the full graph winning 17 of 18
 \item
   \textbf{One product, one operator, one prompt.} The worked example comes from the M8 branch of the graph, which may favour ideas in that area.
 \item
-  \textbf{Per-market-need results} rest on 5 calls or pairs each and should be read as patterns; the slice-size effect is exploratory (13 market needs, p ≈ 0.04--0.13).
+  \textbf{Per-market-need results} rest on 5 calls or pairs each and should be read as patterns; the slice-size effect is exploratory (13 market needs, $p \approx 0.04$--$0.13$).
 \end{itemize}
 
 \hypertarget{discussion-and-conclusion}{%
