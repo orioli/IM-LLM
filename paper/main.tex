@@ -65,13 +65,13 @@ for generative ideation with product graphs}%
 Instead of ephemeral human-vs-AI benchmarks, we evaluate representation eﬃciency:
 standout ideas per total token spent. Using a 6-layer microwave oven knowledge graph (123
 nodes, 246 edges), we test four prompt representations across 13 market needs and four
-thinking-eﬀort levels: full graph (A), market-need vertical slice (B), size-matched random
+thinking-effort levels: full graph (A), market-need vertical slice (B), size-matched random
 slice (R, controlling for prompt length), and no graph (C). Claude 3.5 Haiku generated
 2, 892 ideas (580 calls) under the SCAMPER Substitute operator, scored blind by Claude
 3.5 Sonnet.
-We measure yield: top-decile ideas (top 12%, score ≥ 4.0/5.0) per 100k total tokens
+We measure yield: top-decile ideas (top 12\%, score ≥ 4.0/5.0) per 100k total tokens
 (input plus output/reasoning). The targeted market-need slice at medium eﬀort achieves
-peak yield (8.8 top ideas/100k tokens)—nearly triple the full graph (3.1) and superior on
+peak yield (8.8 top ideas/100k tokens)—nearly triple the full graph and superior on
 10/13 market needs. While the full graph produces more detailed average sets, it yields no
 more top ideas and inflates token cost. An additional step of human expert analysis also
 shows that, despite high scores, top ideas retrieve established state-of-the-art solutions rather
