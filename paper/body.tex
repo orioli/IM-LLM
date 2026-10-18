@@ -1958,7 +1958,7 @@ The pilot (2 market needs × 3 replicates) found the full graph winning 17 of 18
 \item
   \textbf{Relevance vs size rests on the tail measure:} the pairwise judging found no difference between B and R.
 \item
-  \textbf{R is size-matched to B in nodes, not tokens} (17\% fewer input tokens).
+  \textbf{R controls for node count, not edges or graph distribution:} $R$ matches $B$ in node count and layer composition, but random selection yields substantially sparser induced graphs (2--52 edges vs.\ 11--85 in $B$) and 17\% fewer input tokens. Furthermore, only a single fixed random draw per market need was evaluated rather than an ensemble over multiple random graph realizations, so variance across different random subgraphs is not averaged out.
 \item
   \textbf{Length and effort are intertwined;} the pairwise effort effects may be partly inflated by detail bias.
 \item
