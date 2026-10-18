@@ -62,24 +62,8 @@ for generative ideation with product graphs}%
 \begin{document}
 \maketitle
 \begin{abstract}
-
-Instead of ephemeral human-vs-AI benchmarks, we evaluate representation efficiency:
-standout ideas per total token spent. Using a 6-layer microwave oven knowledge graph (123
-nodes, 246 edges), we test four prompt representations across 13 market needs and four
-thinking-effort levels: full graph (A), market-need vertical slice (B), size-matched random
-slice (R, controlling for prompt length), and no graph (C). Claude 3.5 Haiku generated
-2,892 ideas (580 calls) under the SCAMPER Substitute operator, scored blind by Claude
-3.5 Sonnet.
-
-We measure yield: top-decile ideas (top 12\%, score $\ge 4.0/5.0$) per 100k total tokens
-(input plus output/reasoning). The targeted market-need slice at medium effort achieves
-peak yield (8.8 top ideas/100k tokens)---nearly triple the full graph and superior on
-10/13 market needs. While the full graph produces more detailed average sets, it yields no
-more top ideas and inflates token cost. An additional step of human expert analysis also
-shows that, despite high scores, top ideas retrieve established state-of-the-art solutions rather
-than unpatented inventions: LLM ideation operates as query-driven retrieval, where narrow,
-structured context maximizes discovery throughput. Thinking longer raised linguistic quality 
-metrics but not token efficiency. 
+In AI-assisted product ideation, describing the problem as a knowledge graph is increasingly common. Most studies benchmark the output on innovation metrics; few ask how the form of the graph given to the model affects what it produces, and at what cost. We test this on a microwave oven described as a graph (123 nodes, 246 edges) linking user needs to the functions, parts and technologies that serve them. For each of 13 needs, Claude Haiku 5.5 got the whole graph, only the slice relevant to that need, a random slice of the same size, or no graph, at four levels of thinking effort. Claude Sonnet 5.5 scored the 2,892 ideas from 580 runs blind, and we counted top ideas (the best 12%) per 100k tokens.
+The relevant slice worked best: 8.8 top ideas per 100k tokens, about three times the full graph, and more efficient on 10 of 13 needs. Per token, the full graph did worse than no graph at all (about 3 against 6.4): its idea sets were judged better, but its extra context cost more than it found. A random slice also trailed no graph, so relevance, not quantity, is what helps. Thinking longer raised quality but not efficiency, and changing the model’s persona did not help. An expert who read every idea found that even the best mostly restate existing technology: the model retrieves the state of the art more than it invents.
 
 
 \end{abstract}
