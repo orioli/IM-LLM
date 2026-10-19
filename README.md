@@ -42,7 +42,7 @@ The model applies the SUBSTITUTE operator to 13 market needs at four levels of t
 | `runs/`                                                          | every generation call (prompt metadata, raw response, token counts)                               |
 | `results/`                                                       | judge outputs, tables, charts, results write-up                                                   |
 | `persona_as_factor/`                                             | exploratory follow-up: three personas × B, C × 3 market needs × 2 efforts                      |
-| `paper/`                                                         | LaTeX source of the paper (`main.tex`; built from Markdown drafts by `build_paper.py`)        |
+| `paper/`                                                         | LaTeX source of the paper (`main.tex`, `body.tex`, `appendix.tex`, `figures/`)                  |
 
 ## Reproducibility
 
@@ -128,6 +128,24 @@ python analyze.py judge --logs runs/rq1_full.jsonl --pair condition B C --both-o
 # 4. Individual idea quality scoring (Claude Sonnet 5.5)
 python top_ideas.py score --logs runs/rq1_full.jsonl
 ```
+
+### 4. Building the paper PDF
+
+You can build the manuscript PDF using either the automated end-to-end script.
+
+The build script automatically sets up `.venv`, updates stats and charts, syncs figures into `paper/figures/`, compiles with Tectonic (or PDFLaTeX), and verifies PDF integrity:
+
+```bash
+# Full end-to-end build (stats + charts + sync + tectonic compile):
+python3 .github/skills/build_paper/build_paper.py
+
+# Fast LaTeX-only recompile (skip data/chart regeneration):
+python3 .github/skills/build_paper/build_paper.py --skip-stats --skip-charts
+
+# Compile using pdflatex instead of tectonic:
+python3 .github/skills/build_paper/build_paper.py --engine pdflatex
+```
+
 
 ## Citation
 
