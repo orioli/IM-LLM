@@ -29,20 +29,23 @@ The model applies the SUBSTITUTE operator to 13 market needs at four levels of t
 
 ## Repository layout
 
-| Path                                                               | Contents                                                                                          |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
-| `microwave_base_graph.yaml`                                      | the innovation matrix (product graph)                                                             |
-| `slicer.py`, `slices/`                                         | market-need slices (B) and size-matched random slices (R), with `manifest.csv`                  |
-| `template_prompt.txt`                                            | the generation prompt                                                                             |
-| `KG_informed_brainstorm_AB_Test.py`                              | runs the generation calls                                                                         |
-| `analyze.py`                                                     | pairwise set judging and summaries                                                                |
-| `top_ideas.py`                                                   | individual idea scoring (quality; `--rubric patent` for patentability) and the ranked idea list |
-| `charts.py`, `tail_charts.py`, `figure_innovation_matrix.py` | figures                                                                                           |
-| `human_check.py`                                                 | stratified sample for human raters, and agreement statistics                                      |
-| `runs/`                                                          | every generation call (prompt metadata, raw response, token counts)                               |
-| `results/`                                                       | judge outputs, tables, charts, results write-up                                                   |
-| `persona_as_factor/`                                             | exploratory follow-up: three personas × B, C × 3 market needs × 2 efforts                      |
-| `paper/`                                                         | LaTeX source of the paper (`main.tex`, `body.tex`, `appendix.tex`, `figures/`)            |
+| Path                                                                                  | Contents                                                                                          |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `microwave_base_graph.yaml`                                                           | the innovation matrix (product graph)                                                             |
+| `render_matrix_v2.py`, `build_matrix_xlsx.py`, `*.html`                               | interactive innovation matrix visualizers and export scripts                                      |
+| `slicer.py`, `slices/`                                                                | market-need slices (B) and size-matched random slices (R), with `manifest.csv`                    |
+| `template_prompt.txt`                                                                 | the generation prompt                                                                             |
+| `KG_informed_brainstorm_AB_Test.py`                                                   | runs the generation calls                                                                         |
+| `analyze.py`                                                                          | pairwise set judging and summaries                                                                |
+| `top_ideas.py`                                                                        | individual idea scoring (quality; `--rubric patent` for patentability) and the ranked idea list   |
+| `charts.py`, `tail_charts.py`, `figure_innovation_matrix.py`, `figure_slices_grid.py` | figures                                                                                           |
+| `human_check.py`                                                                      | stratified sample for human raters, and agreement statistics                                      |
+| `runs/`                                                                               | every generation call (prompt metadata, raw response, token counts)                               |
+| `results/`                                                                            | judge outputs, tables, charts, results write-up                                                   |
+| `persona_as_factor/`                                                                  | exploratory follow-up: three personas × B, C × 3 market needs × 2 efforts                        |
+| `paper/`                                                                              | LaTeX source of the paper (`main.tex`, `body.tex`, `appendix.tex`, `figures/`)                    |
+| `references/`                                                                         | PDF collection of cited literature and citation verification reports                              |
+| `requirements.txt`                                                                    | Python package dependencies                                                                       |
 
 ## Reproducibility
 
