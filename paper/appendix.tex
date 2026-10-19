@@ -411,26 +411,31 @@ Return JSON with one entry per idea, in the same order:
 \hypertarget{data-and-code}{%
 \section{Data and code}\label{data-and-code}}
 
+The project repository (\url{https://github.com/orioli/IM-LLM}) is organized as follows:
+
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.3800}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.6200}}@{}}
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
-File
+Component / Path
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Contents
+Contents \& Role
 \end{minipage} \\
 \midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-\texttt{runs/rq1\_full.jsonl} & all 580 generation calls \\
-\texttt{results/calls.csv} & one row per call: tokens, length and structure measures \\
-\texttt{results/summary\_condition\_effort.csv}, \texttt{results/summary\_cells.csv} & cost and validity, per arm and per market need \\
-\texttt{results/judgments.jsonl}, \texttt{results/pairwise\_summary.csv} & pairwise set verdicts; win rates, confidence intervals, sign tests, length check \\
-\texttt{results/idea\_scores.jsonl}, \texttt{results/ideas\_ranked.csv}, \texttt{results/top\_ideas.md} & individual idea scores, ranked \\
-\texttt{persona\_as\_factor/} & persona follow-up: design and hypotheses (\texttt{README.md}), runs, scores, \texttt{results/persona\_summary.md}, supplementary chart 10, 11, 11b \\
-\texttt{yield\_per\_market\_need.xlsx} & per-market-need top ideas and tokens per arm, yields, $B \div A$ ratios and market need-level sign tests (live formulas) \\
-\texttt{results/tail\_summary.csv} (+ \texttt{\_ge4.25}, \texttt{\_matched}) & top-idea rates, yields (top ideas per 100k tokens), confidence intervals, tokens per top idea \\
-\texttt{results/charts/} & 0 the innovation matrix (full, and with the M8 slice; \texttt{figure\_innovation\_matrix.py}) \textperiodcentered{} 1 tokens per call \textperiodcentered{} 2 win rates \textperiodcentered{} 3 score differences \textperiodcentered{} 4 cost vs quality \textperiodcentered{} 5 context ladder \textperiodcentered{} 6 top-idea rate \textperiodcentered{} 7 chance of a top idea vs budget \textperiodcentered{} 8 top ideas vs tokens spent (yield) \textperiodcentered{} 8b/8c spread of the slopes (8c annotated) \textperiodcentered{} 9 slice-size effect per market need \\
+\texttt{microwave\_base\_graph.yaml} & Full innovation matrix (123 nodes, 246 typed edges) \\
+\texttt{slicer.py}, \texttt{slices/} & Graph slicer generating vertical slices (B) and random slices (R) with \texttt{manifest.csv} \\
+\texttt{KG\_informed\_brainstorm\_AB\_Test.py} & Ideation execution harness across conditions and effort levels \\
+\texttt{analyze.py}, \texttt{top\_ideas.py} & Pairwise set judging and individual quality/patentability scoring harnesses \\
+\texttt{runs/rq1\_full.jsonl} & Complete raw call logs (580 runs, 2,892 ideas, prompt hashes, token counts) \\
+\texttt{results/judgments.jsonl}, \texttt{results/idea\_scores.jsonl} & Raw blind judge evaluations and point scores \\
+\texttt{results/pairwise\_summary.csv}, \texttt{results/tail\_summary.csv} & Summary statistics, win rates, and bootstrap yield slope estimates \\
+\texttt{yield\_per\_market\_need.xlsx} & Per-market-need top ideas, tokens, yields, and sign tests (live spreadsheet formulas) \\
+\texttt{persona\_as\_factor/} & Persona experiment logs, scoring, and analysis scripts \\
+\texttt{render\_matrix\_v2.py}, \texttt{*.html} & Interactive visualizers for exploring the full matrix and subgraph slices \\
+\texttt{charts.py}, \texttt{tail\_charts.py} & Figure and visualization generation scripts \\
+\texttt{build\_paper.py} & Automated end-to-end manuscript build, data verification, and compilation pipeline \\
 \end{longtable}
