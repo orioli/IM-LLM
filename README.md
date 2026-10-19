@@ -96,7 +96,7 @@ To re-run generation or live LLM judging from scratch, export your Anthropic API
           --reps 5 --max-tokens 48000 --out runs/rq1_full.jsonl
 ```
 
-###  4 Judge the ideas with Sonent or human
+### 4. Judge the ideas with Sonent or human
 ```bash
      # 3. Pairwise set judging (Claude Sonnet 5.5)
      python analyze.py judge --logs runs/rq1_full.jsonl --pair condition A B --both-orders
@@ -128,7 +128,7 @@ To re-run generation or live LLM judging from scratch, export your Anthropic API
      (cd persona_as_factor && python persona_analysis.py)
 ```
 
-### 6. Building the paper PDF
+# 6. Building the paper PDF
 You can build the manuscript PDF using either the automated end-to-end script.
 The build script automatically sets up `.venv`, updates stats and charts, syncs figures into `paper/figures/`, compiles with Tectonic (or PDFLaTeX), and verifies PDF integrity:
 ```bash
