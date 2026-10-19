@@ -42,7 +42,7 @@ The model applies the SUBSTITUTE operator to 13 market needs at four levels of t
 | `runs/`                                                          | every generation call (prompt metadata, raw response, token counts)                               |
 | `results/`                                                       | judge outputs, tables, charts, results write-up                                                   |
 | `persona_as_factor/`                                             | exploratory follow-up: three personas × B, C × 3 market needs × 2 efforts                      |
-| `paper/`                                                         | LaTeX source of the paper (`main.tex`, `body.tex`, `appendix.tex`, `figures/`)                  |
+| `paper/`                                                         | LaTeX source of the paper (`main.tex`, `body.tex`, `appendix.tex`, `figures/`)            |
 
 ## Reproducibility
 
@@ -70,6 +70,7 @@ The model applies the SUBSTITUTE operator to 13 market needs at four levels of t
 ```
 
 ### 1. Environment setup
+
 ```bash
      python3 -m venv .venv
      source .venv/bin/activate
@@ -77,14 +78,18 @@ The model applies the SUBSTITUTE operator to 13 market needs at four levels of t
 ```
 
 ### 2. Create sub graphs (slices)
+
 All raw generation logs and judge outputs are included in `runs/` and `results/`. You can recalculate every statistic, summary table, chart, and compile the manuscript completely offline:
+
 ```bash
      # 1. Create the various version of the graph (slices) for condition B
-     python slicer.py microwave_base_graph.yaml 
+     python slicer.py microwave_base_graph.yaml
 ```
 
 ### 3. AI gerneates ideas in condition A B C and R  (requires API key)
+
 To re-run generation or live LLM judging from scratch, export your Anthropic API key:
+
 ```bash
      export ANTHROPIC_API_KEY=...          # never commit this
 
@@ -96,7 +101,8 @@ To re-run generation or live LLM judging from scratch, export your Anthropic API
           --reps 5 --max-tokens 48000 --out runs/rq1_full.jsonl
 ```
 
-### 4. Judge the ideas with Sonent or human
+### 4. Judge the ideas with LLM or human
+
 ```bash
      # 3. Pairwise set judging (Claude Sonnet 5.5)
      python analyze.py judge --logs runs/rq1_full.jsonl --pair condition A B --both-orders
@@ -107,8 +113,8 @@ To re-run generation or live LLM judging from scratch, export your Anthropic API
      python top_ideas.py score --logs runs/rq1_full.jsonl
 ```
 
-
 ### 5. Create charts
+
 ```bash
      # 2. Cost, validity, pairwise statistics, and idea rankings
      python analyze.py stats --logs runs/rq1_full.jsonl
@@ -129,8 +135,10 @@ To re-run generation or live LLM judging from scratch, export your Anthropic API
 ```
 
 ### 6. Building the paper PDF
+
 You can build the manuscript PDF using either the automated end-to-end script.
 The build script automatically sets up `.venv`, updates stats and charts, syncs figures into `paper/figures/`, compiles with Tectonic (or PDFLaTeX), and verifies PDF integrity:
+
 ```bash
      # compile
      python3 .github/skills/build_paper/build_paper.py
