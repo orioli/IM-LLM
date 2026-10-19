@@ -33,5 +33,6 @@ results/*.zip
 runs/dry_run/
 tmp/
 .vscode/
-.github/skills/review_paper/
+.github/
+!.github/skills/build_paper/
 references/
