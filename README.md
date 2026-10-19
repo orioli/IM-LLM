@@ -108,7 +108,7 @@ To re-run generation or live LLM judging from scratch, export your Anthropic API
 ```
 
 
-# 5 Create charts
+### 5. Create charts
 ```bash
      # 2. Cost, validity, pairwise statistics, and idea rankings
      python analyze.py stats --logs runs/rq1_full.jsonl
@@ -128,7 +128,7 @@ To re-run generation or live LLM judging from scratch, export your Anthropic API
      (cd persona_as_factor && python persona_analysis.py)
 ```
 
-# 6. Building the paper PDF
+### 6. Building the paper PDF
 You can build the manuscript PDF using either the automated end-to-end script.
 The build script automatically sets up `.venv`, updates stats and charts, syncs figures into `paper/figures/`, compiles with Tectonic (or PDFLaTeX), and verifies PDF integrity:
 ```bash
