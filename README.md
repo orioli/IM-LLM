@@ -70,82 +70,80 @@ The model applies the SUBSTITUTE operator to 13 market needs at four levels of t
 ```
 
 ### 1. Environment setup
-
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+     python3 -m venv .venv
+     source .venv/bin/activate
+     pip install -r requirements.txt
 ```
 
-### 2. Offline reproduction (no API key needed)
-
+### 2. Create sub graphs (slices)
 All raw generation logs and judge outputs are included in `runs/` and `results/`. You can recalculate every statistic, summary table, chart, and compile the manuscript completely offline:
-
 ```bash
-# 1. Regenerate slices and manifest
-python slicer.py microwave_base_graph.yaml
-
-# 2. Cost, validity, pairwise statistics, and idea rankings
-python analyze.py stats --logs runs/rq1_full.jsonl
-python analyze.py summary --logs runs/rq1_full.jsonl
-python top_ideas.py report --logs runs/rq1_full.jsonl
-
-# 3. Top-tail metrics, yield slopes, and bootstrap intervals
-python tail_charts.py --threshold 4.0
-python tail_charts.py --threshold 4.25
-python tail_charts.py --match-needs
-
-# 4. Figures and charts
-python figure_innovation_matrix.py
-python figure_slices_grid.py
-python charts.py
-python tail_charts.py
-(cd persona_as_factor && python persona_analysis.py)
-
-# 5. Compile the paper PDF
-python3 .github/skills/build_paper/build_paper.py
+     # 1. Create the various version of the graph (slices) for condition B
+     python slicer.py microwave_base_graph.yaml 
 ```
 
-### 3. Live generation and scoring (requires API key)
-
+### 3. AI gerneates ideas in condition A B C and R  (requires API key)
 To re-run generation or live LLM judging from scratch, export your Anthropic API key:
-
 ```bash
-export ANTHROPIC_API_KEY=...          # never commit this
+     export ANTHROPIC_API_KEY=...          # never commit this
 
-# 1. Inspect prompts without calling the API
-python KG_informed_brainstorm_AB_Test.py --dry-run
+     # 1. Inspect prompts without calling the API
+     python KG_informed_brainstorm_AB_Test.py --dry-run
 
-# 2. Generation (Claude Haiku 5.5; ~8.6M tokens for full 580 calls)
-python KG_informed_brainstorm_AB_Test.py --conditions A B R C --effort low medium high \
-       --reps 5 --max-tokens 48000 --out runs/rq1_full.jsonl
-
-# 3. Pairwise set judging (Claude Sonnet 5.5)
-python analyze.py judge --logs runs/rq1_full.jsonl --pair condition A B --both-orders
-python analyze.py judge --logs runs/rq1_full.jsonl --pair condition B R --both-orders
-python analyze.py judge --logs runs/rq1_full.jsonl --pair condition B C --both-orders
-
-# 4. Individual idea quality scoring (Claude Sonnet 5.5)
-python top_ideas.py score --logs runs/rq1_full.jsonl
+     # 2. Generation (Claude Haiku 5.5; ~8.6M tokens for full 580 calls)
+     python KG_informed_brainstorm_AB_Test.py --conditions A B R C --effort low medium high \
+          --reps 5 --max-tokens 48000 --out runs/rq1_full.jsonl
 ```
 
-### 4. Building the paper PDF
+###  4 Judge the ideas with Sonent or human
+```bash
+     # 3. Pairwise set judging (Claude Sonnet 5.5)
+     python analyze.py judge --logs runs/rq1_full.jsonl --pair condition A B --both-orders
+     python analyze.py judge --logs runs/rq1_full.jsonl --pair condition B R --both-orders
+     python analyze.py judge --logs runs/rq1_full.jsonl --pair condition B C --both-orders
 
+     # 4. Individual idea quality scoring (Claude Sonnet 5.5)
+     python top_ideas.py score --logs runs/rq1_full.jsonl
+```
+
+
+# 5 Create charts
+```bash
+     # 2. Cost, validity, pairwise statistics, and idea rankings
+     python analyze.py stats --logs runs/rq1_full.jsonl
+     python analyze.py summary --logs runs/rq1_full.jsonl
+     python top_ideas.py report --logs runs/rq1_full.jsonl
+
+     # 3. Top-tail metrics, yield slopes, and bootstrap intervals
+     python tail_charts.py --threshold 4.0
+     python tail_charts.py --threshold 4.25
+     python tail_charts.py --match-needs
+
+     # 4. Figures and charts
+     python figure_innovation_matrix.py
+     python figure_slices_grid.py
+     python charts.py
+     python tail_charts.py
+     (cd persona_as_factor && python persona_analysis.py)
+```
+
+### 6. Building the paper PDF
 You can build the manuscript PDF using either the automated end-to-end script.
-
 The build script automatically sets up `.venv`, updates stats and charts, syncs figures into `paper/figures/`, compiles with Tectonic (or PDFLaTeX), and verifies PDF integrity:
-
 ```bash
-# Full end-to-end build (stats + charts + sync + tectonic compile):
-python3 .github/skills/build_paper/build_paper.py
+     # compile
+     python3 .github/skills/build_paper/build_paper.py
 
-# Fast LaTeX-only recompile (skip data/chart regeneration):
-python3 .github/skills/build_paper/build_paper.py --skip-stats --skip-charts
+     # Full end-to-end build (stats + charts + sync + tectonic compile):
+     python3 .github/skills/build_paper/build_paper.py
 
-# Compile using pdflatex instead of tectonic:
-python3 .github/skills/build_paper/build_paper.py --engine pdflatex
+     # Fast LaTeX-only recompile (skip data/chart regeneration):
+     python3 .github/skills/build_paper/build_paper.py --skip-stats --skip-charts
+
+     # Compile using pdflatex instead of tectonic:
+     python3 .github/skills/build_paper/build_paper.py --engine pdflatex
 ```
-
 
 ## Citation
 
