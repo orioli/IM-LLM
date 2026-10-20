@@ -36,6 +36,7 @@ from matplotlib.ticker import FuncFormatter
 from common import CONDITIONS, GEN_MODEL, GEN_SUFFIX, NEED, RESULTS, ROOT, RUNS, load_calls
 
 sys.path.insert(0, str(ROOT))
+import m6_thumb  # noqa: E402
 import tail_charts as tc  # noqa: E402  (the main study's chart code, reused unchanged)
 
 EFFORT = "medium"
@@ -178,7 +179,7 @@ def main() -> None:
     # the main study's drawing code, pointed at this study's folder and arms
     tc.OUT = RESULTS / "charts"
     tc.OUT.mkdir(parents=True, exist_ok=True)
-    tc.THUMB = ROOT / "results" / "charts" / "0b_slices_grid_thumb.png"
+    tc.THUMB = m6_thumb.path()                        # the four M6 prompts this study sent (m6_thumb.py)
     tc.CURVE_ARMS = [(c, EFFORT) for c in CONDITIONS]
     tag = "_m6_50ideas" + GEN_SUFFIX + ("" if args.threshold == 4.0 else f"_ge{args.threshold:g}")
     tc.chart_yield(rows, groups, args.threshold,
@@ -215,7 +216,8 @@ def main() -> None:
               "longer ideas, not directly comparable):")
         for (c, e), (n, t, runs_, toks) in sorted(agg.items()):
             print(f"  {c} · {e:<6} {n:>4} ideas {t:>3} top  {1e5 * t / toks:5.1f} per 100k tokens")
-    print(f"-> results/charts/8_top_ideas_vs_tokens{tag}.png, results/yield{tag}.csv")
+    print(f"-> {tc.OUT.relative_to(ROOT)}/8_top_ideas_vs_tokens{tag}*.png, "
+          f"{(RESULTS / f'yield{tag}.csv').relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

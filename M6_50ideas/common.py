@@ -17,10 +17,11 @@ import yaml
 
 HERE = Path(__file__).resolve().parent            # this study's folder, wherever scripts are run from
 ROOT = HERE.parent                                 # the main study (read only)
-# The model that writes the ideas: GEN_MODEL=haiku (default, the first run) or opus / sonnet, set in the shell
+# The model that writes the ideas: GEN_MODEL=haiku (default, the first run) or opus / sonnet / fable, set in the shell
 # (GEN_MODEL=opus ./run_all.sh generate). Each model gets its own run log and results folder; the codebook,
 # prompts, judge and coder are shared, so the models are compared on the same terms.
-GEN_MODELS = {"haiku": "claude-haiku-5-5", "opus": "claude-opus-5-5", "sonnet": "claude-sonnet-5-5"}
+GEN_MODELS = {"haiku": "claude-haiku-5-5", "opus": "claude-opus-5-5", "sonnet": "claude-sonnet-5-5",
+              "fable": "claude-fable-5-1"}
 GEN_MODEL = os.environ.get("GEN_MODEL", "haiku")
 if GEN_MODEL not in GEN_MODELS:
     sys.exit(f"GEN_MODEL={GEN_MODEL!r}: use one of {sorted(GEN_MODELS)}")

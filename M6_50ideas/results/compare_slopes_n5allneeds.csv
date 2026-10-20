@@ -1,0 +1,13 @@
+panel,condition,effort,needs,calls,ideas,top_ideas,tokens,yield_per_100k,yield_lo,yield_hi
+Haiku · 5 ideas/call,A,medium,13,65,325,34,1053489,3.227,2.375,4.097
+Haiku · 5 ideas/call,B,medium,13,65,325,49,555763,8.817,6.867,10.811
+Haiku · 5 ideas/call,R,high,13,65,325,32,774885,4.13,3.143,5.153
+Haiku · 5 ideas/call,C,high,13,65,325,33,519604,6.351,5.157,7.608
+Haiku · 50 ideas/call,A,medium,1,10,517,28,297939,9.398,6.117,13.291
+Haiku · 50 ideas/call,B,medium,1,10,525,42,206178,20.371,14.506,27.765
+Haiku · 50 ideas/call,R,medium,1,10,513,19,174153,10.91,6.75,16.845
+Haiku · 50 ideas/call,C,medium,1,10,525,37,166561,22.214,17.152,27.979
+Opus · 50 ideas/call,A,medium,1,10,506,72,273333,26.341,21.687,31.074
+Opus · 50 ideas/call,B,medium,1,10,495,73,182828,39.928,31.705,48.07
+Opus · 50 ideas/call,R,medium,1,10,487,60,161347,37.187,29.808,44.956
+Opus · 50 ideas/call,C,medium,1,10,497,65,186964,34.766,27.061,44.53

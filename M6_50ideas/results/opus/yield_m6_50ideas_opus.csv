@@ -1,0 +1,5 @@
+condition,effort,calls,ideas,top_ideas,top_idea_rate,tokens,yield_per_100k,yield_lo,yield_hi
+A,medium,10,506,72,0.142,273333,26.341,21.476,31.09
+B,medium,10,495,73,0.147,182828,39.928,31.711,48.618
+R,medium,10,487,60,0.123,161347,37.187,29.713,45.552
+C,medium,10,497,65,0.131,186964,34.766,26.735,43.166
