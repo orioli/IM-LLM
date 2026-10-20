@@ -1,0 +1,532 @@
+# Final codebook (version 1), edited from codebook_draft.yaml before any new idea was coded.
+status: final
+version: 1
+need: M6
+built_from: codebook/old_M6_ideas.csv (250 main-study ideas, blind)
+drafted_by: claude-sonnet-5-5 (effort high), 2026-10-19
+edited_by: author review of the draft, 2026-10-20
+changes_from_draft:
+- MV03 widened to food-picture presets on any control (dial or keys); food-picture key ideas O067, O090, O227 move from
+  MV13 to MV03 (O091 too).
+- MV13 redefined as one control with two or three plain levels; MV35 (single push-dial with light ring) merged into MV13.
+- MV25 (container shape selects program) merged into MV19.
+- MV02 restricted to weighing; O150 (capacitive load-impedance sensing) moved to MV24, widened to electrical or RF load
+  sensing.
+- 'Tie-break rules written into the definitions: MV04 vs MV08 vs MV17, MV07 vs MV09, MV01/MV11 vs MV19, MV03 vs MV13
+  vs MV22.'
+- 'Categories: drawer (MV06), lift-up lid (MV23), sliding door (MV30) and power cradle (MV34) relabelled interaction
+  (they change how the user reaches or sets up the oven).'
+- 'MV01 and MV11 kept separate: disposable packaging tag (supply chain) vs reusable tagged dish, tile or card.'
+- IDs kept stable, so MV25 and MV35 are gaps; 35 moves.
+moves:
+- id: MV01
+  label: Food packaging NFC tag sets program
+  replaces: manual setting of time and power
+  by: a passive tag printed on the food pack, read by an oven reader (cavity, tray, door or panel)
+  definition: The food package carries its own cooking program in a passive tag. The oven reads it when the pack is placed
+    or tapped and loads time and power with no user input.
+  category: ecosystem
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O014
+  - O019
+  - O054
+- id: MV02
+  label: Weigh food to set time and power
+  replaces: timer and power setting
+  by: a load cell or strain gauge under the turntable with a mass-to-program lookup
+  definition: 'The oven weighs the food on the plate and derives cook time or power from its mass. The user just places
+    food and starts. Mass only: sensing the electrical or RF load is MV24.'
+  category: technology
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O037
+  - O106
+  - O134
+- id: MV03
+  label: Food-picture preset selector (dial or keys)
+  replaces: separate timer and power knobs and numeric settings
+  by: one dial, drum, ring or row of keys marked with food pictures, each mapped to a preset time and power
+  definition: The user picks a food picture (or tactile food shape) and the oven runs that food's factory preset, so
+    the user never sets numbers. Covers mechanical dials and drums as well as membrane, touch or push keys. Plain levels
+    without food pictures (Warm/Cook, low/medium/high) are MV13.
+  category: interaction
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O016
+  - O021
+  - O114
+  - O090
+  - O067
+  - O227
+- id: MV04
+  label: Door pops open at end of cycle
+  replaces: end-of-cook bell and the door-release step
+  by: a spring or solenoid that opens the door ajar when the cycle ends
+  definition: At cycle end a spring, cam or solenoid cracks the door open by itself. The open door is the 'done' signal
+    and gives access to the food with no button. If the user must push or touch the door to open it, code MV08 or MV17
+    instead.
+  category: interaction
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O003
+  - O024
+  - O195
+- id: MV05
+  label: Colour or light progress and status ring
+  replaces: numeric timer readout, bell and interior lamp
+  by: LED, light-guide or colour-changing elements that show state by colour or fill
+  definition: Cooking progress and completion are shown by colour, fill level or glow, with no numbers or sound. The
+    light can be on the rim, handle, plate or window.
+  category: interaction
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O027
+  - O093
+  - O163
+- id: MV06
+  label: Pull-out drawer cavity replaces door
+  replaces: hinged door and release button
+  by: a cavity that slides out on rails with a choke seal
+  definition: The cooking chamber is a drawer that slides straight out on runners. Access is a pull and closure a push,
+    sometimes starting the cycle, and the sliding joint has an RF choke seal.
+  category: interaction
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O006
+  - O045
+  - O123
+- id: MV07
+  label: Steam or humidity sensing auto-stop
+  replaces: timer setting
+  by: a humidity or gas sensor (or steam-driven bimetal) in the vent that ends cooking when food steams
+  definition: A vent sensor or steam-actuated element detects steam, humidity or gas from the food and stops the cycle
+    by itself. The user sets no time. If the idea senses food temperature (IR, thermistor, probe), code MV09; if it uses
+    both, the primary is the one that ends the cycle and the other is secondary.
+  category: technology
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O039
+  - O069
+  - O199
+- id: MV08
+  label: Push anywhere on door to open
+  replaces: small door release button and lever
+  by: a magnetic or spring push-to-open latch over the whole door face
+  definition: 'A magnet or spring catch lets a light push anywhere on the door face release it, so there is no target
+    to find. Purely mechanical: if a sensor detects the hand and a motor or solenoid releases the latch, code MV17; if
+    the door opens by itself at cycle end, code MV04.'
+  category: interaction
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O002
+  - O004
+  - O138
+- id: MV09
+  label: Temperature sensing auto-stop and control
+  replaces: timer and power setting
+  by: an infrared thermopile or thermistor reading food temperature in closed loop
+  definition: A non-contact IR sensor, thermistor or probe reads food temperature or state, and the oven stops or modulates
+    heating to reach a target, so the user sets no time or power. Steam or humidity sensing is MV07.
+  category: technology
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O011
+  - O055
+  - O171
+- id: MV10
+  label: Close the door to start cooking
+  replaces: start button or start step
+  by: door-closure sensing that triggers a default or remembered program
+  definition: Closing the door on food is the start command, and opening pauses or stops. A default, last-used or learned
+    program runs, so there is no start control.
+  category: behaviour
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O013
+  - O110
+  - O117
+- id: MV11
+  label: Tagged dish, tile or card sets program
+  replaces: manual setting of time and power
+  by: a reusable NFC or RFID tag in a plate, tile or card that the oven reads
+  definition: A reusable tagged item, such as a plate, bowl, tile or food card, stores the heating program and the oven
+    loads it on placement or insertion. The tag belongs to the dish, not to disposable packaging.
+  category: ecosystem
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O007
+  - O109
+  - O230
+- id: MV12
+  label: Mode stirrer replaces turntable
+  replaces: rotating turntable and placement rules
+  by: a rotating metal vane that stirs the microwave field
+  definition: A rotating reflector in the cavity or waveguide scatters the field so food heats evenly while stationary
+    on a flat floor.
+  category: technology
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O020
+  - O033
+  - O237
+- id: MV13
+  label: One control with a few plain levels
+  replaces: power knob, timer knob and numeric settings
+  by: a single switch, key, ring or push-dial with two or three plain levels (e.g. Warm/Cook, low/medium/high)
+  definition: All heating choices collapse into one simple control with two or three plain, non-pictorial levels (a toggle,
+    a touch ring, a turn-and-press dial, sometimes with a light ring for feedback). Food-picture presets are MV03; a
+    single button that adds time per press is MV22.
+  category: interaction
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O164
+  - O228
+  - O203
+- id: MV14
+  label: Transparent conductive glass door
+  replaces: perforated mesh window and interior lamp
+  by: a transparent conductive film on glass that blocks microwaves
+  definition: A clear conductive-oxide coating on the door or cavity glass shields microwaves while giving an unbroken
+    view of the food.
+  category: technology
+  worked_example_echo: true
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O085
+  - O154
+  - O209
+- id: MV15
+  label: Phased RF feeds replace turntable
+  replaces: turntable and its motor
+  by: multiple phase-steered microwave feeds that sweep the field
+  definition: Several electronically phased feeds or magnetrons move hot spots around the fixed cavity, so there is no
+    moving part and no placement rule.
+  category: technology
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O044
+  - O056
+  - O092
+- id: MV16
+  label: Spoken cooking commands
+  replaces: dials and buttons
+  by: on-device speech or keyword recognition
+  definition: The user says plain words or phrases and the oven turns them into time and power, usually with a local
+    keyword spotter and a fallback stop key.
+  category: interaction
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O018
+  - O032
+  - O212
+- id: MV17
+  label: Proximity-sensed door release
+  replaces: door release button
+  by: capacitive proximity or touch sensing driving a motorised latch
+  definition: A capacitive or proximity sensor detects a hand near or touching the door and a motor or solenoid releases
+    the latch, so no button is needed. A purely mechanical push-to-open catch is MV08.
+  category: technology
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O008
+  - O089
+  - O107
+- id: MV18
+  label: Non-door tactile, steam or scent done cue
+  replaces: bell
+  by: a physical cue (vibration, popping tab, whistle, steam flag or nudge)
+  definition: The end of cooking is signalled by something felt, seen or smelled, other than the door or a light, with
+    no screen or bell to interpret.
+  category: interaction
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O183
+  - O132
+  - O194
+- id: MV19
+  label: Mechanical key, card, cap or dish shape sets heating
+  replaces: power knob and program selection controls
+  by: a notched, magnetic or shaped item (card, key, cap, dish or cradle) read by pins, reeds or switches
+  definition: 'A physical item sets power or time mechanically, with no electronics to read it: notches or magnets on
+    a card, key or cap engage feelers, reeds or pins, or the shape of the dish or cradle presses switches. Tagged items
+    read by NFC/RFID are MV01 (disposable packaging) or MV11 (reusable dish, tile or card).'
+  category: ecosystem
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O075
+  - O170
+  - O129
+  - O036
+  - O071
+- id: MV20
+  label: Visible analog countdown device
+  replaces: numeric timer dial
+  by: sand, marbles or a pull-cord that show time left physically
+  definition: Time is set and shown by a gravity or spring device such as an hourglass, marble track or cord reel, so
+    remaining time is seen rather than read.
+  category: interaction
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O120
+  - O184
+  - O245
+- id: MV21
+  label: Camera recognises food
+  replaces: setting of time and power
+  by: an in-cavity camera with food classification
+  definition: A camera looks at the food, a model identifies it, and the oven selects or proposes the program, often
+    with a single confirm or start control.
+  category: technology
+  worked_example_echo: true
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O022
+  - O122
+  - O180
+- id: MV22
+  label: Tap-to-add-time button
+  replaces: timer dial
+  by: a single button where presses count time
+  definition: One large control adds a fixed time block per press, with a long press to start and no numeric reading.
+  category: interaction
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O001
+  - O108
+  - O247
+- id: MV23
+  label: Lift-up lid, dome or door
+  replaces: side-hinged door and release button
+  by: a top-lifting lid or dome
+  definition: Access is a straight upward lift of a lid, dome or top-hinged door, held by a gas strut or magnet, and
+    sometimes lowering it starts cooking.
+  category: interaction
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O005
+  - O115
+  - O231
+- id: MV24
+  label: Electrical or RF load sensing sets the program
+  replaces: manual time and power choice
+  by: capacitive or impedance sensing of the load, or low-power RF probing with reflected-power readings
+  definition: The oven senses the food electrically, by capacitive or impedance measurement or by brief low-power RF
+    pulses and reflected power, and sets time and power from that signature. Weighing the food is MV02; refusing a metal
+    load is MV37.
+  category: technology
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O094
+  - O126
+  - O150
+- id: MV26
+  label: Magnetic self-centering plate drive
+  replaces: turntable seating and alignment
+  by: a magnetic coupling that centres and spins any dish
+  definition: A magnetic base drives and centres any plate without a roller ring or coupler.
+  category: technology
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O118
+  - O220
+- id: MV27
+  label: Solid-state low-charge RF stage
+  replaces: high-voltage magnetron supply
+  by: a GaN or switching power stage that stores little charge
+  definition: The high-voltage transformer, diode and capacitor chain is replaced by a low-charge solid-state stage that
+    is safe the instant the oven stops.
+  category: technology
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O125
+  - O148
+- id: MV28
+  label: Spoken status prompts
+  replaces: bell and display
+  by: a speaker with fixed plain-language phrases
+  definition: The oven tells the user aloud what it is doing and when it is done, using stored phrases.
+  category: interaction
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O052
+  - O143
+- id: MV29
+  label: Motorised presenting of food
+  replaces: manual door release and food retrieval
+  by: a motor that slides the tray or lifts the plinth to present food
+  definition: At cycle end a motor pushes the tray or turntable forward or up and opens the door to present the food.
+  category: technology
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O099
+  - O179
+- id: MV30
+  label: Side-sliding door
+  replaces: hinged swinging door
+  by: a sideways sliding door on a rail with choke seal
+  definition: The door slides along a track, so there is no swing arc or hinge.
+  category: interaction
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O112
+  - O221
+- id: MV31
+  label: Hold-to-heat key
+  replaces: timer and power setting
+  by: a key that runs the magnetron only while held
+  definition: Heating lasts as long as the user holds one large key, with release stopping it.
+  category: interaction
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O046
+  - O246
+- id: MV32
+  label: Optical code on pack or card read
+  replaces: control panel and manual setting
+  by: a camera or photodiode decoding a printed code
+  definition: A printed matrix code or pictogram on a pack or card is optically read to set the full cycle.
+  category: ecosystem
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O097
+  - O189
+- id: MV33
+  label: Wave-to-start proximity panel
+  replaces: start buttons
+  by: capacitive proximity electrodes on the panel
+  definition: A hand held near the panel starts a default program and removing it stops it.
+  category: interaction
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O015
+- id: MV34
+  label: Magnetic self-aligning power cradle
+  replaces: mains plug orientation
+  by: a keyed magnetic contact base
+  definition: Power connects by setting the oven on a magnetic cradle, with no plug to align.
+  category: interaction
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O168
+- id: MV36
+  label: Turn the tray to set time
+  replaces: timer knob
+  by: a tray angle read by a magnetic encoder
+  definition: Rotating the glass tray by hand sets the cooking time, and the angle is read by a Hall sensor.
+  category: interaction
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O210
+- id: MV37
+  label: Automatic metal-load refusal
+  replaces: user knowledge of unsafe dishes
+  by: a short reflected-power test with a warning icon
+  definition: A brief pulse detects metal or arcing risk, blocks the cook and shows a single warning icon.
+  category: technology
+  worked_example_echo: false
+  source: old_ideas
+  prior_art: unchecked
+  prior_art_ref: ''
+  examples:
+  - O222

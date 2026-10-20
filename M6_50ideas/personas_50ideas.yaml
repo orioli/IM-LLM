@@ -1,0 +1,7 @@
+# The only persona of the M6_50ideas study. Its system_intro is the main study's engineer sentence,
+# verbatim, so the prompts differ from the main study's only in the number of ideas asked for
+# (check_prompts.py verifies this). The name "engineer50" only prefixes the run ids
+# (engineer50_A_M6_medium_r01), so they can never collide with the main study's 5-idea calls.
+engineer50:
+  label: Innovation engineer (50 ideas per call)
+  system_intro: "You are an innovation engineer."

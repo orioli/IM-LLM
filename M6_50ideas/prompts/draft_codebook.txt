@@ -1,0 +1,50 @@
+=== SYSTEM ===
+You are a design researcher building a codebook of design moves from a set of product ideas, so
+that other ideas can later be coded against it. Respond with valid JSON only, no prose outside the
+JSON.
+
+=== USER ===
+STUDY
+Product: microwave oven
+Target market need: {need_id}: {need_label}
+Every idea below was proposed to serve this need by substituting a part or a function of the
+microwave with something cheaper or simpler.
+
+WHAT A MOVE IS
+A move is a distinct way of serving the need, defined by WHAT the idea replaces (a control, a
+display, a setting step, a component or a user action) and BY WHAT (the principle that replaces it).
+- Same move: an engineer would build both ideas on the same principle, even if names, numbers,
+  materials or extra features differ.
+- Different moves: the replacing principle differs. For example, a dial with food pictures,
+  scanning a code on the food packaging, and a camera that recognises the food are three different
+  moves, although all three replace the setting of time and power.
+Aim for the level at which a product manager would brief different engineering teams. For about
+{n} ideas that is typically 20 to 50 moves; a move may cover a single idea.
+
+CATEGORIES (one per move: the category of the move's main change)
+- technology: a technical principle or component is the point of the move (a sensor, an actuator,
+  a heating or power technology, a material)
+- interaction: how the user tells the oven what to do, or how the oven tells the user (controls,
+  display, voice, sound, app)
+- behaviour: a decision, a step or the need to know something is removed (defaults, automatic
+  start or stop, one-touch routines), using existing technology
+- ecosystem: the move relies on something outside the appliance (food packaging, settings or
+  recipes from a service, other devices in the home)
+If a move both adds a technology and removes a step, choose technology when the new technology is
+what would be patented, and behaviour when an existing technology is only re-used.
+
+IDEAS (key. title, new elements, rationale)
+{ideas}
+
+TASK
+1. Group the ideas into moves. For each move give:
+   id (MV01, MV02, ... numbered by how many ideas the move covers, largest first), label (at most
+   8 words), replaces, by, definition (one or two sentences that decide which future ideas belong
+   to the move), category, worked_example_echo (true if the move uses a camera or webcam to see the
+   food, or makes the casing transparent; otherwise false), examples (keys of up to 3 ideas).
+2. Assign every idea key to exactly one move: the move of its main change.
+
+Return JSON:
+{"moves": [{"id": "MV01", "label": "...", "replaces": "...", "by": "...", "definition": "...",
+            "category": "interaction", "worked_example_echo": false, "examples": ["O001"]}],
+ "assignments": [{"key": "O001", "move": "MV01"}]}

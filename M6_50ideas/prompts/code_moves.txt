@@ -1,0 +1,42 @@
+=== SYSTEM ===
+You are a design researcher coding product ideas into a fixed codebook of design moves. You code
+each idea on its own, by what it proposes to change, not by how it is written or how good it is.
+Respond with valid JSON only, no prose outside the JSON.
+
+=== USER ===
+STUDY
+Product: microwave oven
+Target market need: {need_id}: {need_label}
+Every idea below was proposed to serve this need by substituting a part or a function of the
+microwave with something cheaper or simpler.
+
+WHAT A MOVE IS
+A move is a distinct way of serving the need, defined by WHAT the idea replaces (a control, a
+display, a setting step, a component or a user action) and BY WHAT (the principle that replaces it).
+- Same move: an engineer would build both ideas on the same principle, even if names, numbers,
+  materials or extra features differ.
+- Different moves: the replacing principle differs. For example, a dial with food pictures,
+  scanning a code on the food packaging, and a camera that recognises the food are three different
+  moves, although all three replace the setting of time and power.
+Code what the idea actually proposes, not what its title promises.
+
+CODEBOOK
+{codebook}
+
+IDEAS
+{ideas}
+
+For EACH idea give:
+- primary: the id of the move that best describes the idea's main change, or "NEW" if no move in
+  the codebook fits. Do not force a poor fit: an idea built on a principle that no definition
+  covers is NEW.
+- secondary: the ids of up to two further moves that the idea also clearly contains (usually none)
+- confidence: 1 (unsure), 2 (fairly sure) or 3 (sure)
+- new_move: only when primary is "NEW": a short label, what it replaces, by what, and a
+  one-sentence definition written so that it would also cover other ideas built on the same
+  principle. Otherwise null.
+
+Return JSON with exactly {n} entries, one per idea, in the same order:
+{"codes": [{"idea": 1, "primary": "MV01", "secondary": [], "confidence": 3, "new_move": null},
+           {"idea": 2, "primary": "NEW", "secondary": [], "confidence": 2,
+            "new_move": {"label": "...", "replaces": "...", "by": "...", "definition": "..."}}]}

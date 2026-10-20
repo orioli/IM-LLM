@@ -1,0 +1,25 @@
+# Schema of codebook/codebook.yaml. Copy codebook_draft.yaml (or this file) to codebook.yaml and edit.
+# The example move below comes from a real main-study M6 idea ("Food-Picture Dial"); replace it.
+
+status: draft            # set to "final" once edited: code_moves.py refuses to code with a draft
+version: 1               # bump whenever moves or definitions change (not for prior-art edits)
+need: M6
+built_from: codebook/old_M6_ideas.csv (main-study M6 ideas, blind)
+drafted_by: ""           # e.g. claude-sonnet-5-5 draft, 2026-10-20 (or "by hand")
+edited_by: ""            # who edited it, and when
+
+moves:
+  - id: MV01                         # MV01, MV02, ... ; never reuse an id for a different move
+    label: Single dial with food pictures     # at most 8 words
+    replaces: keypad for time and power       # WHAT is replaced
+    by: one rotary dial whose positions are food pictures with preset time and power   # BY WHAT
+    definition: >-
+      The time and power keys are replaced by a single control whose positions name foods or dishes,
+      each mapped to a fixed preset. Covers dials, sliders or single buttons cycling through food
+      presets; not packaging codes or cameras that identify the food.
+    category: interaction            # technology | interaction | behaviour | ecosystem
+    worked_example_echo: false       # true for camera/webcam or transparent-casing moves (the prompt's example)
+    source: old_ideas                # old_ideas (codebook v1) | new_run (added from NEW proposals)
+    prior_art: unchecked             # unchecked | commercial | patented | published | not_found
+    prior_art_ref: ""                # link, patent number or product name
+    examples: [O001]                 # keys from old_M6_ideas.csv (or refs from new_move_proposals.csv)

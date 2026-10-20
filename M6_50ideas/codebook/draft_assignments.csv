@@ -1,0 +1,251 @@
+key,move,move_label,title
+O001,MV22,Tap-to-add-time button,Tap-to-Add Heat Puck
+O002,MV08,Push anywhere on door to open,Press-Anywhere Door
+O003,MV04,Door pops open at end of cycle,Door That Opens Itself
+O004,MV08,Push anywhere on door to open,Push-Anywhere Magnetic Door
+O005,MV23,"Lift-up lid, dome or door",Pot-Lid Access
+O006,MV06,Pull-out drawer cavity replaces door,Pull-Out Drawer Cooker
+O007,MV11,"Tagged dish, tile or card sets program",Tap-A-Plate NFC Cooking
+O008,MV17,Proximity-sensed door release,Wave-to-Open Door
+O009,MV08,Push anywhere on door to open,Touch-Anywhere Spring Door
+O010,MV01,Food packaging NFC tag sets program,Tag-and-Go Turntable
+O011,MV09,Temperature sensing auto-stop and control,Thermal Eye Replaces the Power Knob
+O012,MV09,Temperature sensing auto-stop and control,Look-and-Go Auto Cook
+O013,MV10,Close the door to start cooking,Door-Open Auto-Start Cavity
+O014,MV01,Food packaging NFC tag sets program,Food-Tag Tap
+O015,MV33,Wave-to-start proximity panel,Voice-Free Gesture Hob: Wave to Start
+O016,MV03,Food-picture rotary dial presets,Voice-free Single-Dial Ring Microwave
+O017,MV06,Pull-out drawer cavity replaces door,"Drawer Cavity: Pull-Out Oven, No Hinges"
+O018,MV16,Spoken cooking commands,Say-It Microwave
+O019,MV01,Food packaging NFC tag sets program,Tap-to-Cook Packaging
+O020,MV12,Mode stirrer replaces turntable,"Stirred, Not Turned"
+O021,MV03,Food-picture rotary dial presets,"Menu Drum: Point at the Food, Not a Number"
+O022,MV21,Camera recognises food,Look-and-Confirm Cavity (camera recognises food and offers one button)
+O023,MV10,Close the door to start cooking,Close to Cook
+O024,MV04,Door pops open at end of cycle,Door Pops at Finish
+O025,MV01,Food packaging NFC tag sets program,Read-the-Package Auto-Cook
+O026,MV01,Food packaging NFC tag sets program,Packet Is the Program
+O027,MV05,Colour or light progress and status ring,Voice-Free Light-Bar Progress Ring
+O028,MV01,Food packaging NFC tag sets program,Package-Read Auto-Cook
+O029,MV05,Colour or light progress and status ring,Glass Dome Cavity with Projected Cook Guide
+O030,MV08,Push anywhere on door to open,Push-Anywhere Spring Door
+O031,MV13,Touch or membrane picture preset keys,Voice-Free Gesture Dial Replaced by Single Smart Tap Target
+O032,MV16,Spoken cooking commands,Say-It Cooking
+O033,MV12,Mode stirrer replaces turntable,Flat-Floor Mode-Stirrer Cavity
+O034,MV03,Food-picture rotary dial presets,Single Dial Replacing Timer and Power Knobs with Pictogram Ring
+O035,MV09,Temperature sensing auto-stop and control,Pour-and-Go Smart Mug Cradle
+O036,MV25,Container shape selects program,Shape-Keyed Plate
+O037,MV02,Weigh food to set time and power,Weigh-and-Go Turntable
+O038,MV02,Weigh food to set time and power,Weigh-and-Go Turntable
+O039,MV07,Steam or humidity sensing auto-stop,Steam-Sense Auto-Finish (sensor replaces countdown timer)
+O040,MV04,Door pops open at end of cycle,Door-Ajar Done Signal
+O041,MV08,Push anywhere on door to open,Nudge-to-Open Door
+O042,MV03,Food-picture rotary dial presets,Single-Gesture Smart Dial with Preset Icons
+O043,MV04,Door pops open at end of cycle,Self-Presenting Door
+O044,MV15,Phased RF feeds replace turntable,"No Turntable, No Placement Rules"
+O045,MV06,Pull-out drawer cavity replaces door,Pull-Out Drawer Front
+O046,MV31,Hold-to-heat key,Hold-to-Heat Button
+O047,MV08,Push anywhere on door to open,Press-Anywhere Self-Opening Door
+O048,MV04,Door pops open at end of cycle,Door-Pop Done Signal
+O049,MV01,Food packaging NFC tag sets program,Pack-Tag Power
+O050,MV01,Food packaging NFC tag sets program,Hand-Off Cooking Assistant Tag
+O051,MV03,Food-picture rotary dial presets,Pictogram Drum Power Selector
+O052,MV28,Spoken status prompts,Talking Cavity with Spoken Status
+O053,MV01,Food packaging NFC tag sets program,Read-the-Package Cooking
+O054,MV01,Food packaging NFC tag sets program,Package Programs the Oven
+O055,MV09,Temperature sensing auto-stop and control,Done-When-Hot Sensing
+O056,MV15,Phased RF feeds replace turntable,Phased Twin Magnetrons Replace the Turntable
+O057,MV05,Colour or light progress and status ring,Doneness Ring Replaces Bell and Timer Readout
+O058,MV09,Temperature sensing auto-stop and control,Sense-to-Stop: The Food Decides When It Is Done
+O059,MV03,Food-picture rotary dial presets,Single Food-Icon Dial
+O060,MV02,Weigh food to set time and power,Single Big Button Cooks Everything
+O061,MV10,Close the door to start cooking,Door That Starts Itself
+O062,MV15,Phased RF feeds replace turntable,Field-Steered Turntable-Free Cavity
+O063,MV08,Push anywhere on door to open,Press-Anywhere Door
+O064,MV12,Mode stirrer replaces turntable,"Stirrer Floor, No Turntable"
+O065,MV16,Spoken cooking commands,Speak-to-Cook Voice Panel
+O066,MV19,"Mechanical key, card or cap sets heating",Spoken-Free Tactile Recipe Cards
+O067,MV13,Touch or membrane picture preset keys,Picture-Preset Pad replaces the power knob
+O068,MV04,Door pops open at end of cycle,The Door Opens Itself When Done
+O069,MV07,Steam or humidity sensing auto-stop,Steam Stop: the microwave ends itself when the food steams
+O070,MV02,Weigh food to set time and power,Sense-and-Cook Turntable
+O071,MV25,Container shape selects program,Shape-Keyed Cradle
+O072,MV01,Food packaging NFC tag sets program,Packaging Programs the Oven
+O073,MV03,Food-picture rotary dial presets,"Shape-Coded Dial: Learn by Touch, Not by Reading"
+O074,MV01,Food packaging NFC tag sets program,Tag-and-Go: Packaging Programs the Oven
+O075,MV19,"Mechanical key, card or cap sets heating",Cook-Key Slot
+O076,MV03,Food-picture rotary dial presets,Voice-free Single-Dial Wheel with Pictogram Presets
+O077,MV02,Weigh food to set time and power,"Weigh, Close, Done"
+O078,MV04,Door pops open at end of cycle,Pop-Ajar Done Signal
+O079,MV17,Proximity-sensed door release,Touch-Anywhere Door
+O080,MV08,Push anywhere on door to open,Door Comes To You
+O081,MV10,Close the door to start cooking,Door-Open Auto-Resume Cooking
+O082,MV09,Temperature sensing auto-stop and control,Thermal-Touch Pad: Warm Plate Tells When Done
+O083,MV08,Push anywhere on door to open,Press Anywhere to Open
+O084,MV01,Food packaging NFC tag sets program,Tap-to-Cook Packaging
+O085,MV14,Transparent conductive glass door,Transparent Glass Cavity Replaces Interior Lamp and Mesh Window
+O086,MV01,Food packaging NFC tag sets program,Tag-Set Power Reader
+O087,MV12,Mode stirrer replaces turntable,Mode Stirrer Replaces Turntable
+O088,MV01,Food packaging NFC tag sets program,Read-the-Pack: Frozen Meal Tells the Oven What to Do
+O089,MV17,Proximity-sensed door release,Door That Opens by Leaning Against It
+O090,MV13,Touch or membrane picture preset keys,Picture Panel Presets
+O091,MV13,Touch or membrane picture preset keys,Single-Touch Ambient Dial Replaced by Pre-Set Food Presets
+O092,MV15,Phased RF feeds replace turntable,Phased-Array Beam Steering Replaces the Turntable
+O093,MV05,Colour or light progress and status ring,Cavity Glow: Colour-Coded Cooking State
+O094,MV24,Reflected RF load sensing,Close-to-Cook: Auto-Start by Cavity Sensing
+O095,MV05,Colour or light progress and status ring,Electrochromic Progress Window
+O096,MV15,Phased RF feeds replace turntable,Phantom Turntable
+O097,MV32,Optical code on pack or card read,Show-the-Pack Controller
+O098,MV11,"Tagged dish, tile or card sets program",Cook-by-Plate NFC Program
+O099,MV29,Motorised presenting of food,Self-Presenting Tray
+O100,MV11,"Tagged dish, tile or card sets program",Tap-the-Food Bowl Tag
+O101,MV04,Door pops open at end of cycle,Pop-Out Door: The Door Announces Itself
+O102,MV05,Colour or light progress and status ring,Ambient Doneness Glow
+O103,MV06,Pull-out drawer cavity replaces door,Pull-Out Tray Drawer
+O104,MV08,Push anywhere on door to open,Push-Anywhere Magnetic Door
+O105,MV05,Colour or light progress and status ring,Glowing Cavity Replaced by Ambient Food-Status Halo
+O106,MV02,Weigh food to set time and power,Weigh-And-Go Turntable
+O107,MV17,Proximity-sensed door release,Gesture-Free Hands-Off Door Opener via Proximity Sensing
+O108,MV22,Tap-to-add-time button,Press-to-Add-Time Button
+O109,MV11,"Tagged dish, tile or card sets program",Tap-a-Tile Cooking
+O110,MV10,Close the door to start cooking,Close-to-Start
+O111,MV04,Door pops open at end of cycle,Auto-Eject Door Spring
+O112,MV30,Side-sliding door,Sliding Pocket Door
+O113,MV04,Door pops open at end of cycle,Ring-to-Open: the bell also unlocks the door
+O114,MV03,Food-picture rotary dial presets,"Pictogram Dial: One Dial, Five Foods"
+O115,MV23,"Lift-up lid, dome or door",Cake Dome: the door becomes a lift-off cloche and lowering it starts cooking
+O116,MV07,Steam or humidity sensing auto-stop,Steam-Sense One-Press Cook
+O117,MV10,Close the door to start cooking,Close-to-Cook with Habit Memory
+O118,MV26,Magnetic self-centering plate drive,Turntable Pulls Its Own Plate
+O119,MV06,Pull-out drawer cavity replaces door,Drawer-Door
+O120,MV20,Visible analog countdown device,Sand-Glass Cook: flip the hourglass and cook until the sand runs out
+O121,MV02,Weigh food to set time and power,Weigh-to-Cook Platform
+O122,MV21,Camera recognises food,Gesture-Free Voice-Less Auto-Cook by Photograph
+O123,MV06,Pull-out drawer cavity replaces door,Pull-Out Drawer Cavity (drawer replaces hinged door and release button)
+O124,MV07,Steam or humidity sensing auto-stop,Self-Timing Cook Sensor Mat
+O125,MV27,Solid-state low-charge RF stage,No-Charge Solid-State Heart
+O126,MV24,Reflected RF load sensing,"Self-Sensing Cook: No Timer, No Power Setting"
+O127,MV06,Pull-out drawer cavity replaces door,Front-Sliding Drawer Cavity
+O128,MV03,Food-picture rotary dial presets,Pictogram Dial
+O129,MV19,"Mechanical key, card or cap sets heating",Heat-Snap Dish Caps
+O130,MV06,Pull-out drawer cavity replaces door,Pull-Out Drawer Door
+O131,MV07,Steam or humidity sensing auto-stop,Steam-Sense Auto-Stop
+O132,MV18,"Non-door tactile, steam or scent done cue",Turntable Nudge Alert
+O133,MV01,Food packaging NFC tag sets program,NFC Package Auto-Program
+O134,MV02,Weigh food to set time and power,Weigh-and-Go Turntable
+O135,MV06,Pull-out drawer cavity replaces door,Pull-Out Drawer Cavity replaces the hinged door
+O136,MV05,Colour or light progress and status ring,Haptic Light-Ring Feedback
+O137,MV06,Pull-out drawer cavity replaces door,Drawer Cavity
+O138,MV08,Push anywhere on door to open,Lean-To-Open Door
+O139,MV04,Door pops open at end of cycle,Door Does the Talking
+O140,MV18,"Non-door tactile, steam or scent done cue",Spoken-Free Bell Replaced by Scent and Vibration Cue
+O141,MV10,Close the door to start cooking,Single Door Handle That Opens and Starts
+O142,MV05,Colour or light progress and status ring,Progress Ring
+O143,MV28,Spoken status prompts,Glass Box With Voice Narration
+O144,MV10,Close the door to start cooking,Door Is the Switch
+O145,MV05,Colour or light progress and status ring,Traffic-Light Rim: Colour Replaces the Manual
+O146,MV11,"Tagged dish, tile or card sets program",Pictogram Plate Autocook
+O147,MV12,Mode stirrer replaces turntable,Vane Stirrer: Put Food Anywhere on a Flat Floor
+O148,MV27,Solid-state low-charge RF stage,Safe the Instant It Stops
+O149,MV02,Weigh food to set time and power,Voice-Free Auto-Cook by Weight Drop Detection
+O150,MV02,Weigh food to set time and power,Load-Sensing Auto-Start
+O151,MV01,Food packaging NFC tag sets program,Tag-and-Go Packaging
+O152,MV11,"Tagged dish, tile or card sets program",Plate-As-Controller
+O153,MV05,Colour or light progress and status ring,Glowing Dome Status Ring Replacing the Bell and Lamp
+O154,MV14,Transparent conductive glass door,Quarter-Wave Mesh Window Replaced by Sealed Transparent Panel
+O155,MV07,Steam or humidity sensing auto-stop,Steam-Sensing Auto-Stop
+O156,MV09,Temperature sensing auto-stop and control,Sense-Done Heating
+O157,MV14,Transparent conductive glass door,Fully Transparent Glass Shell with Printed Dial
+O158,MV06,Pull-out drawer cavity replaces door,Drawer That Starts On Close
+O159,MV03,Food-picture rotary dial presets,Pictogram Cam Drum
+O160,MV04,Door pops open at end of cycle,Self-Opening Door with Glass Wall Cavity
+O161,MV05,Colour or light progress and status ring,Light-Ring Progress Halo
+O162,MV08,Push anywhere on door to open,Push-Anywhere Door: No Button to Find
+O163,MV05,Colour or light progress and status ring,Sunrise Ring
+O164,MV13,Touch or membrane picture preset keys,Fixed Stepless Power Replaced by Two-Button Warm and Cook
+O165,MV14,Transparent conductive glass door,Fully Transparent Conductive Pane
+O166,MV01,Food packaging NFC tag sets program,Tap-to-Cook Food Tags
+O167,MV09,Temperature sensing auto-stop and control,Single-Button Cook-Everything Mode
+O168,MV34,Magnetic self-aligning power cradle,Cradle That Can't Be Plugged Wrong
+O169,MV12,Mode stirrer replaces turntable,Stirrer Instead of Turntable
+O170,MV19,"Mechanical key, card or cap sets heating",Packet Card: the meal's sleeve is the power knob
+O171,MV09,Temperature sensing auto-stop and control,One-Button Thermal Stop
+O172,MV03,Food-picture rotary dial presets,Single Big Dial That Speaks Food
+O173,MV04,Door pops open at end of cycle,Door Says Done
+O174,MV04,Door pops open at end of cycle,Pop-Open Done: The Door Is the Bell
+O175,MV14,Transparent conductive glass door,Transparent Conductive-Film Door Replacing Mesh Window
+O176,MV03,Food-picture rotary dial presets,Picture-Drum Selector
+O177,MV09,Temperature sensing auto-stop and control,One-Touch Auto-Stop Sensing
+O178,MV02,Weigh food to set time and power,Voice-Free Food Scale Plate Replaces the Timer
+O179,MV29,Motorised presenting of food,Presenting Turntable
+O180,MV21,Camera recognises food,Food-Recognising Camera Chef
+O181,MV05,Colour or light progress and status ring,Colour-Coded Light Strip
+O182,MV02,Weigh food to set time and power,Food-Mass Platform (weight plate replaces power knob)
+O183,MV18,"Non-door tactile, steam or scent done cue",Rising Done Tab replaces the bell
+O184,MV20,Visible analog countdown device,Marble Countdown Track
+O185,MV04,Door pops open at end of cycle,Spring Pop-Open Door
+O186,MV10,Close the door to start cooking,Close-to-Start Door
+O187,MV07,Steam or humidity sensing auto-stop,Steam-Sense Auto-Stop
+O188,MV07,Steam or humidity sensing auto-stop,Just Heat: Sense It Done
+O189,MV32,Optical code on pack or card read,Pack-Is-the-Panel
+O190,MV01,Food packaging NFC tag sets program,Tap-to-Cook Tagged Meals
+O191,MV17,Proximity-sensed door release,Voice-Free Door That Opens on Approach
+O192,MV09,Temperature sensing auto-stop and control,Heat-Until-Hot Sensor
+O193,MV14,Transparent conductive glass door,Transparent Cavity Replaces Lamp and Mesh Window
+O194,MV18,"Non-door tactile, steam or scent done cue",Steam-Whistle Finish
+O195,MV04,Door pops open at end of cycle,Done-Pop Door
+O196,MV04,Door pops open at end of cycle,Pop-Open Door
+O197,MV11,"Tagged dish, tile or card sets program",Plate-as-Program
+O198,MV07,Steam or humidity sensing auto-stop,Scent Bell
+O199,MV07,Steam or humidity sensing auto-stop,Steam-Stop: The Food Ends the Cook
+O200,MV07,Steam or humidity sensing auto-stop,Steam-Sense One-Button Cooking
+O201,MV05,Colour or light progress and status ring,Glow-Halo Door
+O202,MV07,Steam or humidity sensing auto-stop,Steam-Sense Auto-Stop
+O203,MV35,Single rotary-push dial with light ring,Single Start Shell Replaces All Controls with a Tilt Dial
+O204,MV06,Pull-out drawer cavity replaces door,Drawer Microwave
+O205,MV06,Pull-out drawer cavity replaces door,"Drawer Cavity: Pull to Open, Nothing to Find"
+O206,MV02,Weigh food to set time and power,Weigh-and-Go Turntable
+O207,MV02,Weigh food to set time and power,Weigh-and-Go Turntable
+O208,MV07,Steam or humidity sensing auto-stop,Steam-Sense Auto-Stop
+O209,MV14,Transparent conductive glass door,Holeless Conductive-Glass Door
+O210,MV36,Turn the tray to set time,Tray-as-Dial: turn the glass plate to set the time
+O211,MV09,Temperature sensing auto-stop and control,Thermal-Eye Auto-Stop
+O212,MV16,Spoken cooking commands,Just Say It
+O213,MV01,Food packaging NFC tag sets program,Tap-to-Cook Packaging
+O214,MV02,Weigh food to set time and power,Weigh-and-Go Turntable
+O215,MV11,"Tagged dish, tile or card sets program",The Plate Knows
+O216,MV01,Food packaging NFC tag sets program,Packaging Reads Itself
+O217,MV07,Steam or humidity sensing auto-stop,Steam-Stop Reheat: the food decides when it is done
+O218,MV08,Push anywhere on door to open,Self-Presenting Door
+O219,MV18,"Non-door tactile, steam or scent done cue",Steam-Triggered Finish Signal
+O220,MV26,Magnetic self-centering plate drive,Manual Turntable Replaced by Self-Centering Auto-Rotating Base
+O221,MV30,Side-sliding door,Side-Slide Door
+O222,MV37,Automatic metal-load refusal,Metal-Sniff Safe-Load Check
+O223,MV06,Pull-out drawer cavity replaces door,Pull-Out Drawer Cavity
+O224,MV07,Steam or humidity sensing auto-stop,Steam-Stop Autodone
+O225,MV03,Food-picture rotary dial presets,Pictogram Mode Drum
+O226,MV05,Colour or light progress and status ring,Exterior Status Halo Replaces the Interior Lamp
+O227,MV13,Touch or membrane picture preset keys,Picture Plate Power
+O228,MV13,Touch or membrane picture preset keys,Gesture-Free Ambient Dial Ring
+O229,MV02,Weigh food to set time and power,Weigh-and-Go Tray
+O230,MV11,"Tagged dish, tile or card sets program",Food-Card Cooking (NFC presets replace timer and power knobs)
+O231,MV23,"Lift-up lid, dome or door",Lift-to-Open Gravity Door
+O232,MV02,Weigh food to set time and power,Weigh-and-Go Platter
+O233,MV08,Push anywhere on door to open,Press-Anywhere Pop Door
+O234,MV08,Push anywhere on door to open,Push-Anywhere Door
+O235,MV01,Food packaging NFC tag sets program,Tag-and-Go: The Food Pack Is the Control Panel
+O236,MV06,Pull-out drawer cavity replaces door,"Drawer, Not Door"
+O237,MV12,Mode stirrer replaces turntable,"Plate Goes Down, No Turntable"
+O238,MV02,Weigh food to set time and power,Weigh-and-Go Turntable
+O239,MV20,Visible analog countdown device,Flip-to-Start Sand Glass
+O240,MV03,Food-picture rotary dial presets,Food-Picture Dial
+O241,MV04,Door pops open at end of cycle,Door-Pop Done Signal
+O242,MV03,Food-picture rotary dial presets,Food-Picture Dial
+O243,MV16,Spoken cooking commands,Speak-to-Cook
+O244,MV03,Food-picture rotary dial presets,Food-Picture Dial
+O245,MV20,Visible analog countdown device,Pull-Cord Countdown
+O246,MV31,Hold-to-heat key,Hold-to-Heat Key
+O247,MV22,Tap-to-add-time button,Tap-to-Add Timer
+O248,MV01,Food packaging NFC tag sets program,Packaging Tells the Oven What To Do
+O249,MV03,Food-picture rotary dial presets,Pictogram Cam Dial
+O250,MV10,Close the door to start cooking,Close-to-Cook Door
