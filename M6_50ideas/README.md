@@ -4,6 +4,10 @@ A follow-up to the main RQ1 experiment, on one market need, asking for **50 idea
 of 5. Everything here is kept apart from the main study: its own run log, codes, scores, tables and
 charts. The main study's files are only read, never changed.
 
+The same 40 calls were run with three generator models: Claude Haiku 5.5 (the pre-registered run),
+Claude Opus 5.5 and Claude Fable 5.1 (added afterwards, see *Models* below). Each has its own run log
+and results folder; prompts, judge, coder and codebook are shared.
+
 ## Why
 
 The main study asked for 5 ideas per call. Read one by one, those ideas converge on the same few moves
@@ -80,7 +84,7 @@ Applied to the 13 needs of the main study, in order:
 | Calls | **10 per representation**, 40 in total, 2,000 ideas, in random order (`--order-seed 6`) |
 | Persona, operator, worked example | as in the main study: the innovation engineer's sentence, SUBSTITUTE, the webcam/transparent-casing example |
 | Effort | medium (the model's default) |
-| Generator | `claude-haiku-5-5`, `max_tokens` 48,000 |
+| Generator | `claude-haiku-5-5` (pre-registered), `max_tokens` 48,000; also `claude-opus-5-5` and `claude-fable-5-1` (see *Models*) |
 
 **Deviation: list length** (noted on 2026-10-19, after generation and before any coding or
 analysis). Asked for 50, the model returned between 44 and 60 ideas per call. So that lists are
@@ -88,6 +92,23 @@ compared on equal length, every list is cut to its first *K* ideas, where *K* is
 in this run). All per-call measures use those *K* ideas: H14 uses ideas 26–*K*, H15 compares 1–5 with
 6–*K*, and the last position band is 41–*K*. Tokens per list count the whole prompt plus the output in
 proportion to the ideas kept. `discovery_analysis.py --positions N` changes *K*.
+
+**Models** (added on 2026-10-20, after the Haiku run had been scored, so exploratory). To see whether
+the result depends on the generator, the identical 40 calls were repeated with Claude Opus 5.5 and
+Claude Fable 5.1. Nothing else changed: same prompts, same order, same effort, same judge. The switch is
+the environment variable `GEN_MODEL` (`haiku`, the default, `opus`, `sonnet` or `fable`; see
+`common.py` and `run_all.sh`):
+
+| `GEN_MODEL` | Model | Run log | Results |
+| --- | --- | --- | --- |
+| `haiku` (default) | `claude-haiku-5-5` | `runs/m6_50ideas.jsonl` | `results/` |
+| `opus` | `claude-opus-5-5` | `runs/m6_50ideas_opus.jsonl` | `results/opus/` |
+| `fable` | `claude-fable-5-1` | `runs/m6_50ideas_fable.jsonl` | `results/fable/` |
+
+Prefix every step of a run with the same `GEN_MODEL`, e.g. `GEN_MODEL=opus bash run_all.sh score`.
+The cost tables of `../analyze.py stats` go to `results/<model>/stats/results/` for the added models,
+so the Haiku tables in `results/` are not overwritten. The hypotheses H12–H15 refer to the Haiku run;
+the other models are compared descriptively.
 
 **Prompts.** `check_prompts.py` checks that each prompt is the main study's, word for word, except
 the one line "Return exactly 5 ideas" → "Return exactly 50 ideas". It does this by putting the 5 back
@@ -97,8 +118,9 @@ and matching the `prompt_sha256` logged in `../runs/rq1_full.jsonl`.
 verbatim under the name `engineer50`. The name only prefixes the run ids (`engineer50_A_M6_medium_r01`),
 so they never collide with the main study's calls.
 
-**Cost.** Each 50-idea call writes roughly 15–25k output tokens, so expect about 1M generation tokens
-in all, and a few minutes per call. If a call stops at `max_tokens`, raise `--max-tokens` to 64000 in
+**Cost.** Each 50-idea call writes roughly 15–25k output tokens, so expect about 0.8–1M generation
+tokens per model, and a few minutes per call (longer for Opus and Fable). At list prices the 40 calls
+cost about $0.35 with Haiku, $13 with Opus and $31 with Fable (see *Yield* below). If a call stops at `max_tokens`, raise `--max-tokens` to 64000 in
 `run_all.sh` and run `generate` again (finished calls are skipped).
 
 **The number of calls** is one setting (`--reps` in `run_all.sh`). In a test run on simulated data, 10
@@ -160,7 +182,50 @@ the CI of its pre-registered difference is above 0.
 **Quality scores.** `score_ideas.py` uses the main study's judge prompt and criteria, imported
 unchanged from `../top_ideas.py`. A 50-idea list goes to the judge as ten requests of five
 consecutive ideas, so every request looks like a main-study request. The judge sees titles, new
-elements and rationales only: no condition, no position.
+elements and rationales only: no condition, no position. `ideas_scored.csv` has one row per idea: the
+four criteria and their mean (`score`), the idea's `position` in its list, and, for human checking,
+the idea as the judge saw it (`title`, `new_elements`, `rationale`) and the judge's one-sentence
+`judge_comment`. Hide `condition`, `run_id` and `idea_id` before giving the sheet to a blind rater.
+
+## Yield: top ideas per token and per dollar
+
+These measures need only the judge scores, not the codebook, so they can be read before the coding
+without biasing it.
+
+- **Top idea:** an idea whose score (mean of the four criteria) is ≥ 4.0, as in the main study.
+- **Yield:** all top ideas of an arm ÷ all its tokens (input + output), per 100k tokens: the slope of
+  a line through the origin in the main study's Figure 8. All ideas of a call are counted (no cut to
+  *K*), since yield is a rate per token.
+- **Per dollar:** the same with each call's cost at the API list price, in USD per million tokens
+  (input / output): Haiku 5.5 $0.10 / $0.50, Opus 5.5 $4 / $20, Fable 5.1 $10 / $50
+  ([pricing](https://platform.claude.com/docs/en/about-claude/pricing), 2026-10-20). No batch or
+  caching discount; output tokens include thinking. The judge's cost is the same for every model and
+  is left out.
+- **Two kinds of box plot.** *Bootstrap* boxes (default) show 2,000 resampled values of the arm's
+  pooled yield (calls resampled within need): the uncertainty of the arm's average, box = middle 50%,
+  whiskers = 95% CI. *Per-call* boxes (`--box calls`) show each call's own yield, one dot per call: the
+  call-to-call variation, which is about √(calls) times wider. Compare arms with the bootstrap boxes.
+
+**Results so far** (M6, 50 ideas asked per call, medium effort, 10 calls per arm; top ideas per 100k
+tokens, and per dollar in brackets):
+
+| Arm | Haiku 5.5 | Opus 5.5 | Fable 5.1 |
+| --- | --- | --- | --- |
+| Full graph (A) | 9.4 (266) | 26.3 (19.3) | 26.4 (7.5) |
+| Need slice (B) | 20.4 (459) | 39.9 (22.9) | 51.3 (11.9) |
+| Random slice (R) | 10.9 (246) | 37.2 (21.1) | 37.0 (8.5) |
+| No graph (C) | 22.2 (468) | 34.8 (18.2) | 53.6 (11.4) |
+| Top ideas / ideas | 126 / 2,080 | 270 / 1,985 | 295 / 2,001 |
+| Cost of the 40 calls | $0.35 | $13.32 | $30.89 |
+
+- The full graph is the least efficient arm for every model.
+- The need slice and no graph are indistinguishable for every model (overlapping 95% CIs).
+- For Opus and Fable the full graph does not lower the share of top ideas (14.2% and 15.6%, against
+  13.1% and 14.5% with no graph); it only costs more tokens. For Haiku it lowers it too (5.4% vs 7.0%).
+- Stronger models find up to about twice as many top ideas per token, but Haiku finds 20–40 times more
+  per dollar.
+- Ideas are shorter than in the main study (about 40 words against 100), and the judge scores them
+  lower, so yields are not directly comparable with the main study's.
 
 ## Codebook
 
@@ -171,7 +236,13 @@ elements and rationales only: no condition, no position.
    ideas to them, writing `codebook/codebook_draft.yaml` and `draft_assignments.csv`.
 3. **Edit by hand.** Edit the draft into `codebook/codebook.yaml` (schema:
    `codebook/codebook_template.yaml`). Check every definition and category, then set `status: final`
-   and `version: 1`. Keep the draft unchanged, so the edits can be reported.
+   and `version: 1`. Keep the draft unchanged, so the edits can be reported. Version 1 (2026-10-20,
+   before any new idea was coded) has 35 moves; its edits from the 37-move draft are listed under
+   `changes_from_draft` in the file: MV03 widened to food-picture presets on any control, MV13 redefined
+   as one control with a few plain levels (MV35 merged in), MV25 merged into MV19, MV02 restricted to
+   weighing (O150 moved to MV24, electrical or RF load sensing), tie-break rules written into the
+   definitions, and the drawer, lid, sliding door and power cradle relabelled *interaction*. IDs are kept
+   stable, so MV25 and MV35 are gaps.
 4. **Bump the version** whenever moves or definitions change. Filling in prior art does not need a
    new version.
 
@@ -186,7 +257,9 @@ through the NEW loop below, blind to condition.
   each idea's title, new elements and rationale, with node ids removed, and never the condition or
   the position.
 - **What gets coded.** Both the new 2,000 ideas and the main study's 250 M6 ideas are coded against
-  the same codebook. The old ideas are needed to define the main five.
+  the same codebook. The old ideas are needed to define the main five. Each model's run is coded into
+  its own results folder (`GEN_MODEL=opus bash run_all.sh code`, and so on), with the same codebook
+  version, so the main-study ideas are coded once per model folder.
 - **The loop.** Run `code`, then `review` (which writes the NEW proposals, without conditions). Add
   the real new moves to the codebook (`source: new_run`) and bump the version, then run `code` again,
   which recodes the NEW ideas. Repeat until NEW is under 2% of ideas.
@@ -212,7 +285,10 @@ found a move.
 
 ## Running it
 
-`bash run_all.sh <step>`, in this order (steps marked *hand* are done by a person):
+`bash run_all.sh <step>`, in this order (steps marked *hand* are done by a person). For Opus or
+Fable, prefix each step with `GEN_MODEL=opus` or `GEN_MODEL=fable`. Use `bash run_all.sh`, not
+`./run_all.sh`: copying the file can drop its execute permission. In zsh, don't paste the `#`
+comments from this README after a command; zsh reads them as arguments.
 
 | Step | What it does |
 | --- | --- |
@@ -228,9 +304,29 @@ found a move.
 | `sample` / `agree` | *hand* coding of 100 ideas, then agreement |
 | `priorart` | *hand*: prior art for every move |
 | `analyze` | tests, tables, charts |
+| `chart` | Figure 8 for this run (running count, box plot of slopes, key): per-call and bootstrap versions |
+
+The comparison charts across runs need no step: `python compare_runs_chart.py` and
+`python compare_stack_chart.py` (options below). No API calls.
 
 Generation can run while you edit the codebook. Just don't read `runs/m6_50ideas.jsonl` until
 `codebook.yaml` is final.
+
+Every API step needs `ANTHROPIC_API_KEY` set in the terminal it runs in (`echo ${ANTHROPIC_API_KEY:+set}`
+to check). A step run without it logs every request as failed within seconds; set the key and run the
+same step again, which retries only what failed.
+
+**Charts across runs:**
+
+| Command | Chart |
+| --- | --- |
+| `python yield_chart.py` | Figure 8 for one run (`GEN_MODEL` picks the run): running count of top ideas against tokens, box plot of slopes, ranked key; `--box bootstrap` for bootstrap boxes, `--threshold` for another cut-off |
+| `python compare_runs_chart.py` | box plots of yield side by side: Haiku · 5 ideas/call (main study), then Haiku, Opus, Fable · 50 ideas/call (each added once its scores exist), one shared y axis and legend |
+| `... --n5-needs all` | the 5-idea panel over all 13 needs instead of M6 only |
+| `... --unit dollars` | top ideas per dollar at list price (log axis) |
+| `... --box calls` | one dot per call instead of bootstrap boxes (zeros shown on a symlog axis with dollars) |
+| `python compare_stack_chart.py` | two of those charts stacked, one legend, model titles once; rows set with `--top` / `--bottom NEEDS:BOX:UNIT`, e.g. `--top all:bootstrap:dollars --bottom all:bootstrap:tokens` |
+| `python m6_thumb.py` | the "what each prompt contains" panel for M6 (full graph, no graph, random slice, slice); built automatically by the charts |
 
 ## Outputs
 
@@ -245,12 +341,20 @@ Generation can run while you edit the codebook. Just don't read `runs/m6_50ideas
 | `results/charts/m6_within_call.png` | distinct moves along a 50-idea list, per representation |
 | `results/charts/m6_by_position.png` | new-move, on-need and main-5 shares by position |
 | `results/charts/m6_incidence.png` | which moves each representation found, next to the main study's 5-idea calls |
+| `runs/m6_50ideas_opus.jsonl`, `runs/m6_50ideas_fable.jsonl`, `results/opus/`, `results/fable/` | the same for Opus and Fable |
+| `results/yield_m6_50ideas[_opus\|_fable].csv` | yield per arm: calls, ideas, top ideas, tokens, top ideas per 100k tokens and 95% CI |
+| `results[/<model>]/charts/8_top_ideas_vs_tokens_m6_50ideas*.png` | Figure 8 for each run (plain, `_box` per call, `_box_bootstrap`) |
+| `results/charts/compare_slopes_haiku5_haiku50_opus50*.png`, `results/compare_slopes*.csv` | the comparison across runs; suffixes `_calls`, `_n5allneeds`, `_usd` follow the options |
+| `results/charts/compare_stack_*.png`, `results/compare_stack_row*.csv` | stacked comparison |
+| `results/charts/m6_prompts_thumb.png` | the M6 prompt panel used in these charts |
 
 ## Files
 
-`common.py` (shared helpers), `personas_50ideas.yaml`, `check_prompts.py`, `export_old_ideas.py`,
-`draft_codebook.py`, `score_ideas.py`, `code_moves.py`, `discovery_analysis.py`, `prompts/` (coding
-and drafting prompts), `codebook/`, `run_all.sh`.
+`common.py` (shared helpers, the `GEN_MODEL` switch), `personas_50ideas.yaml`, `check_prompts.py`,
+`export_old_ideas.py`, `draft_codebook.py`, `score_ideas.py`, `code_moves.py`, `discovery_analysis.py`,
+`yield_chart.py` (Figure 8 per run, reusing `../tail_charts.py`), `compare_runs_chart.py` and
+`compare_stack_chart.py` (comparisons across runs), `m6_thumb.py`, `prompts/` (coding and drafting
+prompts), `codebook/`, `run_all.sh`.
 
 ## References
 

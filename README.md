@@ -19,141 +19,119 @@ A hand-built innovation matrix of a microwave oven (123 nodes, 246 typed edges) 
 
 The model applies the SUBSTITUTE operator to 13 market needs at four levels of thinking effort (580 calls, 2,892 ideas). `claude-sonnet-5-5` judges the ideas blind, both as whole sets (pairwise) and one by one. The main measure is **yield**: top ideas (score ≥ 4.0, the top 12%) per 100k tokens.
 
-**Main result.** The market-need slice at medium effort yields 8.8 top ideas per 100k tokens, about three times the full graph at any effort, and beats it on 10 of 13 market needs. Per token, the full graph is less efficient than no graph at all.
+**Main result** (5 ideas per call, Haiku). The market-need slice at medium effort yields 8.8 top ideas per 100k tokens, about three times the full graph at any effort, and beats it on 10 of 13 market needs. Per token, the full graph is less efficient than no graph at all.
 
 ![Yield per arm: top ideas per 100k tokens, with the no-graph control as a dashed line](results/charts/8c_yield_spread_annotated.png)
 
 *Top ideas per 100k tokens for each arm (box = middle 50% of 2,000 bootstrap slopes). Arms left of the dashed line, including every full-graph arm, find top ideas less efficiently than giving the model no graph at all.*
 
+## Follow-up experiment: 50 ideas per call, three models
+
+Asked for 5 ideas, the model mostly returns the same few obvious answers whatever it is given, so the
+main study may only measure its first answers. The follow-up (`M6_50ideas/`) forces it past them.
+
+**Design.**
+
+| Factor | Level |
+| --- | --- |
+| Market need | one: M6, *simple operation with no learning curve*, chosen by pre-set rules (no overlap with the prompt's worked example, every arm found a top idea in the main study, arms ranked as in the pooled result) |
+| Context | the same four conditions and files as the main study: A full graph, B need slice (28 nodes), R random slice of the same size, C no graph |
+| Ideas per call | **50** (main study: 5); everything else in the prompt is identical, checked by `M6_50ideas/check_prompts.py` |
+| Calls | 10 per condition, 40 per model, in random order |
+| Effort | medium |
+| Generator | `claude-haiku-5-5` (pre-registered run, 2026-10-19), repeated with `claude-opus-5-5` and `claude-fable-5-1` (added afterwards, exploratory) |
+| Judge | `claude-sonnet-5-5` with the main study's prompt and criteria, blind to condition and position; each 50-idea list is judged in requests of 5 consecutive ideas, so every request looks like a main-study request |
+
+**Measures.**
+
+- **Yield**, as in the main study: top ideas (score ≥ 4.0) per 100k tokens, input + output, with a 95%
+  bootstrap CI over calls.
+- **Yield per dollar:** each call's tokens at the API list price (USD per million input / output
+  tokens: Haiku $0.10 / $0.50, Opus $4 / $20, Fable $10 / $50; no batch or caching discount).
+- **Distinct ideas** (pre-registered H12–H15, Haiku run; coding in progress): each idea is coded into a
+  *move*, defined by what it replaces and by what, using a codebook built beforehand from the main
+  study's 250 M6 ideas. This measures how many different ideas each condition reaches, whether the
+  later ideas stay on the need, and whether the first five ideas are the main study's usual five.
+
+**Result so far.** The full graph was the least efficient condition for every model, at about half the
+yield of the alternatives. The need slice and no graph were indistinguishable for every model. For
+Opus and Fable the full graph did not lower the share of top ideas; it only cost more tokens. Stronger
+models found up to twice as many top ideas per token, but Haiku found 20–40 times more per dollar.
+
+| Top ideas per 100k tokens (per $) | Haiku 5.5 | Opus 5.5 | Fable 5.1 |
+| --- | --- | --- | --- |
+| Full graph | 9.4 (266) | 26.3 (19.3) | 26.4 (7.5) |
+| Need slice | 20.4 (459) | 39.9 (22.9) | 51.3 (11.9) |
+| Random slice | 10.9 (246) | 37.2 (21.1) | 37.0 (8.5) |
+| No graph | 22.2 (468) | 34.8 (18.2) | 53.6 (11.4) |
+
+![Top ideas per dollar (A) and per token (B): Haiku with 5 ideas per call (main study), then Haiku, Opus and Fable with 50](M6_50ideas/results/charts/compare_stack_all_bootstrap_dollars__M6_calls_tokens.png)
+
+*(A) Top ideas per US dollar at list price (log scale): bootstrap boxes, the uncertainty of each
+condition's average yield (box = middle 50%, whiskers = 95% CI); the 5-idea panel pools all 13 needs.
+(B) Top ideas per 100k tokens, M6 only: one dot per call, the call-to-call variation (whiskers 1.5 ×
+IQR). Triangle and number = pooled yield. The 50-idea ideas are shorter and scored lower, so compare
+conditions within a panel rather than heights across the 5-idea and 50-idea panels.*
+
+Details, hypotheses and every step: [`M6_50ideas/README.md`](M6_50ideas/README.md).
+
 ![Microwave innovation matrix demo](innovation_matrix_demo.gif)
 
 ## Repository layout
 
-| Path                                                                                  | Contents                                                                                          |
-| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `microwave_base_graph.yaml`                                                           | the innovation matrix (product graph)                                                             |
-| `render_matrix_v2.py`, `build_matrix_xlsx.py`, `*.html`                               | interactive innovation matrix visualizers and export scripts                                      |
-| `slicer.py`, `slices/`                                                                | market-need slices (B) and size-matched random slices (R), with `manifest.csv`                    |
-| `template_prompt.txt`                                                                 | the generation prompt                                                                             |
-| `KG_informed_brainstorm_AB_Test.py`                                                   | runs the generation calls                                                                         |
-| `analyze.py`                                                                          | pairwise set judging and summaries                                                                |
-| `top_ideas.py`                                                                        | individual idea scoring (quality; `--rubric patent` for patentability) and the ranked idea list   |
-| `charts.py`, `tail_charts.py`, `figure_innovation_matrix.py`, `figure_slices_grid.py` | figures                                                                                           |
-| `human_check.py`                                                                      | stratified sample for human raters, and agreement statistics                                      |
-| `runs/`                                                                               | every generation call (prompt metadata, raw response, token counts)                               |
-| `results/`                                                                            | judge outputs, tables, charts, results write-up                                                   |
-| `persona_as_factor/`                                                                  | exploratory follow-up: three personas × B, C × 3 market needs × 2 efforts                        |
-| `paper/`                                                                              | LaTeX source of the paper (`main.tex`, `body.tex`, `appendix.tex`, `figures/`)                    |
-| `references/`                                                                         | PDF collection of cited literature and citation verification reports                              |
-| `requirements.txt`                                                                    | Python package dependencies                                                                       |
+| Path                                                               | Contents                                                                                          |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| `microwave_base_graph.yaml`                                      | the innovation matrix (product graph)                                                             |
+| `slicer.py`, `slices/`                                         | market-need slices (B) and size-matched random slices (R), with `manifest.csv`                  |
+| `template_prompt.txt`                                            | the generation prompt                                                                             |
+| `KG_informed_brainstorm_AB_Test.py`                              | runs the generation calls                                                                         |
+| `analyze.py`                                                     | pairwise set judging and summaries                                                                |
+| `top_ideas.py`                                                   | individual idea scoring (quality; `--rubric patent` for patentability) and the ranked idea list |
+| `charts.py`, `tail_charts.py`, `figure_innovation_matrix.py` | figures                                                                                           |
+| `human_check.py`                                                 | stratified sample for human raters, and agreement statistics                                      |
+| `runs/`                                                          | every generation call (prompt metadata, raw response, token counts)                               |
+| `results/`                                                       | judge outputs, tables, charts, results write-up                                                   |
+| `persona_as_factor/`                                             | exploratory follow-up: three personas × B, C × 3 market needs × 2 efforts                      |
+| `M6_50ideas/`                                                    | follow-up: 50 ideas per call on market need M6, four conditions × three models (Haiku, Opus, Fable), yield per token and per dollar, move coding |
+| `paper/`                                                         | LaTeX source of the paper (`main.tex`; built from Markdown drafts by `build_paper.py`)        |
 
-## Reproducibility
-
-### Pipeline overview
-
-```text
-  microwave_base_graph.yaml
-             │
-             ▼ slicer.py
-     slices/*.yaml + manifest.csv
-             │
-             ▼ KG_informed_brainstorm_AB_Test.py  [Claude Haiku 5.5]
-       runs/rq1_full.jsonl (580 calls, 2,892 ideas)
-        /               \
-       /                 \
-      ▼ analyze.py judge  ▼ top_ideas.py score  [Claude Sonnet 5.5]
- results/judgments.jsonl  results/idea_scores.jsonl
-      │                   │
-      ▼ analyze.py summary▼ top_ideas.py report
- results/pairwise_*.csv   results/ideas_ranked.csv
-      │                   │
-      └─────────┬─────────┘
-                ▼ charts.py, tail_charts.py, persona_analysis.py
-          results/charts/*.png  ──>  paper/main.pdf (LaTeX build)
-```
-
-### 1. Environment setup
+## Reproducing
 
 ```bash
-     python3 -m venv .venv
-     source .venv/bin/activate
-     pip install -r requirements.txt
+pip install -r requirements.txt
+export ANTHROPIC_API_KEY=...          # never commit this
+
+# 1. inspect the prompts without calling the API
+python KG_informed_brainstorm_AB_Test.py --dry-run
+
+# 2. generate (example: the high-effort arms)
+python KG_informed_brainstorm_AB_Test.py --conditions A B R C --effort high --reps 5 \
+       --max-tokens 48000 --out runs/rq1_full.jsonl
+
+# 3. judge, score and summarise
+python analyze.py judge  ...           # see python analyze.py --help
+python analyze.py stats
+python top_ideas.py score
+python top_ideas.py report
+
+# 4. figures
+python charts.py
+python tail_charts.py
+python figure_innovation_matrix.py
 ```
 
-### 2. Create sub graphs (slices)
+Every number in the paper's results is regenerated from `runs/` and `results/` by steps 3 and 4. Re-running the generation produces new samples, so individual ideas will differ.
 
-All raw generation logs and judge outputs are included in `runs/` and `results/`. You can recalculate every statistic, summary table, chart, and compile the manuscript completely offline:
-
-```bash
-     # 1. Create the various version of the graph (slices) for condition B
-     python slicer.py microwave_base_graph.yaml
-```
-
-### 3. AI gerneates ideas in condition A B C and R  (requires API key)
-
-To re-run generation or live LLM judging from scratch, export your Anthropic API key:
+The follow-up runs from its own folder, one step at a time; `GEN_MODEL` picks the generator
+(`haiku` by default, `opus`, `fable`):
 
 ```bash
-     export ANTHROPIC_API_KEY=...          # never commit this
-
-     # 1. Inspect prompts without calling the API
-     python KG_informed_brainstorm_AB_Test.py --dry-run
-
-     # 2. Generation (Claude Haiku 5.5; ~8.6M tokens for full 580 calls)
-     python KG_informed_brainstorm_AB_Test.py --conditions A B R C --effort low medium high \
-          --reps 5 --max-tokens 48000 --out runs/rq1_full.jsonl
-```
-
-### 4. Judge the ideas with LLM or human
-
-```bash
-     # 3. Pairwise set judging (Claude Sonnet 5.5)
-     python analyze.py judge --logs runs/rq1_full.jsonl --pair condition A B --both-orders
-     python analyze.py judge --logs runs/rq1_full.jsonl --pair condition B R --both-orders
-     python analyze.py judge --logs runs/rq1_full.jsonl --pair condition B C --both-orders
-
-     # 4. Individual idea quality scoring (Claude Sonnet 5.5)
-     python top_ideas.py score --logs runs/rq1_full.jsonl
-```
-
-### 5. Create charts
-
-```bash
-     # 2. Cost, validity, pairwise statistics, and idea rankings
-     python analyze.py stats --logs runs/rq1_full.jsonl
-     python analyze.py summary --logs runs/rq1_full.jsonl
-     python top_ideas.py report --logs runs/rq1_full.jsonl
-
-     # 3. Top-tail metrics, yield slopes, and bootstrap intervals
-     python tail_charts.py --threshold 4.0
-     python tail_charts.py --threshold 4.25
-     python tail_charts.py --match-needs
-
-     # 4. Figures and charts
-     python figure_innovation_matrix.py
-     python figure_slices_grid.py
-     python charts.py
-     python tail_charts.py
-     (cd persona_as_factor && python persona_analysis.py)
-```
-
-### 6. Building the paper PDF
-
-You can build the manuscript PDF using either the automated end-to-end script.
-The build script automatically sets up `.venv`, updates stats and charts, syncs figures into `paper/figures/`, compiles with Tectonic (or PDFLaTeX), and verifies PDF integrity:
-
-```bash
-     # compile
-     python3 .github/skills/build_paper/build_paper.py
-
-     # Full end-to-end build (stats + charts + sync + tectonic compile):
-     python3 .github/skills/build_paper/build_paper.py
-
-     # Fast LaTeX-only recompile (skip data/chart regeneration):
-     python3 .github/skills/build_paper/build_paper.py --skip-stats --skip-charts
-
-     # Compile using pdflatex instead of tectonic:
-     python3 .github/skills/build_paper/build_paper.py --engine pdflatex
+cd M6_50ideas
+bash run_all.sh prompts                       # dry run and prompt check
+GEN_MODEL=opus bash run_all.sh generate       # 40 calls of 50 ideas
+GEN_MODEL=opus bash run_all.sh score          # blind judge
+GEN_MODEL=opus bash run_all.sh chart          # Figure 8 for this run
+python compare_runs_chart.py                  # all runs side by side (--unit dollars for per dollar)
 ```
 
 ## Citation
