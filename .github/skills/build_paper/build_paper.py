@@ -53,7 +53,6 @@ def generate_charts(py_bin: Path) -> None:
     run_cmd([str(py_bin), "figure_innovation_matrix.py"])
     run_cmd([str(py_bin), "charts.py"])
     run_cmd([str(py_bin), "tail_charts.py"])
-    run_cmd([str(py_bin), "persona_analysis.py"], cwd=ROOT / "persona_as_factor")
 
 
 def sync_figures() -> None:
@@ -61,7 +60,7 @@ def sync_figures() -> None:
     target_dir = PAPER_DIR / "figures"
     target_dir.mkdir(parents=True, exist_ok=True)
 
-    src_dirs = [ROOT / "results" / "charts", ROOT / "persona_as_factor" / "results" / "charts"]
+    src_dirs = [ROOT / "results" / "charts"]
     copied = 0
     for sdir in src_dirs:
         if sdir.exists():

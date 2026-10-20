@@ -7,9 +7,9 @@ In product ideation, engineering design, and service innovation, problem represe
 
 To address this gap, we examine how problem representations and reasoning allocations govern AI brainstorming efficiency across three questions: first, which graph representation yields the most top ideas per token (RQ1); second, whether structural relevance or raw prompt length drives performance (RQ2); and third, how investing tokens in context compares with spending them on thinking effort (RQ3). We test these questions using a countertop microwave oven represented as an innovation matrix with 123 nodes and 246 edges. Using Claude 3.5 Haiku as the ideation model and the \emph{Substitute} operator from the SCAMPER ideation framework \citep{Eberle1971, Osborn1953} across 13 market needs, we evaluate four prompt representations: the full graph (A), a targeted vertical slice of the active market need (functions, components, technologies, fields, linked constraints and actors; B), a size-matched random slice (R), and a no-graph control (C). Each condition is crossed with four thinking-effort levels across 580 API calls, generating 2,892 ideas that are evaluated blind by Claude 3.5 Sonnet and validated by human expert review. We measure \emph{yield}: standout ideas (top $\sim$12\%, score $\ge 4.0/5.0$) per 100k total tokens spent.
 
-Our primary finding is that prompting with a targeted market-need slice at medium effort achieves peak yield (8.8 top ideas per 100k tokens), nearly tripling the efficiency of the full graph. Note here that the size of the slice is about one third that of the full graph. Although the full graph produces more specific average sets, it yields no more top-tail ideas while doubling prompt costs. Furthermore, scaling thinking effort raises average linguistic quality but fails to improve token efficiency. Together, these findings make three contributions: they reframe AI ideation around representation efficiency (outcome per token) rather than ephemeral human baselines; they establish yield as a non-saturating tail metric that captures extreme-value creative discovery where mean scores mislead; and they provide an open, controlled empirical comparison of product-graph representations, thinking effort, and prompt personas, with all prompts, calls, and judgments released.
+Our primary finding is that prompting with a targeted market-need slice at medium effort achieves peak yield (8.8 top ideas per 100k tokens), nearly tripling the efficiency of the full graph. Note here that the size of the slice is about one third that of the full graph. Although the full graph produces more specific average sets, it yields no more top-tail ideas while doubling prompt costs. Furthermore, scaling thinking effort raises average linguistic quality but fails to improve token efficiency. Together, these findings make three contributions: they reframe AI ideation around representation efficiency (outcome per token) rather than ephemeral human baselines; they establish yield as a non-saturating tail metric that captures extreme-value creative discovery where mean scores mislead; and they provide an open, controlled empirical comparison of product-graph representations and thinking effort, with all prompts, calls, and judgments released.
 
-The remainder of this paper is structured as follows. Section~\ref{related-work} reviews related work on design representations, LLM ideation workflows, and cost-aware evaluation. Section~\ref{methods} details the product graph, prompt representations, experimental design, and scoring metrics. Section~\ref{results} presents empirical findings for RQ1--RQ3, exploratory persona analyses, and robustness checks. Finally, Section~\ref{discussion-and-conclusion} discusses implications for design thinking and outlines directions for graph-guided AI innovation.
+The remainder of this paper is structured as follows. Section~\ref{related-work} reviews related work on design representations, LLM ideation workflows, and cost-aware evaluation. Section~\ref{methods} details the product graph, prompt representations, experimental design, and scoring metrics. Section~\ref{results} presents empirical findings for RQ1--RQ3 and robustness checks. Finally, Section~\ref{discussion-and-conclusion} discusses implications for design thinking and outlines directions for graph-guided AI innovation.
 
 \section{Related work}
 \label{related-work}
@@ -20,11 +20,11 @@ Structured descriptions that link what customers want to what a product does and
 
 \subsection{LLMs that innovate with design methods}
 
-Language models were first used as concept generators \citep{Zhu2022,Ma2023} and compared with people: their concepts are less diverse than crowdsourced ones \citep{Ma2025}, their research ideas are judged more novel but slightly less feasible than experts' \citep{Si2024}, and working with them raises individual creativity while narrowing collective diversity \citep{Doshi2024,Anderson2024,Ashkinaze2025,Wadinambiarachchi2024}. Large language models are often conceptualized as a ``lossy compression of the web'' \citep{Chiang2023}, distilling vast online corpora into compact neural weights \citep{Karpathy2023}. Recent systems give the model the structured methods above. An FBS ontology steers concept generation \citep{Chen2024a}; generated text and images enrich concepts \citep{Chen2024}; TRIZ is applied by single models and by agent teams \citep{Chen2024c,Jiang2025,Szczepanik2025}; morphological analysis is automated \citep{Chen2024b}; and agentic workflows chain whole design processes \citep{Ding2023,Massoudi2026}. iDesignGPT \citep{Liu2026} goes furthest: agent clusters run problem definition with QFD and Kano analysis, then functional decomposition, morphological analysis, SCAMPER \citep{Eberle1971} and TRIZ, and produce a product design specification. Persona prompts are a related device, from role-play that raises the creativity of LLM discussions \citep{Lu2024} to agents that act out a design team \citep{Liu2025}, drawing on ideas about thinking styles in innovation \citep{Bono1970,Kelley2005}.
+Language models were first used as concept generators \citep{Zhu2022,Ma2023} and compared with people: their concepts are less diverse than crowdsourced ones \citep{Ma2025}, their research ideas are judged more novel but slightly less feasible than experts' \citep{Si2024}, and working with them raises individual creativity while narrowing collective diversity \citep{Doshi2024,Anderson2024,Ashkinaze2025,Wadinambiarachchi2024}. Large language models are often conceptualized as a ``lossy compression of the web'' \citep{Chiang2023}, distilling vast online corpora into compact neural weights \citep{Karpathy2023}. Recent systems give the model the structured methods above. An FBS ontology steers concept generation \citep{Chen2024a}; generated text and images enrich concepts \citep{Chen2024}; TRIZ is applied by single models and by agent teams \citep{Chen2024c,Jiang2025,Szczepanik2025}; morphological analysis is automated \citep{Chen2024b}; and agentic workflows chain whole design processes \citep{Ding2023,Massoudi2026}. iDesignGPT \citep{Liu2026} goes furthest: agent clusters run problem definition with QFD and Kano analysis, then functional decomposition, morphological analysis, SCAMPER \citep{Eberle1971} and TRIZ, and produce a product design specification.
 
 \subsection{What ``innovative'' is checked against}
 
-These systems claim to innovate, but the claim usually rests on ratings: experts or a model score novelty and originality, or embedding distances measure how far the generated concepts spread from each other. iDesignGPT, for example, reports that it ``surpasses benchmark models in generating innovative, modular, and rational solutions'', on the basis of expert scores against GPT-4o baselines and semantic novelty metrics; patents are searched as an input to the workflow, but the generated concepts are not compared with prior art \citep{Liu2026}. This is typical. Novelty is judged relative to other generated ideas or to a rater's memory, seldom against what already exists, although patent-based measures of technological novelty are well established \citep{Fleming2001,Verhoeven2016,Uzzi2013} and patent-derived knowledge networks are available for design \citep{Sarica2020,Luo2021}. An idea a rater finds novel may be on the market already. Our own study shares this limitation: its judge rates novelty and patentability from knowledge, without a prior-art search, and several of its top-rated ideas, such as solid-state RF heating and RF thawing, already exist in industry, as the judge itself noted. A second gap is cost: none of these systems reports what its outputs cost, so a more elaborate pipeline cannot be weighed against a simpler one. None of these experiments has resulted to our knowledge in a single patent. Perhaps in our opinion due to token costs of implementing  genchibembutsu \cite{berengueres2014}, collecting first hand information, and collecting field information.
+These systems claim to innovate, but the claim usually rests on ratings: experts or a model score novelty and originality, or embedding distances measure how far the generated concepts spread from each other. iDesignGPT, for example, reports that it ``surpasses benchmark models in generating innovative, modular, and rational solutions'', on the basis of expert scores against GPT-4o baselines and semantic novelty metrics; patents are searched as an input to the workflow, but the generated concepts are not compared with prior art \citep{Liu2026}. This is typical. Novelty is judged relative to other generated ideas or to a rater's memory, seldom against what already exists, although patent-based measures of technological novelty are well established \citep{Fleming2001,Verhoeven2016,Uzzi2013} and patent-derived knowledge networks are available for design \citep{Sarica2020,Luo2021}. An idea a rater finds novel may be on the market already. Our own study shares this limitation: its judge rates novelty from knowledge, without a prior-art search, and several of its top-rated ideas, such as solid-state RF heating and RF thawing, already exist in industry, as the judge itself noted. A second gap is cost: none of these systems reports what its outputs cost, so a more elaborate pipeline cannot be weighed against a simpler one. None of these experiments has resulted to our knowledge in a single patent. Perhaps in our opinion due to token costs of implementing  genchibembutsu \cite{berengueres2014}, collecting first hand information, and collecting field information.
 
 \subsection{Context and cost in LLMs}
 
@@ -525,14 +525,6 @@ The aim of brainstorming is the rare great idea, not a good average, so the main
 \tightlist
 \item
   \textbf{Thinking effort is the strongest lever on quality, but not on yield.} High beats low in about 93\% of set comparisons, and xhigh produces the highest top-idea rates of all (19--21\%). But each call costs proportionally more, so yield does not rise with effort: for the full graph it stays at about 3 per 100k tokens from low to xhigh, and for the slice it peaks at medium (8.8) and falls at high (5.9) and xhigh (3.1).
-\end{itemize}
-
-\textbf{Exploratory: persona} (Section~\ref{follow-up-persona-as-a-factor-exploratory})
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{Persona prompting did not raise efficiency (exploratory follow-up).} On three market needs, neither a lateral-thinker nor a patent-focused persona beat the plain innovation engineer per token (6.3 top ideas per 100k tokens; patent persona 5.5, lateral thinker 4.3, lower than the engineer's in \textgreater{} 99.9\% of bootstrap draws); the lateral thinker was the least efficient, especially without a graph. The market-need slice helped every persona; whether it helps some personas more than others could not be resolved.
 \end{itemize}
 
 \hypertarget{setup-cost-validity}{%
@@ -1685,143 +1677,6 @@ Slice high vs Full graph low & 65 & 56 & 3 & 6 & 91\% & 81--96\% & \textless{} 0
 
 B-high was ahead on every criterion and for all 13 market needs, at 12,407 vs 14,243 tokens per call (13\% fewer). For a similar budget, a relevant slice with more thinking clearly beats the full graph with little thinking.
 
-\hypertarget{follow-up-persona-as-a-factor-exploratory}{%
-\subsection{Exploratory: persona as a factor}\label{follow-up-persona-as-a-factor-exploratory}}
-
-Does the best representation depend on who is thinking? A follow-up (\texttt{persona\_as\_factor/}, hypotheses H5--H7 written down before the run) crossed three personas with the market-need slice (B) and no graph (C), on three market needs (M4, M8, M13), at medium and high effort, 15 calls per cell (540 planned, 532 logged, 525 parsed and scored; the 8 missing calls did not complete on re-runs and are spread over five cells, 1--2 each, so they cannot change the picture). The innovation engineer is the main study's persona, verbatim; the 45 matching main-study calls were reused. The two new personas replace the first sentence of the system prompt with a description of a way of thinking and one credited exemplar:
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{Lateral thinker:} behavioural economics, changing perception rather than performance; exemplar Rory Sutherland's Eurostar observation (make the journey more enjoyable, e.g.~with Wi-Fi, rather than the train faster).
-\item
-  \textbf{Patent-focused inventor:} new, non-obvious, industrially applicable, precise enough to be claimed; exemplar James Dyson's bagless cyclone vacuum.
-\end{itemize}
-
-Ideas were scored with the main study's quality prompt, unchanged, and in a separate call for patentability (new, non-obvious, applicable, overall 1--5).
-
-Table~\ref{tab:persona-rep} gives the \textbf{yield (top ideas per 100k tokens), pooled over the three market needs and both efforts} (per effort: repository chart \texttt{10\_persona\_yield.png}; bootstrap spread per persona and representation: repository chart \texttt{11b\_persona\_by\_representation.png}):
-
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2603}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1781}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1781}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2192}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1644}}@{}}
-\caption{Persona follow-up: yield (top ideas per 100k tokens, 95\% bootstrap CI) per persona with the market-need slice (B) and with no graph (C), pooled over three market needs and two efforts.}\label{tab:persona-rep}\tabularnewline
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Persona
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-B \textperiodcentered{} market-need slice
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-C \textperiodcentered{} no graph
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-$B \div C$ {[}95\% CI{]}
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Top-idea rate B / C
-\end{minipage} \\
-\midrule\noalign{}
-\endfirsthead
-\caption*{Table~\thetable{} (continued)}\tabularnewline
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Persona
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-B \textperiodcentered{} market-need slice
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-C \textperiodcentered{} no graph
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-$B \div C$ {[}95\% CI{]}
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Top-idea rate B / C
-\end{minipage} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Innovation engineer & 5.9 {[}4.8--7.2{]} & 7.0 {[}5.1--9.1{]} & 0.84 {[}0.60--1.22{]} & 13.4\% / 9.3\% \\
-Lateral thinker & 4.6 {[}3.6--5.6{]} & 3.9 {[}2.7--5.2{]} & 1.16 {[}0.80--1.76{]} & 11.0\% / 5.8\% \\
-Patent-focused & 5.8 {[}4.8--6.8{]} & 4.9 {[}3.6--6.4{]} & 1.17 {[}0.86--1.66{]} & 14.8\% / 7.7\% \\
-\end{longtable}
-
-\begin{figure}[tbp]
-\centering
-\IfFileExists{figures/11_persona_effect.png}{\includegraphics[width=0.7\textwidth]{figures/11_persona_effect.png}}{\fbox{\parbox[c][5cm][c]{0.9\textwidth}{\centering\small missing: \texttt{\detokenize{figures/11_persona_effect.png}}}}}
-\caption{Persona follow-up: yield per persona over all of its calls (market-need slice and no graph, medium and high effort). Box = middle 50\% of 2,000 bootstrap yields, whiskers = 95\% CI, dot = observed.}
-\label{fig:persona}
-\end{figure}
-
-Table~\ref{tab:persona} gives \textbf{one yield per persona} (all its calls: both representations, both efforts; Figure \ref{fig:persona}, \texttt{11\_persona\_effect.png}):
-
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3276}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2241}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1724}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2759}}@{}}
-\caption{Persona follow-up: one yield per persona over all its calls, the chance it beats the innovation engineer, and mean patentability (1--5).}\label{tab:persona}\tabularnewline
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Persona
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Yield {[}95\% CI{]}
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-P(beats engineer)
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean patentability {[}95\% CI{]}
-\end{minipage} \\
-\midrule\noalign{}
-\endfirsthead
-\caption*{Table~\thetable{} (continued)}\tabularnewline
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Persona
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Yield {[}95\% CI{]}
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-P(beats engineer)
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean patentability {[}95\% CI{]}
-\end{minipage} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Innovation engineer & 6.3 {[}5.3--7.4{]} & -- & 2.19 {[}2.15--2.22{]} \\
-Patent-focused & 5.5 {[}4.6--6.3{]} & 0.10 & 2.23 {[}2.19--2.27{]} \\
-Lateral thinker & 4.3 {[}3.5--5.2{]} & \textless{} 0.001 & 2.17 {[}2.13--2.21{]} \\
-\end{longtable}
-
-P = share of 2,000 paired bootstrap draws (calls resampled within market need) in which the persona's yield is higher than the engineer's. The patent persona's yield is higher than the lateral thinker's in 97\% of draws.
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{No persona beat the plain engineer per token.} The engineer is the most efficient overall (the patent persona is behind but not clearly worse); the lateral thinker the least, most of all without a graph (5.8\% top ideas, against 9.3\% for the engineer). The new personas also cost slightly more per call: their descriptions add about 150 input tokens, and the patent persona thinks longer (about 11.7k output tokens per high-effort slice call, against 9.6k for the engineer).
-\item
-  \textbf{The slice helped every persona's top-idea rate,} and the lateral thinker most: its rate nearly doubles with the slice (5.8\% to 11.0\%). A persona that works by reframing seems to need concrete product structure to anchor on.
-\item
-  \textbf{The best single cell} is the patent persona with the slice at high effort: 18.0\% top ideas, and the only $B \div C$ ratio whose interval clears 1 (1.55 {[}1.03--2.61{]}). It is one cell of twelve and is reported as a pattern.
-\item
-  \textbf{On these three market needs, the engineer's slice does not beat no graph} ($B \div C$ 0.84 {[}0.60--1.22{]} pooled; at medium effort no graph is even ahead, 10.0 against 6.4, intervals overlapping). In the main study, too, no graph's yield at high effort (6.4) was close to the slice's (5.9); the slice's clear lead there came at medium effort on all 13 market needs (8.8), and on M4, one of the three market needs here, no graph did well. The slice's efficiency advantage over no graph is therefore market-need-dependent; its advantage over the full graph and the random slice is the robust result.
-\item
-  \textbf{The exemplars were not copied:} at most 1.8\% of ideas mention Wi-Fi, the Eurostar or entertainment (engineer baseline 0.7\%), and none mention Dyson, cyclones or bagless designs.
-\end{itemize}
-
-\textbf{Against the hypotheses written down before the run:}
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{H5 (the lateral thinker needs the graph less): not supported.} The $B \div C$ ratio points the other way (1.16 against the engineer's 0.84), and the intervals overlap.
-\item
-  \textbf{H6 (the patent persona needs the graph more, for patentable ideas): not testable.} The judge rated almost every idea 2 out of 5 for patentability (means 2.13--2.31 in every cell); only about 1\% of ideas reach the pre-set threshold of 4, 0--2 per cell, so patentable yields are noise.
-\item
-  \textbf{H7 (personas do what they are told): not supported.} The lateral thinker's ideas are not rated more novel (mean novelty 3.23, against 3.30--3.34 for the engineer), and the patent persona's mean patentability is barely higher (2.23 {[}2.19--2.27{]} against 2.19 {[}2.15--2.22{]}; a difference of 0.04 on a 1--5 scale, intervals overlapping).
-\end{itemize}
-
-\textbf{Reading these results.} The quality rubric (relevance, novelty, feasibility, specificity) rewards concrete engineering, and the operator is SUBSTITUTE; a persona that proposes changes of perception rather than of parts may be marked down by the rubric rather than be worse. Patentability is the judge's estimate without a prior-art search; that it rates nearly all ideas as weakly patentable is consistent with many top ideas reusing known moves (solid-state RF, RF thawing), but it is not a legal assessment. Both are planned for the human check.
-
 \hypertarget{robustness-and-caveats}{%
 \subsection{Robustness and caveats}\label{robustness-and-caveats}}
 \hypertarget{length-and-judge-reliability}{%
@@ -1936,7 +1791,7 @@ The pilot (2 market needs $\times$ 3 replicates) found the full graph winning 17
 
 This study asked how much of a product's knowledge graph an LLM needs to see in order to brainstorm well, measured not by the quality of its output alone but by how efficiently it turns tokens into top ideas (in the sense of ideas that can lead to innvoative breakthoughs). An innovation matrix \citep{Tchirsky} of a microwave oven (123 nodes, 246 edges) was given to \texttt{claude-haiku-5-5} in four forms: the full graph (A), the vertical slice for the target market need (B), a random slice of the same size (R), or no graph at all (C). The model applied (individually to each market need) the SUBSTITUTE operator to each market needs, with 5 replicates per cell and four levels of thinking effort. The 2,892 resulting ideas were judged blind by \texttt{claude-sonnet-5-5}, both as whole sets side by side and one idea at a time.
 
-Brainstorming is a search for the rare great idea, so the main measure was the \textbf{yield}: top ideas (the top \ensuremath{\sim}12\% of all ideas) found per 100k tokens spent. Counted against tokens, top ideas accumulate in a straight line for every arm, so arms can be compared by slope. Five conclusions follow.
+Brainstorming is a search for the rare great idea, so the main measure was the \textbf{yield}: top ideas (the top \ensuremath{\sim}12\% of all ideas) found per 100k tokens spent. Counted against tokens, top ideas accumulate in a straight line for every arm, so arms can be compared by slope. Four conclusions follow.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1948,8 +1803,6 @@ Brainstorming is a search for the rare great idea, so the main measure was the \
   \textbf{Relevance matters, size does not.} A random slice of the same size as the market-need slice is less efficient than both the market-need slice and no graph, though still ahead of the full graph: the market-need slice's slope is higher in 99\% of paired bootstrap draws (5.9 against 4.1 at high effort), and no graph beats the random slice on 10 of 12 market needs (p = 0.039). Irrelevant structure is worse per token than none. Judged as whole sets, market-need slice and random slice cannot be told apart: relevance shows up in the best ideas, not in the average set.
 \item
   \textbf{Thinking effort raises quality, not efficiency.} High effort beats low in about 93\% of set comparisons, and extra-high effort gives the highest top-idea rates (19--21\%). But each call costs proportionally more, so yield does not rise with effort: the full graph stays at about 3 top ideas per 100k tokens from low to extra-high, and the slice peaks at medium effort.
-\item
-  \textbf{A persona prompt is no substitute for the right context (exploratory).} In a follow-up on three market needs, neither a lateral-thinker persona nor a patent-focused persona beat the plain innovation engineer per token (6.3 top ideas per 100k tokens against 5.5 and 4.3), and the hypotheses that they would change which representation works best were not supported. The lateral thinker was the least efficient, especially without a graph; given the market-need slice, its top-idea rate nearly doubled. The judge rated almost no idea from any persona as clearly patentable.
 \end{enumerate}
 
 

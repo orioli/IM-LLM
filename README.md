@@ -91,7 +91,6 @@ Details, hypotheses and every step: [`M6_50ideas/README.md`](M6_50ideas/README.m
 | `human_check.py`                                                 | stratified sample for human raters, and agreement statistics                                      |
 | `runs/`                                                          | every generation call (prompt metadata, raw response, token counts)                               |
 | `results/`                                                       | judge outputs, tables, charts, results write-up                                                   |
-| `persona_as_factor/`                                             | exploratory follow-up: three personas × B, C × 3 market needs × 2 efforts                      |
 | `M6_50ideas/`                                                    | follow-up: 50 ideas per call on market need M6, four conditions × three models (Haiku, Opus, Fable), yield per token and per dollar, move coding |
 | `paper/`                                                         | LaTeX source of the paper (`main.tex`; built from Markdown drafts by `build_paper.py`)        |
 

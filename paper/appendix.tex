@@ -254,11 +254,11 @@ P1 & Basic countertop microwave oven (timer knob, power knob, door button, lamp)
 \hypertarget{generation-prompt}{%
 \section{Generation prompt}\label{generation-prompt}}
 
-The template used for every call (\texttt{template\_prompt.txt}). Placeholders in braces are filled per call; \texttt{\{persona\}} is ``You are an innovation engineer.'' in the main study.
+The template used for every call (\texttt{template\_prompt.txt}). Placeholders in braces are filled per call; the opening sentence of the system prompt is shown filled in.
 
 \begin{verbatim}
 === SYSTEM ===
-{persona} You read product graphs and propose radical
+You are an innovation engineer. You read product graphs and propose radical
 product innovations. Respond with valid JSON only, no prose outside the JSON.
 
 === USER ===
@@ -348,7 +348,7 @@ Return JSON:
 \hypertarget{individual-scoring-prompts}{%
 \section{Individual scoring prompts}\label{individual-scoring-prompts}}
 
-Quality (all ideas). System prompt:
+Quality, used for every idea. System prompt:
 
 \begin{verbatim}
 You are an expert panel judging product-innovation ideas. Rate each idea on its own merits, independently of the others. Ignore writing style and length. Respond with valid JSON only.
@@ -377,37 +377,6 @@ Return JSON with one entry per idea, in the same order:
                "comment": "one sentence"}]}
 \end{verbatim}
 
-Patentability (persona follow-up only), a separate call. System prompt:
-
-\begin{verbatim}
-You are an experienced patent examiner assessing product-innovation ideas. Rate each idea on its own merits, independently of the others. Ignore writing style and length. Respond with valid JSON only.
-\end{verbatim}
-
-User prompt:
-
-\begin{verbatim}
-BRIEF
-Product: {product}
-Target market need: {need_id}: {need_label}
-Innovation operator: {operator}
-The brief asked for radical, wild ideas that serve the target need.
-
-IDEAS
-{ideas}
-
-Rate EACH idea from 1 (poor) to 5 (excellent) on the three requirements for a patent:
-- new: not already known, on the market or published in the form described
-- non_obvious: not an obvious step for a skilled engineer in the field
-- applicable: can be made and used as described (industrial applicability)
-and give an overall patentability from 1 to 5: how likely a patent with a meaningful claim
-could be granted for the idea as described. You cannot search prior art; use your knowledge
-of existing products, patents and published work.
-
-Return JSON with one entry per idea, in the same order:
-{"ratings": [{"idea": 1, "new": 0, "non_obvious": 0, "applicable": 0, "patentability": 0,
-               "comment": "one sentence"}]}
-\end{verbatim}
-
 \hypertarget{data-and-code}{%
 \section{Data and code}\label{data-and-code}}
 
@@ -429,12 +398,11 @@ Contents \& Role
 \texttt{microwave\_base\_graph.yaml} & Full innovation matrix (123 nodes, 246 typed edges) \\
 \texttt{slicer.py}, \texttt{slices/} & Graph slicer generating vertical slices (B) and random slices (R) with \texttt{manifest.csv} \\
 \texttt{KG\_informed\_brainstorm\_AB\_Test.py} & Ideation execution harness across conditions and effort levels \\
-\texttt{analyze.py}, \texttt{top\_ideas.py} & Pairwise set judging and individual quality/patentability scoring harnesses \\
+\texttt{analyze.py}, \texttt{top\_ideas.py} & Pairwise set judging and individual quality scoring harnesses \\
 \texttt{runs/rq1\_full.jsonl} & Complete raw call logs (580 runs, 2,892 ideas, prompt hashes, token counts) \\
 \texttt{results/judgments.jsonl}, \texttt{results/idea\_scores.jsonl} & Raw blind judge evaluations and point scores \\
 \texttt{results/pairwise\_summary.csv}, \texttt{results/tail\_summary.csv} & Summary statistics, win rates, and bootstrap yield slope estimates \\
 \texttt{yield\_per\_market\_need.xlsx} & Per-market-need top ideas, tokens, yields, and sign tests (live spreadsheet formulas) \\
-\texttt{persona\_as\_factor/} & Persona experiment logs, scoring, and analysis scripts \\
 \texttt{render\_matrix\_v2.py}, \texttt{*.html} & Interactive visualizers for exploring the full matrix and subgraph slices \\
 \texttt{charts.py}, \texttt{tail\_charts.py} & Figure and visualization generation scripts \\
 \texttt{build\_paper.py} & Automated end-to-end manuscript build, data verification, and compilation pipeline \\

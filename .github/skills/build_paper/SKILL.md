@@ -11,7 +11,7 @@ Standardized workflow to build, compile, verify, and validate the scientific pap
 
 The paper build pipeline consists of four modular stages:
 1. **Python Virtual Environment (`.venv`)**: Executes data analysis, metrics aggregation, and figure generation scripts.
-2. **Analysis & Figure Generation**: Produces all summary CSVs, ranked tables, and visualization charts in `results/charts/` and `persona_as_factor/results/charts/`.
+2. **Analysis & Figure Generation**: Produces all summary CSVs, ranked tables, and visualization charts in `results/charts/`.
 3. **Figure Syncing**: Copies the latest vector/raster figures into `paper/figures/`.
 4. **LaTeX Compilation & Verification**: Compiles `paper/main.tex` using `tectonic` (or `pdflatex` + `bibtex`) to generate `paper/main.pdf`, followed by automated visual and structural validation.
 
@@ -79,9 +79,6 @@ Regenerate all publication-quality figures:
 .venv/bin/python figure_innovation_matrix.py
 .venv/bin/python charts.py
 .venv/bin/python tail_charts.py
-
-# Persona follow-up analysis charts:
-(cd persona_as_factor && ../.venv/bin/python persona_analysis.py)
 ```
 
 Generated outputs:
@@ -97,9 +94,6 @@ Generated outputs:
 - `results/charts/8b_yield_spread.png`
 - `results/charts/8c_yield_spread_annotated.png`
 - `results/charts/9_slice_size_effect.png`
-- `persona_as_factor/results/charts/10_persona_yield.png`
-- `persona_as_factor/results/charts/11_persona_effect.png`
-- `persona_as_factor/results/charts/11b_persona_by_representation.png`
 
 ### 4. Sync Figures to LaTeX Source Directory
 
@@ -107,7 +101,6 @@ Copy all freshly rendered charts into `paper/figures/`:
 
 ```bash
 cp results/charts/* paper/figures/ 2>/dev/null || true
-cp persona_as_factor/results/charts/* paper/figures/ 2>/dev/null || true
 ```
 
 ### 5. Compile LaTeX Document
