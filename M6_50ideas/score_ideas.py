@@ -6,6 +6,9 @@ score_ideas.py: blind quality scores for every idea, with the main study's judge
   python score_ideas.py score      # API calls, resumable  -> results/idea_scores.jsonl
   python score_ideas.py table      # no API calls          -> results/ideas_scored.csv
 
+ideas_scored.csv has one row per idea: scores, then the idea as the judge saw it (title, new_elements =
+each new element's label and detail, rationale) and the judge's one-sentence comment, for human checking.
+
 In the main study the judge rated each call's 5 ideas in one request. Here a call has 50 ideas, so
 they are sent as ten requests of 5 consecutive ideas (positions 1-5, 6-10, ...): every request looks
 exactly like a main-study request. The prompt and the four criteria (relevance, novelty,
@@ -22,7 +25,7 @@ import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 
-from common import NEED, RESULTS, ROOT, RUNS, call_claude, load_calls, need_label, parse_json
+from common import NEED, RESULTS, ROOT, RUNS, call_claude, clean, elements, load_calls, need_label, parse_json
 
 sys.path.insert(0, str(ROOT))
 from top_ideas import IDEA_CRITERIA, JUDGE_SYSTEM, JUDGE_USER, render_for_judge  # noqa: E402
@@ -111,12 +114,14 @@ def cmd_table(args) -> None:
                 continue
             rows.append({"idea_id": f"{run_id}#{k}", "run_id": run_id, "condition": c["condition"], "position": k,
                          "score": round(sum(vals) / len(vals), 2), **{x: rt.get(x) for x in IDEA_CRITERIA},
-                         "title": idea.get("title", "")})
+                         "title": idea.get("title", ""), "new_elements": elements(idea),
+                         "rationale": clean(idea.get("rationale", "")),
+                         "judge_comment": str(rt.get("comment") or "").strip()})
     n_ideas = sum(len(c.get("ideas") or []) for c in calls.values())
     RESULTS.mkdir(exist_ok=True)
     with TABLE.open("w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=["idea_id", "run_id", "condition", "position", "score", *IDEA_CRITERIA,
-                                           "title"])
+                                           "title", "new_elements", "rationale", "judge_comment"])
         w.writeheader()
         w.writerows(rows)
     print(f"{len(rows)} of {n_ideas} ideas scored -> {TABLE}")

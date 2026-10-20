@@ -6,12 +6,22 @@ set -euo pipefail
 SELF="$(cd "$(dirname "$0")" && pwd)/$(basename "$0")"
 cd "$(dirname "$SELF")"
 ROOT=..
+# Which model writes the ideas: haiku (default, the first run) or opus / sonnet:  GEN_MODEL=opus ./run_all.sh generate
+# Each model has its own run log (runs/m6_50ideas[_opus].jsonl) and results folder (results/ or results/opus/);
+# codebook, prompts, judge (Sonnet) and coder are shared. Prefix every step of a run with the same GEN_MODEL.
+export GEN_MODEL="${GEN_MODEL:-haiku}"
+case "$GEN_MODEL" in
+  haiku)  MODEL_ID=claude-haiku-5-5;  SUF="" ;;
+  opus)   MODEL_ID=claude-opus-5-5;   SUF=_opus ;;
+  sonnet) MODEL_ID=claude-sonnet-5-5; SUF=_sonnet ;;
+  *) echo "GEN_MODEL must be haiku, opus or sonnet"; exit 1 ;;
+esac
 # 50 ideas per call, 10 calls per condition (2,000 ideas). The persona file holds the main study's
 # engineer sentence verbatim; its name only prefixes the run ids (engineer50_A_M6_medium_r01).
 GEN=(--graph $ROOT/microwave_base_graph.yaml --manifest $ROOT/slices/manifest.csv
      --template $ROOT/template_prompt.txt --needs M6 --conditions A B R C --effort medium
      --n-ideas 50 --reps 10 --persona engineer50 --personas-file personas_50ideas.yaml
-     --r-seed 1 --max-tokens 48000 --order-seed 6 --out runs/m6_50ideas.jsonl)
+     --r-seed 1 --max-tokens 48000 --order-seed 6 --model $MODEL_ID --out runs/m6_50ideas$SUF.jsonl)
 
 case "${1:-help}" in
   # ── before any generation call ─────────────────────────────────────
@@ -32,7 +42,7 @@ case "${1:-help}" in
   score)      # quality scores with the main study's judge prompt, 5 ideas per request; cost tables
     python score_ideas.py score
     python score_ideas.py table
-    python $ROOT/analyze.py stats --logs runs/m6_50ideas.jsonl --graph $ROOT/microwave_base_graph.yaml \
+    python $ROOT/analyze.py stats --logs runs/m6_50ideas$SUF.jsonl --graph $ROOT/microwave_base_graph.yaml \
            --manifest $ROOT/slices/manifest.csv ;;
   # ── coding into moves ──────────────────────────────────────────────
   code)       # the new ideas, and the main study's M6 ideas (the 5-idea reference) -> results/moves.jsonl
@@ -55,6 +65,9 @@ case "${1:-help}" in
   # ── analysis ───────────────────────────────────────────────────────
   analyze)
     python discovery_analysis.py ;;
+  chart)      # Figure 8 for this run: running count, box plot of slopes, key -> results[/opus]/charts/
+    python yield_chart.py
+    python yield_chart.py --box bootstrap ;;
   help|*)
     grep -E '^  [a-z|]+\)' "$SELF" | sed 's/)//' ;;
 esac

@@ -19,6 +19,10 @@ Charts
                            size of the slice (needs --manifest, default slices/manifest.csv)
   8_top_ideas_vs_tokens.png  cumulative count of top ideas against tokens spent, per arm; the slope of each
                            line (top ideas per 100k tokens) is the arm's yield, and does not saturate
+  8d_yield_with_spread.png  chart 8 and 8b in one figure: pane 1 the running counts and fitted lines, pane 2
+                           a box plot of each arm's 2,000 bootstrap slopes, pane 3 the ranked key and thumbnail
+  8d_yield_with_spread_calls.png  the same, but pane 2 shows each call's own slope (its top ideas / its tokens,
+                           one dot per call); with 5 ideas a call, most calls have 0 or 1 top idea
 
 Also writes results/tail_summary.csv with every number in the charts. Runs with another --threshold or
 with --match-needs add a tag to every file name (e.g. 6_top_idea_rate_ge4.25_matched.png).
@@ -348,6 +352,110 @@ def chart_yield(rows, groups, th, sub_note, tag=""):
     plt.close(fig)
     print(f"  {OUT / name}")
 
+# ── 8d. Chart 8 with the spread of the slopes ───────────────────────
+BOX_FIG = (16, 7.0)
+BOX_PANES = {"curve": (0.05, 0.43), "box": (0.49, 0.69), "key": 0.72}   # edges, figure fractions
+BOX_PLOT = (0.19, 0.79)                     # bottom, top of both plots
+BOX_THUMB_WIDTH = 0.19
+
+
+def call_slope(call, th):
+    return 1e5 * sum(s >= th for s in call["scores"]) / call["tokens"] if call["tokens"] else float("nan")
+
+
+def chart_yield_box(rows, groups, th, sub_note, tag="", box_kind="bootstrap"):
+    """Pane 1: running count + fitted lines (as chart 8). Pane 2: box plot of the slopes, steepest arm first:
+    the 2,000 bootstrap slopes (box_kind="bootstrap", as chart 8b) or each call's slope ("calls").
+    Pane 3: ranked key and the thumbnail of what each prompt contains."""
+    by_arm = {(r["condition"], r["effort"]): r for r in rows}
+    arms = [by_arm[a] for a in CURVE_ARMS if a in by_arm and groups.get(a)]
+    if not arms:
+        return
+    ranked = sorted(arms, key=lambda r: -r["yield_per_100k"])
+    most = max(len(v) for v in groups.values())
+    fig = plt.figure(figsize=BOX_FIG)
+    (cl, cr), (bl, br), (pb, pt) = BOX_PANES["curve"], BOX_PANES["box"], BOX_PLOT
+    ax = fig.add_axes([cl, pb, cr - cl, pt - pb])
+    bx = fig.add_axes([bl, pb, br - bl, pt - pb])
+    x_max = y_max = 0
+    for r in arms:
+        c, e = r["condition"], r["effort"]
+        pn, col = groups[(c, e)], COND.get(c, MUTED)
+        xs, ys, tx, ty = [0.0], [0], 0.0, 0
+        for call in interleaved(pn):
+            tx += call["tokens"]
+            ty += sum(s >= th for s in call["scores"])
+            xs.append(tx / 1e6)
+            ys.append(ty)
+        ax.step(xs, ys, where="post", color=col, linewidth=0.9, alpha=0.35, zorder=1)
+        end = r["yield_per_100k"] * xs[-1] * 10
+        ax.plot([0, xs[-1]], [0, end], color=col, linewidth=2.0, linestyle=CURVE_STYLE.get(e, "-"), zorder=2)
+        ax.scatter([xs[-1]], [end], s=42, zorder=3, **mark_style(e, col, 1.5, fill=SURFACE))
+        x_max, y_max = max(x_max, xs[-1]), max(y_max, ys[-1], end)
+    ax.set_xlim(0, x_max * 1.04)
+    ax.set_ylim(0, y_max * 1.08)
+    ax.xaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:g}M"))
+    ax.set_xlabel("tokens spent (input + output, summed over the arm's calls), millions")
+    ax.set_ylabel(f"top ideas found (score ≥ {th:g})")
+    ax.grid(color=GRID, linewidth=0.8)
+    ax.set_axisbelow(True)
+    ax.set_title("Top ideas found per token spent", loc="left", fontsize=11, color=INK, pad=8)
+
+    data = [[call_slope(x, th) for cs in groups[(r["condition"], r["effort"])].values() for x in cs]
+            if box_kind == "calls" else r["yield_boot"] for r in ranked]
+    pos = list(range(1, len(ranked) + 1))
+    bp = bx.boxplot(data, positions=pos, widths=0.6, whis=(2.5, 97.5) if box_kind == "bootstrap" else 1.5,
+                    showfliers=False, patch_artist=True, medianprops={"linewidth": 1.6})
+    jitter = random.Random(1)
+    for i, (r, d) in enumerate(zip(ranked, data)):
+        col = COND.get(r["condition"], MUTED)
+        bp["boxes"][i].set(facecolor=col + "22", edgecolor=col, linewidth=1.3)
+        bp["medians"][i].set(color=col)
+        for k in ("whiskers", "caps"):
+            for line in bp[k][2 * i:2 * i + 2]:
+                line.set(color=col, linewidth=1.1)
+        if box_kind == "calls":
+            bx.scatter([pos[i] + jitter.uniform(-0.18, 0.18) for _ in d], d, s=10, color=col, alpha=0.6,
+                       linewidths=0, zorder=3)
+        bx.scatter([pos[i]], [r["yield_per_100k"]], s=55, zorder=4, **mark_style(r["effort"], col, 1.6, fill=SURFACE))
+    bx.set_xticks(pos, [f"{SPREAD_NAMES.get(r['condition'], r['condition'])} · {r['effort']}" for r in ranked],
+                  fontsize=8, rotation=45, ha="right", rotation_mode="anchor")
+    for lab, r in zip(bx.get_xticklabels(), ranked):
+        lab.set_color(COND.get(r["condition"], MUTED))
+        lab.set_fontweight("bold")
+    bx.set_ylim(bottom=0)
+    bx.set_ylabel("top ideas per 100k tokens")
+    bx.grid(axis="y", color=GRID, linewidth=0.8)
+    bx.set_axisbelow(True)
+    bx.set_title("Spread of the slopes", loc="left", fontsize=11, color=INK, pad=8)
+    what = ("box = one dot per call: that call's top ideas ÷ its tokens (whiskers 1.5 × IQR)" if box_kind == "calls"
+            else "box = 2,000 bootstrap slopes (calls resampled within need): middle 50%, whiskers 95% CI")
+
+    x0, y = BOX_PANES["key"], pt + 0.005
+    fig.text(x0, y, "Top ideas per 100k tokens  [95% CI]", fontsize=8.5, color=INK, fontweight="bold", va="top")
+    for i, r in enumerate(ranked, 1):
+        col, yy = COND.get(r["condition"], MUTED), y - 0.042 * i
+        few = f" ({len(groups[(r['condition'], r['effort'])])} needs)" if len(groups[(r["condition"], r["effort"])]) < most else ""
+        fig.text(x0, yy, f"{r['yield_per_100k']:4.1f}  [{r['yield_lo']:.1f}–{r['yield_hi']:.1f}]", fontsize=8.5,
+                 color=INK, va="top", family="monospace")
+        fig.text(x0 + 0.1, yy, f"{SPREAD_NAMES.get(r['condition'], r['condition'])} · {r['effort']}{few}",
+                 fontsize=8.5, color=col, fontweight="bold", va="top")
+    add_slices_thumbnail(fig, (x0, 0, BOX_THUMB_WIDTH), top=y - 0.042 * len(ranked) - 0.06)
+
+    fig.text(cl, 0.98, "Top ideas found per token spent, and how much the slope varies", fontsize=13,
+             fontweight="bold", color=INK, va="top")
+    fig.text(cl, 0.935, "Left: faint steps = observed running count, calls in need-balanced order · line = fit through "
+             "the origin, slope = all top ideas ÷ all tokens\nMiddle: " + what + " · symbol = the pooled slope "
+             "(the line on the left)" + sub_note, fontsize=9, color=INK2, va="top", linespacing=1.4)
+    fig.patch.set_facecolor(SURFACE)
+    for a in (ax, bx):
+        a.set_facecolor(SURFACE)
+    name = f"8d_yield_with_spread{tag}{'' if box_kind == 'bootstrap' else '_calls'}.png"
+    fig.savefig(OUT / name, dpi=200, facecolor=SURFACE)
+    plt.close(fig)
+    print(f"  {OUT / name}")
+
+
 # ── 8b. Spread of each arm's slope ──────────────────────────────────
 def chart_yield_spread(rows, th, sub_note, tag="", annotated=False):
     """Box plot of each arm's bootstrap slopes, steepest first, so overlaps between arms are visible.
@@ -553,6 +661,8 @@ def main():
     chart_rate(rows, th, kept, sub_note, tag)
     chart_budget(groups, th, kept, sub_note, tag)
     chart_yield(rows, groups, th, sub_note, tag)
+    chart_yield_box(rows, groups, th, sub_note, tag)
+    chart_yield_box(rows, groups, th, sub_note, tag, box_kind="calls")
     chart_yield_spread(rows, th, sub_note, tag)
     chart_yield_spread(rows, th, sub_note, tag, annotated=True)
     chart_slice_size(groups, th, Path(args.manifest), tag)

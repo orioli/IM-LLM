@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 import sys
 import time
@@ -16,12 +17,21 @@ import yaml
 
 HERE = Path(__file__).resolve().parent            # this study's folder, wherever scripts are run from
 ROOT = HERE.parent                                 # the main study (read only)
-RUNS = HERE / "runs" / "m6_50ideas.jsonl"          # this study: 50 ideas per call
+# The model that writes the ideas: GEN_MODEL=haiku (default, the first run) or opus / sonnet, set in the shell
+# (GEN_MODEL=opus ./run_all.sh generate). Each model gets its own run log and results folder; the codebook,
+# prompts, judge and coder are shared, so the models are compared on the same terms.
+GEN_MODELS = {"haiku": "claude-haiku-5-5", "opus": "claude-opus-5-5", "sonnet": "claude-sonnet-5-5"}
+GEN_MODEL = os.environ.get("GEN_MODEL", "haiku")
+if GEN_MODEL not in GEN_MODELS:
+    sys.exit(f"GEN_MODEL={GEN_MODEL!r}: use one of {sorted(GEN_MODELS)}")
+GEN_MODEL_ID = GEN_MODELS[GEN_MODEL]
+GEN_SUFFIX = "" if GEN_MODEL == "haiku" else f"_{GEN_MODEL}"   # haiku keeps the first run's file names
+RUNS = HERE / "runs" / f"m6_50ideas{GEN_SUFFIX}.jsonl"          # this study: 50 ideas per call
 REF_LOGS = [ROOT / "runs" / "rq1_full.jsonl"]      # the main study: 5 ideas per call (the reference)
 N_IDEAS = 50
 PERSONA = "engineer50"                              # the main study's engineer sentence, verbatim (personas_50ideas.yaml);
                                                     # the name only keeps run ids apart from the main study's
-RESULTS = HERE / "results"
+RESULTS = HERE / "results" if GEN_MODEL == "haiku" else HERE / "results" / GEN_MODEL
 CODEBOOK_DIR = HERE / "codebook"
 CODEBOOK = CODEBOOK_DIR / "codebook.yaml"
 MOVES = RESULTS / "moves.jsonl"
