@@ -1,0 +1,17 @@
+panel,condition,effort,needs,calls,ideas,top_ideas,tokens,cost_usd,yield_per_100k,yield_lo,yield_hi
+Haiku · 5 ideas/call,A,medium,13,65,325,34,1053489.0,0.243,139.906,103.069,178.361
+Haiku · 5 ideas/call,B,medium,13,65,325,49,555763.0,0.18,272.765,212.952,333.969
+Haiku · 5 ideas/call,R,high,13,65,325,32,774885.0,0.306,104.671,79.736,130.797
+Haiku · 5 ideas/call,C,high,13,65,325,33,519604.0,0.232,142.012,115.36,170.393
+Haiku · 50 ideas/call,A,medium,1,10,517,28,297939,0.105,265.832,174.03,372.507
+Haiku · 50 ideas/call,B,medium,1,10,525,42,206178,0.091,459.373,324.337,634.133
+Haiku · 50 ideas/call,R,medium,1,10,513,19,174153,0.077,245.705,151.954,383.134
+Haiku · 50 ideas/call,C,medium,1,10,525,37,166561,0.079,467.878,363.434,588.471
+Opus · 50 ideas/call,A,medium,1,10,506,72,273333,3.721,19.349,16.151,22.682
+Opus · 50 ideas/call,B,medium,1,10,495,73,182828,3.19,22.883,18.218,27.575
+Opus · 50 ideas/call,R,medium,1,10,487,60,161347,2.837,21.149,16.986,25.579
+Opus · 50 ideas/call,C,medium,1,10,497,65,186964,3.571,18.201,14.122,23.39
+Fable · 50 ideas/call,A,medium,1,10,501,78,295878,10.43,7.478,6.248,8.709
+Fable · 50 ideas/call,B,medium,1,10,507,87,169433,7.306,11.909,10.422,13.485
+Fable · 50 ideas/call,R,medium,1,10,498,58,156577,6.854,8.462,6.36,10.735
+Fable · 50 ideas/call,C,medium,1,10,495,72,134431,6.302,11.426,9.385,13.513

@@ -82,6 +82,13 @@ Applied to the 13 needs of the main study, in order:
 | Effort | medium (the model's default) |
 | Generator | `claude-haiku-5-5`, `max_tokens` 48,000 |
 
+**Deviation: list length** (noted on 2026-10-19, after generation and before any coding or
+analysis). Asked for 50, the model returned between 44 and 60 ideas per call. So that lists are
+compared on equal length, every list is cut to its first *K* ideas, where *K* is the shortest list (44
+in this run). All per-call measures use those *K* ideas: H14 uses ideas 26–*K*, H15 compares 1–5 with
+6–*K*, and the last position band is 41–*K*. Tokens per list count the whole prompt plus the output in
+proportion to the ideas kept. `discovery_analysis.py --positions N` changes *K*.
+
 **Prompts.** `check_prompts.py` checks that each prompt is the main study's, word for word, except
 the one line "Return exactly 5 ideas" → "Return exactly 50 ideas". It does this by putting the 5 back
 and matching the `prompt_sha256` logged in `../runs/rq1_full.jsonl`.
