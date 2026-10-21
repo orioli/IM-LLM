@@ -380,7 +380,9 @@ To check whether judges favour longer sets, each pairwise record stores the numb
 No correction for multiple comparisons was applied. Per-market-need results rest on 5 calls or pairs each and are reported only as patterns.
 
 \hypertarget{what-was-planned-and-what-was-not}{%
-\subsection{Plan and pilot}\label{what-was-planned-and-what-was-not}}
+\subsection{Pilot and plan}\label{what-was-planned-and-what-was-not}\label{pilot}}
+
+A pilot (2 market needs, M8 and M16; A and B; low, medium and high effort; 3 replicates; 36 calls) tested the pipeline before the full run. Half of its high-effort calls (6 of 12) used up the 8,000-token output limit thinking and returned no ideas. Its 17-of-18 advantage for the full graph did not hold at full scale (Section~\ref{change-from-the-pilot}).
 
 \begin{itemize}
 \tightlist
@@ -404,11 +406,13 @@ No correction for multiple comparisons was applied. Per-market-need results rest
   \begin{itemize}
   \tightlist
   \item
-    Medium and xhigh effort.
+    An output limit of 48,000 instead of 8,000 tokens to accommodate longer responses for high and xhigh effort; streamed calls, which the API requires for calls that long; and effort in the run identifier, so that cells could be resumed.
+  \item
+    Medium and xhigh effort in the full run.
   \item
     The B-high vs A-low comparison.
   \item
-    Judging in both orders, the length check, and individual idea scoring, which was first used to rank ideas for inspection.
+    Judging every pair in both orders, the length check, and individual idea scoring, which was first used to rank ideas for inspection.
   \end{itemize}
 \item
   \textbf{Exploratory, defined after seeing the results.}
@@ -422,28 +426,7 @@ No correction for multiple comparisons was applied. Per-market-need results rest
   \end{itemize}
 \end{itemize}
 
-The top-tail measures follow from the purpose of brainstorming (Section 1), but they were chosen after the pairwise results were known and are reported as exploratory. Their conclusions about relevance (B against R) are not confirmed by the planned pairwise test (Section 4).
-
-\hypertarget{pilot}{%
-\subsection{Pilot}\label{pilot}}
-
-A pilot (2 market needs, M8 and M16; A and B; low, medium and high effort; 3 replicates; 36 calls) tested the pipeline. It led to five changes:
-
-\begin{itemize}
-\tightlist
-\item
-  the output limit was raised from 8,000 to 48,000 tokens, after half the high-effort calls used up their budget thinking and returned no ideas;
-\item
-  calls were switched to streaming;
-\item
-  effort was added to the run identifier so cells could be resumed;
-\item
-  every pair was judged in both orders;
-\item
-  the length check was added.
-\end{itemize}
-
-The pilot's 17-of-18 advantage for the full graph did not survive at full scale (Section 4).
+The top-tail measures follow from the purpose of brainstorming (Section~\ref{introduction}), but they were chosen after the pairwise results were known and are reported as exploratory. Their conclusions about relevance (B against R) are not confirmed by the planned pairwise test (Section~\ref{results}).
 
 \hypertarget{sample of genrated ideas}{%
 \subsection{Sample of genrated ideas}\label{sample of genrated ideas}}
@@ -1786,7 +1769,7 @@ Brainstorming is a search for the rare great idea, so the main measure was the \
 \end{enumerate}
 
 
-In summary, Haiku is a small model, what such a model does superbly is retrieval: it holds a lossy copy of its training corpus, patents and product literature included, and surfaces the engineering moves that bear on a stated problem (Section 3.10). A retrieval system is most efficient when the query is precise. 
+In summary, Haiku is a small model, what such a model does superbly is retrieval: it holds a lossy copy of its training corpus, patents and product literature included, and surfaces the engineering moves that bear on a stated problem (Section~\ref{sample of genrated ideas}). A retrieval system is most efficient when the query is precise. 
  
 
 \hypertarget{implications-for-design-thinking}{%
