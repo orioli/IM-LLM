@@ -37,7 +37,35 @@ For lack of objective measures (beyond patentability), currently ideation with A
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
 
-The experiment holds the AI model and the prompt fixed, and varies only how much of the product graph the prompt contains (the \emph{representation}) and how long the model may think (the \emph{effort}). It measures what each combination produces and what it costs.
+The experiment holds the AI model and the prompt fixed, and varies only how much of the product graph the prompt contains (the \emph{representation}) and how long the model may think (the \emph{effort}). It measures what each combination produces and what it costs. Table~\ref{tab:setup} gives an overview; the subsections below give the details.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.20}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.58}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.22}}@{}}
+\caption{The study at a glance.}\label{tab:setup}\tabularnewline
+\toprule\noalign{}
+Item & Value & Details \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
+\toprule\noalign{}
+Item & Value & Details \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Product graph & Hand-built innovation matrix of a microwave oven: 123 nodes, 246 typed edges & Section~\ref{product-graph}, Table~\ref{tab:node-types} \\
+Market needs & 13 of 17; four (M2, M9, M10, M15) are addressed by no function, so their slice is empty & Section~\ref{representations} \\
+Representations & \textbf{A} full graph; \textbf{B} vertical slice of the target market need; \textbf{R} random slice with B's number of nodes of each type; \textbf{C} no graph (target market need only) & Section~\ref{representations}, Table~\ref{tab:representations} \\
+Task & SUBSTITUTE operator, one worked example, 5 ideas as JSON; the prompt differs across conditions only in the graph file & Section~\ref{task-and-prompt}, Appendix~\ref{generation-prompt} \\
+Generator & \texttt{claude-haiku-5-5}, default sampling; effort low, medium, high or xhigh & Section~\ref{generation} \\
+Design & 5 replicate calls per cell; A and B at low--high on 13 needs and at xhigh on 6; R and C at high on 13; 580 calls, 2,892 ideas & Table~\ref{tab:design} \\
+Judge & \texttt{claude-sonnet-5-5}, medium effort, blind to condition and effort & Section~\ref{judging} \\
+Set judging & Pairs of idea sets differing in one factor, judged in both orders; 1--5 on five criteria & Table~\ref{tab:pairwise-design} \\
+Idea scoring & Every idea rated 1--5 on four criteria; score = mean; a \emph{top idea} scores $\geq$ 4.0 (12.3\% of ideas) & Sections~\ref{judging}, \ref{measures} \\
+Statistics & Pairwise: win rate (ties = half), Wilson 95\% CI, exact sign test, 45\% non-inferiority margin for B vs A. Top tail: market-need-averaged rates, bootstrap 95\% CI (2,000 resamples of calls within need) & Section~\ref{statistics} \\
+\end{longtable}
 
 \hypertarget{product-graph}{%
 \subsection{Product graph}\label{product-graph}}
@@ -232,7 +260,7 @@ Table~\ref{tab:design} summarises the design.
 \begin{longtable}[]{@{}llll@{}}
 \caption{Generation design: conditions run at each thinking effort and on how many market needs, with 5 replicate calls per cell (580 calls in total).}\label{tab:design}\tabularnewline
 \toprule\noalign{}
-Conditions & Efforts & Market need node & Calls \\
+Conditions & Efforts & Needs & Calls \\
 \midrule\noalign{}
 \endfirsthead
 \caption*{Table~\thetable{} (continued)}\tabularnewline
@@ -525,52 +553,10 @@ The aim of brainstorming is the rare great idea, not a good average, so the main
   \textbf{Thinking effort is the strongest lever on quality, but not on yield.} High beats low in about 93\% of set comparisons, and xhigh produces the highest top-idea rates of all (19--21\%). But each call costs proportionally more, so yield does not rise with effort: for the full graph it stays at about 3 per 100k tokens from low to xhigh, and for the slice it peaks at medium (8.8) and falls at high (5.9) and xhigh (3.1).
 \end{itemize}
 
-\hypertarget{setup-cost-validity}{%
-\subsection{Setup, cost and validity}\label{setup-cost-validity}}
-\hypertarget{setup}{%
-\subsubsection{Overview}\label{setup}}
-
-Table~\ref{tab:setup} summarises the experimental setup.
-
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2857}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.7143}}@{}}
-\caption{Experimental setup at a glance.}\label{tab:setup}\tabularnewline
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Item
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Value
-\end{minipage} \\
-\midrule\noalign{}
-\endfirsthead
-\caption*{Table~\thetable{} (continued)}\tabularnewline
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Item
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Value
-\end{minipage} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Product graph & \texttt{microwave\_base\_graph.yaml}: 123 nodes, 246 edges \\
-Target needs & 13: M1, M3, M4, M5, M6, M7, M8, M11, M12, M13, M14, M16, M17 (M2, M9, M10, M15 excluded: no functions address them, so their slice is empty) \\
-Conditions & \textbf{A} = full graph \textperiodcentered{} \textbf{B} = vertical slice of the target market need (functions, components, technologies, fields, linked constraints and actors) \textperiodcentered{} \textbf{R} = random slice with the same number of nodes per layer as B \textperiodcentered{} \textbf{C} = no graph (product description and target market need only) \\
-Thinking effort & A and B: low, medium, high on all 13 market needs, xhigh on 6 market needs (M1, M4, M6, M8, M13, M17) \textperiodcentered{} R and C: high on all 13 market needs \\
-Replicates & 5 per cell \\
-Generation calls & 580: A and B 450 (13 market needs $\times$ 2 conditions $\times$ 3 efforts $\times$ 5 reps, plus 6 market needs $\times$ 2 $\times$ 5 at xhigh); R and C 130 (13 $\times$ 2 $\times$ 5) \\
-Prompt & \texttt{template\_prompt.txt}: 5 radical ideas for the target market need, operator SUBSTITUTE, worked example (door holes + lamp $\rightarrow$ webcam / transparent casing), JSON output \\
-\texttt{max\_tokens} & 48,000 (64,000 for xhigh); no call was truncated \\
-Sampling & model defaults (Haiku 5.5 accepts no temperature setting) \\
-Pairwise judging & A vs B at low and high effort; B vs R, B vs C, A vs C at high effort; effort steps within A and B; B-high vs A-low. Blind comparison of two idea sets for the same market need and replicate; no condition labels or node IDs shown; each pair judged in both presentation orders and the two verdicts combined (agreeing verdicts = a win, split = a tie); scores 1--5 on relevance, novelty, feasibility, specificity, diversity \\
-Individual scoring & every idea scored on its own, blind, 1--5 on relevance, novelty, feasibility, specificity; idea score = mean of the four (all 2,892 ideas) \\
-Statistics & pairwise: per pair (65 pairs per comparison, 30 for xhigh), ties count half, Wilson 95\% CI, exact sign test \textperiodcentered{} tail: rates averaged over market needs (each market need weighs the same), 95\% CI by resampling calls within each market need (2,000 resamples) \\
-\end{longtable}
-
 \hypertarget{cost-and-validity}{%
-\subsubsection{Cost and validity}\label{cost-and-validity}}
+\subsection{Cost and validity}\label{cost-and-validity}}
+
+The design is summarised in Table~\ref{tab:setup} and detailed in Section~\ref{methods}; this section reports what the calls cost and how many responses were valid.
 
 \begin{figure}[tbp]
 \centering
