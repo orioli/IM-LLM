@@ -493,7 +493,7 @@ All code, product graphs, raw call traces, and judge outputs are available at \u
 \item \textbf{Offline re-analysis (zero-cost):} The complete raw dataset of all 580 generation calls (2,892 ideas) with prompt hashes, raw outputs, and token counts (\texttt{runs/rq1\_full.jsonl}), together with pairwise and individual judge ratings (\texttt{results/}), is bundled in the repository. All statistical tests, bootstrap intervals, tables, and figures can be regenerated locally offline without API keys or costs.
 \item \textbf{Live pipeline execution:} Slicing, prompt construction, API execution harnesses, and evaluation scripts are parameterized to rerun the study from scratch or adapt it to other models.
 \end{enumerate}
-Total generation consumed $\sim$8.6 million tokens using \texttt{claude-haiku-5-5} for ideation and \texttt{claude-sonnet-5-5} for judging. Appendix~\ref{data-and-code} lists the repository structure and artifacts.
+Total generation consumed 8.6 million tokens (3.6 million input, 5.0 million output) using \texttt{claude-haiku-5-5} for ideation and \texttt{claude-sonnet-5-5} for judging. Appendix~\ref{data-and-code} lists the repository structure and artifacts.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
