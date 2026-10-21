@@ -1222,16 +1222,8 @@ high & $-0.01$ & +0.06 & +0.09 & +0.34 & +0.16 \\
   \textbf{The slice is not shown to be non-inferior on sets:} B's win rate is 35--36\%, with the lower confidence bound (25--26\%) well below the 45\% non-inferiority margin. On the tail measure, however, B is not worse than A at any effort.
 \item
   \textbf{The effect varies by market need:} A swept 5--0 for M17 and M6 at high effort and M11 at low; B led for M1 at low effort, M3 at both levels and M8 at high. With 5 pairs per market need, no single market need is significant.
-\item
-  \textbf{Slice size (exploratory):} The less of the graph the slice contains, the larger its advantage. B's lead over A is largest where the slice is small: 3--5$\times$ for M6, M8 and M16 (15--28 nodes), against 0.8--2.3$\times$ for the market needs with 45--51 nodes (Figure \ref{fig:slicesize}). Across market needs, the log of B's yield ratio over A correlates with slice size at $r = -0.46$ at high effort ($n = 12$, $p \approx 0.13$) and $r = -0.61$ at medium effort ($n = 12$, $p \approx 0.04$). M11, the smallest slice (10 nodes), is an exception at 1.2$\times$; it is also one of the two hardest market needs for every arm. A smaller slice saves more tokens and is more focused; with 13 market needs and 5 calls each this is a pattern to test, not an established result.
 \end{itemize}
 
-\begin{figure}[tbp]
-\centering
-\IfFileExists{figures/9_slice_size_effect.png}{\includegraphics[width=\textwidth]{figures/9_slice_size_effect.png}}{\fbox{\parbox[c][5cm][c]{0.9\textwidth}{\centering\small missing: \texttt{\detokenize{figures/9_slice_size_effect.png}}}}}
-\caption{Per market need: the market-need slice's yield divided by the full graph's, against the number of nodes in the slice (log scale; market needs with zero yield omitted).}
-\label{fig:slicesize}
-\end{figure}
 
 
 \hypertarget{relevance-top-tail}{%
