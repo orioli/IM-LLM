@@ -1,0 +1,414 @@
+\begin{thebibliography}{61}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Akao(2024)]{ed2024}
+Yoji Akao, editor.
+\newblock \emph{{Quality Function Deployment: Integrating Customer Requirements
+  into Product Design}}.
+\newblock Productivity Press, New York, 2024.
+\newblock \doi{10.4324/9781003578833}.
+\newblock Reissue of the 1990 edition.
+
+\bibitem[An et~al.(2024)An, Zhang, Zhong, Li, Gong, Luo, Xu, and Kong]{An2024}
+Chenxin An, Jun Zhang, Ming Zhong, Lei Li, Shansan Gong, Yao Luo, Jingjing Xu,
+  and Lingpeng Kong.
+\newblock {Why Does the Effective Context Length of LLMs Fall Short?}
+\newblock arXiv preprint arXiv:2410.18745, 2024.
+
+\bibitem[Anderson et~al.(2024)Anderson, Shah, and Kreminski]{Anderson2024}
+Barrett~R Anderson, Jash~Hemant Shah, and Max Kreminski.
+\newblock {Homogenization Effects of Large Language Models on Human Creative
+  Ideation}.
+\newblock \emph{Creativity and Cognition 2024}, 2024.
+\newblock \doi{10.1145/3635636.3656204}.
+
+\bibitem[Ashkinaze et~al.(2025)Ashkinaze, Mendelsohn, Qiwei, Budak, and
+  Gilbert]{Ashkinaze2025}
+Joshua Ashkinaze, Julia Mendelsohn, Li~Qiwei, Ceren Budak, and Eric Gilbert.
+\newblock {How AI Ideas Affect the Creativity, Diversity, and Evolution of
+  Human Ideas: Evidence From a Large, Dynamic Experiment}.
+\newblock \emph{Proceedings of the ACM Collective Intelligence Conference
+  2025}, 2025.
+\newblock \doi{10.1145/3715928.3737481}.
+
+\bibitem[Berengueres(2014)]{berengueres2014}
+Jose Berengueres.
+\newblock \emph{{The Brown Book of Design Thinking}}.
+\newblock UAE University College, Al Ain, 2014.
+
+\bibitem[Browning(2001)]{Browning2001}
+T.~R. Browning.
+\newblock {Applying the design structure matrix to system decomposition and
+  integration problems: a review and new directions}.
+\newblock \emph{IEEE Transactions on Engineering Management 48(3)}, 2001.
+\newblock \doi{10.1109/17.946528}.
+
+\bibitem[Chan and Wu(2002)]{Chan2002}
+Lai-Kow Chan and Ming-Lu Wu.
+\newblock {Quality function deployment: A literature review}.
+\newblock \emph{European Journal of Operational Research 143(3)}, 2002.
+\newblock \doi{10.1016/s0377-2217(02)00178-9}.
+
+\bibitem[Chen et~al.(2024{\natexlab{a}})Chen, Zaharia, and Zou]{Chen2024d}
+Lingjiao Chen, Matei Zaharia, and James Zou.
+\newblock {{FrugalGPT}: How to Use Large Language Models While Reducing Cost
+  and Improving Performance}.
+\newblock \emph{Transactions on Machine Learning Research}, 2024{\natexlab{a}}.
+
+\bibitem[Chen et~al.(2024{\natexlab{b}})Chen, Jing, Tsang, Wang, Sun, and
+  Luo]{Chen2024}
+Liuqing Chen, Qianzhi Jing, Yixin Tsang, Qianyi Wang, Lingyun Sun, and Jianxi
+  Luo.
+\newblock {DesignFusion: Integrating Generative Models for Conceptual Design
+  Enrichment}.
+\newblock \emph{Journal of Mechanical Design}, 2024{\natexlab{b}}.
+\newblock \doi{10.1115/1.4065487}.
+
+\bibitem[Chen et~al.(2024{\natexlab{c}})Chen, Song, Ding, Sun, Childs, and
+  Zuo]{Chen2024c}
+Liuqing Chen, Yaxuan Song, Shixian Ding, Lingyun Sun, Peter Childs, and Haoyu
+  Zuo.
+\newblock {TRIZ-GPT: An LLM-Augmented Method For Problem-Solving}.
+\newblock \emph{ASME IDETC-CIE 2024}, 2024{\natexlab{c}}.
+\newblock \doi{10.1115/detc2024-143163}.
+
+\bibitem[Chen et~al.(2024{\natexlab{d}})Chen, Tsang, Jing, and Sun]{Chen2024b}
+Liuqing Chen, Yiyan Tsang, Qianzhi Jing, and Lingyun Sun.
+\newblock {A LLM-augmented Morphological Analysis Approach for Conceptual
+  Design}.
+\newblock \emph{Proceedings of DRS2024}, 2024{\natexlab{d}}.
+\newblock \doi{10.21606/drs.2024.605}.
+
+\bibitem[Chen et~al.(2024{\natexlab{e}})Chen, Zuo, Cai, Yin, Zhang, Sun,
+  Childs, and Wang]{Chen2024a}
+Liuqing Chen, Haoyu Zuo, Zebin Cai, Yuan Yin, Yuan Zhang, Lingyun Sun, Peter
+  Childs, and Boheng Wang.
+\newblock {Toward Controllable Generative Design: A Conceptual Design
+  Generation Approach Leveraging the Function--Behavior--Structure Ontology and
+  Large Language Models}.
+\newblock \emph{Journal of Mechanical Design}, 2024{\natexlab{e}}.
+\newblock \doi{10.1115/1.4065562}.
+
+\bibitem[Chiang(2023)]{Chiang2023}
+Ted Chiang.
+\newblock {ChatGPT Is a Blurry JPEG of the Web}.
+\newblock \emph{The New Yorker}, February 2023.
+\newblock URL
+  \url{https://www.newyorker.com/tech/annals-of-technology/chatgpt-is-a-blurry-jpeg-of-the-web}.
+
+\bibitem[Dahan and Mendelson(2001)]{Dahan2001}
+Ely Dahan and Haim Mendelson.
+\newblock {An Extreme-Value Model of Concept Testing}.
+\newblock \emph{Management Science}, 47\penalty0 (1):\penalty0 102--116, 2001.
+\newblock \doi{10.1287/mnsc.47.1.102.10666}.
+
+\bibitem[Ding et~al.(2024)Ding, Mallick, Wang, et~al.]{Ding2024}
+Dujian Ding, Ankur Mallick, Chi Wang, et~al.
+\newblock {Hybrid LLM: Cost-Efficient and Quality-Aware Query Routing}.
+\newblock arXiv preprint arXiv:2404.14618, 2024.
+
+\bibitem[Ding et~al.(2023)Ding, Chen, Fang, Liu, Qiu, and Chai]{Ding2023}
+Shiying Ding, Xinyi Chen, Yan Fang, Wenrui Liu, Yiwu Qiu, and Chunlei Chai.
+\newblock {DesignGPT: Multi-Agent Collaboration in Design}.
+\newblock \emph{2023 16th International Symposium on Computational Intelligence
+  and Design (ISCID)}, 2023.
+\newblock \doi{10.1109/iscid59865.2023.00056}.
+
+\bibitem[Doshi and Hauser(2024)]{Doshi2024}
+Anil~R. Doshi and Oliver~P. Hauser.
+\newblock {Generative AI enhances individual creativity but reduces the
+  collective diversity of novel content}.
+\newblock \emph{Science Advances}, 2024.
+\newblock \doi{10.1126/sciadv.adn5290}.
+
+\bibitem[Eberle(1971)]{Eberle1971}
+Bob Eberle.
+\newblock \emph{{SCAMPER: Games for Imagination Development}}.
+\newblock D.O.K. Publishers, Buffalo, NY, 1971.
+
+\bibitem[Eppinger and Browning(2012)]{Eppinger2012}
+Steven~D. Eppinger and Tyson~R. Browning.
+\newblock \emph{{Design Structure Matrix Methods and Applications}}.
+\newblock MIT Press, Cambridge, MA, 2012.
+\newblock \doi{10.7551/mitpress/8896.001.0001}.
+
+\bibitem[Fleming(2001)]{Fleming2001}
+Lee Fleming.
+\newblock {Recombinant Uncertainty in Technological Search}.
+\newblock \emph{Management Science 47(1)}, 2001.
+\newblock \doi{10.1287/mnsc.47.1.117.10671}.
+
+\bibitem[Gero(1990)]{Gero1990}
+J.~S. Gero.
+\newblock {Design Prototypes: A Knowledge Representation Schema for Design}.
+\newblock \emph{AI Magazine 11(4)}, 1990.
+\newblock \doi{10.1609/aimag.v11i4.854}.
+
+\bibitem[Gero and Kannengiesser(2004)]{Gero2004}
+John~S. Gero and Udo Kannengiesser.
+\newblock {The situated function--behaviour--structure framework}.
+\newblock \emph{Design Studies 25(4)}, 2004.
+\newblock \doi{10.1016/j.destud.2003.10.010}.
+
+\bibitem[Girotra et~al.(2010)Girotra, Terwiesch, and Ulrich]{Girotra2010}
+Karan Girotra, Christian Terwiesch, and Karl~T. Ulrich.
+\newblock {Idea Generation and the Quality of the Best Idea}.
+\newblock \emph{Management Science}, 56\penalty0 (4):\penalty0 591--605, 2010.
+\newblock \doi{10.1287/mnsc.1090.1144}.
+
+\bibitem[Han et~al.(2025)Han, Wang, Fang, et~al.]{Han2025}
+Tingxu Han, Zhenting Wang, Chunrong Fang, et~al.
+\newblock {Token-Budget-Aware LLM Reasoning}.
+\newblock \emph{Findings of the Association for Computational Linguistics: ACL
+  2025}, 2025.
+\newblock \doi{10.18653/v1/2025.findings-acl.1274}.
+
+\bibitem[Hauser and Clausing(1988)]{Hauser1988}
+John~R. Hauser and Don Clausing.
+\newblock {The House of Quality}.
+\newblock \emph{Harvard Business Review}, 66\penalty0 (3):\penalty0 63--73,
+  1988.
+
+\bibitem[Hirtz et~al.(2002)Hirtz, Stone, McAdams, Szykman, and Wood]{Hirtz2002}
+Julie Hirtz, Robert~B. Stone, Daniel~A. McAdams, Simon Szykman, and Kristin~L.
+  Wood.
+\newblock {A functional basis for engineering design: Reconciling and evolving
+  previous efforts}.
+\newblock \emph{Research in Engineering Design 13(2)}, 2002.
+\newblock \doi{10.1007/s00163-001-0008-3}.
+
+\bibitem[Jiang et~al.(2025)Jiang, Li, Qian, Zhang, and Luo]{Jiang2025}
+Shuo Jiang, Weifeng Li, Yuping Qian, Yangjun Zhang, and Jianxi Luo.
+\newblock {AutoTRIZ: Automating engineering innovation with TRIZ and large
+  language models}.
+\newblock \emph{Advanced Engineering Informatics}, 2025.
+\newblock \doi{10.1016/j.aei.2025.103312}.
+
+\bibitem[Kapoor et~al.(2025)Kapoor, Stroebl, Siegel, et~al.]{Kapoor2025}
+Sayash Kapoor, Benedikt Stroebl, Zachary~S. Siegel, et~al.
+\newblock {{AI} Agents That Matter}.
+\newblock \emph{Transactions on Machine Learning Research}, 2025.
+
+\bibitem[Karpathy(2023)]{Karpathy2023}
+Andrej Karpathy.
+\newblock {Intro to Large Language Models}.
+\newblock Video Lecture, 2023.
+\newblock URL \url{https://www.youtube.com/watch?v=zjkBMFhNj_g}.
+
+\bibitem[Kyffin and Gardien(2009)]{Kyffin2009}
+Steven Kyffin and Paul Gardien.
+\newblock {Navigating the Innovation Matrix: An Approach to Design-led
+  Innovation}.
+\newblock \emph{International Journal of Design}, 3\penalty0 (1):\penalty0
+  57--69, 2009.
+
+\bibitem[Levy et~al.(2024)Levy, Jacoby, and Goldberg]{Levy2024}
+Mosh Levy, Alon Jacoby, and Yoav Goldberg.
+\newblock {Same Task, More Tokens: the Impact of Input Length on the Reasoning
+  Performance of Large Language Models}.
+\newblock \emph{Proceedings of ACL 2024 (Long Papers)}, 2024.
+\newblock \doi{10.18653/v1/2024.acl-long.818}.
+
+\bibitem[Li et~al.(2024)Li, Li, Zhang, et~al.]{Li2024}
+Zhuowan Li, Cheng Li, Mingyang Zhang, et~al.
+\newblock {Retrieval Augmented Generation or Long-Context LLMs? A Comprehensive
+  Study and Hybrid Approach}.
+\newblock \emph{Proceedings of EMNLP 2024: Industry Track}, 2024.
+\newblock \doi{10.18653/v1/2024.emnlp-industry.66}.
+
+\bibitem[Liu et~al.(2024)Liu, Lin, Hewitt, et~al.]{Liu2024}
+Nelson~F. Liu, Kevin Lin, John Hewitt, et~al.
+\newblock {Lost in the Middle: How Language Models Use Long Contexts}.
+\newblock \emph{Transactions of the Association for Computational Linguistics},
+  2024.
+\newblock \doi{10.1162/tacl_a_00638}.
+
+\bibitem[Liu et~al.(2026)Liu, Shen, Zhang, Hou, Wang, Luo, and Zhang]{Liu2026}
+Songkai Liu, Yanqing Shen, Yilun Zhang, Zhangli Hou, Xin Wang, Jianxi Luo, and
+  Zhinan Zhang.
+\newblock {iDesignGPT enhances conceptual design via large language model
+  agentic workflows}.
+\newblock \emph{Nature Communications}, 2026.
+\newblock \doi{10.1038/s41467-026-68672-1}.
+
+\bibitem[Luo et~al.(2021)Luo, Sarica, and Wood]{Luo2021}
+Jianxi Luo, Serhad Sarica, and Kristin~L. Wood.
+\newblock {Guiding data-driven design ideation by knowledge distance}.
+\newblock \emph{Knowledge-Based Systems 218}, 2021.
+\newblock \doi{10.1016/j.knosys.2021.106873}.
+
+\bibitem[Ma et~al.(2023)Ma, Grandi, McComb, and Goucher-Lambert]{Ma2023}
+Kevin Ma, Daniele Grandi, Christopher McComb, and Kosa Goucher-Lambert.
+\newblock {Conceptual Design Generation Using Large Language Models}.
+\newblock \emph{ASME IDETC-CIE 2023}, 2023.
+\newblock \doi{10.1115/detc2023-116838}.
+
+\bibitem[Ma et~al.(2025)Ma, Grandi, McComb, and Goucher-Lambert]{Ma2025}
+Kevin Ma, Daniele Grandi, Christopher McComb, and Kosa Goucher-Lambert.
+\newblock {Do Large Language Models Produce Diverse Design Concepts? A
+  Comparative Study with Human-Crowdsourced Solutions}.
+\newblock \emph{Journal of Computing and Information Science in Engineering},
+  2025.
+\newblock \doi{10.1115/1.4067332}.
+
+\bibitem[Massoudi and Fuge(2026)]{Massoudi2026}
+Soheyl Massoudi and Mark Fuge.
+\newblock {Agentic Large Language Models for Conceptual Systems Engineering and
+  Design}.
+\newblock \emph{Journal of Mechanical Design}, 2026.
+\newblock \doi{10.1115/1.4070328}.
+
+\bibitem[Modarressi et~al.(2025)Modarressi, Deilamsalehy, Dernoncourt,
+  et~al.]{Modarressi2025}
+Ali Modarressi, Hanieh Deilamsalehy, Franck Dernoncourt, et~al.
+\newblock {NoLiMa: Long-Context Evaluation Beyond Literal Matching}.
+\newblock arXiv preprint arXiv:2502.05167, 2025.
+
+\bibitem[Ong et~al.(2024)Ong, Almahairi, Wu, et~al.]{Ong2024}
+Isaac Ong, Amjad Almahairi, Vincent Wu, et~al.
+\newblock {RouteLLM: Learning to Route LLMs with Preference Data}.
+\newblock arXiv preprint arXiv:2406.18665, 2024.
+
+\bibitem[Osborn(1953)]{Osborn1953}
+Alex~F. Osborn.
+\newblock \emph{{Applied Imagination: Principles and Procedures of Creative
+  Problem-Solving}}.
+\newblock Charles Scribner's Sons, New York, 1953.
+
+\bibitem[Paulsen(2026)]{Paulsen2026}
+Norman Paulsen.
+\newblock {Context Is What You Need: The Maximum Effective Context Window for
+  Real World Limits of LLMs}.
+\newblock \emph{Advances in Artificial Intelligence and Machine Learning},
+  2026.
+\newblock \doi{10.54364/AAIML.2026.61268}.
+
+\bibitem[Phaal et~al.(2004)Phaal, Farrukh, and Probert]{Phaal2004}
+Robert Phaal, Clare J.~P. Farrukh, and David~R. Probert.
+\newblock {Technology roadmapping---A planning framework for evolution and
+  revolution}.
+\newblock \emph{Technological Forecasting and Social Change 71(1--2)}, 2004.
+\newblock \doi{10.1016/s0040-1625(03)00072-6}.
+
+\bibitem[Ritchey(2006)]{Ritchey2006}
+T.~Ritchey.
+\newblock {Problem structuring using computer-aided morphological analysis}.
+\newblock \emph{Journal of the Operational Research Society 57(7)}, 2006.
+\newblock \doi{10.1057/palgrave.jors.2602177}.
+
+\bibitem[Ritchey(2018)]{Ritchey2018}
+Tom Ritchey.
+\newblock {General morphological analysis as a basic scientific modelling
+  method}.
+\newblock \emph{Technological Forecasting and Social Change 126}, 2018.
+\newblock \doi{10.1016/j.techfore.2017.05.027}.
+
+\bibitem[Sarica et~al.(2020)Sarica, Luo, and Wood]{Sarica2020}
+Serhad Sarica, Jianxi Luo, and Kristin~L. Wood.
+\newblock {TechNet: Technology semantic network based on patent data}.
+\newblock \emph{Expert Systems with Applications 142}, 2020.
+\newblock \doi{10.1016/j.eswa.2019.112995}.
+
+\bibitem[Sarkar and Chakrabarti(2011)]{Sarkar2011}
+Prabir Sarkar and Amaresh Chakrabarti.
+\newblock {Assessing design creativity}.
+\newblock \emph{Design Studies 32(4)}, 2011.
+\newblock \doi{10.1016/j.destud.2011.01.002}.
+
+\bibitem[Shah et~al.(2003)Shah, Smith, and Vargas-Hernandez]{Shah2003}
+Jami~J. Shah, Steve~M. Smith, and Noe Vargas-Hernandez.
+\newblock {Metrics for measuring ideation effectiveness}.
+\newblock \emph{Design Studies}, 2003.
+\newblock \doi{10.1016/s0142-694x(02)00034-0}.
+
+\bibitem[Si et~al.(2024)Si, Yang, and Hashimoto]{Si2024}
+Chenglei Si, Diyi Yang, and Tatsunori Hashimoto.
+\newblock {Can LLMs Generate Novel Research Ideas? A Large-Scale Human Study
+  with 100+ NLP Researchers}.
+\newblock arXiv preprint arXiv:2409.04109, 2024.
+
+\bibitem[Steward(1981)]{Steward1981}
+Donald~V. Steward.
+\newblock {The design structure system: A method for managing the design of
+  complex systems}.
+\newblock \emph{IEEE Transactions on Engineering Management EM-28(3)}, 1981.
+\newblock \doi{10.1109/tem.1981.6448589}.
+
+\bibitem[Stone and Wood(2000)]{Stone2000}
+Robert~B. Stone and Kristin~L. Wood.
+\newblock {Development of a Functional Basis for Design}.
+\newblock \emph{Journal of Mechanical Design 122(4)}, 2000.
+\newblock \doi{10.1115/1.1289637}.
+
+\bibitem[Szczepanik and Chudziak(2025)]{Szczepanik2025}
+Kamil Szczepanik and Jarosław Chudziak.
+\newblock {TRIZ Agents: A Multi-Agent LLM Approach for TRIZ-Based Innovation}.
+\newblock \emph{Proceedings of ICAART 2025 (SciTePress)}, 2025.
+\newblock \doi{10.5220/0013321900003890}.
+
+\bibitem[Tchirsky(n.d.)]{Tchirsky}
+Leo Tchirsky.
+\newblock {[Innovation matrix: reference to be added]}, n.d.
+
+\bibitem[Terwiesch et~al.(2026)Terwiesch, Meincke, Girotra, Mollick, Nave, and
+  Ulrich]{Terwiesch2026}
+Christian Terwiesch, Lennart Meincke, Karan Girotra, Ethan Mollick, Gideon
+  Nave, and Karl Ulrich.
+\newblock {Artificial intelligence and its impact on creativity and diversity:
+  An empirical study of large language model-generated product ideas}.
+\newblock \emph{Production and Operations Management}, 2026.
+\newblock \doi{10.1177/10591478261474243}.
+
+\bibitem[Uzzi et~al.(2013)Uzzi, Mukherjee, Stringer, and Jones]{Uzzi2013}
+Brian Uzzi, Satyam Mukherjee, Michael Stringer, and Ben Jones.
+\newblock {Atypical Combinations and Scientific Impact}.
+\newblock \emph{Science 342(6157)}, 2013.
+\newblock \doi{10.1126/science.1240474}.
+
+\bibitem[Verhoeven et~al.(2016)Verhoeven, Bakker, and Veugelers]{Verhoeven2016}
+Dennis Verhoeven, Jurriën Bakker, and Reinhilde Veugelers.
+\newblock {Measuring technological novelty with patent-based indicators}.
+\newblock \emph{Research Policy 45(3)}, 2016.
+\newblock \doi{10.1016/j.respol.2015.11.010}.
+
+\bibitem[Wadinambiarachchi et~al.(2024)Wadinambiarachchi, Kelly, Pareek, Zhou,
+  and Velloso]{Wadinambiarachchi2024}
+Samangi Wadinambiarachchi, Ryan~M. Kelly, Saumya Pareek, Qiushi Zhou, and
+  Eduardo Velloso.
+\newblock {The Effects of Generative AI on Design Fixation and Divergent
+  Thinking}.
+\newblock \emph{Proceedings of CHI 2024}, 2024.
+\newblock \doi{10.1145/3613904.3642919}.
+
+\bibitem[Wang et~al.(2024)Wang, Jain, Zhang, et~al.]{Wang2024}
+Junlin Wang, Siddhartha Jain, Dejiao Zhang, et~al.
+\newblock {Reasoning in Token Economies: Budget-Aware Evaluation of LLM
+  Reasoning Strategies}.
+\newblock \emph{Proceedings of EMNLP 2024}, 2024.
+\newblock \doi{10.18653/v1/2024.emnlp-main.1112}.
+
+\bibitem[Wang et~al.(2025)Wang, Hu, Liu, et~al.]{Wang2025}
+Ningning Wang, Xavier Hu, Pai Liu, et~al.
+\newblock {Efficient Agents: Building Effective Agents While Reducing Cost}.
+\newblock arXiv preprint arXiv:2508.02694, 2025.
+
+\bibitem[Zhu and Luo(2022)]{Zhu2022}
+Qihao Zhu and Jianxi Luo.
+\newblock {Generative Transformers for Design Concept Generation}.
+\newblock \emph{Journal of Computing and Information Science in Engineering},
+  2022.
+\newblock \doi{10.1115/1.4056220}.
+
+\bibitem[Zwicky(1967)]{Zwicky1967}
+F.~Zwicky.
+\newblock {The Morphological Approach to Discovery, Invention, Research and
+  Construction}.
+\newblock In \emph{New Methods of Thought and Procedure}, pages 273--297.
+  Springer, 1967.
+\newblock \doi{10.1007/978-3-642-87617-2_14}.
+
+\end{thebibliography}

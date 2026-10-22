@@ -644,46 +644,6 @@ The aim of brainstorming is the rare great idea, not a good average, so the main
 
 Asked for 50 ideas per call on market need M6, all three models found top ideas least efficiently with the full graph: per token, its yield was about half that of the slice or no graph for Haiku (9.4 against 20.4 and 22.2 top ideas per 100k tokens) and Fable (26.4 against 51.3 and 53.6), and the lowest for Opus (26.3 against 39.9 and 34.8). The slice and no graph were indistinguishable for every model. For Opus and Fable the full graph did not lower the share of top ideas; it only cost more. The stronger models found two to three times as many top ideas per token as Haiku, but at list prices Haiku found about 20 times more per dollar than Opus and about 40 times more than Fable. Exploratory.
 
-\hypertarget{rq4}{%
-\subsection{RQ4: Does the effect of the representation hold across models, and what does each model cost per top idea?}\label{rq4}}
-
-Experiment 2 (Section~\ref{experiment-2}) asked Haiku, Opus and Fable for 50 ideas per call on market need M6, ten calls per representation. Figure~\ref{fig:rq4} shows the yield of every arm per dollar (A) and per token (B) next to Experiment 1's Haiku arms; Table~\ref{tab:rq4} gives the values with 95\% intervals.
-
-\begin{figure}[tbp]
-\centering
-\IfFileExists{figures/compare_stack_all_bootstrap_dollars__M6_calls_tokens.png}{\includegraphics[width=\textwidth]{figures/compare_stack_all_bootstrap_dollars__M6_calls_tokens.png}}{\fbox{\parbox[c][5cm][c]{0.9\textwidth}{\centering\small missing: \texttt{\detokenize{figures/compare_stack_all_bootstrap_dollars__M6_calls_tokens.png}}}}}
-\caption{Yield by representation and model. Columns: Haiku with 5 ideas per call (Experiment 1), then Haiku, Opus and Fable with 50 ideas per call on M6 (Experiment 2). \textbf{(A)} Top ideas per US dollar at list price (log scale). Each box holds 2,000 bootstrap estimates of the arm's pooled yield: box = middle 50\%, whiskers = 95\% CI; it shows how uncertain the arm's average is. The 5-idea column pools all 13 market needs. \textbf{(B)} Top ideas per 100k tokens, M6 only. Each dot is one call's yield (its top ideas divided by its tokens), so the box shows how much single calls vary (whiskers 1.5 $\times$ IQR). In both rows, the triangle and the number give the pooled yield, all top ideas divided by all cost. Experiment 2's ideas are shorter and score lower than Experiment 1's, so compare arms within a column, not heights across the first and the other columns.}
-\label{fig:rq4}
-\end{figure}
-
-\begin{longtable}[]{@{}llrrr@{}}
-\caption{Experiment 2: top-idea rate and yield per arm (M6, 50 ideas per call, medium effort, 10 calls per arm), with bootstrap 95\% intervals. Cost at list price.}\label{tab:rq4}\tabularnewline
-\toprule\noalign{}
-Model & Representation & Top ideas / ideas & Per 100k tokens & Per US dollar \\
-\midrule\noalign{}
-\endfirsthead
-\caption*{Table~\thetable{} (continued)}\tabularnewline
-\toprule\noalign{}
-Model & Representation & Top ideas / ideas & Per 100k tokens & Per US dollar \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Haiku 5.5 & A full graph   & 28/517 (5.4\%)  & 9.4 [6.3--13.2]   & 266 [177--373] \\
-          & B need slice   & 42/525 (8.0\%)  & 20.4 [14.5--27.8] & 459 [326--630] \\
-          & R random slice & 19/513 (3.7\%)  & 10.9 [6.7--16.5]  & 246 [151--375] \\
-          & C no graph     & 37/525 (7.0\%)  & 22.2 [17.0--28.5] & 468 [360--600] \\
-\midrule
-Opus 5.5  & A full graph   & 72/506 (14.2\%) & 26.3 [21.5--31.1] & 19.3 [16.0--22.5] \\
-          & B need slice   & 73/495 (14.7\%) & 39.9 [31.7--48.6] & 22.9 [18.3--27.6] \\
-          & R random slice & 60/487 (12.3\%) & 37.2 [29.7--45.6] & 21.1 [16.8--25.5] \\
-          & C no graph     & 65/497 (13.1\%) & 34.8 [26.7--43.2] & 18.2 [14.1--22.9] \\
-\midrule
-Fable 5.1 & A full graph   & 78/501 (15.6\%) & 26.4 [22.0--30.6] & 7.5 [6.2--8.8] \\
-          & B need slice   & 87/507 (17.2\%) & 51.3 [45.0--57.9] & 11.9 [10.4--13.5] \\
-          & R random slice & 58/498 (11.6\%) & 37.0 [28.4--46.6] & 8.5 [6.5--10.7] \\
-          & C no graph     & 72/495 (14.5\%) & 53.6 [44.3--63.4] & 11.4 [9.4--13.6] \\
-\end{longtable}
 
 \subsubsection{Representation across models}\label{rq4-representation}
 
@@ -1810,6 +1770,49 @@ Slice high vs Full graph low & 65 & 56 & 3 & 6 & 91\% & 81--96\% & \textless{} 0
 
 B-high was ahead on every criterion and for all 13 market needs, at 12,407 vs 14,243 tokens per call (13\% fewer). For a similar budget, a relevant slice with more thinking clearly beats the full graph with little thinking.
 
+
+\hypertarget{rq4}{%
+\subsection{RQ4: Does the effect of the representation hold across models, and what does each model cost per top idea?}\label{rq4}}
+
+Experiment 2 (Section~\ref{experiment-2}) asked Haiku, Opus and Fable for 50 ideas per call on market need M6, ten calls per representation. Figure~\ref{fig:rq4} shows the yield of every arm per dollar (A) and per token (B) next to Experiment 1's Haiku arms; Table~\ref{tab:rq4} gives the values with 95\% intervals.
+
+\begin{figure}[tbp]
+\centering
+\IfFileExists{figures/compare_stack_all_bootstrap_dollars__M6_calls_tokens.png}{\includegraphics[width=\textwidth]{figures/compare_stack_all_bootstrap_dollars__M6_calls_tokens.png}}{\fbox{\parbox[c][5cm][c]{0.9\textwidth}{\centering\small missing: \texttt{\detokenize{figures/compare_stack_all_bootstrap_dollars__M6_calls_tokens.png}}}}}
+\caption{Yield by representation and model. Columns: Haiku with 5 ideas per call (Experiment 1), then Haiku, Opus and Fable with 50 ideas per call on M6 (Experiment 2). \textbf{(A)} Top ideas per US dollar at list price (log scale). Each box holds 2,000 bootstrap estimates of the arm's pooled yield: box = middle 50\%, whiskers = 95\% CI; it shows how uncertain the arm's average is. The 5-idea column pools all 13 market needs. \textbf{(B)} Top ideas per 100k tokens, M6 only. Each dot is one call's yield (its top ideas divided by its tokens), so the box shows how much single calls vary (whiskers 1.5 $\times$ IQR). In both rows, the triangle and the number give the pooled yield, all top ideas divided by all cost. Experiment 2's ideas are shorter and score lower than Experiment 1's, so compare arms within a column, not heights across the first and the other columns.}
+\label{fig:rq4}
+\end{figure}
+
+\begin{longtable}[]{@{}llrrr@{}}
+\caption{Experiment 2: top-idea rate and yield per arm (M6, 50 ideas per call, medium effort, 10 calls per arm), with bootstrap 95\% intervals. Cost at list price.}\label{tab:rq4}\tabularnewline
+\toprule\noalign{}
+Model & Representation & Top ideas / ideas & Per 100k tokens & Per US dollar \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
+\toprule\noalign{}
+Model & Representation & Top ideas / ideas & Per 100k tokens & Per US dollar \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Haiku 5.5 & A full graph   & 28/517 (5.4\%)  & 9.4 [6.3--13.2]   & 266 [177--373] \\
+          & B need slice   & 42/525 (8.0\%)  & 20.4 [14.5--27.8] & 459 [326--630] \\
+          & R random slice & 19/513 (3.7\%)  & 10.9 [6.7--16.5]  & 246 [151--375] \\
+          & C no graph     & 37/525 (7.0\%)  & 22.2 [17.0--28.5] & 468 [360--600] \\
+\midrule
+Opus 5.5  & A full graph   & 72/506 (14.2\%) & 26.3 [21.5--31.1] & 19.3 [16.0--22.5] \\
+          & B need slice   & 73/495 (14.7\%) & 39.9 [31.7--48.6] & 22.9 [18.3--27.6] \\
+          & R random slice & 60/487 (12.3\%) & 37.2 [29.7--45.6] & 21.1 [16.8--25.5] \\
+          & C no graph     & 65/497 (13.1\%) & 34.8 [26.7--43.2] & 18.2 [14.1--22.9] \\
+\midrule
+Fable 5.1 & A full graph   & 78/501 (15.6\%) & 26.4 [22.0--30.6] & 7.5 [6.2--8.8] \\
+          & B need slice   & 87/507 (17.2\%) & 51.3 [45.0--57.9] & 11.9 [10.4--13.5] \\
+          & R random slice & 58/498 (11.6\%) & 37.0 [28.4--46.6] & 8.5 [6.5--10.7] \\
+          & C no graph     & 72/495 (14.5\%) & 53.6 [44.3--63.4] & 11.4 [9.4--13.6] \\
+\end{longtable}
+
+
 \hypertarget{robustness-and-caveats}{%
 \subsection{Robustness and caveats}\label{robustness-and-caveats}}
 \hypertarget{length-and-judge-reliability}{%
@@ -1976,3 +1979,5 @@ In summary, Haiku is a small model, what such a model does superbly is retrieval
 \item
   \textbf{Yield as a standard measure.} Top ideas per token is simple, transferable and does not saturate. 
 \end{itemize}
+
+%so you know... fable ideas seem better, than opus and haiku.. but thats lingusitic bias... when i check  and i ignore the language floritures... the three are comaprable... but to proof that... what if I use anoter prompt to "beautify" haiku and opus to fable level? then show it is indistinguishable? 
