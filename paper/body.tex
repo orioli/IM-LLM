@@ -5,7 +5,7 @@ Most research on AI for innovation asks about outcomes: whether LLM-generated id
 
 In product ideation, engineering design, and service innovation, problem representations range from business model canvases and user journey maps to design structure matrices and typed knowledge graphs \citep{ed2024, Steward1981, Gero1990}. Here, we focus on the \emph{innovation matrix} (IM) of Leo Tchirsky \citep{Tchirsky, berengueres2014}---a layered, typed graph connecting market needs to functions, components, enabling technologies, and scientific fields. While cost-aware evaluation is now standard for LLM reasoning and agent benchmarks \citep{Chen2024d, Wang2024, Kapoor2025}, generative ideation is still largely judged by average scores without accounting for token expenditure or the extreme-value nature of brainstorming \citep{Girotra2010, Dahan2001}.
 
-To address this gap, we examine how problem representations and reasoning allocations govern AI brainstorming efficiency across four questions: which graph representation yields the most top ideas per token (RQ1); whether structural relevance or raw prompt length drives performance (RQ2); how investing tokens in context compares with spending them on thinking effort (RQ3); and whether the effect of the representation holds across models, and what each model costs per top idea (RQ4). We test these questions on a countertop microwave oven represented as an innovation matrix with 123 nodes and 246 edges, using the \emph{Substitute} operator from the SCAMPER ideation framework \citep{Eberle1971, Osborn1953}. We compare four prompt representations: the full graph (A), a targeted vertical slice of the active market need (functions, components, technologies, fields, linked constraints and actors; B), a size-matched random slice (R), and a no-graph control (C). In Experiment 1 (RQ1--RQ3), \texttt{claude-haiku-5-5} receives each representation for 13 market needs at four thinking-effort levels, in 580 API calls generating 2,892 ideas. In Experiment 2 (RQ4), three models, \texttt{claude-haiku-5-5}, \texttt{claude-opus-5-5} and \texttt{claude-fable-5-1}, each receive the four representations for one market need and are asked for 50 ideas per call, in 120 calls generating about 6,000 ideas. All ideas are scored blind by \texttt{claude-sonnet-5-5}, and Experiment 1's ideas were also read by an expert. We measure \emph{yield}: top ideas (score $\ge 4.0/5.0$; the top $\sim$12\% in Experiment 1) per 100k tokens spent, and in Experiment 2 also per US dollar at list price.
+To address this gap, we examine how problem representations and reasoning allocations govern AI brainstorming efficiency across four questions: which graph representation yields the most top ideas per token (RQ1); whether structural relevance or raw prompt length drives performance (RQ2); how investing tokens in context compares with spending them on thinking effort (RQ3); and whether the effect of the representation holds across models, and what each model costs per top idea (RQ4). We test these questions on a countertop microwave oven represented as an innovation matrix with 123 nodes and 246 edges, using the \emph{Substitute} operator from the SCAMPER ideation framework \citep{Eberle1971, Osborn1953}. We compare four prompt representations: the full graph (A), a targeted vertical slice of the active market need (functions, components, technologies, fields, linked constraints and actors; B), a size-matched random slice (R), and a no-graph control (C). In Experiment 1 (RQ1--RQ3), \texttt{claude-haiku-5-5} receives each representation for 13 market needs at four thinking-effort levels, in 580 API calls generating 2,892 ideas. In Experiment 2 (RQ4), three models, \texttt{claude-haiku-5-5}, \texttt{claude-opus-5-5} and \texttt{claude-fable-5-1}, each receive the four representations for one market need and are asked for 50 ideas per call, in 120 calls generating 6,091 ideas. All ideas are scored blind by \texttt{claude-sonnet-5-5}, and Experiment 1's ideas were also read by an expert. We measure \emph{yield}: top ideas (score $\ge 4.0/5.0$; the top $\sim$12\% in Experiment 1) per 100k tokens spent, and in Experiment 2 also per US dollar at list price.
 
 Our primary finding is that prompting with a targeted market-need slice at medium effort achieves peak yield (8.8 top ideas per 100k tokens), nearly tripling the efficiency of the full graph. Note here that the size of the slice is about one third that of the full graph. Although the full graph produces more specific average sets, it yields no more top-tail ideas while doubling prompt costs. Furthermore, scaling thinking effort raises average linguistic quality but fails to improve token efficiency. Together, these findings make three contributions: they reframe AI ideation around representation efficiency (outcome per token) rather than ephemeral human baselines; they establish yield as a non-saturating tail metric that captures extreme-value creative discovery where mean scores mislead; and they provide an open, controlled empirical comparison of product-graph representations and thinking effort, with all prompts, calls, and judgments released.
 
@@ -432,7 +432,6 @@ A pilot (2 market needs, M8 and M16; A and B; low, medium and high effort; 3 rep
 The top-tail measures follow from the purpose of brainstorming (Section~\ref{introduction}), but they were chosen after the pairwise results were known and are reported as exploratory. Their conclusions about relevance (B against R) are not confirmed by the planned pairwise test (Section~\ref{results}).
 
 
-\newcommand{\PH}[1]{\textcolor{red}{[#1]}}   % placeholder, remove before submission
 
 \hypertarget{experiment-2}{%
 \subsection{Experiment 2: model comparison (RQ4)}\label{experiment-2}}
@@ -479,7 +478,7 @@ Statistics & Bootstrap 95\% CI, 2,000 resamples of calls within each arm \\
 
 \textbf{Prompt.} The prompt is Experiment 1's word for word, except for the one line that sets the number of ideas. This was checked by restoring ``5'' in each Experiment 2 prompt and matching the prompt hash logged in Experiment 1. The persona sentence is identical; only its name in the run identifiers differs, so that the two experiments' runs cannot be confused.
 
-\textbf{Generation.} Each model received the same 40 prompts in the same random order, at medium effort, through the Anthropic Messages API with streaming and default sampling. All \PH{120} calls returned valid JSON and none reached the output limit. Asked for 50 ideas, the models returned between \PH{44} and \PH{60} per call (Haiku 44--60, Opus 49--52, Fable \PH{min--max}); every idea returned is used. Identical prompts produced identical input token counts across the three models (for example 10,910 tokens for every full-graph call), so a token is the same unit for all three and per-token yields can be compared across models.
+\textbf{Generation.} Each model received the same 40 prompts in the same random order, at medium effort, through the Anthropic Messages API with streaming and default sampling. All 120 calls returned valid JSON and ended normally; none reached the output limit. Asked for 50 ideas, the models returned between 44 and 60 per call (Haiku 44--60, Opus 49--52, Fable 50--52); every idea returned is used. Identical prompts produced identical input token counts across the three models (for example 10,910 tokens for every full-graph call), so a token is the same unit for all three and per-token yields can be compared across models.
 
 \begin{longtable}[]{@{}lrrrrr@{}}
 \caption{Experiment 2 generation by model: calls, ideas returned and scored, tokens and cost at list price.}\label{tab:gen-exp2}\tabularnewline
@@ -495,11 +494,11 @@ Model & Calls & Ideas & Input tokens & Output tokens & Cost (USD) \\
 \bottomrule\noalign{}
 \endlastfoot
 Haiku 5.5 & 40 & 2,080 & 173,120 & 671,711 & 0.35 \\
-Opus 5.5 & 40 & \PH{1,990} & 173,120 & 631,352 & 13.32 \\
-Fable 5.1 & 40 & \PH{2,001} & 173,120 & 583,199 & 30.89 \\
+Opus 5.5 & 40 & 1,990 & 173,120 & 631,352 & 13.32 \\
+Fable 5.1 & 40 & 2,021 & 173,120 & 583,199 & 30.89 \\
 \end{longtable}
 
-\textbf{Judging.} Every idea was scored individually by the judge of Experiment 1, with the same prompt and the same four criteria. A 50-idea list was sent to the judge in requests of five consecutive ideas, so that every request had the form of an Experiment 1 request. The judge saw each idea's title, new elements and rationale, and nothing that revealed the representation, the model or the idea's position in its list. Of \PH{6,071} ideas, \PH{6,066} were scored (\PH{5} Opus ideas failed to parse after a retry).
+\textbf{Judging.} Every idea was scored individually by the judge of Experiment 1, with the same prompt and the same four criteria. A 50-idea list was sent to the judge in requests of five consecutive ideas, so that every request had the form of an Experiment 1 request. The judge saw each idea's title, new elements and rationale, and nothing that revealed the representation, the model or the idea's position in its list. Of 6,091 ideas, 6,066 were scored; 25 (0.4\%: 5 from Opus, 20 from Fable) could not be scored after a retry and are excluded, while their calls' tokens are counted.
 
 \textbf{Measures.}
 \begin{itemize}
@@ -511,18 +510,18 @@ Fable 5.1 & 40 & \PH{2,001} & 173,120 & 583,199 & 30.89 \\
 \item
   \textbf{Yield per 100k tokens:} an arm's top ideas divided by its input and output tokens, as in Experiment 1. All ideas and tokens of a call are counted.
 \item
-  \textbf{Cost and yield per dollar:} each call's cost is its input and output tokens at the provider's list price per million tokens, as published on \PH{2026-10-20}: Haiku 5.5 \$0.10 input and \$0.50 output, Opus 5.5 \$4 and \$20, Fable 5.1 \$10 and \$50. Thinking tokens are billed as output. No batch or caching discount is applied. The yield per dollar is an arm's top ideas divided by its cost. The judge's cost is the same for every model and is not included.
+  \textbf{Cost and yield per dollar:} each call's cost is its input and output tokens at the provider's list price per million tokens, as published on 20 October 2026: Haiku 5.5 \$0.10 input and \$0.50 output, Opus 5.5 \$4 and \$20, Fable 5.1 \$10 and \$50. Thinking tokens are billed as output. No batch or caching discount is applied. The yield per dollar is an arm's top ideas divided by its cost. The judge's cost is the same for every model and is not included.
 \end{itemize}
 
 \textbf{Statistics.} With one market need, the bootstrap resamples the 10 calls of each arm with replacement (2,000 resamples), keeping each call's ideas and tokens together. Arms are compared by these intervals. The distribution of single-call yields is shown alongside as a description of how much individual calls vary, not as a test. No correction for multiple comparisons is applied.
 
-\textbf{Plan and exploration.} The Haiku run was planned and its hypotheses recorded on 2026-10-19, before any 50-idea call. Those hypotheses concern how many distinct ideas each representation reaches and whether later ideas stay on the need; they require coding every idea into a codebook of moves, which is \PH{reported separately / in progress} and not used here. The Opus and Fable runs were added on 2026-10-20, after the Haiku scores had been seen, and the yield per dollar after that. All RQ4 results are therefore exploratory.
+\textbf{Plan and exploration.} The Haiku run was planned and its hypotheses recorded on 2026-10-19, before any 50-idea call. Those hypotheses concern how many distinct ideas each representation reaches and whether later ideas stay on the need; they require coding every idea into a codebook of moves, which is in progress and not used here. The Opus and Fable runs were added on 2026-10-20, after the Haiku scores had been seen, and the yield per dollar after that. All RQ4 results are therefore exploratory.
 
 \textbf{Limitations specific to Experiment 2.}
 \begin{itemize}
 \tightlist
 \item
-  \emph{Scores are not comparable with Experiment 1.} Asked for 50 ideas, the models write shorter ideas (Haiku about 40 words against about 100; Opus \PH{xx}, Fable \PH{xx}), which the judge scores lower, so top-idea rates and yields are compared within Experiment 2 only.
+  \emph{Scores are not comparable with Experiment 1.} Asked for 50 ideas, the models write shorter ideas (about 35 words per idea for all three models, against about 100 in Experiment 1), which the judge scores lower, so top-idea rates and yields are compared within Experiment 2 only.
 \item
   \emph{The judge is weaker than two of the generators.} Sonnet judges ideas from Opus and Fable, and may not recognise the best ideas of a stronger model. Judge and generators also come from one model family.
 \item
@@ -535,7 +534,7 @@ Fable 5.1 & 40 & \PH{2,001} & 173,120 & 583,199 & 30.89 \\
 
 
 \hypertarget{sample of genrated ideas}{%
-\subsection{Sample of genrated ideas}\label{sample of genrated ideas}}
+\subsection{Sample of generated ideas}\label{sample of genrated ideas}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1923,9 +1922,9 @@ The pilot (2 market needs $\times$ 3 replicates) found the full graph winning 17
 
 
 \hypertarget{discusion}{%
-\subsection{Discusion}\label{discusion}}
+\subsection{Discussion}\label{discusion}}
 
-\textbf{Expert reading of all ideas.} As a first validation, one of the authors read all 2,892 generated ideas of the first experiment - the one that comapres difficulties accros four levels and al the slices. LLM-ideation studies often assess output linguistically, with embedding-based measures such as the semantic distance between ideas. These are useful for diversity, but they measure how the generated texts relate \emph{to each other}, not to prior art, so the ``novelty'' or ``surprise'' they report has little to do with innovation worth in the patent sense. The reading was aimed at exactly that gap, and produced three observations.
+\textbf{Expert reading of all ideas.} As a first validation, one of the authors read all 2,892 generated ideas of Experiment 1, which compares the four representations across the effort levels; Experiment 2's ideas were not read in this way. LLM-ideation studies often assess output linguistically, with embedding-based measures such as the semantic distance between ideas. These are useful for diversity, but they measure how the generated texts relate \emph{to each other}, not to prior art, so the ``novelty'' or ``surprise'' they report has little to do with innovation worth in the patent sense. The reading was aimed at exactly that gap, and produced three observations.
 
 
 
