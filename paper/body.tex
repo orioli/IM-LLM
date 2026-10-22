@@ -427,6 +427,109 @@ A pilot (2 market needs, M8 and M16; A and B; low, medium and high effort; 3 rep
 
 The top-tail measures follow from the purpose of brainstorming (Section~\ref{introduction}), but they were chosen after the pairwise results were known and are reported as exploratory. Their conclusions about relevance (B against R) are not confirmed by the planned pairwise test (Section~\ref{results}).
 
+
+\newcommand{\PH}[1]{\textcolor{red}{[#1]}}   % placeholder, remove before submission
+
+\hypertarget{experiment-2}{%
+\subsection{Experiment 2: model comparison (RQ4)}\label{experiment-2}}
+
+Experiment 1 asked for five ideas per call, and read one by one those ideas converge on the same few moves whatever the representation and the effort: asked for five, the model returns its five most obvious answers. Experiment 2 asks for 50 ideas per call on a single market need, which forces the model past the obvious ones, and repeats the run with three generator models. It asks whether the effect of the representation found in Experiment 1 holds across models, and what each model costs per top idea. Everything not described here is as in Experiment 1: the product graph, the four representations and their files, the operator, the worked example, the judge and its prompt. Table~\ref{tab:setup-exp2} gives an overview.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.22}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.78}}@{}}
+\caption{Experiment 2 at a glance.}\label{tab:setup-exp2}\tabularnewline
+\toprule\noalign{}
+Item & Value \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
+\toprule\noalign{}
+Item & Value \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Market need & One: M6, \emph{simple operation with no learning curve} (slice: 28 nodes, 23\% of the graph) \\
+Representations & A, B, R and C, the same files as in Experiment 1 (R: the same random draw) \\
+Task & As in Experiment 1, except ``Return exactly 50 ideas'' instead of 5 \\
+Generators & \texttt{claude-haiku-5-5}, \texttt{claude-opus-5-5}, \texttt{claude-fable-5-1}; medium effort; output limit 48,000 tokens \\
+Design & 10 calls per representation and model: 40 calls per model, 120 in total, in random order \\
+Judge & \texttt{claude-sonnet-5-5}, medium effort, the prompt and criteria of Experiment 1, blind to representation, model and position in the list \\
+Measures & Yield per 100k tokens (as in Experiment 1) and per US dollar at list price; top-idea rate \\
+Statistics & Bootstrap 95\% CI, 2,000 resamples of calls within each arm \\
+\end{longtable}
+
+\textbf{Choice of market need.} The need was chosen before any 50-idea call was run, by applying four rules to the 13 needs of Experiment 1, in order:
+\begin{enumerate}
+\tightlist
+\item
+  \emph{No overlap with the worked example.} The webcam and the transparent casing must not themselves answer the need. This excludes M8 and M16.
+\item
+  \emph{Every representation found something.} Each representation must have produced at least one top idea for the need at high effort in Experiment 1. This excludes M1, M5 and M11.
+\item
+  \emph{Same order as the pooled result.} The representations must rank as in the pooled Experiment 1 result at high effort (B $>$ C $>$ R $>$ A). This excludes M3, M4, M7, M12 and M17.
+\item
+  \emph{Chosen by the authors from the rest} (M6, M13, M14). M6 was chosen because operating the appliance is a central, long-standing usability problem that no single technology dominates.
+\end{enumerate}
+
+\textbf{Prompt.} The prompt is Experiment 1's word for word, except for the one line that sets the number of ideas. This was checked by restoring ``5'' in each Experiment 2 prompt and matching the prompt hash logged in Experiment 1. The persona sentence is identical; only its name in the run identifiers differs, so that the two experiments' runs cannot be confused.
+
+\textbf{Generation.} Each model received the same 40 prompts in the same random order, at medium effort, through the Anthropic Messages API with streaming and default sampling. All \PH{120} calls returned valid JSON and none reached the output limit. Asked for 50 ideas, the models returned between \PH{44} and \PH{60} per call (Haiku 44--60, Opus 49--52, Fable \PH{min--max}); every idea returned is used. Identical prompts produced identical input token counts across the three models (for example 10,910 tokens for every full-graph call), so a token is the same unit for all three and per-token yields can be compared across models.
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\caption{Experiment 2 generation by model: calls, ideas returned and scored, tokens and cost at list price.}\label{tab:gen-exp2}\tabularnewline
+\toprule\noalign{}
+Model & Calls & Ideas & Input tokens & Output tokens & Cost (USD) \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
+\toprule\noalign{}
+Model & Calls & Ideas & Input tokens & Output tokens & Cost (USD) \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Haiku 5.5 & 40 & 2,080 & 173,120 & 671,711 & 0.35 \\
+Opus 5.5 & 40 & \PH{1,990} & 173,120 & 631,352 & 13.32 \\
+Fable 5.1 & 40 & \PH{2,001} & 173,120 & 583,199 & 30.89 \\
+\end{longtable}
+
+\textbf{Judging.} Every idea was scored individually by the judge of Experiment 1, with the same prompt and the same four criteria. A 50-idea list was sent to the judge in requests of five consecutive ideas, so that every request had the form of an Experiment 1 request. The judge saw each idea's title, new elements and rationale, and nothing that revealed the representation, the model or the idea's position in its list. Of \PH{6,071} ideas, \PH{6,066} were scored (\PH{5} Opus ideas failed to parse after a retry).
+
+\textbf{Measures.}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Top idea:} an idea scoring at least 4.0, the threshold of Experiment 1.
+\item
+  \textbf{Top-idea rate:} the share of an arm's ideas that are top ideas.
+\item
+  \textbf{Yield per 100k tokens:} an arm's top ideas divided by its input and output tokens, as in Experiment 1. All ideas and tokens of a call are counted.
+\item
+  \textbf{Cost and yield per dollar:} each call's cost is its input and output tokens at the provider's list price per million tokens, as published on \PH{2026-10-20}: Haiku 5.5 \$0.10 input and \$0.50 output, Opus 5.5 \$4 and \$20, Fable 5.1 \$10 and \$50. Thinking tokens are billed as output. No batch or caching discount is applied. The yield per dollar is an arm's top ideas divided by its cost. The judge's cost is the same for every model and is not included.
+\end{itemize}
+
+\textbf{Statistics.} With one market need, the bootstrap resamples the 10 calls of each arm with replacement (2,000 resamples), keeping each call's ideas and tokens together. Arms are compared by these intervals. The distribution of single-call yields is shown alongside as a description of how much individual calls vary, not as a test. No correction for multiple comparisons is applied.
+
+\textbf{Plan and exploration.} The Haiku run was planned and its hypotheses recorded on 2026-10-19, before any 50-idea call. Those hypotheses concern how many distinct ideas each representation reaches and whether later ideas stay on the need; they require coding every idea into a codebook of moves, which is \PH{reported separately / in progress} and not used here. The Opus and Fable runs were added on 2026-10-20, after the Haiku scores had been seen, and the yield per dollar after that. All RQ4 results are therefore exploratory.
+
+\textbf{Limitations specific to Experiment 2.}
+\begin{itemize}
+\tightlist
+\item
+  \emph{Scores are not comparable with Experiment 1.} Asked for 50 ideas, the models write shorter ideas (Haiku about 40 words against about 100; Opus \PH{xx}, Fable \PH{xx}), which the judge scores lower, so top-idea rates and yields are compared within Experiment 2 only.
+\item
+  \emph{The judge is weaker than two of the generators.} Sonnet judges ideas from Opus and Fable, and may not recognise the best ideas of a stronger model. Judge and generators also come from one model family.
+\item
+  \emph{Scope.} One product, one market need, one effort level and 10 calls per arm.
+\item
+  \emph{Prices change.} List prices are a snapshot. The ranking per dollar would change with discounts or new prices, while the yield per token would not.
+\end{itemize}
+
+
+
+
 \hypertarget{sample of genrated ideas}{%
 \subsection{Sample of genrated ideas}\label{sample of genrated ideas}}
 
@@ -535,6 +638,77 @@ The aim of brainstorming is the rare great idea, not a good average, so the main
 \item
   \textbf{Thinking effort is the strongest lever on quality, but not on yield.} High beats low in about 93\% of set comparisons, and xhigh produces the highest top-idea rates of all (19--21\%). But each call costs proportionally more, so yield does not rise with effort: for the full graph it stays at about 3 per 100k tokens from low to xhigh, and for the slice it peaks at medium (8.8) and falls at high (5.9) and xhigh (3.1).
 \end{itemize}
+
+
+\textbf{RQ4. Does the effect of the representation hold across models, and what does each model cost per top idea?} (Section~\ref{rq4})
+
+Asked for 50 ideas per call on market need M6, all three models found top ideas least efficiently with the full graph: per token, its yield was about half that of the slice or no graph for Haiku (9.4 against 20.4 and 22.2 top ideas per 100k tokens) and Fable (26.4 against 51.3 and 53.6), and the lowest for Opus (26.3 against 39.9 and 34.8). The slice and no graph were indistinguishable for every model. For Opus and Fable the full graph did not lower the share of top ideas; it only cost more. The stronger models found two to three times as many top ideas per token as Haiku, but at list prices Haiku found about 20 times more per dollar than Opus and about 40 times more than Fable. Exploratory.
+
+\hypertarget{rq4}{%
+\subsection{RQ4: Does the effect of the representation hold across models, and what does each model cost per top idea?}\label{rq4}}
+
+Experiment 2 (Section~\ref{experiment-2}) asked Haiku, Opus and Fable for 50 ideas per call on market need M6, ten calls per representation. Figure~\ref{fig:rq4} shows the yield of every arm per dollar (A) and per token (B) next to Experiment 1's Haiku arms; Table~\ref{tab:rq4} gives the values with 95\% intervals.
+
+\begin{figure}[tbp]
+\centering
+\IfFileExists{figures/compare_stack_all_bootstrap_dollars__M6_calls_tokens.png}{\includegraphics[width=\textwidth]{figures/compare_stack_all_bootstrap_dollars__M6_calls_tokens.png}}{\fbox{\parbox[c][5cm][c]{0.9\textwidth}{\centering\small missing: \texttt{\detokenize{figures/compare_stack_all_bootstrap_dollars__M6_calls_tokens.png}}}}}
+\caption{Yield by representation and model. Columns: Haiku with 5 ideas per call (Experiment 1), then Haiku, Opus and Fable with 50 ideas per call on M6 (Experiment 2). \textbf{(A)} Top ideas per US dollar at list price (log scale). Each box holds 2,000 bootstrap estimates of the arm's pooled yield: box = middle 50\%, whiskers = 95\% CI; it shows how uncertain the arm's average is. The 5-idea column pools all 13 market needs. \textbf{(B)} Top ideas per 100k tokens, M6 only. Each dot is one call's yield (its top ideas divided by its tokens), so the box shows how much single calls vary (whiskers 1.5 $\times$ IQR). In both rows, the triangle and the number give the pooled yield, all top ideas divided by all cost. Experiment 2's ideas are shorter and score lower than Experiment 1's, so compare arms within a column, not heights across the first and the other columns.}
+\label{fig:rq4}
+\end{figure}
+
+\begin{longtable}[]{@{}llrrr@{}}
+\caption{Experiment 2: top-idea rate and yield per arm (M6, 50 ideas per call, medium effort, 10 calls per arm), with bootstrap 95\% intervals. Cost at list price.}\label{tab:rq4}\tabularnewline
+\toprule\noalign{}
+Model & Representation & Top ideas / ideas & Per 100k tokens & Per US dollar \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
+\toprule\noalign{}
+Model & Representation & Top ideas / ideas & Per 100k tokens & Per US dollar \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Haiku 5.5 & A full graph   & 28/517 (5.4\%)  & 9.4 [6.3--13.2]   & 266 [177--373] \\
+          & B need slice   & 42/525 (8.0\%)  & 20.4 [14.5--27.8] & 459 [326--630] \\
+          & R random slice & 19/513 (3.7\%)  & 10.9 [6.7--16.5]  & 246 [151--375] \\
+          & C no graph     & 37/525 (7.0\%)  & 22.2 [17.0--28.5] & 468 [360--600] \\
+\midrule
+Opus 5.5  & A full graph   & 72/506 (14.2\%) & 26.3 [21.5--31.1] & 19.3 [16.0--22.5] \\
+          & B need slice   & 73/495 (14.7\%) & 39.9 [31.7--48.6] & 22.9 [18.3--27.6] \\
+          & R random slice & 60/487 (12.3\%) & 37.2 [29.7--45.6] & 21.1 [16.8--25.5] \\
+          & C no graph     & 65/497 (13.1\%) & 34.8 [26.7--43.2] & 18.2 [14.1--22.9] \\
+\midrule
+Fable 5.1 & A full graph   & 78/501 (15.6\%) & 26.4 [22.0--30.6] & 7.5 [6.2--8.8] \\
+          & B need slice   & 87/507 (17.2\%) & 51.3 [45.0--57.9] & 11.9 [10.4--13.5] \\
+          & R random slice & 58/498 (11.6\%) & 37.0 [28.4--46.6] & 8.5 [6.5--10.7] \\
+          & C no graph     & 72/495 (14.5\%) & 53.6 [44.3--63.4] & 11.4 [9.4--13.6] \\
+\end{longtable}
+
+\subsubsection{Representation across models}\label{rq4-representation}
+
+\textbf{The full graph is the least efficient representation for every model.} Per token, its yield is about half that of the slice and of no graph for Haiku and Fable, and the lowest of the four for Opus. Its interval lies wholly below no graph's for Haiku and Fable and below the slice's for Fable; for Opus it only just separates from the slice's (upper bound 31.1 against lower bound 31.7).
+
+\textbf{The slice does no better than no graph.} For all three models their intervals overlap almost completely (Haiku 20.4 and 22.2, Opus 39.9 and 34.8, Fable 51.3 and 53.6). Giving only the relevant slice removes the full graph's penalty but adds no gain over giving no graph at all.
+
+\textbf{For the stronger models, the full graph costs tokens, not quality.} Opus and Fable produced top ideas at about the same rate with the full graph as with no graph (14.2\% and 15.6\% against 13.1\% and 14.5\%); their lower yield comes from the roughly 10,000 extra input tokens per call. For Haiku the full graph also lowered the rate (5.4\% against 7.0\%), as in Experiment 1.
+
+\textbf{The random slice} was as poor as the full graph for Haiku but close to the slice and no graph for Opus, and in between for Fable. A stronger model seems less hurt by irrelevant context of moderate size.
+
+\subsubsection{Unit economics}\label{rq4-economics}
+
+\textbf{Per token, the stronger models are about two to three times as productive.} With the slice or no graph, Opus found 35--40 and Fable 51--54 top ideas per 100k tokens, against 20--22 for Haiku. All three used similar numbers of tokens per call (Table~\ref{tab:gen-exp2}); the difference is the share of ideas that reach the top: 12--17\% for Opus and Fable against 4--8\% for Haiku.
+
+\textbf{Per dollar, the order reverses.} At list prices Opus costs 40 times and Fable 100 times as much per token as Haiku, so Haiku found about 460 top ideas per dollar with the slice or no graph, against about 20 for Opus and 12 for Fable. A top idea cost about \$0.002 with Haiku, \$0.05 with Opus and \$0.09 with Fable. The whole run of 40 calls cost \$0.35 with Haiku, \$13.32 with Opus and \$30.89 with Fable.
+
+\textbf{Per dollar, the full graph's penalty shrinks.} The graph adds only input tokens, which cost a fifth as much as output tokens. Per dollar, Opus's full graph is within the intervals of the other three representations (19.3 against 18.2--22.9); Fable's remains clearly below the slice and no graph (7.5 against 11.9 and 11.4).
+
+\subsubsection{Single calls and list length}\label{rq4-calls}
+
+\textbf{Single calls vary widely} (Figure~\ref{fig:rq4}B). Within one arm, a call's yield ranged up to about fourfold (for example 12 to 67 top ideas per 100k tokens for Fable with the random slice), so a single brainstorming call is an unreliable sample of what a configuration delivers. In Experiment 1, with five ideas per call, about half of all calls produced no top idea at all.
+
+\textbf{Asking for 50 ideas instead of 5.} For Haiku on M6, the 50-idea calls had a per-token yield close to that of the 5-idea calls with the slice (20.4 against 25.3) and higher with the other representations (for example 9.4 against 6.3 with the full graph). The two experiments differ in idea length and therefore in score, so this comparison is indicative only.
+
 
 \hypertarget{cost-and-validity}{%
 \subsection{Cost and validity}\label{cost-and-validity}}
