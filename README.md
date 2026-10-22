@@ -17,9 +17,11 @@ A hand-built innovation matrix of a microwave oven (123 nodes, 246 typed edges) 
 | **R**, random slice      | a random slice of the same size as B          |
 | **C**, no graph          | the product and the market need only          |
 
-The model applies the SUBSTITUTE operator to 13 market needs at four levels of thinking effort (580 calls, 2,892 ideas). `claude-sonnet-5-5` judges the ideas blind, both as whole sets (pairwise) and one by one. The main measure is **yield**: top ideas (score ≥ 4.0, the top 12%) per 100k tokens.
+The model applies the SUBSTITUTE operator to 13 market needs at four levels of thinking effort (580 calls, 2,892 ideas). `claude-sonnet-5-5` judges the ideas blind, both as whole sets (pairwise) and one by one. The main measure is **yield**: top ideas (score ≥ 4.0; the top 12% of this experiment's ideas) per 100k tokens.
 
-**Main result** (5 ideas per call, Haiku). The market-need slice at medium effort yields 8.8 top ideas per 100k tokens, about three times the full graph at any effort, and beats it on 10 of 13 market needs. Per token, the full graph is less efficient than no graph at all.
+**Headline.** Across both experiments and all three models, the full graph never paid off: it was always the least efficient way to find top ideas. The relevant slice removed its cost but did no better than giving no graph at all. For finding top ideas, the knowledge graph did not pay for itself.
+
+**Experiment 1** (5 ideas per call, Haiku). The market-need slice at medium effort yields 8.8 top ideas per 100k tokens, about three times the full graph at any effort, and beats it on 10 of 13 market needs. Per token, the full graph is less efficient than no graph at all.
 
 ![Yield per arm: top ideas per 100k tokens, with the no-graph control as a dashed line](results/charts/8c_yield_spread_annotated.png)
 
@@ -91,6 +93,7 @@ Details, hypotheses and every step: [`M6_50ideas/README.md`](M6_50ideas/README.m
 | `human_check.py`                                                 | stratified sample for human raters, and agreement statistics                                      |
 | `runs/`                                                          | every generation call (prompt metadata, raw response, token counts)                               |
 | `results/`                                                       | judge outputs, tables, charts, results write-up                                                   |
+| `persona_as_factor/`                                             | exploratory follow-up: three personas × B, C × 3 market needs × 2 efforts                      |
 | `M6_50ideas/`                                                    | follow-up: 50 ideas per call on market need M6, four conditions × three models (Haiku, Opus, Fable), yield per token and per dollar, move coding |
 | `paper/`                                                         | LaTeX source of the paper (`main.tex`; built from Markdown drafts by `build_paper.py`)        |
 
