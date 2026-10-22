@@ -1,0 +1,121 @@
+rank,key,model,sonnet_group,sonnet_score,content,relevance,novelty,feasibility,specificity,title
+1,X003,Fable,top,4.25,7.75,9,4,9,9,"One 'Go' button, each press adds a minute"
+2,X019,Opus,top,4.5,7.5,8,3,10,9,+30 Seconds Mega Button
+3,X034,Opus,top,4.25,7.5,9,5,8,8,Pictogram Food Dial
+4,X026,Opus,top,4.25,7.5,8,5,9,8,Detent Dish-Size Knob
+5,X017,Fable,top,4.25,7.5,8,6,8,8,Toaster lever microwave
+6,X055,Haiku,top,4.25,7.25,8,3,9,9,One-Button Heat
+7,X013,Fable,top,4.25,7.25,8,3,10,8,Food icons on timer dial
+8,X084,Opus,top,4.25,7.25,8,7,6,8,Pull-String Toy Timer
+9,X117,Fable,top,4.25,7.25,8,4,9,8,Single +30 s Button
+10,X068,Fable,top,4.25,7.25,8,5,8,8,Mug-slot auto-run
+11,X089,Opus,top,4.5,7.0,8,6,6,8,Close-the-Door-to-Start
+12,X050,Opus,top,4.5,7.0,7,6,8,7,Food Tokens
+13,X116,Haiku,top,4.25,7.0,8,3,9,8,Fixed-Cycle Reheat
+14,X007,Opus,top,4.25,7.0,8,3,9,8,Pictogram Food Dial
+15,X100,Haiku,top,4.25,7.0,8,4,9,7,Picture-Menu Dial
+16,X108,Fable,top,4.25,7.0,8,3,9,8,Heat/Defrost toggle
+17,X041,Fable,top,4.25,7.0,8,4,9,7,Tactile Braille-free big knob
+18,X005,Opus,top,4.25,7.0,8,7,5,8,Toaster-Lever Start
+19,X065,Opus,top,4.25,7.0,8,6,7,7,Tagged Smart Containers
+20,X058,Fable,top,4.25,7.0,8,5,8,7,Slider with food pictograms
+21,X028,Fable,top,4.25,7.0,8,7,6,7,Door-handle twist is the timer
+22,X048,Fable,top,4.25,7.0,8,4,9,7,Timer scale in food icons instead of minutes
+23,X012,Fable,top,4.25,6.75,6,6,7,8,Hold-to-heat paddle
+24,X016,Opus,top,4.25,6.75,7,7,6,7,Handle-Twist Controls
+25,X077,Opus,top,4.25,6.75,7,4,9,7,Food-Shaped Buttons
+26,X087,Opus,top,4.25,6.75,8,6,6,7,Recipe Punch Cards
+27,X010,Fable,top,4.25,6.75,7,7,6,7,Gravity weight timer
+28,X030,Haiku,top,4.25,6.75,8,3,9,7,Pictogram Dial
+29,X070,Fable,top,4.25,6.75,8,4,8,7,Quantity Dial Instead of Time
+30,X088,Fable,top,4.25,6.75,8,3,9,7,Traffic-Light Dial Zones
+31,X029,Fable,top,4.5,6.5,7,6,5,8,Door-close equals start
+32,X107,Haiku,top,4.25,6.5,8,3,9,6,Three Pictogram Buttons
+33,X022,Opus,top,4.25,6.5,7,7,5,7,Lid-Keyed Containers
+34,X037,Opus,top,4.25,6.5,8,5,7,6,Slider Lever Timeline
+35,X054,Haiku,top,4.25,6.5,7,6,7,6,Picture-card control cartridge
+36,X043,Haiku,top,4.25,6.5,8,3,8,7,"Sensing Stop, No Timer"
+37,X074,Haiku,top,4.25,6.5,7,5,7,7,Auto-Start on Door Close
+38,X092,Opus,top,4.5,6.25,7,7,5,6,Container-Key Presets
+39,X057,Haiku,top,4.25,6.25,6,4,9,6,Food-Type Slider Replacing Power
+40,X095,Opus,top,4.25,6.25,7,6,6,6,Handle-Is-the-Timer
+41,X053,Opus,top,4.25,6.25,6,6,6,7,Pull-Cord Wind-Up
+42,X090,Fable,top,4.25,6.25,6,7,5,7,Turntable is the timer dial
+43,X056,Haiku,top,4.25,6.25,7,5,6,7,Temperature Target Dial
+44,X047,Haiku,top,4.25,6.25,7,2,9,7,Egg-Timer Mechanical Cam
+45,X091,Haiku,top,4.25,6.25,6,7,6,6,Pull-Cord Timer
+46,X110,Opus,top,4.25,6.25,7,6,6,6,Picture Card Slot
+47,X023,Haiku,top,4.25,6.25,6,4,9,6,Tactile wheel with one notch
+48,X086,Fable,bottom,2.25,6.25,6,4,8,7,Silicone Mat Instead of Glass Tray
+49,X035,Fable,top,4.25,6.0,7,6,5,6,Cup-shaped pressure pad as the only control
+50,X011,Opus,top,4.25,6.0,5,7,5,7,Tap-Top Gesture
+51,X113,Haiku,top,4.25,6.0,7,3,9,5,Pictogram Knob Faces
+52,X044,Opus,top,4.25,6.0,7,6,5,6,Magnet-Coded Containers
+53,X094,Fable,top,4.25,6.0,6,5,6,7,Solid-state RF with continuous auto-cook
+54,X099,Haiku,top,4.25,6.0,6,3,9,6,Single Flat Glass Panel
+55,X120,Haiku,top,4.25,5.75,7,7,5,4,Single-Button Reheat Dock
+56,X103,Haiku,top,4.25,5.5,7,5,6,4,One Button Means Everything
+57,X038,Haiku,top,4.25,5.5,7,5,5,5,Tray-as-Controller
+58,X046,Fable,top,4.25,5.5,7,5,4,6,Tagged Containers Program the Oven
+59,X059,Opus,bottom,2.25,5.5,3,4,8,7,Forever Light
+60,X021,Opus,bottom,2.25,5.5,4,3,8,7,Nonstick Ceramic Cavity
+61,X073,Fable,bottom,2.5,5.25,5,4,6,6,Silicone mat replaces glass turntable
+62,X062,Fable,top,4.25,5.0,6,4,5,5,Kitchen-timer twist egg
+63,X039,Haiku,top,4.25,5.0,6,5,6,3,Recipe Card Slot
+64,X097,Haiku,top,4.25,5.0,5,2,8,5,Egg-Timer Shell
+65,X071,Fable,bottom,2.5,5.0,4,6,3,7,Water-Clock Drip Timer
+66,X049,Fable,bottom,2.25,5.0,5,3,6,6,Door glass replaced by polymer with embedded mesh and printed tips
+67,X018,Opus,bottom,2.25,5.0,2,3,8,7,External LED Light Pipe
+68,X051,Opus,bottom,2.25,5.0,4,5,5,6,Thermochromic Window
+69,X079,Fable,bottom,2.25,4.75,4,5,4,6,Electroluminescent Cavity Wall
+70,X001,Opus,bottom,2.25,4.75,3,3,7,6,Silicone Mat Turntable
+71,X109,Opus,bottom,2.25,4.75,3,6,4,6,Light-Pipe Window
+72,X105,Fable,bottom,2.25,4.75,3,6,4,6,Daylight Light-Pipe
+73,X045,Fable,bottom,2.5,4.5,2,6,4,6,Phosphorescent cavity instead of lamp
+74,X009,Opus,bottom,2.25,4.5,3,6,3,6,Daylight Light Pipe
+75,X004,Opus,bottom,2.25,4.5,2,4,6,6,Doubler-Free Half-Wave Drive
+76,X093,Opus,bottom,2.25,4.5,4,5,4,5,Gentle Mug Sleeve
+77,X033,Fable,bottom,2.5,4.25,3,5,3,6,Living-hinge door
+78,X111,Fable,bottom,2.5,4.25,2,6,3,6,Airflow-driven turntable (no motor)
+79,X076,Fable,bottom,2.25,4.25,3,5,3,6,Fanless Heat-Pipe Cooling
+80,X020,Opus,bottom,2.25,4.25,2,5,4,6,Silent Heat-Pipe Cooling
+81,X115,Opus,bottom,2.25,4.25,2,3,6,6,Snap-Fit Tool-Free Assembly
+82,X112,Fable,bottom,2.25,4.25,2,6,3,6,Passive chimney cooling replaces fan and motor
+83,X101,Haiku,bottom,2,4.25,2,3,6,6,Snap-Fit Shell
+84,X052,Opus,bottom,2.25,4.0,2,4,5,5,No Stored Charge by Design
+85,X081,Opus,bottom,2.25,4.0,2,3,5,6,Self-Draining Transformer Winding
+86,X106,Opus,bottom,2.25,4.0,2,6,3,5,Self-Lighting Glow Cavity
+87,X069,Opus,bottom,2.25,4.0,2,3,6,5,Inherently Low-Risk Architecture
+88,X118,Opus,bottom,2.25,4.0,2,4,5,5,Self-Rectifying Magnetron
+89,X082,Haiku,bottom,2,4.0,2,3,5,6,Snap-fit recycled shell
+90,X015,Fable,bottom,2.0,4.0,3,5,3,5,Glass-Only Cavity
+91,X006,Haiku,bottom,2,4.0,2,2,7,5,Screwless Snap Panels
+92,X080,Fable,bottom,2.0,4.0,2,4,4,6,Bleeder resistor replaced by self-discharging capacitor film
+93,X024,Opus,bottom,2.25,3.75,2,6,2,5,Glowing Cavity Walls
+94,X114,Fable,bottom,2.25,3.75,2,5,3,5,Metallised polymer shell replaces steel casing
+95,X072,Haiku,bottom,2,3.75,2,3,6,4,Modular Stackable Cabinet
+96,X014,Haiku,bottom,2,3.75,2,3,5,5,Snap-Fit Modular Assembly
+97,X085,Opus,bottom,2.25,3.5,2,3,4,5,Single-Shell Stamped Body
+98,X027,Fable,bottom,2.25,3.5,2,3,4,5,PTC thermistor replaces bimetal thermostat
+99,X032,Fable,bottom,2.25,3.5,2,4,3,5,Neon charge indicator replaces bleeder resistor
+100,X067,Fable,bottom,2.25,3.5,3,5,2,4,Tilt the oven
+101,X036,Haiku,bottom,2,3.5,2,3,4,5,Rounded Edge Cavity Mouth
+102,X042,Haiku,bottom,2,3.5,2,4,3,5,Window Mesh Peel-Off
+103,X060,Haiku,bottom,2,3.5,2,6,2,4,Fold-Away Oven Chassis
+104,X078,Fable,bottom,2.0,3.5,2,4,2,6,Hinge contacts as the interlock
+105,X075,Haiku,bottom,2,3.5,3,3,5,3,Auto-Adjusting Voltage Core
+106,X083,Haiku,bottom,1.75,3.5,2,5,4,3,Low-Voltage RF Stack
+107,X040,Fable,bottom,2.5,3.25,2,4,3,4,Capacitor-free design eliminates bleed-down
+108,X002,Opus,bottom,2.25,3.25,2,3,5,3,Capacitor-Free Supply
+109,X031,Opus,bottom,2.25,3.25,3,5,2,3,Hardwired Wall Module
+110,X025,Haiku,bottom,1.75,3.25,2,5,2,4,Plug-Free Induction Hob Link
+111,X102,Haiku,bottom,1.75,3.25,1,5,2,5,Pulp-Molded Shell
+112,X096,Haiku,bottom,2,3.0,2,3,3,4,Silent Passive Cooling
+113,X104,Haiku,bottom,2,3.0,3,4,2,3,Reflective Mirror Door
+114,X098,Haiku,bottom,2,3.0,1,4,2,5,Thermoelectric Silent Cooler
+115,X008,Haiku,bottom,1.75,3.0,2,3,5,2,No Stored Charge Design
+116,X064,Haiku,bottom,2,2.75,2,4,1,4,Fog-Proof Seal Without Choke
+117,X063,Haiku,bottom,2,2.75,2,3,2,4,Quiet Gravity Vent
+118,X119,Haiku,bottom,1.75,2.75,2,4,2,3,Passive Capacitor Discharge
+119,X061,Fable,bottom,2.25,2.5,2,3,2,3,Thermal fuse instead of snap-disc thermostat
+120,X066,Haiku,bottom,1.75,2.5,2,3,2,3,Cavity Sound Sealer
