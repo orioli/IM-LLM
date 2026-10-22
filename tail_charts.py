@@ -65,7 +65,7 @@ SPREAD_NOTE_BETTER = ("B", "low", 2.0, "Giving a partial view of the graph impro
 SPREAD_NOTE_WRAP = 30            # characters per line in the notes
 # y-axis names in the slope-spread charts (8b, 8c); other charts keep the letter codes
 SPREAD_THUMB_RIGHT = 0.73       # chart 8c: right edge of the plot when the thumbnail column is added
-SPREAD_NAMES = {"A": "Full graph", "B": "Slice", "C": "No graph", "R": "Random graph"}
+SPREAD_NAMES = dict(COND_NAME)   # "A · full graph", ...: the same names as charts 1 and 5
 KEY_POS = (1.03, 0.98)        # chart 8: top-left corner of the slope key, in axes fractions (>1 = right of plot)
 CURVE_STYLE = {"low": (0, (1, 2)), "medium": (0, (5, 2)), "high": "-", "xhigh": "-", "max": "-"}
 

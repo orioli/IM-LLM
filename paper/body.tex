@@ -536,10 +536,12 @@ Fable 5.1 & 40 & 2,021 & 173,120 & 583,199 & 30.89 \\
 \hypertarget{sample of genrated ideas}{%
 \subsection{Sample of generated ideas}\label{sample of genrated ideas}}
 
+One of the authors read all the ideas from Experiment 1. This lead to Experiment 2. LLM-ideation studies usually assess novelty with embedding measures such as the semantic distance between ideas, which show how the ideas differ from each other but not from prior art. 
+
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  \textbf{The top tier is state of the art, not invention.} Two ideas from the judge's top decile:
+  \textbf{The top tier is state of the art, not invention.} Two ideas from the judge's top decile from Experiment 1:
 
   \begin{quote}
   \texttt{A\_M13\_high\_r03} --- \emph{Solid-State RF Core: Magnetron and HV Stack Replaced by GaN Amplifiers}
@@ -724,16 +726,16 @@ Words per idea
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-A (Full) & low & 65 & 100\% & 10,912 & 3,331 & 14,243 & 91 \\
-A (Full) & medium & 65 & 100\% & 10,912 & 5,295 & 16,208 & 99 \\
-A (Full) & high & 65 & 100\% & 10,912 & 11,163 & 22,076 & 108 \\
-A (Full) & xhigh & 30 & 100\% & 10,912 & 28,346 & 39,258 & 117 \\
-B (Slice) & low & 65 & 100\% & 3,778 & 2,849 & 6,627 & 89 \\
-B (Slice) & medium & 65 & 100\% & 3,778 & 4,772 & 8,550 & 98 \\
-B (Slice) & high & 65 & 98.5\% & 3,778 & 8,628 & 12,407 & 100 \\
-B (Slice) & xhigh & 30 & 100\% & 4,135 & 25,885 & 30,020 & 117 \\
-R (Rnd) & high & 65 & 100\% & 3,143 & 8,778 & 11,921 & 98 \\
-C (No graph)  & high & 65 & 100\% & 1,055 & 6,939 & 7,994 & 106 \\
+A \textperiodcentered{} Full Graph & low & 65 & 100\% & 10,912 & 3,331 & 14,243 & 91 \\
+A \textperiodcentered{} Full Graph & medium & 65 & 100\% & 10,912 & 5,295 & 16,208 & 99 \\
+A \textperiodcentered{} Full Graph & high & 65 & 100\% & 10,912 & 11,163 & 22,076 & 108 \\
+A \textperiodcentered{} Full Graph & xhigh & 30 & 100\% & 10,912 & 28,346 & 39,258 & 117 \\
+B \textperiodcentered{} Slice & low & 65 & 100\% & 3,778 & 2,849 & 6,627 & 89 \\
+B \textperiodcentered{} Slice & medium & 65 & 100\% & 3,778 & 4,772 & 8,550 & 98 \\
+B \textperiodcentered{} Slice & high & 65 & 98.5\% & 3,778 & 8,628 & 12,407 & 100 \\
+B \textperiodcentered{} Slice & xhigh & 30 & 100\% & 4,135 & 25,885 & 30,020 & 117 \\
+R \textperiodcentered{} Random & high & 65 & 100\% & 3,143 & 8,778 & 11,921 & 98 \\
+C \textperiodcentered{} Control & high & 65 & 100\% & 1,055 & 6,939 & 7,994 & 106 \\
 \end{longtable}
 
 xhigh was run on 6 of the 13 market needs; those market needs have larger slices on average, which is why B's xhigh input is higher.
@@ -800,16 +802,16 @@ New nodes per idea
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-A (Full graph) & low & 53\% & 0\% & 0.95 & 2.8 \\
-A (Full graph) & medium & 49\% & 0\% & 0.69 & 3.1 \\
-A (Full graph) & high & 48\% & 0\% & 0.54 & 3.4 \\
-A (Full graph) & xhigh & 40\% & 0\% & 0.33 & 3.6 \\
-B (Slice) & low & 0\% & 0\% & 0.86 & 2.9 \\
-B (Slice) & medium & 0\% & 0\% & 0.48 & 3.1 \\
-B (Slice) & high & 0\% & 0\% & 0.55 & 3.3 \\
-B (Slice) & xhigh & 0\% & 0\% & 0.40 & 3.9 \\
-R (Random graph) & high & 42\% & 0\% & 0.51 & 3.3 \\
-C (No graph) & high & --- & 48\% & 0.37 & 4.4 \\
+A \textperiodcentered{} Full Graph & low & 53\% & 0\% & 0.95 & 2.8 \\
+A \textperiodcentered{} Full Graph & medium & 49\% & 0\% & 0.69 & 3.1 \\
+A \textperiodcentered{} Full Graph & high & 48\% & 0\% & 0.54 & 3.4 \\
+A \textperiodcentered{} Full Graph & xhigh & 40\% & 0\% & 0.33 & 3.6 \\
+B \textperiodcentered{} Slice & low & 0\% & 0\% & 0.86 & 2.9 \\
+B \textperiodcentered{} Slice & medium & 0\% & 0\% & 0.48 & 3.1 \\
+B \textperiodcentered{} Slice & high & 0\% & 0\% & 0.55 & 3.3 \\
+B \textperiodcentered{} Slice & xhigh & 0\% & 0\% & 0.40 & 3.9 \\
+R \textperiodcentered{} Random & high & 42\% & 0\% & 0.51 & 3.3 \\
+C \textperiodcentered{} Control & high & --- & 48\% & 0.37 & 4.4 \\
 \end{longtable}
 
 \begin{itemize}
@@ -896,16 +898,16 @@ Tokens per top idea
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-C (No graph) \textperiodcentered{} high & 13 & 33 / 325 & 10.2\% & 8.3--12.3\% & 48\% & 7,994 & 15,746 \\
-R (Random graph) \textperiodcentered{} high & 13 & 32 / 325 & 9.8\% & 7.7--12.3\% & 45\% & 11,921 & 24,215 \\
-B (Slice) \textperiodcentered{} low & 13 & 30 / 323 & 9.3\% & 7.4--11.4\% & 37\% & 6,627 & 14,359 \\
-B (Slice) \textperiodcentered{} medium & 13 & 49 / 325 & 15.1\% & 11.7--18.5\% & 52\% & 8,550 & \textbf{11,342} \\
-B (Slice) \textperiodcentered{} high & 13 & 47 / 320 & 14.7\% & 11.9--17.5\% & 56\% & 12,384 & 16,838 \\
-B (Slice) \textperiodcentered{} xhigh & 6 & 28 / 150 & 18.7\% & 14.0--23.3\% & 73\% & 30,020 & 32,164 \\
-A (Full graph) \textperiodcentered{} low & 13 & 27 / 324 & 8.3\% & 6.2--10.5\% & 37\% & 14,243 & 34,289 \\
-A (Full graph) \textperiodcentered{} medium & 13 & 34 / 325 & 10.5\% & 8.0--13.2\% & 45\% & 16,208 & 30,985 \\
-A (Full graph) \textperiodcentered{} high & 13 & 44 / 325 & 13.5\% & 10.5--16.3\% & 57\% & 22,076 & 32,612 \\
-A (Full graph) \textperiodcentered{} xhigh & 6 & 31 / 150 & 20.7\% & 16.7--24.7\% & 80\% & 39,258 & 37,991 \\
+C \textperiodcentered{} Control \textperiodcentered{} high & 13 & 33 / 325 & 10.2\% & 8.3--12.3\% & 48\% & 7,994 & 15,746 \\
+R \textperiodcentered{} Random \textperiodcentered{} high & 13 & 32 / 325 & 9.8\% & 7.7--12.3\% & 45\% & 11,921 & 24,215 \\
+B \textperiodcentered{} Slice \textperiodcentered{} low & 13 & 30 / 323 & 9.3\% & 7.4--11.4\% & 37\% & 6,627 & 14,359 \\
+B \textperiodcentered{} Slice \textperiodcentered{} medium & 13 & 49 / 325 & 15.1\% & 11.7--18.5\% & 52\% & 8,550 & \textbf{11,342} \\
+B \textperiodcentered{} Slice \textperiodcentered{} high & 13 & 47 / 320 & 14.7\% & 11.9--17.5\% & 56\% & 12,384 & 16,838 \\
+B \textperiodcentered{} Slice \textperiodcentered{} xhigh & 6 & 28 / 150 & 18.7\% & 14.0--23.3\% & 73\% & 30,020 & 32,164 \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} low & 13 & 27 / 324 & 8.3\% & 6.2--10.5\% & 37\% & 14,243 & 34,289 \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} medium & 13 & 34 / 325 & 10.5\% & 8.0--13.2\% & 45\% & 16,208 & 30,985 \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} high & 13 & 44 / 325 & 13.5\% & 10.5--16.3\% & 57\% & 22,076 & 32,612 \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} xhigh & 6 & 31 / 150 & 20.7\% & 16.7--24.7\% & 80\% & 39,258 & 37,991 \\
 \end{longtable}
 
 
@@ -974,16 +976,16 @@ Yield (top ideas per 100k tokens)
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-B (Slice) \textperiodcentered{} medium & 49 & 0.56M & \textbf{8.8} & 7.0--10.7 \\
-B (Slice) \textperiodcentered{} low & 30 & 0.43M & 7.0 & 5.4--8.4 \\
-C (No graph) \textperiodcentered{} high & 33 & 0.52M & 6.4 & 5.1--7.7 \\
-B (Slice) \textperiodcentered{} high & 47 & 0.79M & 5.9 & 4.9--7.0 \\
-R (Random graph) \textperiodcentered{} high & 32 & 0.77M & 4.1 & 3.1--5.2 \\
-A (Full graph) \textperiodcentered{} medium & 34 & 1.05M & 3.2 & 2.5--4.1 \\
-B (Slice) \textperiodcentered{} xhigh (6 market needs) & 28 & 0.90M & 3.1 & 2.4--3.9 \\
-A (Full graph) \textperiodcentered{} high & 44 & 1.43M & 3.1 & 2.4--3.7 \\
-A (Full graph) \textperiodcentered{} low & 27 & 0.93M & 2.9 & 2.2--3.7 \\
-A (Full graph) \textperiodcentered{} xhigh (6 market needs) & 31 & 1.18M & 2.6 & 2.1--3.1 \\
+B \textperiodcentered{} Slice \textperiodcentered{} medium & 49 & 0.56M & \textbf{8.8} & 7.0--10.7 \\
+B \textperiodcentered{} Slice \textperiodcentered{} low & 30 & 0.43M & 7.0 & 5.4--8.4 \\
+C \textperiodcentered{} Control \textperiodcentered{} high & 33 & 0.52M & 6.4 & 5.1--7.7 \\
+B \textperiodcentered{} Slice \textperiodcentered{} high & 47 & 0.79M & 5.9 & 4.9--7.0 \\
+R \textperiodcentered{} Random \textperiodcentered{} high & 32 & 0.77M & 4.1 & 3.1--5.2 \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} medium & 34 & 1.05M & 3.2 & 2.5--4.1 \\
+B \textperiodcentered{} Slice \textperiodcentered{} xhigh (6 market needs) & 28 & 0.90M & 3.1 & 2.4--3.9 \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} high & 44 & 1.43M & 3.1 & 2.4--3.7 \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} low & 27 & 0.93M & 2.9 & 2.2--3.7 \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} xhigh (6 market needs) & 31 & 1.18M & 2.6 & 2.1--3.1 \\
 \end{longtable}
 
 \begin{itemize}
@@ -1108,13 +1110,13 @@ Sign test p
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-B vs A, high effort & 10 market needs & 2 & 1 & \textbf{0.039} \\
-B vs A, medium effort & 10 & 3 & 0 & 0.092 \\
-C vs R (no graph vs random slice) & 10 & 2 & 1 & \textbf{0.039} \\
-R vs A & 10 & 3 & 0 & 0.092 \\
-C vs A & 9 & 3 & 1 & 0.146 \\
-B vs R & 9 & 4 & 0 & 0.267 \\
-B vs C & 8 & 4 & 1 & 0.388 \\
+B \textperiodcentered{} Slice vs A \textperiodcentered{} Full Graph, high effort & 10 market needs & 2 & 1 & \textbf{0.039} \\
+B \textperiodcentered{} Slice vs A \textperiodcentered{} Full Graph, medium effort & 10 & 3 & 0 & 0.092 \\
+C \textperiodcentered{} Control vs R \textperiodcentered{} Random & 10 & 2 & 1 & \textbf{0.039} \\
+R \textperiodcentered{} Random vs A \textperiodcentered{} Full Graph & 10 & 3 & 0 & 0.092 \\
+C \textperiodcentered{} Control vs A \textperiodcentered{} Full Graph & 9 & 3 & 1 & 0.146 \\
+B \textperiodcentered{} Slice vs R \textperiodcentered{} Random & 9 & 4 & 0 & 0.267 \\
+B \textperiodcentered{} Slice vs C \textperiodcentered{} Control & 8 & 4 & 1 & 0.388 \\
 \end{longtable}
 
 \begin{itemize}
@@ -1154,16 +1156,16 @@ Arm & 25k tokens & 50k tokens & 100k tokens \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-No graph \textperiodcentered{} high & 74\% (3 calls) & 84\% (6) & 92\% (12) \\
-Random graph \textperiodcentered{} high & 65\% (2) & 82\% (4) & 93\% (8) \\
-Slice \textperiodcentered{} low & 64\% (3) & 81\% (7) & 91\% (15) \\
-Slice \textperiodcentered{} medium & 70\% (2) & \textbf{89\%} (5) & \textbf{96\%} (11) \\
-Slice \textperiodcentered{} high & 74\% (2) & 88\% (4) & 95\% (8) \\
-Slice \textperiodcentered{} xhigh (6 market needs) & --- (0) & 69\% (1) & 94\% (3) \\
-Full graph \textperiodcentered{} low & 39\% (1) & 67\% (3) & 86\% (7) \\
-Full graph \textperiodcentered{} medium & 46\% (1) & 79\% (3) & 94\% (6) \\
-Full graph \textperiodcentered{} high & 56\% (1) & 76\% (2) & 90\% (4) \\
-Full graph \textperiodcentered{} xhigh (6 market needs) & --- (0) & 75\% (1) & 93\% (2) \\
+C \textperiodcentered{} Control \textperiodcentered{} high & 74\% (3 calls) & 84\% (6) & 92\% (12) \\
+R \textperiodcentered{} Random \textperiodcentered{} high & 65\% (2) & 82\% (4) & 93\% (8) \\
+B \textperiodcentered{} Slice \textperiodcentered{} low & 64\% (3) & 81\% (7) & 91\% (15) \\
+B \textperiodcentered{} Slice \textperiodcentered{} medium & 70\% (2) & \textbf{89\%} (5) & \textbf{96\%} (11) \\
+B \textperiodcentered{} Slice \textperiodcentered{} high & 74\% (2) & 88\% (4) & 95\% (8) \\
+B \textperiodcentered{} Slice \textperiodcentered{} xhigh (6 market needs) & --- (0) & 69\% (1) & 94\% (3) \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} low & 39\% (1) & 67\% (3) & 86\% (7) \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} medium & 46\% (1) & 79\% (3) & 94\% (6) \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} high & 56\% (1) & 76\% (2) & 90\% (4) \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} xhigh (6 market needs) & --- (0) & 75\% (1) & 93\% (2) \\
 \end{longtable}
 
 \begin{itemize}
@@ -1402,10 +1404,10 @@ Order agreement
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-Full graph vs No graph & 65 & 44 & 13 & 8 & 74\% & 62--83\% & \textless{} 0.001 & 88\% \\
-Slice vs No graph & 65 & 34 & 19 & 12 & 62\% & 49--72\% & 0.053 & 82\% \\
-Slice vs Random graph & 65 & 25 & 20 & 20 & 54\% & 42--65\% & 0.55 & 68\% \\
-Full graph vs Slice (for reference) & 65 & 34 & 16 & 15 & 64\% & 52--74\% & 0.015 & 77\% \\
+A \textperiodcentered{} Full Graph vs C \textperiodcentered{} Control & 65 & 44 & 13 & 8 & 74\% & 62--83\% & \textless{} 0.001 & 88\% \\
+B \textperiodcentered{} Slice vs C \textperiodcentered{} Control & 65 & 34 & 19 & 12 & 62\% & 49--72\% & 0.053 & 82\% \\
+B \textperiodcentered{} Slice vs R \textperiodcentered{} Random & 65 & 25 & 20 & 20 & 54\% & 42--65\% & 0.55 & 68\% \\
+A \textperiodcentered{} Full Graph vs B \textperiodcentered{} Slice, for reference & 65 & 34 & 16 & 15 & 64\% & 52--74\% & 0.015 & 77\% \\
 \end{longtable}
 
 Mean score difference, first minus second arm (1--5 scale):
@@ -1453,9 +1455,9 @@ Diversity
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-Full graph $-$ No graph & +0.21 & +0.24 & +0.29 & +0.88 & $-0.11$ \\
-Slice $-$ No graph & +0.16 & +0.20 & +0.14 & +0.52 & $-0.30$ \\
-Slice $-$ Random graph & +0.14 & $-0.08$ & +0.20 & $-0.03$ & $-0.20$ \\
+A \textperiodcentered{} Full Graph $-$ C \textperiodcentered{} Control & +0.21 & +0.24 & +0.29 & +0.88 & $-0.11$ \\
+B \textperiodcentered{} Slice $-$ C \textperiodcentered{} Control & +0.16 & +0.20 & +0.14 & +0.52 & $-0.30$ \\
+B \textperiodcentered{} Slice $-$ R \textperiodcentered{} Random & +0.14 & $-0.08$ & +0.20 & $-0.03$ & $-0.20$ \\
 \end{longtable}
 
 \begin{itemize}
@@ -1490,16 +1492,16 @@ Arm & Mean score & Relevance & Novelty & Feasibility & Specificity \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-No graph \textperiodcentered{} high & 3.44 & 3.49 & 3.29 & 3.21 & 3.78 \\
-Random graph \textperiodcentered{} high & 3.46 & 3.44 & 3.16 & 3.37 & 3.88 \\
-Slice \textperiodcentered{} low & 3.28 & 3.38 & 3.01 & 3.26 & 3.50 \\
-Slice \textperiodcentered{} medium & 3.47 & 3.53 & 3.20 & 3.36 & 3.82 \\
-Slice \textperiodcentered{} high & 3.53 & 3.60 & 3.25 & 3.37 & 3.92 \\
-Slice \textperiodcentered{} xhigh (6 market needs) & 3.54 & 3.47 & 3.38 & 3.29 & 4.03 \\
-Full graph \textperiodcentered{} low & 3.30 & 3.39 & 3.04 & 3.27 & 3.52 \\
-Full graph \textperiodcentered{} medium & 3.44 & 3.42 & 3.10 & 3.42 & 3.83 \\
-Full graph \textperiodcentered{} high & 3.50 & 3.46 & 3.20 & 3.45 & 3.89 \\
-Full graph \textperiodcentered{} xhigh (6 market needs) & 3.52 & 3.42 & 3.33 & 3.29 & 4.03 \\
+C \textperiodcentered{} Control \textperiodcentered{} high & 3.44 & 3.49 & 3.29 & 3.21 & 3.78 \\
+R \textperiodcentered{} Random \textperiodcentered{} high & 3.46 & 3.44 & 3.16 & 3.37 & 3.88 \\
+B \textperiodcentered{} Slice \textperiodcentered{} low & 3.28 & 3.38 & 3.01 & 3.26 & 3.50 \\
+B \textperiodcentered{} Slice \textperiodcentered{} medium & 3.47 & 3.53 & 3.20 & 3.36 & 3.82 \\
+B \textperiodcentered{} Slice \textperiodcentered{} high & 3.53 & 3.60 & 3.25 & 3.37 & 3.92 \\
+B \textperiodcentered{} Slice \textperiodcentered{} xhigh (6 market needs) & 3.54 & 3.47 & 3.38 & 3.29 & 4.03 \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} low & 3.30 & 3.39 & 3.04 & 3.27 & 3.52 \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} medium & 3.44 & 3.42 & 3.10 & 3.42 & 3.83 \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} high & 3.50 & 3.46 & 3.20 & 3.45 & 3.89 \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} xhigh (6 market needs) & 3.52 & 3.42 & 3.33 & 3.29 & 4.03 \\
 \end{longtable}
 
 \begin{itemize}
@@ -1610,10 +1612,10 @@ Order agreement
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-high vs low & Full graph & 65 & 58 & 3 & 4 & 92\% & 83--97\% & \textless{} 0.001 & 94\% \\
-high vs low & Slice & 65 & 59 & 2 & 4 & 94\% & 85--98\% & \textless{} 0.001 & 94\% \\
-xhigh vs high & Full graph & 30 & 19 & 5 & 6 & 73\% & 56--86\% & 0.007 & 80\% \\
-xhigh vs high & Slice & 30 & 25 & 4 & 1 & 85\% & 68--94\% & \textless{} 0.001 & 97\% \\
+high vs low & A \textperiodcentered{} Full Graph & 65 & 58 & 3 & 4 & 92\% & 83--97\% & \textless{} 0.001 & 94\% \\
+high vs low & B \textperiodcentered{} Slice & 65 & 59 & 2 & 4 & 94\% & 85--98\% & \textless{} 0.001 & 94\% \\
+xhigh vs high & A \textperiodcentered{} Full Graph & 30 & 19 & 5 & 6 & 73\% & 56--86\% & 0.007 & 80\% \\
+xhigh vs high & B \textperiodcentered{} Slice & 30 & 25 & 4 & 1 & 85\% & 68--94\% & \textless{} 0.001 & 97\% \\
 \end{longtable}
 
 Mean score difference, higher minus lower effort:
@@ -1666,10 +1668,10 @@ Diversity
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-high $-$ low & Full graph & +0.48 & +0.71 & +0.52 & +1.14 & +0.63 \\
-high $-$ low & Slice & +0.71 & +0.69 & +0.70 & +1.23 & +0.71 \\
-xhigh $-$ high & Full graph & +0.25 & +0.34 & +0.02 & +0.46 & +0.33 \\
-xhigh $-$ high & Slice & +0.19 & +0.47 & +0.03 & +0.61 & +0.45 \\
+high $-$ low & A \textperiodcentered{} Full Graph & +0.48 & +0.71 & +0.52 & +1.14 & +0.63 \\
+high $-$ low & B \textperiodcentered{} Slice & +0.71 & +0.69 & +0.70 & +1.23 & +0.71 \\
+xhigh $-$ high & A \textperiodcentered{} Full Graph & +0.25 & +0.34 & +0.02 & +0.46 & +0.33 \\
+xhigh $-$ high & B \textperiodcentered{} Slice & +0.19 & +0.47 & +0.03 & +0.61 & +0.45 \\
 \end{longtable}
 
 \begin{itemize}
@@ -1743,7 +1745,7 @@ Order agreement
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-Slice high vs Full graph low & 65 & 56 & 3 & 6 & 91\% & 81--96\% & \textless{} 0.001 & 91\% \\
+B \textperiodcentered{} Slice \textperiodcentered{} high vs A \textperiodcentered{} Full Graph \textperiodcentered{} low & 65 & 56 & 3 & 6 & 91\% & 81--96\% & \textless{} 0.001 & 91\% \\
 \end{longtable}
 
 B-high was ahead on every criterion and for all 13 market needs, at 12,407 vs 14,243 tokens per call (13\% fewer). For a similar budget, a relevant slice with more thinking clearly beats the full graph with little thinking.
@@ -1774,20 +1776,20 @@ Model & Representation & Top ideas / ideas & Per 100k tokens & Per US dollar \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-Haiku 5.5 & A full graph   & 28/517 (5.4\%)  & 9.4 [6.3--13.2]   & 266 [177--373] \\
-          & B need slice   & 42/525 (8.0\%)  & 20.4 [14.5--27.8] & 459 [326--630] \\
-          & R random slice & 19/513 (3.7\%)  & 10.9 [6.7--16.5]  & 246 [151--375] \\
-          & C no graph     & 37/525 (7.0\%)  & 22.2 [17.0--28.5] & 468 [360--600] \\
+Haiku 5.5 & A \textperiodcentered{} Full Graph & 28/517 (5.4\%)  & 9.4 [6.3--13.2]   & 266 [177--373] \\
+          & B \textperiodcentered{} Slice & 42/525 (8.0\%)  & 20.4 [14.5--27.8] & 459 [326--630] \\
+          & R \textperiodcentered{} Random & 19/513 (3.7\%)  & 10.9 [6.7--16.5]  & 246 [151--375] \\
+          & C \textperiodcentered{} Control & 37/525 (7.0\%)  & 22.2 [17.0--28.5] & 468 [360--600] \\
 \midrule
-Opus 5.5  & A full graph   & 72/506 (14.2\%) & 26.3 [21.5--31.1] & 19.3 [16.0--22.5] \\
-          & B need slice   & 73/495 (14.7\%) & 39.9 [31.7--48.6] & 22.9 [18.3--27.6] \\
-          & R random slice & 60/487 (12.3\%) & 37.2 [29.7--45.6] & 21.1 [16.8--25.5] \\
-          & C no graph     & 65/497 (13.1\%) & 34.8 [26.7--43.2] & 18.2 [14.1--22.9] \\
+Opus 5.5  & A \textperiodcentered{} Full Graph & 72/506 (14.2\%) & 26.3 [21.5--31.1] & 19.3 [16.0--22.5] \\
+          & B \textperiodcentered{} Slice & 73/495 (14.7\%) & 39.9 [31.7--48.6] & 22.9 [18.3--27.6] \\
+          & R \textperiodcentered{} Random & 60/487 (12.3\%) & 37.2 [29.7--45.6] & 21.1 [16.8--25.5] \\
+          & C \textperiodcentered{} Control & 65/497 (13.1\%) & 34.8 [26.7--43.2] & 18.2 [14.1--22.9] \\
 \midrule
-Fable 5.1 & A full graph   & 78/501 (15.6\%) & 26.4 [22.0--30.6] & 7.5 [6.2--8.8] \\
-          & B need slice   & 87/507 (17.2\%) & 51.3 [45.0--57.9] & 11.9 [10.4--13.5] \\
-          & R random slice & 58/498 (11.6\%) & 37.0 [28.4--46.6] & 8.5 [6.5--10.7] \\
-          & C no graph     & 72/495 (14.5\%) & 53.6 [44.3--63.4] & 11.4 [9.4--13.6] \\
+Fable 5.1 & A \textperiodcentered{} Full Graph & 78/501 (15.6\%) & 26.4 [22.0--30.6] & 7.5 [6.2--8.8] \\
+          & B \textperiodcentered{} Slice & 87/507 (17.2\%) & 51.3 [45.0--57.9] & 11.9 [10.4--13.5] \\
+          & R \textperiodcentered{} Random & 58/498 (11.6\%) & 37.0 [28.4--46.6] & 8.5 [6.5--10.7] \\
+          & C \textperiodcentered{} Control & 72/495 (14.5\%) & 53.6 [44.3--63.4] & 11.4 [9.4--13.6] \\
 \end{longtable}
 
 \subsubsection{Representation across models}\label{rq4-representation}
@@ -1808,6 +1810,30 @@ Fable 5.1 & A full graph   & 78/501 (15.6\%) & 26.4 [22.0--30.6] & 7.5 [6.2--8.8
 
 \textbf{Per dollar, the full graph's penalty shrinks.} The graph adds only input tokens, which cost a fifth as much as output tokens. Per dollar, Opus's full graph is within the intervals of the other three representations (19.3 against 18.2--22.9); Fable's remains clearly below the slice and no graph (7.5 against 11.9 and 11.4).
 
+\textbf{The net cost depends on who sifts the ideas.} The dollar yield counts only generation. But the top ideas must still be found among all the others, and Haiku makes the sifting longer: it produced one top idea per 16.5 ideas, against one per 7.4 for Opus and 6.8 for Fable. With a screening cost $s$ per idea, the net cost of a top idea is
+\[
+\text{net cost per top idea} = \frac{\text{generation cost} + s \times \text{ideas generated}}{\text{top ideas}} .
+\]
+Table~\ref{tab:netcost} evaluates it for the three models, pooled over the four representations, with 95\% intervals from 2,000 bootstrap resamples of calls within representation. Screening by an automated judge, as in this study, cost \$0.0012 per idea (\texttt{claude-sonnet-5-5} at list price), and at that cost Haiku is the cheapest per top idea in every resample. Opus becomes cheaper than Haiku once screening costs more than about \$0.005 per idea (95\% CI \$0.004--0.008), and Fable once it costs more than about \$0.01 (\$0.008--0.015). At the cost of a person reading each idea (about 30 seconds at \$60 an hour, \$0.50 per idea), both larger models cost less than half as much per top idea as Haiku in every resample; between them, Opus and Fable cost about the same at any screening cost (Fable cheaper in 83\% of resamples at \$0.50). The content-only re-rating (Section~\ref{rq4-style}) adds that Haiku's top ideas are also somewhat weaker. The cheapest model is therefore the one that matches the screening: a small model when an automated judge filters the output, a larger one when people do.
+
+\begin{longtable}[]{@{}lrrrr@{}}
+\caption{Net cost per top idea (US dollars) for a given screening cost per idea, pooled over the four representations of Experiment 2, with bootstrap 95\% intervals (2,000 resamples of calls within representation). Generation at list prices; \$0.0012 is the measured cost of the automated judge per idea; \$0.50 corresponds to about 30 seconds of human reading at \$60 an hour. Bold: cheapest, or indistinguishable from the cheapest.}\label{tab:netcost}\tabularnewline
+\toprule\noalign{}
+Model & Ideas per top idea & \$0 & \$0.0012 (AI judge) & \$0.50 (human) \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
+\toprule\noalign{}
+Model & Ideas per top idea & \$0 & \$0.0012 (AI judge) & \$0.50 (human) \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Haiku 5.5 & 16.5 [14.1--19.5] & \textbf{0.003} [0.002--0.003] & \textbf{0.023} [0.019--0.027] & 8.26 [7.07--9.78] \\
+Opus 5.5 & 7.4 [6.7--8.2] & 0.049 [0.045--0.055] & 0.058 [0.053--0.065] & \textbf{3.73} [3.39--4.15] \\
+Fable 5.1 & 6.8 [6.3--7.4] & 0.105 [0.096--0.115] & 0.113 [0.104--0.124] & \textbf{3.50} [3.24--3.82] \\
+\end{longtable}
+
 \subsubsection{Single calls and list length}\label{rq4-calls}
 
 \textbf{Single calls vary widely} (Figure~\ref{fig:rq4}B). Within one arm, a call's yield ranged up to about fourfold (for example 12 to 67 top ideas per 100k tokens for Fable with the random slice), so a single brainstorming call is an unreliable sample of what a configuration delivers. In Experiment 1, with five ideas per call, about half of all calls produced no top idea at all.
@@ -1826,7 +1852,25 @@ The larger models' ideas read better, and part of their higher ratings may rewar
 \label{fig:extremes}
 \end{figure}
 
-\textbf{Result.} The second judge's top 20 came 3 from Haiku, 9 from Opus and 8 from Fable, and its bottom 20 15, 2 and 3. It agreed with the first judge at both ends: all of its top 20 had been in the first judge's top 20s and all of its bottom 20 in the first judge's bottom 20s (Spearman $\rho = 0.87$ over the 120 ideas). Once wording was set aside, Haiku's ideas remained the weakest at both ends, so its gap to the larger models is one of content. Opus and Fable were indistinguishable on content (mean ratings 6.75 and 6.71 for their top ideas, 4.31 and 4.20 for their bottom ideas), so Fable's higher yield under the first judge may partly reflect presentation.
+\begin{longtable}[]{@{}lrr@{}}
+\caption{Mean content rating by the second judge (Opus, 1--10, mean of four criteria) of each model's ideas, by the first judge's (Sonnet's) group. 20 ideas per cell.}\label{tab:extremes}\tabularnewline
+\toprule\noalign{}
+Model & First judge's top 20 & First judge's bottom 20 \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
+\toprule\noalign{}
+Model & First judge's top 20 & First judge's bottom 20 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Haiku 5.5 & 6.20 & 3.33 \\
+Opus 5.5 & 6.75 & 4.31 \\
+Fable 5.1 & 6.71 & 4.20 \\
+\end{longtable}
+
+\textbf{Result.} The second judge's top 20 came 3 from Haiku, 9 from Opus and 8 from Fable, and its bottom 20 15, 2 and 3. It agreed with the first judge at both ends: all of its top 20 had been in the first judge's top 20s and all of its bottom 20 in the first judge's bottom 20s (Spearman $\rho = 0.87$ over the 120 ideas). Once wording was set aside, Haiku's ideas remained the weakest at both ends, so its gap to the larger models is one of content. Opus and Fable were indistinguishable on content (mean ratings 6.75 and 6.71 for their top ideas, 4.31 and 4.20 for their bottom ideas; Table~\ref{tab:extremes}), so Fable's higher yield under the first judge may partly reflect presentation.
 
 \textbf{Caveats.} The second judge is one of the three generators and may still favour its own style, although it saw no authorship. Forty ideas per model, chosen at the extremes of another judge's ranking, are a small and selective sample; the check bounds the role of presentation rather than measuring it. Twelve ideas tied at the cut of the top 20 (content rating 7.0); ties were broken by the first judge's score, which slightly favours Opus and Fable, whose top scores reach 4.50 against 4.25 for Haiku. Random tie-breaking would move at most one or two places and leaves the conclusion unchanged.
 
@@ -1870,16 +1914,16 @@ Win rate of the winning arm
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-Full graph vs Slice, low effort & 452 / 443 & 65\% & 65\% (Full graph) \\
-Full graph vs Slice, high effort & 542 / 492 & 71\% & 64\% (Full graph) \\
-High vs low effort, Full graph & 542 / 452 & 90\% & 92\% (high) \\
-High vs low effort, Slice & 492 / 443 & 85\% & 94\% (high) \\
-xhigh vs high effort, Full graph & 587 / 530 & 88\% & 73\% (xhigh) \\
-xhigh vs high effort, Slice & 587 / 499 & 83\% & 85\% (xhigh) \\
-Slice high vs Full graph low & 492 / 452 & 74\% & 91\% (Slice high) \\
-Full graph vs No graph, high effort & 542 / 529 & 68\% & 74\% (Full graph) \\
-Slice vs No graph, high effort & 492 / 529 & 60\% & 62\% (Slice) \\
-Slice vs Random graph, high effort & 492 / 492 & 59\% & 54\% (Slice) \\
+A \textperiodcentered{} Full Graph vs B \textperiodcentered{} Slice, low effort & 452 / 443 & 65\% & 65\%, A \textperiodcentered{} Full Graph \\
+A \textperiodcentered{} Full Graph vs B \textperiodcentered{} Slice, high effort & 542 / 492 & 71\% & 64\%, A \textperiodcentered{} Full Graph \\
+High vs low effort, A \textperiodcentered{} Full Graph & 542 / 452 & 90\% & 92\%, high \\
+High vs low effort, B \textperiodcentered{} Slice & 492 / 443 & 85\% & 94\%, high \\
+xhigh vs high effort, A \textperiodcentered{} Full Graph & 587 / 530 & 88\% & 73\%, xhigh \\
+xhigh vs high effort, B \textperiodcentered{} Slice & 587 / 499 & 83\% & 85\%, xhigh \\
+B \textperiodcentered{} Slice \textperiodcentered{} high vs A \textperiodcentered{} Full Graph \textperiodcentered{} low & 492 / 452 & 74\% & 91\%, B \textperiodcentered{} Slice \textperiodcentered{} high \\
+A \textperiodcentered{} Full Graph vs C \textperiodcentered{} Control, high effort & 542 / 529 & 68\% & 74\%, A \textperiodcentered{} Full Graph \\
+B \textperiodcentered{} Slice vs C \textperiodcentered{} Control, high effort & 492 / 529 & 60\% & 62\%, B \textperiodcentered{} Slice \\
+B \textperiodcentered{} Slice vs R \textperiodcentered{} Random, high effort & 492 / 492 & 59\% & 54\%, B \textperiodcentered{} Slice \\
 \end{longtable}
 
 \begin{itemize}
@@ -1933,18 +1977,9 @@ The pilot (2 market needs $\times$ 3 replicates) found the full graph winning 17
 \end{itemize}
 
 \hypertarget{discussion-and-conclusion}{%
-\section{Discussion and conclusion}\label{discussion-and-conclusion}}
+\section{Discussion}\label{discussion-and-conclusion}}
 
 
-\hypertarget{discusion}{%
-\subsection{Discussion}\label{discusion}}
-
-\textbf{Expert reading of all ideas.} As a first validation, one of the authors read all 2,892 generated ideas of Experiment 1, which compares the four representations across the effort levels; Experiment 2's ideas were not read in this way. LLM-ideation studies often assess output linguistically, with embedding-based measures such as the semantic distance between ideas. These are useful for diversity, but they measure how the generated texts relate \emph{to each other}, not to prior art, so the ``novelty'' or ``surprise'' they report has little to do with innovation worth in the patent sense. The reading was aimed at exactly that gap, and produced three observations.
-
-
-
-\hypertarget{conclusions}{%
-\subsection{Conclusions}\label{conclusions}}
 
 This study asked how much of a product's knowledge graph an LLM needs to see in order to brainstorm well, judged not by the quality of its output alone but by how efficiently it turns tokens, and money, into top ideas. An innovation matrix \citep{Tchirsky} of a microwave oven (123 nodes, 246 edges) was given to a model in four forms: the full graph (A), the vertical slice for the target market need (B), a random slice of the same size (R), or no graph at all (C). In Experiment 1, \texttt{claude-haiku-5-5} applied the SUBSTITUTE operator to each of 13 market needs at four levels of thinking effort, producing 2,892 ideas. In Experiment 2, Haiku, \texttt{claude-opus-5-5} and \texttt{claude-fable-5-1} were each asked for 50 ideas per call on one market need. All ideas were judged blind by \texttt{claude-sonnet-5-5}. Brainstorming is a search for the rare great idea, so the main measure was the \textbf{yield}: top ideas (score $\ge 4.0$) per 100k tokens, and in Experiment 2 also per dollar.
 
@@ -1966,41 +2001,16 @@ The short answer is that, for finding top ideas, the knowledge graph did not pay
   \textbf{Model choice is a question of unit economics.} Per token, Opus and Fable found two to three times as many top ideas as Haiku; per dollar at list prices, Haiku found about 20 times more than Opus and 40 times more than Fable. The best model per token is the worst per dollar (exploratory; Section~\ref{rq4}).
 \end{enumerate}
 
-These results are bounded. They concern one product, one operator, one judge model and, in Experiment 2, one market need, and a top idea is one this judge rated highly, not an idea checked against prior art. The expert reading suggests what the judge rewards: Haiku behaves as a retrieval system, holding a lossy copy of its training corpus, patents and product literature included, and surfacing the engineering moves that bear on a stated problem 
-
-(Section~\ref{sample of generated ideas (Experiment 1)}). A retrieval system is most efficient when the query is precise, and a stated market need is already a precise query; a large graph adds cost more than direction. Whether larger models do more than retrieve is open. It has been argued that no amount of scale removes this limit, because the abductive ``jump'' to new premises is not a matter of compressing more text \citep{Zahavy2026}; Experiment 2 is consistent with that view but cannot test it. A content-only re-rating (Section~\ref{rq4-style}) suggests that their lead over Haiku is one of content, while Fable's edge over Opus may be one of presentation; checking the best ideas against prior art would show whether either goes beyond retrieval.
+These results are bounded. They concern one product, one operator, one judge model and, in Experiment 2, one market need, and a top idea is one this judge rated highly, not an idea checked against prior art. The expert reading suggests what the judge rewards: Haiku behaves as a retrieval system, holding a lossy copy of its training corpus, patents and product literature included, and surfacing the engineering moves that bear on a stated problem (Section~\ref{sample of genrated ideas}). A retrieval system is most efficient when the query is precise, and a stated market need is already a precise query; a large graph adds cost more than direction. Whether larger models do more than retrieve is open. It has been argued that no amount of scale removes this limit, because the abductive ``jump'' to new premises is not a matter of compressing more text \citep{Zahavy2026}; Experiment 2 is consistent with that view but cannot test it. A content-only re-rating (Section~\ref{rq4-style}) suggests that their lead over Haiku is one of content, while Fable's edge over Opus may be one of presentation; checking the best ideas against prior art would show whether either goes beyond retrieval.
 
 For practice, the advice is plain: state the market need, give the model at most the slice of the graph that serves it, and choose the model by cost per top idea rather than by its reputation.
 
 \hypertarget{implications-for-design-thinking}{%
 \subsection{Implications for design thinking}\label{implications-for-design-thinking}}
+For design practice, the results point the same way as a familiar design move: framing beats volume. Stating the market need precisely did most of the work. Giving the model the relevant slice of the product graph was the machine version of narrowing the problem, but it did no better than the stated need alone, and the full graph only added cost. Three highlights:
 
-\begin{itemize}
-\item
-  \textbf{Framing beats tokens.} The market-need slice is a machine version of a familiar design move: narrowing the problem.
-\item
-  \textbf{Yield turns ideation into a budgetable activity.}
-\item
-  \textbf{Context behaved like an input with diminishing, then negative, returns.} 
-\item
-  \textbf{Representation mattered more than role.} 
-\item
+The measure introduced here, \emph{yield} (top ideas per token or per dollar), turns ideation into a budgetable activity: the cost of a given number of strong candidates can be estimated before a session is run, which may also help to design and tune agentic ideation workflows.
 
-  \textbf{The product graph is a reusable, auditable design asset.}
-\end{itemize}
+None of this makes the product graph useless. It remains a strong tool for systematic search, for example a mutually exclusive, collectively exhaustive (MECE) decomposition of the design space, which could help make the combinatorics of innovation explicit rather than leaving them to the model's recall.
 
-\hypertarget{new-research-directions}{%
-\subsection{New research directions}\label{new-research-directions}}
-
-\begin{itemize}
-\item
-  \textbf{Graph-guided search instead of prompts.} 
-
-\item
-  \textbf{Operators as graph transformations.} TRIZ (40) principles and SCAMPER \citep{Eberle1971} can each be defined as operations on the graph.
-
-\item
-  \textbf{Yield as a standard measure.} Top ideas per token is simple, transferable and does not saturate. 
-\end{itemize}
-
-%so you know... fable ideas seem better, than opus and haiku.. but thats lingusitic bias... when i check  and i ignore the language floritures... the three are comaprable... but to proof that... what if I use anoter prompt to "beautify" haiku and opus to fable level? then show it is indistinguishable? 
+Finally, we propose, and leave for future work, the idea of a \emph{diffable} product graph: one that can be compared with another graph to show exactly what differs. Diffing a product's graph against a competitor's, against an earlier version, or against the graph of the needs it should serve would point to where innovation is missing or possible, giving agents a machine friendly operator to find explore the design space.

@@ -214,12 +214,13 @@ def chart_tokens(rows: list[dict]) -> None:
                 ax.bar(x, i, width=0.7, color=TOKENS["input"], edgecolor=SURFACE, linewidth=2)
                 ax.bar(x, o, bottom=i, width=0.7, color=TOKENS["output"], edgecolor=SURFACE, linewidth=2)
                 ax.text(x, i + o + 300, f"{(i + o) / 1000:.1f}k", ha="center", va="bottom", color=INK, fontsize=9)
-                labels.append(SHORT_NAME.get(c, c).replace(" ", "\n") + f"\n{e}")
+                w = COND_NAME.get(c, c).split()           # "A · full graph", as in chart 5
+                labels.append(" ".join(w[:3]) + ("\n" + " ".join(w[3:]) if w[3:] else "") + f"\n{e}")
                 pos.append(x)
                 x += 0.9
         x += 0.6
     ax.set_xticks(pos, labels)
-    ax.tick_params(axis="x", colors=INK2, length=0)
+    ax.tick_params(axis="x", colors=INK2, length=0, labelsize=9)
     ax.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v / 1000:g}k"))
     ax.set_ylabel("tokens per call")
     a_in = [num(r["input_tokens"]) for r in rows if r["condition"] == "A"]
@@ -261,7 +262,7 @@ def chart_win_rates(rows: list[dict]) -> None:
              "high over low": 6, "xhigh over high": 7}
     items.sort(key=lambda t: (next((v for k, v in order.items() if t[0].startswith(k)), 8), t[0]))
     # sorted on the letter codes above; shown with readable names
-    items = [(re.sub(r"\b[ABRC]\b", lambda m: SHORT_NAME[m.group(0)], lab), *rest) for lab, *rest in items]
+    items = [(re.sub(r"\b[ABRC]\b", lambda m: COND_NAME[m.group(0)], lab), *rest) for lab, *rest in items]
 
     fig, ax = plt.subplots(figsize=(8, 0.55 * len(items) + 1.6))
     ys = list(range(len(items)))[::-1]

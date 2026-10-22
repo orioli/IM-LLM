@@ -98,7 +98,7 @@ def chart_yield_box(rows, groups, th, box_kind, draws, sub_note, tag):
             bx.scatter([pos[i] + rng.uniform(-0.16, 0.16) for _ in d], d, s=14, color=col, alpha=0.75,
                        linewidths=0, zorder=3)
         bx.scatter([pos[i]], [r["yield_per_100k"]], s=60, zorder=4, **tc.mark_style(EFFORT, col, 1.6, fill=tc.SURFACE))
-    bx.set_xticks(pos, [tc.SPREAD_NAMES.get(r["condition"], r["condition"]).replace(" ", "\n") for r in ranked],
+    bx.set_xticks(pos, [tc.SPREAD_NAMES.get(r["condition"], r["condition"]).replace(" · ", "\x00").replace(" ", "\n").replace("\x00", " · ") for r in ranked],
                   fontsize=8.5)
     for lab, r in zip(bx.get_xticklabels(), ranked):
         lab.set_color(tc.COND.get(r["condition"], tc.MUTED))
