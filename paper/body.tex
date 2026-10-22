@@ -5,11 +5,11 @@ Most research on AI for innovation asks about outcomes: whether LLM-generated id
 
 In product ideation, engineering design, and service innovation, problem representations range from business model canvases and user journey maps to design structure matrices and typed knowledge graphs \citep{ed2024, Steward1981, Gero1990}. Here, we focus on the \emph{innovation matrix} (IM) of Leo Tchirsky \citep{Tchirsky, berengueres2014}---a layered, typed graph connecting market needs to functions, components, enabling technologies, and scientific fields. While cost-aware evaluation is now standard for LLM reasoning and agent benchmarks \citep{Chen2024d, Wang2024, Kapoor2025}, generative ideation is still largely judged by average scores without accounting for token expenditure or the extreme-value nature of brainstorming \citep{Girotra2010, Dahan2001}.
 
-To address this gap, we examine how problem representations and reasoning allocations govern AI brainstorming efficiency across three questions: first, which graph representation yields the most top ideas per token (RQ1); second, whether structural relevance or raw prompt length drives performance (RQ2); third, how investing tokens in context compares with spending them on thinking effort (RQ3), and fourth what are the effects of using difrent type od models (haiku, opus, fable) in terms of quality of ideas and in terms of unit economics. We test these questions using a countertop microwave oven represented as an innovation matrix with 123 nodes and 246 edges. Using \texttt{claude-haiku-5-5} as the ideation model and the \emph{Substitute} operator from the SCAMPER ideation framework \citep{Eberle1971, Osborn1953} across 13 market needs, we evaluate four prompt representations: the full graph (A), a targeted vertical slice of the active market need (functions, components, technologies, fields, linked constraints and actors; B), a size-matched random slice (R), and a no-graph control (C). Each condition is crossed with four thinking-effort levels across 580 API calls, generating 2,892 ideas that are evaluated blind by \texttt{claude-sonnet-5-5} and validated by human expert review. We measure \emph{yield}: standout ideas (top $\sim$12\%, score $\ge 4.0/5.0$) per 100k total tokens spent.
+To address this gap, we examine how problem representations and reasoning allocations govern AI brainstorming efficiency across four questions: which graph representation yields the most top ideas per token (RQ1); whether structural relevance or raw prompt length drives performance (RQ2); how investing tokens in context compares with spending them on thinking effort (RQ3); and whether the effect of the representation holds across models, and what each model costs per top idea (RQ4). We test these questions on a countertop microwave oven represented as an innovation matrix with 123 nodes and 246 edges, using the \emph{Substitute} operator from the SCAMPER ideation framework \citep{Eberle1971, Osborn1953}. We compare four prompt representations: the full graph (A), a targeted vertical slice of the active market need (functions, components, technologies, fields, linked constraints and actors; B), a size-matched random slice (R), and a no-graph control (C). In Experiment 1 (RQ1--RQ3), \texttt{claude-haiku-5-5} receives each representation for 13 market needs at four thinking-effort levels, in 580 API calls generating 2,892 ideas. In Experiment 2 (RQ4), three models, \texttt{claude-haiku-5-5}, \texttt{claude-opus-5-5} and \texttt{claude-fable-5-1}, each receive the four representations for one market need and are asked for 50 ideas per call, in 120 calls generating about 6,000 ideas. All ideas are scored blind by \texttt{claude-sonnet-5-5}, and Experiment 1's ideas were also read by an expert. We measure \emph{yield}: top ideas (score $\ge 4.0/5.0$; the top $\sim$12\% in Experiment 1) per 100k tokens spent, and in Experiment 2 also per US dollar at list price.
 
 Our primary finding is that prompting with a targeted market-need slice at medium effort achieves peak yield (8.8 top ideas per 100k tokens), nearly tripling the efficiency of the full graph. Note here that the size of the slice is about one third that of the full graph. Although the full graph produces more specific average sets, it yields no more top-tail ideas while doubling prompt costs. Furthermore, scaling thinking effort raises average linguistic quality but fails to improve token efficiency. Together, these findings make three contributions: they reframe AI ideation around representation efficiency (outcome per token) rather than ephemeral human baselines; they establish yield as a non-saturating tail metric that captures extreme-value creative discovery where mean scores mislead; and they provide an open, controlled empirical comparison of product-graph representations and thinking effort, with all prompts, calls, and judgments released.
 
-The remainder of this paper is structured as follows. Section~\ref{related-work} reviews related work on design representations, LLM ideation workflows, and cost-aware evaluation. Section~\ref{methods} details the product graph, prompt representations, experimental design, and scoring metrics. Section~\ref{results} presents empirical findings for RQ1--RQ3 and robustness checks. Finally, Section~\ref{discussion-and-conclusion} discusses implications for design thinking and outlines directions for graph-guided AI innovation.
+The remainder of this paper is structured as follows. Section~\ref{related-work} reviews related work on design representations, LLM ideation workflows, and cost-aware evaluation. Section~\ref{methods} details the product graph, prompt representations, experimental design, and scoring metrics. Section~\ref{results} presents the findings for RQ1--RQ3 (Experiment 1) and RQ4 (Experiment 2), and robustness checks. Finally, Section~\ref{discussion-and-conclusion} discusses implications for design thinking and outlines directions for graph-guided AI innovation.
 
 \section{Related work}
 \label{related-work}
@@ -36,13 +36,13 @@ For lack of objective measures (beyond patentability), currently ideation with A
 
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
-Two experiments are conducted, one to test RQ1, RQ2 and RQ3 where we hold the AI model and the prompt fixed, and varies two inputs (i)  how much of the product graph the prompt contains (the \emph{representation}) and how long the model may think (the \emph{effort}) and accross all the market need avialable in the full graph. It measures what each combination produces and what it costs. Table~\ref{tab:setup} gives an overview; the subsections below give the details. A second experiment (RQ4), fixes the prompt, the effort, the market need to M6, and varies the ammount of (i) grpah shown and (ii) the model type (haiku, opus, fable) this one is concerned not with the graph but with unit economics. First we explain the setup of the first experiment.
+Two experiments are conducted. Experiment 1 (RQ1--RQ3) holds the model and the prompt fixed and varies two inputs across all 13 market needs that the graph can serve: how much of the product graph the prompt contains (the \emph{representation}) and how long the model may think (the \emph{effort}). It measures what each combination produces and what it costs. Experiment 2 (RQ4) fixes the prompt, the effort and the market need (M6), asks for 50 ideas per call instead of 5, and varies the representation and the generator model (Haiku, Opus and Fable). It tests whether the effect of the representation holds across models, and what each model costs per top idea. Table~\ref{tab:setup} gives an overview of Experiment 1 and the subsections below give its details; Experiment 2 is described in Section~\ref{experiment-2}.
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.20}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.58}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.22}}@{}}
-\caption{The study at a glance.}\label{tab:setup}\tabularnewline
+\caption{Experiment 1 (RQ1--RQ3) at a glance. Experiment 2 is summarised in Table~\ref{tab:setup-exp2}.}\label{tab:setup}\tabularnewline
 \toprule\noalign{}
 Item & Value & Details \\
 \midrule\noalign{}
@@ -335,7 +335,11 @@ B at high vs A at low & --- & 65 \\
   \emph{new nodes per idea}, and \emph{words per idea} in the text the judge sees.
 \end{itemize}
 
-\textbf{Top tail.} A \textbf{top idea} is one whose individual score is at least 4.0. Scores move in steps of 0.25 (one step of a 1--5 rating, averaged over four criteria), so no exact percentile cut exists; 4.0 is the step closest to the top 10\% and keeps 12.3\% of all ideas (355 of 2,892). As a stricter check, 4.25 keeps the top 2.4\% (68 ideas). Target market needs differ widely in how easily they yield top ideas (from 3\% to 29\% of ideas at 4.0), and the xhigh arms cover only 6 market needs, so every rate is computed per market need and then averaged over the market needs an arm was run on, each market need weighing the same. For each arm:
+\textbf{Top tail.} A \textbf{top idea} is an idea whose individual score is at least 4.0, that is, one the judge rates 4 or higher on average across relevance, novelty, feasibility and specificity. The threshold is a fixed point on the judge's scale, not a percentile, so the share of ideas that clear it depends on what is being judged. Scores move in steps of 0.25 (one step of a 1--5 rating, averaged over four criteria), so no exact percentile cut exists; in Experiment 1, 4.0 is the step closest to the top 10\% and keeps 12.3\% of all ideas (355 of 2,892). As a stricter check, 4.25 keeps the top 2.4\% (68 ideas).
+
+\textbf{What ``top'' means, and what it does not.} A top idea is top \emph{relative to this setup}: one judge model, one rubric, one brief, one product and one operator. It is not a global benchmark of idea quality or of innovativeness. A score of 4.0 says the judge found the idea relevant, plausible and concrete for this brief; it does not say the idea is new to the world (Section~\ref{sample of genrated ideas} shows that most top ideas restate existing technology), and it cannot be compared with scores from other judges, rubrics or studies. Within the study, the fixed threshold makes arms comparable: an arm that produces more ideas the judge rates highly gets more top ideas. A percentile cut per arm or per model would instead give every arm the same share by construction and hide exactly the differences being measured.
+
+Target market needs differ widely in how easily they yield top ideas (from 3\% to 29\% of ideas at 4.0), and the xhigh arms cover only 6 market needs, so every rate is computed per market need and then averaged over the market needs an arm was run on, each market need weighing the same. For each arm:
 
 \begin{itemize}
 \tightlist
@@ -379,7 +383,7 @@ To check whether judges favour longer sets, each pairwise record stores the numb
 No correction for multiple comparisons was applied. Per-market-need results rest on 5 calls or pairs each and are reported only as patterns.
 
 \hypertarget{what-was-planned-and-what-was-not}{%
-\subsection{Pilot and plan}\label{what-was-planned-and-what-was-not}\label{pilot}}
+\subsection{Pilot and plan (Experiment 1)}\label{what-was-planned-and-what-was-not}\label{pilot}}
 
 A pilot (2 market needs, M8 and M16; A and B; low, medium and high effort; 3 replicates; 36 calls) tested the pipeline before the full run. Half of its high-effort calls (6 of 12) used up the 8,000-token output limit thinking and returned no ideas. Its 17-of-18 advantage for the full graph did not hold at full scale (Section~\ref{change-from-the-pilot}).
 
@@ -501,7 +505,7 @@ Fable 5.1 & 40 & \PH{2,001} & 173,120 & 583,199 & 30.89 \\
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Top idea:} an idea scoring at least 4.0, the threshold of Experiment 1.
+  \textbf{Top idea:} an idea scoring at least 4.0, the same fixed threshold as in Experiment 1. Because the threshold is a point on the scale and not a percentile, the share of ideas clearing it differs by model: 6.1\% of Haiku's ideas (126 of 2,080), 13.6\% of Opus's (270 of 1,985) and 14.7\% of Fable's (295 of 2,001), against 12.3\% in Experiment 1. These shares are the quantity compared: they show how often each model's ideas reach the level the judge rates highly. They are not comparable with Experiment 1's, because 50-idea lists have shorter ideas, which the judge scores lower, and they inherit the judge's limits: Sonnet may rate the polished wording of the larger models above equivalent content from Haiku (Section~\ref{experiment-2}, limitations).
 \item
   \textbf{Top-idea rate:} the share of an arm's ideas that are top ideas.
 \item
@@ -593,10 +597,10 @@ The compression is of what has been written, and what is written about microwave
 All code, product graphs, raw call traces, and judge outputs are available at \url{https://github.com/orioli/IM-LLM}. The artifact supports two reproducibility modes:
 \begin{enumerate}
 \tightlist
-\item \textbf{Offline re-analysis (zero-cost):} The complete raw dataset of all 580 generation calls (2,892 ideas) with prompt hashes, raw outputs, and token counts (\texttt{runs/rq1\_full.jsonl}), together with pairwise and individual judge ratings (\texttt{results/}), is bundled in the repository. All statistical tests, bootstrap intervals, tables, and figures can be regenerated locally offline without API keys or costs.
+\item \textbf{Offline re-analysis (zero-cost):} The complete raw dataset of Experiment 1's 580 generation calls (2,892 ideas) with prompt hashes, raw outputs, and token counts (\texttt{runs/rq1\_full.jsonl}), together with pairwise and individual judge ratings (\texttt{results/}), is bundled in the repository, as are Experiment 2's 120 calls and their scores, one run log and results folder per model (\texttt{M6\_50ideas/}). All statistical tests, bootstrap intervals, tables, and figures can be regenerated locally offline without API keys or costs.
 \item \textbf{Live pipeline execution:} Slicing, prompt construction, API execution harnesses, and evaluation scripts are parameterized to rerun the study from scratch or adapt it to other models.
 \end{enumerate}
-Total generation consumed 8.6 million tokens (3.6 million input, 5.0 million output) using \texttt{claude-haiku-5-5} for ideation and \texttt{claude-sonnet-5-5} for judging. Appendix~\ref{data-and-code} lists the repository structure and artifacts.
+Generation consumed 8.6 million tokens in Experiment 1 (3.6 million input, 5.0 million output, all \texttt{claude-haiku-5-5}) and 2.4 million in Experiment 2 (0.5 million input, 1.9 million output, across the three models; \$44.56 at list prices). \texttt{claude-sonnet-5-5} was used for all judging. Appendix~\ref{data-and-code} lists the repository structure and artifacts.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -604,14 +608,14 @@ Total generation consumed 8.6 million tokens (3.6 million input, 5.0 million out
 \hypertarget{summary}{%
 \subsection{Summary}\label{summary}}
 
-The aim of brainstorming is the rare great idea, not a good average, so the main measure here is the \textbf{top tail}: how often an arm produces an idea in the top $\sim$12\% of all ideas, and what each such idea costs.
+The aim of brainstorming is the rare great idea, not a good average, so the main measure here is the \textbf{top tail}: how often an arm produces a top idea (score $\ge 4.0$, the top $\sim$12\% of Experiment 1's ideas), and what each such idea costs.
 
 \textbf{RQ1. Which representation yields the most top ideas per token?} (Section~\ref{rq1})
 
 \begin{itemize}
 \tightlist
 \item
-  \textbf{A relevant slice of the graph finds top ideas fastest per token.} Counted against tokens spent, top ideas accumulate in a straight line for every arm, so each arm has a yield: top ideas per 100k tokens. The market-need slice (B) at medium effort yields 8.8, about three times the full graph (A) at any effort (2.6--3.2). B's top-idea rate is also the highest at equal effort (15\% at medium and high, against 10\% for no graph and for a random slice of the same size).
+  \textbf{A relevant slice of the graph finds top ideas fastest per token.} Counted against tokens spent, top ideas accumulate in a straight line for every arm, so each arm has a yield: top ideas per 100k tokens. The market-need slice (B) at medium effort yields 8.8, about three times the full graph (A) at any effort (2.6--3.2). B's top-idea rate is also the highest at equal effort (15\% at medium and high, against 10\% for no graph and for a random slice of the same size). In Experiment 2 (RQ4), where every representation ran at the same effort, the slice matched but did not beat no graph, for all three models.
 \item
   \textbf{The efficiency gain holds market need by market need, and is largest for small slices.} The slice is more efficient than the full graph on 10 of 13 market needs (sign test p = 0.039), and no graph beats a random slice on 10 of 12. The slice's lead is 3--5$\times$ for market needs whose slice has 15--28 nodes, and 1--2$\times$ for those with 45--51 nodes (exploratory).
 \item
@@ -645,35 +649,10 @@ The aim of brainstorming is the rare great idea, not a good average, so the main
 Asked for 50 ideas per call on market need M6, all three models found top ideas least efficiently with the full graph: per token, its yield was about half that of the slice or no graph for Haiku (9.4 against 20.4 and 22.2 top ideas per 100k tokens) and Fable (26.4 against 51.3 and 53.6), and the lowest for Opus (26.3 against 39.9 and 34.8). The slice and no graph were indistinguishable for every model. For Opus and Fable the full graph did not lower the share of top ideas; it only cost more. The stronger models found two to three times as many top ideas per token as Haiku, but at list prices Haiku found about 20 times more per dollar than Opus and about 40 times more than Fable. Exploratory.
 
 
-\subsubsection{Representation across models}\label{rq4-representation}
-
-\textbf{The full graph is the least efficient representation for every model.} Per token, its yield is about half that of the slice and of no graph for Haiku and Fable, and the lowest of the four for Opus. Its interval lies wholly below no graph's for Haiku and Fable and below the slice's for Fable; for Opus it only just separates from the slice's (upper bound 31.1 against lower bound 31.7).
-
-\textbf{The slice does no better than no graph.} For all three models their intervals overlap almost completely (Haiku 20.4 and 22.2, Opus 39.9 and 34.8, Fable 51.3 and 53.6). Giving only the relevant slice removes the full graph's penalty but adds no gain over giving no graph at all.
-
-\textbf{For the stronger models, the full graph costs tokens, not quality.} Opus and Fable produced top ideas at about the same rate with the full graph as with no graph (14.2\% and 15.6\% against 13.1\% and 14.5\%); their lower yield comes from the roughly 10,000 extra input tokens per call. For Haiku the full graph also lowered the rate (5.4\% against 7.0\%), as in Experiment 1.
-
-\textbf{The random slice} was as poor as the full graph for Haiku but close to the slice and no graph for Opus, and in between for Fable. A stronger model seems less hurt by irrelevant context of moderate size.
-
-\subsubsection{Unit economics}\label{rq4-economics}
-
-\textbf{Per token, the stronger models are about two to three times as productive.} With the slice or no graph, Opus found 35--40 and Fable 51--54 top ideas per 100k tokens, against 20--22 for Haiku. All three used similar numbers of tokens per call (Table~\ref{tab:gen-exp2}); the difference is the share of ideas that reach the top: 12--17\% for Opus and Fable against 4--8\% for Haiku.
-
-\textbf{Per dollar, the order reverses.} At list prices Opus costs 40 times and Fable 100 times as much per token as Haiku, so Haiku found about 460 top ideas per dollar with the slice or no graph, against about 20 for Opus and 12 for Fable. A top idea cost about \$0.002 with Haiku, \$0.05 with Opus and \$0.09 with Fable. The whole run of 40 calls cost \$0.35 with Haiku, \$13.32 with Opus and \$30.89 with Fable.
-
-\textbf{Per dollar, the full graph's penalty shrinks.} The graph adds only input tokens, which cost a fifth as much as output tokens. Per dollar, Opus's full graph is within the intervals of the other three representations (19.3 against 18.2--22.9); Fable's remains clearly below the slice and no graph (7.5 against 11.9 and 11.4).
-
-\subsubsection{Single calls and list length}\label{rq4-calls}
-
-\textbf{Single calls vary widely} (Figure~\ref{fig:rq4}B). Within one arm, a call's yield ranged up to about fourfold (for example 12 to 67 top ideas per 100k tokens for Fable with the random slice), so a single brainstorming call is an unreliable sample of what a configuration delivers. In Experiment 1, with five ideas per call, about half of all calls produced no top idea at all.
-
-\textbf{Asking for 50 ideas instead of 5.} For Haiku on M6, the 50-idea calls had a per-token yield close to that of the 5-idea calls with the slice (20.4 against 25.3) and higher with the other representations (for example 9.4 against 6.3 with the full graph). The two experiments differ in idea length and therefore in score, so this comparison is indicative only.
-
-
 \hypertarget{cost-and-validity}{%
-\subsection{Cost and validity}\label{cost-and-validity}}
+\subsection{Cost and validity (Experiment 1)}\label{cost-and-validity}}
 
-The design is summarised in Table~\ref{tab:setup} and detailed in Section~\ref{methods}; this section reports what the calls cost and how many responses were valid.
+The design is summarised in Table~\ref{tab:setup} and detailed in Section~\ref{methods}; this section reports what Experiment 1's calls cost and how many responses were valid. Experiment 2's cost and validity are reported in Section~\ref{experiment-2} (Table~\ref{tab:gen-exp2}), and its plan in the same section.
 
 \begin{figure}[tbp]
 \centering
@@ -1227,7 +1206,7 @@ The 10 highest-scoring of all 2,892 ideas (\texttt{results/top\_ideas.md}), all 
 \hypertarget{rq2}{%
 \subsection{RQ2: Does the amount or the relevance of the graph matter?}\label{rq2}}
 
-\textbf{Answer.} Relevance, not amount. More graph buys better average sets: the full graph wins 64--65\% of set comparisons against the market-need slice, mainly on specificity, but its top-idea rate is no higher, so at about twice the tokens per call it finds fewer top ideas per token. Relevant structure helps in the top tail: the market-need slice out-yields a random slice of the same size in 99\% of paired bootstrap draws, although whole-set judging cannot tell the two apart. Irrelevant structure is worse than none: no graph is more efficient than the random slice on 10 of 12 market needs.
+\textbf{Answer.} Relevance, not amount. More graph buys better average sets: the full graph wins 64--65\% of set comparisons against the market-need slice, mainly on specificity, but its top-idea rate is no higher, so at about twice the tokens per call it finds fewer top ideas per token. Relevant structure helps in the top tail: the market-need slice out-yields a random slice of the same size in 99\% of paired bootstrap draws, although whole-set judging cannot tell the two apart. For Haiku, irrelevant structure is worse than none: no graph is more efficient than the random slice on 10 of 12 market needs. Stronger models are less affected: in Experiment 2 the random slice was about as efficient as no graph for Opus, and between the full graph and no graph for Fable (Section~\ref{rq4}).
 
 \hypertarget{pairwise-set-judging-full-graph-vs-market-need-slice-equal-effort}{%
 \subsubsection{Amount: full graph vs market-need slice}\label{pairwise-set-judging-full-graph-vs-market-need-slice-equal-effort}}
@@ -1812,6 +1791,30 @@ Fable 5.1 & A full graph   & 78/501 (15.6\%) & 26.4 [22.0--30.6] & 7.5 [6.2--8.8
           & C no graph     & 72/495 (14.5\%) & 53.6 [44.3--63.4] & 11.4 [9.4--13.6] \\
 \end{longtable}
 
+\subsubsection{Representation across models}\label{rq4-representation}
+
+\textbf{The full graph is the least efficient representation for every model.} Per token, its yield is about half that of the slice and of no graph for Haiku and Fable, and the lowest of the four for Opus. Its interval lies wholly below no graph's for Haiku and Fable and below the slice's for Fable; for Opus it only just separates from the slice's (upper bound 31.1 against lower bound 31.7).
+
+\textbf{The slice does no better than no graph.} For all three models their intervals overlap almost completely (Haiku 20.4 and 22.2, Opus 39.9 and 34.8, Fable 51.3 and 53.6). Giving only the relevant slice removes the full graph's penalty but adds no gain over giving no graph at all.
+
+\textbf{For the stronger models, the full graph costs tokens, not quality.} Opus and Fable produced top ideas at about the same rate with the full graph as with no graph (14.2\% and 15.6\% against 13.1\% and 14.5\%); their lower yield comes from the roughly 10,000 extra input tokens per call. For Haiku the full graph also lowered the rate (5.4\% against 7.0\%), as in Experiment 1.
+
+\textbf{The random slice} was as poor as the full graph for Haiku but close to the slice and no graph for Opus, and in between for Fable. A stronger model seems less hurt by irrelevant context of moderate size.
+
+\subsubsection{Unit economics}\label{rq4-economics}
+
+\textbf{Per token, the stronger models are about two to three times as productive.} With the slice or no graph, Opus found 35--40 and Fable 51--54 top ideas per 100k tokens, against 20--22 for Haiku. All three used similar numbers of tokens per call (Table~\ref{tab:gen-exp2}); the difference is the share of ideas that reach the top: 12--17\% for Opus and Fable against 4--8\% for Haiku.
+
+\textbf{Per dollar, the order reverses.} At list prices Opus costs 40 times and Fable 100 times as much per token as Haiku, so Haiku found about 460 top ideas per dollar with the slice or no graph, against about 20 for Opus and 12 for Fable. A top idea cost about \$0.002 with Haiku, \$0.05 with Opus and \$0.09 with Fable. The whole run of 40 calls cost \$0.35 with Haiku, \$13.32 with Opus and \$30.89 with Fable.
+
+\textbf{Per dollar, the full graph's penalty shrinks.} The graph adds only input tokens, which cost a fifth as much as output tokens. Per dollar, Opus's full graph is within the intervals of the other three representations (19.3 against 18.2--22.9); Fable's remains clearly below the slice and no graph (7.5 against 11.9 and 11.4).
+
+\subsubsection{Single calls and list length}\label{rq4-calls}
+
+\textbf{Single calls vary widely} (Figure~\ref{fig:rq4}B). Within one arm, a call's yield ranged up to about fourfold (for example 12 to 67 top ideas per 100k tokens for Fable with the random slice), so a single brainstorming call is an unreliable sample of what a configuration delivers. In Experiment 1, with five ideas per call, about half of all calls produced no top idea at all.
+
+\textbf{Asking for 50 ideas instead of 5.} For Haiku on M6, the 50-idea calls had a per-token yield close to that of the 5-idea calls with the slice (20.4 against 25.3) and higher with the other representations (for example 9.4 against 6.3 with the full graph). The two experiments differ in idea length and therefore in score, so this comparison is indicative only.
+
 
 \hypertarget{robustness-and-caveats}{%
 \subsection{Robustness and caveats}\label{robustness-and-caveats}}
@@ -1929,24 +1932,26 @@ The pilot (2 market needs $\times$ 3 replicates) found the full graph winning 17
 \hypertarget{conclusions}{%
 \subsection{Conclusions}\label{conclusions}}
 
-This study asked how much of a product's knowledge graph an LLM needs to see in order to brainstorm well, measured not by the quality of its output alone but by how efficiently it turns tokens into top ideas (in the sense of ideas that can lead to innvoative breakthoughs). An innovation matrix \citep{Tchirsky} of a microwave oven (123 nodes, 246 edges) was given to \texttt{claude-haiku-5-5} in four forms: the full graph (A), the vertical slice for the target market need (B), a random slice of the same size (R), or no graph at all (C). The model applied (individually to each market need) the SUBSTITUTE operator to each market needs, with 5 replicates per cell and four levels of thinking effort. The 2,892 resulting ideas were judged blind by \texttt{claude-sonnet-5-5}, both as whole sets side by side and one idea at a time.
+This study asked how much of a product's knowledge graph an LLM needs to see in order to brainstorm well, measured not by the quality of its output alone but by how efficiently it turns tokens, and money, into top ideas (in the sense of ideas that can lead to innovative breakthroughs). An innovation matrix \citep{Tchirsky} of a microwave oven (123 nodes, 246 edges) was given to a model in four forms: the full graph (A), the vertical slice for the target market need (B), a random slice of the same size (R), or no graph at all (C). In Experiment 1, \texttt{claude-haiku-5-5} applied the SUBSTITUTE operator to each of 13 market needs, with 5 replicates per cell and four levels of thinking effort, producing 2,892 ideas. In Experiment 2, Haiku, \texttt{claude-opus-5-5} and \texttt{claude-fable-5-1} were each asked for 50 ideas per call on one market need, 10 calls per representation. All ideas were judged blind by \texttt{claude-sonnet-5-5}; Experiment 1's both as whole sets side by side and one idea at a time.
 
-Brainstorming is a search for the rare great idea, so the main measure was the \textbf{yield}: top ideas (the top \ensuremath{\sim}12\% of all ideas) found per 100k tokens spent. Counted against tokens, top ideas accumulate in a straight line for every arm, so arms can be compared by slope. Four conclusions follow.
+Brainstorming is a search for the rare great idea, so the main measure was the \textbf{yield}: top ideas (score $\ge 4.0$, the top \ensuremath{\sim}12\% in Experiment 1) found per 100k tokens spent. Counted against tokens, top ideas accumulate in a straight line for every arm, so arms can be compared by slope. Five conclusions follow.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  \textbf{A relevant slice of the graph finds top ideas fastest.} The market-need slice at medium effort yields 8.8 top ideas per 100k tokens, about three times the full graph at any effort (2.6--3.2). The advantage over the full graph holds market need by market need: the slice is more efficient on 10 of 13 market needs (sign test p = 0.039), and its lead looks largest where the slice is small (exploratory).
+  \textbf{If a graph is given, a relevant slice of it finds top ideas fastest.} The market-need slice at medium effort yields 8.8 top ideas per 100k tokens, about three times the full graph at any effort (2.6--3.2). The advantage over the full graph holds market need by market need: the slice is more efficient on 10 of 13 market needs (sign test p = 0.039), and its lead looks largest where the slice is small (exploratory). The slice is not, however, clearly better than giving no graph: in Experiment 1 no graph was run at high effort only, and in Experiment 2, with all representations at the same effort, the slice and no graph were indistinguishable for Haiku, Opus and Fable alike. The slice removes the cost of the full graph; it adds no gain over none.
 \item
   \textbf{More context buys better average sets, not more great ideas.} Judged as whole sets, the full graph beats the slice (64\%) and no graph (74\%), mainly by being more specific. But its top-idea rate is no higher than the slice's, and its calls cost about twice as much, so per token it finds fewer top ideas than giving the model no graph at all (3.1 against 6.4 at high effort).
 \item
-  \textbf{Relevance matters, size does not.} A random slice of the same size as the market-need slice is less efficient than both the market-need slice and no graph, though still ahead of the full graph: the market-need slice's slope is higher in 99\% of paired bootstrap draws (5.9 against 4.1 at high effort), and no graph beats the random slice on 10 of 12 market needs (p = 0.039). Irrelevant structure is worse per token than none. Judged as whole sets, market-need slice and random slice cannot be told apart: relevance shows up in the best ideas, not in the average set.
+  \textbf{For Haiku, relevance matters, size does not.} A random slice of the same size as the market-need slice is less efficient than both the market-need slice and no graph, though still ahead of the full graph: the market-need slice's slope is higher in 99\% of paired bootstrap draws (5.9 against 4.1 at high effort), and no graph beats the random slice on 10 of 12 market needs (p = 0.039). Irrelevant structure is worse per token than none. Judged as whole sets, market-need slice and random slice cannot be told apart: relevance shows up in the best ideas, not in the average set. This penalty is specific to the small model: in Experiment 2 a random slice cost Opus nothing against no graph, and Fable less than the full graph did.
 \item
   \textbf{Thinking effort raises quality, not efficiency.} High effort beats low in about 93\% of set comparisons, and extra-high effort gives the highest top-idea rates (19--21\%). But each call costs proportionally more, so yield does not rise with effort: the full graph stays at about 3 top ideas per 100k tokens from low to extra-high, and the slice peaks at medium effort.
+\item
+  \textbf{The full graph's penalty holds across models, and model choice is a question of unit economics.} Asked for 50 ideas per call, Haiku, Opus and Fable all found top ideas least efficiently with the full graph, at about half the yield per token of the slice or no graph for Haiku and Fable. For the larger models the full graph did not lower the share of top ideas; it only added cost. Per token, Opus and Fable found two to three times as many top ideas as Haiku; per dollar at list prices, Haiku found about 20 times more than Opus and 40 times more than Fable (exploratory; Section~\ref{rq4}).
 \end{enumerate}
 
 
-In summary, Haiku is a small model, what such a model does superbly is retrieval: it holds a lossy copy of its training corpus, patents and product literature included, and surfaces the engineering moves that bear on a stated problem (Section~\ref{sample of genrated ideas}). A retrieval system is most efficient when the query is precise. 
+In summary, Haiku is a small model, and what such a model does superbly is retrieval: it holds a lossy copy of its training corpus, patents and product literature included, and surfaces the engineering moves that bear on a stated problem (Section~\ref{sample of genrated ideas}). A retrieval system is most efficient when the query is precise. Whether larger models do more than retrieve is open. In Experiment 2, Opus and Fable produced two to three times as many top ideas per token as Haiku, but the expert reading covered Experiment 1's Haiku ideas only, and part of the larger models' higher ratings may reflect presentation rather than content: read with the wording set aside, the three models' ideas appeared comparable. Testing this requires rewriting all ideas into one neutral style before judging, and checking the best of them against prior art.
  
 
 \hypertarget{implications-for-design-thinking}{%
