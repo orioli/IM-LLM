@@ -378,7 +378,7 @@ Whether the market-need slice is no worse than the full graph is tested as non-i
 
 To check whether judges favour longer sets, each pairwise record stores the number of words each side showed the judge. The share of decided pairs won by the longer set is reported next to each win rate.
 
-\textbf{Top tail.} 95\% confidence intervals for the top-idea rate and the call rate come from 2,000 bootstrap resamples. Each resample redraws calls with replacement within each market need, which keeps the five ideas of a call together and the market-need-averaged weighting fixed.
+\textbf{Top tail.} 95\% confidence intervals for the top-idea rate and the call rate come from 2,000 bootstrap resamples. Each resample redraws calls with replacement within each market need, which keeps the five ideas of a call together and the market-need-averaged weighting fixed. The intervals treat each idea's score as fixed. They capture variation between generation calls but not the within-item variability of the judge, which can assign a different score to the same idea on repeated evaluation; ideas scored near the threshold could then fall on either side of it. The intervals are therefore likely too narrow. The 4.0 threshold was set after the scores were known (it is the step closest to the top 10\% of Experiment 1's ideas), so it is a post hoc choice.
 
 No correction for multiple comparisons was applied. Per-market-need results rest on 5 calls or pairs each and are reported only as patterns.
 
@@ -647,7 +647,7 @@ The aim of brainstorming is the rare great idea, not a good average, so the main
 
 \textbf{RQ4. Does the effect of the representation hold across models, and what does each model cost per top idea?} (Section~\ref{rq4})
 
-Asked for 50 ideas per call on market need M6, all three models found top ideas least efficiently with the full graph: per token, its yield was about half that of the slice or no graph for Haiku (9.4 against 20.4 and 22.2 top ideas per 100k tokens) and Fable (26.4 against 51.3 and 53.6), and the lowest for Opus (26.3 against 39.9 and 34.8). The slice and no graph were indistinguishable for every model. For Opus and Fable the full graph did not lower the share of top ideas; it only cost more. The stronger models found two to three times as many top ideas per token as Haiku, but at list prices Haiku found about 20 times more per dollar than Opus and about 40 times more than Fable. Exploratory.
+Asked for 50 ideas per call on market need M6, all three models had their lowest yield with the full graph (clearly so for Haiku and Fable; for Opus the interval only just separates from the slice's and overlaps with no graph and the random slice): per token, its yield was about half that of the slice or no graph for Haiku (9.4 against 20.4 and 22.2 top ideas per 100k tokens) and Fable (26.4 against 51.3 and 53.6), and the lowest for Opus (26.3 against 39.9 and 34.8). The slice and no graph were indistinguishable for every model. For Opus and Fable the full graph did not lower the share of top ideas; it only cost more. The stronger models found two to three times as many top ideas per token as Haiku, but at list prices Haiku found about 20 times more per dollar than Opus and about 40 times more than Fable. Exploratory.
 
 
 \hypertarget{cost-and-validity}{%
@@ -932,7 +932,7 @@ A \textperiodcentered{} Full Graph \textperiodcentered{} xhigh & 6 & 31 / 150 & 
 \begin{figure}[tbp]
 \centering
 \IfFileExists{figures/8c_yield_spread_annotated.png}{\includegraphics[width=\textwidth]{figures/8c_yield_spread_annotated.png}}{\fbox{\parbox[c][5cm][c]{0.9\textwidth}{\centering\small missing: \texttt{\detokenize{figures/8c_yield_spread_annotated.png}}}}}
-\caption{How certain the yields are: for each arm, a box plot of 2,000 bootstrap slopes (calls resampled within market need; box = middle 50\%, whiskers = 95\% interval). The dashed line marks the control, no knowledge graph in the prompt (C, high effort). Arms whose boxes lie to the left of the line find top ideas less efficiently than giving the model no graph at all; this includes every full-graph arm, the random slice of the graph, and the slice of graph dangling from a given market-need slice. When using a graph slices, only setting at low and medium effort underperform the control ''C''}
+\caption{How certain the yields are, \emph{given the judge's scores}: for each arm, a box plot of 2,000 bootstrap slopes (calls resampled within market need; box = middle 50\%, whiskers = 95\% interval). The intervals capture variation between generation calls only. They do not include the variability of the judge's scores on repeated evaluation, and the 4.0 threshold was chosen after seeing the Experiment 1 scores (Section~\ref{statistics}). The dashed line marks the control, no knowledge graph in the prompt (C, high effort). Arms whose boxes lie to the left of the line find top ideas less efficiently than giving the model no graph at all; this includes every full-graph arm, the random slice of the graph, and the slice of graph dangling from a given market-need slice. When using a graph slices, only setting at low and medium effort underperform the control ''C''}
 \label{fig:spread}
 \end{figure}
 
