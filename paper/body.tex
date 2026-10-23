@@ -1794,7 +1794,7 @@ Fable 5.1 & A \textperiodcentered{} Full Graph & 78/501 (15.6\%) & 26.4 [22.0--3
 
 \subsubsection{Representation across models}\label{rq4-representation}
 
-\textbf{The full graph is the least efficient representation for every model.} Per token, its yield is about half that of the slice and of no graph for Haiku and Fable, and the lowest of the four for Opus. Its interval lies wholly below no graph's for Haiku and Fable and below the slice's for Fable; for Opus it only just separates from the slice's (upper bound 31.1 against lower bound 31.7).
+\textbf{The full graph had the lowest yield for every model, but clearly so only for Haiku and Fable.} Per token, its yield is about half that of the slice and of no graph for Haiku and Fable, and the lowest of the four for Opus. Its interval lies wholly below no graph's and the slice's for Haiku and Fable; for Opus it only just separates from the slice's (upper bound 31.1 against lower bound 31.7).
 
 \textbf{The slice does no better than no graph.} For all three models their intervals overlap almost completely (Haiku 20.4 and 22.2, Opus 39.9 and 34.8, Fable 51.3 and 53.6). Giving only the relevant slice removes the full graph's penalty but adds no gain over giving no graph at all.
 
