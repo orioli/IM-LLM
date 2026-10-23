@@ -1215,7 +1215,7 @@ The 10 highest-scoring of all 2,892 ideas (\texttt{results/top\_ideas.md}), all 
 \begin{figure}[tbp]
 \centering
 \IfFileExists{figures/2_win_rates.png}{\includegraphics[width=\textwidth]{figures/2_win_rates.png}}{\fbox{\parbox[c][5cm][c]{0.9\textwidth}{\centering\small missing: \texttt{\detokenize{figures/2_win_rates.png}}}}}
-\caption{Every pairwise set comparison: the first arm's win rate with a 95\% Wilson interval (each pair judged in both presentation orders, ties excluded). Values above 50\% favour the first arm.}
+\caption{Every pairwise set comparison: the first arm's win rate with a 95\% Wilson interval (each pair judged in both presentation orders, ties excluded). Values above 50\% favour the first arm. Win rates are not adjusted for set length. LLM judges tend to prefer longer, more detailed answers whether or not they are better (verbosity bias; \citealp{Zheng2023}), and in Table~\ref{tab:length} the longer set won 65--90\% of decided pairs in most comparisons (A vs B 65--71\%, effort comparisons 83--90\%). Part of a win rate may therefore reflect length rather than the quality of the ideas.}
 \label{fig:winrates}
 \end{figure}
 
