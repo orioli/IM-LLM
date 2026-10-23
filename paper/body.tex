@@ -936,7 +936,7 @@ A \textperiodcentered{} Full Graph \textperiodcentered{} xhigh & 6 & 31 / 150 & 
 \label{fig:spread}
 \end{figure}
 
-The top-idea rate says how good an arm's ideas are; the yield says how fast it finds top ideas for the money. Counting top ideas against the tokens spent on an arm's calls (taken in replicate order, cycling through the market needs) gives a running count that grows in a straight line for every arm (Figure \ref{fig:yield}). The \textbf{yield} is the slope of that line: all of the arm's top ideas divided by all its tokens, per 100k tokens, with a 95\% CI from 2,000 resamples of calls within each market need. Unlike a probability, a count does not level off, so arms are compared directly by slope. Table~\ref{tab:yield} gives the yields.
+The top-idea rate says how good an arm's ideas are; the yield says how fast it finds top ideas for the money. Counting top ideas against the tokens spent on an arm's calls (taken in replicate order, cycling through the market needs) gives a running count whose overall slope is the arm's yield (Figure \ref{fig:yield}). The \textbf{yield} is the slope of that line: all of the arm's top ideas divided by all its tokens, per 100k tokens, with a 95\% CI from 2,000 resamples of calls within each market need. Unlike a probability, a count does not level off, so arms are compared directly by slope. Table~\ref{tab:yield} gives the yields.
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.4000}}
@@ -1133,7 +1133,7 @@ B \textperiodcentered{} Slice vs C \textperiodcentered{} Control & 8 & 4 & 1 & 0
 \begin{figure}[tbp]
 \centering
 \IfFileExists{figures/7_chance_vs_budget.png}{\includegraphics[width=\textwidth]{figures/7_chance_vs_budget.png}}{\fbox{\parbox[c][5cm][c]{0.9\textwidth}{\centering\small missing: \texttt{\detokenize{figures/7_chance_vs_budget.png}}}}}
-\caption{Chance of at least one top idea for a given token budget, per arm, from whole calls and a Jeffreys estimate of each market need's success rate. Every curve rises towards 1 as the budget grows, so this view compresses differences at large budgets; yield (Figure \ref{fig:yield}) is the main measure.}
+\caption{Chance of at least one top idea for a given token budget, per arm, from whole calls and a Jeffreys estimate of each market need's success rate, assuming independent calls. Each rate rests on only 5 calls per market need, so the curves are rough and are shown as a secondary view. Every curve rises towards 1 as the budget grows, so this view compresses differences at large budgets; yield (Figure \ref{fig:yield}) is the main measure.}
 \label{fig:budget}
 \end{figure}
 
