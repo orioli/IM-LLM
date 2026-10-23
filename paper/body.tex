@@ -1838,7 +1838,7 @@ Fable 5.1 & 6.8 [6.3--7.4] & 0.105 [0.096--0.115] & 0.113 [0.104--0.124] & \text
 
 \textbf{Single calls vary widely} (Figure~\ref{fig:rq4}B). Within one arm, a call's yield ranged more than fivefold (for example 12 to 67 top ideas per 100k tokens for Fable with the random slice), so a single brainstorming call is an unreliable sample of what a configuration delivers. In Experiment 1, with five ideas per call, about half of all calls produced no top idea at all.
 
-\textbf{Asking for 50 ideas instead of 5.} For Haiku on M6, the 50-idea calls had a per-token yield close to that of the 5-idea calls with the slice (20.4 against 25.3) and higher with the other representations (for example 9.4 against 6.3 with the full graph). The two experiments differ in idea length and therefore in score, so this comparison is indicative only.
+\textbf{Asking for 50 ideas instead of 5.} For Haiku on M6, the 50-idea calls had a per-token yield somewhat below that of the 5-idea calls at medium effort with the slice (20.4 against 25.3; the 5-idea figure rests on only 5 calls) and above it with the full graph (9.4 against 6.3). The 5-idea figures are for M6 at medium effort, the setting of Experiment 2, not the pooled figures; at high effort they are lower (slice 11.8, full graph 3.4). The two experiments differ in idea length and therefore in score, so this comparison is indicative only.
 
 
 \subsubsection{Style or content? A content-only re-rating}\label{rq4-style}
@@ -1848,7 +1848,7 @@ The larger models' ideas read better, and part of their higher ratings may rewar
 \begin{figure}[tbp]
 \centering
 \IfFileExists{figures/extremes_pies_claude-opus-5-5.png}{\includegraphics[width=0.9\textwidth]{figures/extremes_pies_claude-opus-5-5.png}}{\fbox{\parbox[c][5cm][c]{0.9\textwidth}{\centering\small missing: \texttt{\detokenize{figures/extremes_pies_claude-opus-5-5.png}}}}}
-\caption{Content-only re-rating of the extremes. The first judge (Sonnet, the study's judge) supplied each model's 20 highest- and 20 lowest-scored ideas; the second judge (Opus) re-rated all 120 blind, told to disregard wording and polish. Left: the second judge's top 20, by the model that wrote them; right: its bottom 20. In brackets: how many of those ideas were also in the first judge's top 20 for that model.}
+\caption{Content-only re-rating of the extremes. The first judge (Sonnet, the study's judge) supplied each model's 20 highest- and 20 lowest-scored ideas, so the sample contains only the two extremes of Sonnet's ranking and none of the middle. The second judge (Opus, itself one of the three generators) re-rated all 120 blind, told to disregard wording and polish. Left: the second judge's top 20, by the model that wrote them; right: its bottom 20. In brackets: how many of those ideas were also in the first judge's top 20 for that model.}
 \label{fig:extremes}
 \end{figure}
 
