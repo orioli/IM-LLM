@@ -1,4 +1,4 @@
-\begin{thebibliography}{62}
+\begin{thebibliography}{61}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -349,10 +349,6 @@ Kamil Szczepanik and Jarosław Chudziak.
 \newblock {TRIZ Agents: A Multi-Agent LLM Approach for TRIZ-Based Innovation}.
 \newblock \emph{Proceedings of ICAART 2025 (SciTePress)}, 2025.
 \newblock \doi{10.5220/0013321900003890}.
-
-\bibitem[Tchirsky(n.d.)]{Tchirsky}
-Leo Tchirsky.
-\newblock {[Innovation matrix: reference to be added]}, n.d.
 
 \bibitem[Terwiesch et~al.(2026)Terwiesch, Meincke, Girotra, Mollick, Nave, and
   Ulrich]{Terwiesch2026}
