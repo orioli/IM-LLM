@@ -280,7 +280,7 @@ The xhigh cells cover 6 market needs, chosen to span small and large slices, to 
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Parsing.} A response is valid if it parses as JSON with an \texttt{ideas} list. 579 of 580 calls were valid with 5 ideas; one returned no parseable ideas and is kept as a failure. In total, the calls produced 2,892 ideas.
+  \textbf{Parsing.} A response is valid if it parses as JSON with an \texttt{ideas} list. 579 of 580 calls were valid: 576 returned 5 ideas and three returned 6, 3 and 3 ideas; one returned no parseable ideas and is kept as a failure. In total, the calls produced 2,892 ideas.
 \item
   \textbf{Logging.} The runner appends one JSON line per call to an append-only log (\texttt{runs/rq1\_full.jsonl}). Each line holds the run identifier (condition, market need, effort, replicate), the graph file's identifier and hash, the prompt hash, model, output limit, input and output tokens, latency, stop reason, the parsed ideas and the raw response. Runs are resumable, and cells can be added later without rerunning earlier ones.
 \end{itemize}
