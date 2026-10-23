@@ -925,7 +925,7 @@ A \textperiodcentered{} Full Graph \textperiodcentered{} xhigh & 6 & 31 / 150 & 
 \begin{figure}[tbp]
 \centering
 \IfFileExists{figures/8_top_ideas_vs_tokens.png}{\includegraphics[width=\textwidth]{figures/8_top_ideas_vs_tokens.png}}{\fbox{\parbox[c][5cm][c]{0.9\textwidth}{\centering\small missing: \texttt{\detokenize{figures/8_top_ideas_vs_tokens.png}}}}}
-\caption{Top ideas (score $\geq$ 4.0) found against tokens spent, per arm, with calls taken in replicate order. Each arm accumulates top ideas at a near-constant rate, so its slope is its yield (top ideas per 100k tokens): the steeper the line, the more efficient the arm. The market-need slice at medium effort climbs fastest; the full-graph arms are the flattest at every effort.}
+\caption{Top ideas (score $\geq$ 4.0) found against tokens spent, per arm, with calls taken in replicate order. The calls are independent, and each round of calls covers every market need of the arm once, so every stretch of a line has the same expected slope and near-straight lines are expected by design. That slope is the arm's yield (all top ideas divided by all tokens, per 100k tokens): the steeper the line, the more efficient the arm. The market-need slice at medium effort climbs fastest; the full-graph arms are the flattest at every effort.}
 \label{fig:yield}
 \end{figure}
 
