@@ -215,8 +215,8 @@ Input tokens per call (mean, incl.~prompt)
 \bottomrule\noalign{}
 \endlastfoot
 A & 123 & 100\% & 246 & 10,912 \\
-B & 10--51 (median 45) & 8--42\% & 11--85 & 3,778 \\
-R & 10--51, same as B for each market need & 8--42\% & 2--52 & 3,143 \\
+B & 10--51 (median 45) & 8--41\% & 11--85 & 3,778 \\
+R & 10--51, same as B for each market need & 8--41\% & 2--52 & 3,143 \\
 C & 1 & 1\% & 0 & 1,055 \\
 \end{longtable}
 
@@ -743,7 +743,7 @@ xhigh was run on 6 of the 13 market needs; those market needs have larger slices
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Input:} the slice cuts input tokens by 65\% on average (slices range from 10 to 51 nodes, 8--42\% of the graph). R matches B's node counts per layer but uses 17\% fewer input tokens, because random nodes have shorter labels and fewer linking edges; the size match is close but not exact.
+  \textbf{Input:} the slice cuts input tokens by 65\% on average (slices range from 10 to 51 nodes, 8--41\% of the graph). R matches B's node counts per layer but uses 17\% fewer input tokens, because random nodes have shorter labels and fewer linking edges; the size match is close but not exact.
 \item
   \textbf{Total:} the slice saves 53\% of total tokens at low effort, 47\% at medium, 44\% at high and 24\% at xhigh. Output grows steeply with effort and soon dominates the bill, so the input saving matters less and less.
 \item
