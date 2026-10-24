@@ -1,4 +1,4 @@
-\begin{thebibliography}{61}
+\begin{thebibliography}{63}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -35,10 +35,14 @@ Joshua Ashkinaze, Julia Mendelsohn, Li~Qiwei, Ceren Budak, and Eric Gilbert.
   2025}, 2025.
 \newblock \doi{10.1145/3715928.3737481}.
 
-\bibitem[Berengueres(2014)]{berengueres2014}
+\bibitem[Balani and Panda(2026)]{Balani2026}
+Paras Balani and Subhrakanta Panda.
+\newblock {LLM}s don't pay for the jump, 2026.
+
+\bibitem[Berengueres(2023)]{berengueres2014}
 Jose Berengueres.
 \newblock \emph{{The Brown Book of Design Thinking}}.
-\newblock UAE University College, Al Ain, 2014.
+\newblock UAE University College, Al Ain, 2023.
 
 \bibitem[Browning(2001)]{Browning2001}
 T.~R. Browning.
@@ -398,6 +402,13 @@ Tom Zahavy.
 \newblock In \emph{Proceedings of the International Conference on Machine
   Learning (ICML)}, 2026.
 \newblock URL \url{https://icml.cc/virtual/2026/poster/67091}.
+
+\bibitem[Zheng et~al.(2023)Zheng, Chiang, Sheng, et~al.]{Zheng2023}
+Lianmin Zheng, Wei-Lin Chiang, Ying Sheng, et~al.
+\newblock {Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena}.
+\newblock \emph{Advances in Neural Information Processing Systems 36 (Datasets
+  and Benchmarks Track)}, 2023.
+\newblock \doi{10.48550/arXiv.2306.05685}.
 
 \bibitem[Zhu and Luo(2022)]{Zhu2022}
 Qihao Zhu and Jianxi Luo.

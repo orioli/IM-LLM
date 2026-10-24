@@ -7,7 +7,7 @@ In product ideation, engineering design, and service innovation, problem represe
 
 To address this gap, we examine how problem representations and reasoning allocations govern AI brainstorming efficiency across four questions: which graph representation yields the most top ideas per token (RQ1); whether structural relevance or raw prompt length drives performance (RQ2); how investing tokens in context compares with spending them on thinking effort (RQ3); and whether the effect of the representation holds across models, and what each model costs per top idea (RQ4). We test these questions on a countertop microwave oven represented as an innovation matrix with 123 nodes and 246 edges, using the \emph{Substitute} operator from the SCAMPER ideation framework \citep{Eberle1971, Osborn1953}. We compare four prompt representations: the full graph (A), a targeted vertical slice of the active market need (functions, components, technologies, fields, linked constraints and actors; B), a size-matched random slice (R), and a no-graph control (C). In Experiment 1 (RQ1--RQ3), \texttt{claude-haiku-5-5} receives each representation for 13 market needs at four thinking-effort levels, in 580 API calls generating 2,892 ideas. In Experiment 2 (RQ4), three models, \texttt{claude-haiku-5-5}, \texttt{claude-opus-5-5} and \texttt{claude-fable-5-1}, each receive the four representations for one market need and are asked for 50 ideas per call, in 120 calls generating 6,091 ideas. All ideas are scored blind by \texttt{claude-sonnet-5-5}, and Experiment 1's ideas were also read by an expert. We measure \emph{yield}: top ideas (score $\ge 4.0/5.0$; the top $\sim$12\% in Experiment 1) per 100k tokens spent, and in Experiment 2 also per US dollar at list price.
 
-Our primary finding is that prompting with a targeted market-need slice at medium effort achieves peak yield (8.8 top ideas per 100k tokens), nearly tripling the efficiency of the full graph. Note here that the size of the slice is about one third that of the full graph. Although the full graph produces more specific average sets, it yields no more top-tail ideas while doubling prompt costs. Furthermore, scaling thinking effort raises average linguistic quality but fails to improve token efficiency. Together, these findings make three contributions: they reframe AI ideation around representation efficiency (outcome per token) rather than ephemeral human baselines; they establish yield as a non-saturating tail metric that captures extreme-value creative discovery where mean scores mislead; and they provide an open, controlled empirical comparison of product-graph representations and thinking effort, with all prompts, calls, and judgments released.
+Our primary finding is that prompting with a targeted market-need slice at medium effort achieves peak yield (8.8 top ideas per 100k tokens), nearly tripling the efficiency of the full graph; no graph was not run at medium effort, and at high effort it was level with the slice (6.4 against 5.9). Note here that the size of the slice is about one third that of the full graph. Although the full graph produces more specific average sets, it yields no more top-tail ideas while doubling prompt costs. Furthermore, scaling thinking effort raises average linguistic quality but fails to improve token efficiency. Together, these findings make three contributions: they reframe AI ideation around representation efficiency (outcome per token) rather than ephemeral human baselines; they establish yield as a non-saturating tail metric that captures extreme-value creative discovery where mean scores mislead; and they provide an open, controlled empirical comparison of product-graph representations and thinking effort, with all prompts, calls, and judgments released.
 
 The remainder of this paper is structured as follows. Section~\ref{related-work} reviews related work on design representations, LLM ideation workflows, and cost-aware evaluation. Section~\ref{methods} details the product graph, prompt representations, experimental design, and scoring metrics. Section~\ref{results} presents the findings for RQ1--RQ3 (Experiment 1) and RQ4 (Experiment 2), and robustness checks. Finally, Section~\ref{discussion-and-conclusion} discusses implications for design thinking and outlines directions for graph-guided AI innovation.
 
@@ -378,7 +378,9 @@ Whether the market-need slice is no worse than the full graph is tested as non-i
 
 To check whether judges favour longer sets, each pairwise record stores the number of words each side showed the judge. The share of decided pairs won by the longer set is reported next to each win rate.
 
-\textbf{Top tail.} 95\% confidence intervals for the top-idea rate and the call rate come from 2,000 bootstrap resamples. Each resample redraws calls with replacement within each market need, which keeps the five ideas of a call together and the market-need-averaged weighting fixed. The intervals treat each idea's score as fixed. They capture variation between generation calls but not the within-item variability of the judge, which can assign a different score to the same idea on repeated evaluation; ideas scored near the threshold could then fall on either side of it. The intervals are therefore likely too narrow. The 4.0 threshold was set after the scores were known (it is the step closest to the top 10\% of Experiment 1's ideas), so it is a post hoc choice.
+\textbf{Top tail.} 95\% confidence intervals for the top-idea rate and the call rate come from 2,000 bootstrap resamples. Each resample redraws calls with replacement within each market need, which keeps the five ideas of a call together and the market-need-averaged weighting fixed. The intervals treat each idea's score as fixed. They capture variation between generation calls but not the within-item variability of the judge, which can assign a different score to the same idea on repeated evaluation; ideas scored near the threshold could then fall on either side of it. The intervals are therefore likely too narrow. The 4.0 threshold was set after the scores were known (it is the step closest to the top 10\% of Experiment 1's ideas), so it is a post hoc choice; the ordering of the arms is reported at other thresholds in the paragraph ``Sensitivity to the threshold'' and in Section~\ref{threshold-sweep}.
+
+\textbf{Sensitivity to the threshold.} Because 4.0 was fixed after seeing the scores, we repeated the yield comparison at 3.5, 3.75 and 4.25 (Section~\ref{threshold-sweep}, Table~\ref{tab:threshold-sweep}). At 3.5, 3.75 and 4.0, every full-graph arm yields less than no graph, and the best full-graph arm yields roughly half or less of what no graph does. The market-need slice at medium effort out-yields the best full-graph arm by 1.7--2.7$\times$ at all four thresholds. The comparison between the slice and no graph is not stable: at 4.0 they are level (5.9 against 6.4 at high effort, the only effort at which both ran), but at 3.5 and 3.75 no graph is clearly ahead of the slice at high effort (intervals do not overlap), and the slice's lead at medium and low effort at 4.0 is not matched at lower thresholds. At 4.25 only 2--11 ideas per arm remain and no arms can be separated.
 
 No correction for multiple comparisons was applied. Per-market-need results rest on 5 calls or pairs each and are reported only as patterns.
 
@@ -471,7 +473,7 @@ Statistics & Bootstrap 95\% CI, 2,000 resamples of calls within each arm \\
 \item
   \emph{Every representation found something.} Each representation must have produced at least one top idea for the need at high effort in Experiment 1. This excludes M1, M5 and M11.
 \item
-  \emph{Same order as the pooled result.} The representations must rank as in the pooled Experiment 1 result at high effort (B $>$ C $>$ R $>$ A). This excludes M3, M4, M7, M12 and M17.
+  \emph{Same order as the pooled result.} The representations must rank as in the pooled Experiment 1 result at high effort (B $>$ C $>$ R $>$ A). This excludes M3, M4, M7, M12 and M17. Because this rule selects a need that already showed the pooled ordering, Experiment 2 tests whether that ordering holds across models and at 50 ideas per call, not whether it replicates on an independent need.
 \item
   \emph{Chosen by the authors from the rest} (M6, M13, M14). M6 was chosen because operating the appliance is a central, long-standing usability problem that no single technology dominates.
 \end{enumerate}
@@ -588,7 +590,7 @@ One of the authors read all the ideas from Experiment 1, which led to Experiment
   \textbf{Diversity.} A topic analysis (Nvivo; not shown) finds the same ideas concentrated in a few recurring topical pathways: solid-state GaN RF generation, transparent or lamp-free enclosures, simplifications of the RF chain, and sensor-based doneness feedback. This should not surprise anyone: each call asked for five ideas under one operator, and further calls revisit the same pathways more often than they open new ones.
 \end{enumerate}
 
-Karpathy has described a language model as ``a lossy compression of the internet'' \citep{Karpathy2023}, and the compressed corpus includes the patent and product literature of this domain. Read this way, the generator behaved as a retrieval system: excellent at surfacing the engineering moves that bear on a market need, which is also why the \ensuremath{\sim}11,000-token full-graph prompt and the \ensuremath{\sim}1,000-token no-graph prompt converge on the same few pathways. This matches the argument that language models excel at induction and increasingly at deduction, but not at abduction, the leap to new premises that genuine invention requires \citep{Zahavy2026}. The setup cannot be blamed for presenting the state of the art as innovation, if innovation is defined as what no one has patented before. What the experiment measures is therefore the efficiency with which a representation surfaces strong, relevant engineering moves, the raw material of ideation, not patentable novelty; the same reading applies to published systems whose ``innovative'' output is rated rather than checked against prior art (Section~\ref{what-innovative-is-checked-against}).
+Karpathy has described a language model as ``a lossy compression of the internet'' \citep{Karpathy2023}, and the compressed corpus includes the patent and product literature of this domain. Read this way, the generator appears to behave as a retrieval system: excellent at surfacing the engineering moves that bear on a market need, which is also why the \ensuremath{\sim}11,000-token full-graph prompt and the \ensuremath{\sim}1,000-token no-graph prompt converge on the same few pathways. This matches the argument that language models excel at induction and increasingly at deduction, but not at abduction, the leap to new premises that genuine invention requires \citep{Zahavy2026}. The setup cannot be blamed for presenting the state of the art as innovation, if innovation is defined as what no one has patented before. What the experiment measures is therefore the efficiency with which a representation surfaces strong, relevant engineering moves, the raw material of ideation, not patentable novelty; the same reading applies to published systems whose ``innovative'' output is rated rather than checked against prior art (Section~\ref{what-innovative-is-checked-against}).
 
 The compression is of what has been written, and what is written about microwave ovens is mostly technology. Reading all the ideas, what is absent is as telling as what is present. Cost appears nowhere as the object of innovation, although the graph carries an explicit low-cost constraint (X12) and cost is the main force selecting microwave innovations: the magnetron has outlived every technically superior alternative because fifty years of manufacturing scale have made it extremely cheap, and that advantage is self-reinforcing, a path dependency that any real substitution must pay its way out of. Nothing in the ideas reflects the open-source hardware movement and its community-designed and community-repaired appliances, and nothing uses the fact that most households run a microwave next to a conventional oven, so that several market needs, crisping and browning among them, are already served by the appliance beside it. This knowledge lives in markets, communities and kitchens more than in patents and specification sheets, so the lossy copy retrieves the recorded state of the art and misses the selection environment that decides which of those ideas becomes an innovation.
 
@@ -616,9 +618,9 @@ The aim of brainstorming is the rare great idea, not a good average, so the main
 \begin{itemize}
 \tightlist
 \item
-  \textbf{A relevant slice of the graph finds top ideas fastest per token.} Counted against tokens spent, top ideas accumulate in a straight line for every arm, so each arm has a yield: top ideas per 100k tokens. The market-need slice (B) at medium effort yields 8.8, about three times the full graph (A) at any effort (2.6--3.2). B's top-idea rate is also the highest at equal effort (15\% at medium and high, against 10\% for no graph and for a random slice of the same size). In Experiment 2 (RQ4), where every representation ran at the same effort, the slice matched but did not beat no graph, for all three models.
+  \textbf{A relevant slice of the graph finds top ideas fastest per token.} Counted against tokens spent, top ideas accumulate in a straight line for every arm, so each arm has a yield: top ideas per 100k tokens. The market-need slice (B) at medium effort yields 8.8, about three times the full graph (A) at any effort (2.6--3.2). At high effort, the only effort at which all four representations ran, B's top-idea rate is the highest (14.7\%, against 10.2\% for no graph and 9.8\% for a random slice of the same size). In Experiment 2 (RQ4), where every representation ran at the same effort, the slice matched but did not beat no graph, for all three models.
 \item
-  \textbf{The efficiency gain holds market need by market need, and is largest for small slices.} The slice is more efficient than the full graph on 10 of 13 market needs (sign test p = 0.039), and no graph beats a random slice on 10 of 12. The slice's lead is 3--5$\times$ for market needs whose slice has 15--28 nodes, and 1--2$\times$ for those with 45--51 nodes (exploratory).
+  \textbf{The efficiency gain holds market need by market need, and is largest for small slices.} The slice is more efficient than the full graph on 10 of 13 market needs (sign test p = 0.039; 8 of 10 without M8 and M16, the needs that overlap the prompt's worked example, p = 0.11), and no graph beats a random slice on 10 of 12 (p = 0.039; 8 of 10 without M8 and M16, p = 0.11). The slice's lead is 3--5$\times$ for market needs whose slice has 15--28 nodes, and 1--2$\times$ for those with 45--51 nodes (exploratory).
 \item
   \textbf{No graph is surprisingly efficient.} Its calls are the cheapest, so despite a low top-idea rate its yield (6.4) beats the random slice (4.1) and the full graph (3.1), and is close to the slice at high effort (5.9).
 \end{itemize}
@@ -632,7 +634,7 @@ The aim of brainstorming is the rare great idea, not a good average, so the main
 \item
   \textbf{Relevance vs size is only partly settled.} In the top tail, the market-need slice beats the size-matched random slice (top-idea rate 14.7\% vs 9.8\%; yield 5.9 vs 4.1 per 100k tokens; the slice's slope is higher in 99\% of paired bootstrap draws). Judged as whole sets, the two cannot be told apart (B over R 54\%, p = 0.55). What a relevant slice adds shows up in the best ideas, not in the average set.
 \item
-  \textbf{A graph helps, clearly so when it is the full graph.} A beats C on whole sets (74\%, p \textless{} 0.001); B beats C less clearly (62\%, p = 0.053) but has a higher top-idea rate (14.7\% vs 10.2\%).
+  \textbf{On whole sets, a graph helps, clearly so when it is the full graph.} A beats C on whole sets (74\%, p \textless{} 0.001); B beats C less clearly (62\%, p = 0.053) but has a higher top-idea rate (14.7\% vs 10.2\%).
 \end{itemize}
 
 \textbf{RQ3. How does spending tokens on context compare with spending them on thinking effort?} (Section~\ref{rq3})
@@ -829,7 +831,7 @@ C \textperiodcentered{} Control & high & --- & 48\% & 0.37 & 4.4 \\
 \hypertarget{rq1}{%
 \subsection{RQ1: Which representation yields the most top ideas per token?}\label{rq1}}
 
-\textbf{Answer.} The market-need slice. At medium effort it yields 8.8 top ideas per 100k tokens, about three times the full graph at any effort (2.6--3.2), and it is more efficient than the full graph on 10 of 13 market needs. At high effort, where all four representations were run, yields rank no graph (6.4) $\approx$ market-need slice (5.9) \textgreater{} random slice (4.1) \textgreater{} full graph (3.1).
+\textbf{Answer.} Among the graph representations, the market-need slice. At medium effort it yields 8.8 top ideas per 100k tokens, about three times the full graph at any effort (2.6--3.2), and it is more efficient than the full graph on 10 of 13 market needs (8 of 10 without M8 and M16, the needs that overlap the prompt's worked example). No graph was not run at medium effort. At high effort, where all four representations were run, yields rank no graph (6.4) $\approx$ market-need slice (5.9) \textgreater{} random slice (4.1) \textgreater{} full graph (3.1).
 
 
 A \textbf{top idea} scores $\ge 4.0$ on the individual blind scoring. Scores move in 0.25 steps, so an exact top 10\% does not exist: $\ge 4.0$ keeps the top 12.3\% of all ideas (355 of 2,892), $\ge 4.25$ the top 2.4\% (68). Market needs differ a lot in how easy a top idea is (29\% of M14's ideas reach 4.0, 3\% of M11's), so every rate is the mean of per-market-need rates.
@@ -932,7 +934,7 @@ A \textperiodcentered{} Full Graph \textperiodcentered{} xhigh & 6 & 31 / 150 & 
 \begin{figure}[tbp]
 \centering
 \IfFileExists{figures/8c_yield_spread_annotated.png}{\includegraphics[width=\textwidth]{figures/8c_yield_spread_annotated.png}}{\fbox{\parbox[c][5cm][c]{0.9\textwidth}{\centering\small missing: \texttt{\detokenize{figures/8c_yield_spread_annotated.png}}}}}
-\caption{How certain the yields are, \emph{given the judge's scores}: for each arm, a box plot of 2,000 bootstrap slopes (calls resampled within market need; box = middle 50\%, whiskers = 95\% interval). The intervals capture variation between generation calls only. They do not include the variability of the judge's scores on repeated evaluation, and the 4.0 threshold was chosen after seeing the Experiment 1 scores (Section~\ref{statistics}). The dashed line marks the control, no knowledge graph in the prompt (C, high effort). Arms whose boxes lie to the left of the line find top ideas less efficiently than giving the model no graph at all; this includes every full-graph arm, the random slice of the graph, and the market-need slice at high and xhigh effort (only just, at high). The slice at low and medium effort is above the control, but the intervals overlap. The clear separation is between the full graph and the other representations: every full-graph arm lies well below the control, while the slice and no graph are not clearly separated.}
+\caption{How certain the yields are, \emph{given the judge's scores}: for each arm, a box plot of 2,000 bootstrap slopes (calls resampled within market need; box = middle 50\%, whiskers = 95\% interval). The intervals capture variation between generation calls only. They do not include the variability of the judge's scores on repeated evaluation, and the 4.0 threshold was chosen after seeing the Experiment 1 scores (Section~\ref{statistics}; sensitivity to the threshold in Section~\ref{threshold-sweep}). The dashed line marks the control, no knowledge graph in the prompt (C, high effort). Arms whose boxes lie to the left of the line find top ideas less efficiently than giving the model no graph at all; this includes every full-graph arm, the random slice of the graph, and the market-need slice at high and xhigh effort (only just, at high). The slice at low and medium effort is above the control, but the intervals overlap. The clear separation is between the full graph and the other representations: every full-graph arm lies well below the control, while the slice and no graph are not clearly separated; at lower thresholds (3.5, 3.75) the control is clearly above the slice at high effort (Section~\ref{threshold-sweep}).}
 \label{fig:spread}
 \end{figure}
 
@@ -991,7 +993,7 @@ A \textperiodcentered{} Full Graph \textperiodcentered{} xhigh (6 market needs) 
 \begin{itemize}
 \tightlist
 \item
-  \textbf{The market-need slice is the most efficient representation at every effort up to high.} B at medium yields 8.8 top ideas per 100k tokens, 2.8 times A at medium (3.2); at high, 5.9 against 3.1. The intervals do not overlap.
+  \textbf{Among the graph representations, the market-need slice is the most efficient at every effort up to high.} B at medium yields 8.8 top ideas per 100k tokens, 2.8 times A at medium (3.2); at high, 5.9 against 3.1. The intervals do not overlap. At high effort, no graph (6.4) is level with it.
 \item
   \textbf{How far apart the slopes are} (Figure \ref{fig:spread}, chance that each arm's slope beats the next lower arm's): B\textperiodcentered{}medium over B\textperiodcentered{}low 0.93; B\textperiodcentered{}low over C 0.74; C over B\textperiodcentered{}high 0.69; B\textperiodcentered{}high over R 0.99; R over A\textperiodcentered{}medium 0.91; among the full-graph arms and B\textperiodcentered{}xhigh 0.53--0.73. Four tiers: B at medium (8.8); B at low and high with C (5.9--7.0); R (4.1); all full-graph arms and B\textperiodcentered{}xhigh (2.6--3.2).
 \item
@@ -1122,7 +1124,7 @@ B \textperiodcentered{} Slice vs C \textperiodcentered{} Control & 8 & 4 & 1 & 0
 \begin{itemize}
 \tightlist
 \item
-  \textbf{The slice's efficiency advantage over the full graph holds market need by market need:} B is more efficient on 10 of 13 market needs at high effort (p = 0.039) and at medium effort (p = 0.09). The full graph is ahead only on M1 and M3, by small margins.
+  \textbf{The slice's efficiency advantage over the full graph holds market need by market need:} B is more efficient on 10 of 13 market needs at high effort (p = 0.039) and at medium effort (p = 0.09). Without M8 and M16, the needs that overlap the prompt's worked example, these become 8 of 10 (p = 0.11) and 8 of 11 (p = 0.23). The full graph is ahead only on M1 and M3, by small margins.
 \item
   \textbf{Single needs are noisy:} each value rests on 5 calls and 0--10 top ideas.
 \end{itemize}
@@ -1207,7 +1209,7 @@ The 10 highest-scoring of all 2,892 ideas (\texttt{results/top\_ideas.md}), all 
 \hypertarget{rq2}{%
 \subsection{RQ2: Does the amount or the relevance of the graph matter?}\label{rq2}}
 
-\textbf{Answer.} Relevance, not amount. More graph buys better average sets: the full graph wins 64--65\% of set comparisons against the market-need slice, mainly on specificity, but its top-idea rate is no higher, so at about twice the tokens per call it finds fewer top ideas per token. Relevant structure helps in the top tail: the market-need slice out-yields a random slice of the same size in 99\% of paired bootstrap draws, although whole-set judging cannot tell the two apart. For Haiku, irrelevant structure is worse than none: no graph is more efficient than the random slice on 10 of 12 market needs. Stronger models are less affected: in Experiment 2 the random slice was about as efficient as no graph for Opus, and between the full graph and no graph for Fable (Section~\ref{rq4}).
+\textbf{Answer.} Relevance, not amount. More graph buys better average sets: the full graph wins 64--65\% of set comparisons against the market-need slice, mainly on specificity, but its top-idea rate is no higher, so at about twice the tokens per call it finds fewer top ideas per token. Relevant structure helps in the top tail: the market-need slice out-yields a random slice of the same size in 99\% of paired bootstrap draws, although whole-set judging cannot tell the two apart. For Haiku, irrelevant structure is worse than none: no graph is more efficient than the random slice on 10 of 12 market needs (8 of 10 without M8 and M16, which overlap the prompt's worked example). Stronger models are less affected: in Experiment 2 the random slice was about as efficient as no graph for Opus, and between the full graph and no graph for Fable (Section~\ref{rq4}).
 
 \hypertarget{pairwise-set-judging-full-graph-vs-market-need-slice-equal-effort}{%
 \subsubsection{Amount: full graph vs market-need slice}\label{pairwise-set-judging-full-graph-vs-market-need-slice-equal-effort}}
@@ -1338,7 +1340,7 @@ The market-need slice (B) and the random slice (R) have the same number of nodes
 \item
   \textbf{Graph vs none:} a relevant slice yields more top ideas than no graph (14.7\% vs 10.2\%); a random slice does not (9.8\%). The full graph is in between (13.5\%).
 \item
-  \textbf{No graph is more efficient than a random slice on 10 of 12 decided market needs (p = 0.039).} Showing the model structure that is not about the problem costs more per top idea than showing it nothing.
+  \textbf{No graph is more efficient than a random slice on 10 of 12 decided market needs (p = 0.039; 8 of 10 without M8 and M16, p = 0.11).} Showing the model structure that is not about the problem costs more per top idea than showing it nothing.
 \end{itemize}
 
 \hypertarget{pairwise-set-judging-the-controls-high-effort}{%
@@ -1942,6 +1944,38 @@ B \textperiodcentered{} Slice vs R \textperiodcentered{} Random, high effort & 4
   \textbf{Individual scores} do not depend on length comparisons between arms, but specificity is one of the four scored criteria, and longer ideas score somewhat higher (Spearman $\rho = 0.20$ between words per idea and score in Experiment 1; top ideas average 109 words against 100). The tail measure is therefore less exposed to detail bias than the pairwise judging, but not free of it; since the full graph's ideas are as long as or longer than the slice's, this bias works against the paper's main finding.
 \end{itemize}
 
+\hypertarget{threshold-sweep}{%
+\subsubsection{Sensitivity to the top-idea threshold}\label{threshold-sweep}}
+
+Table~\ref{tab:threshold-sweep} repeats the Experiment 1 yields at four thresholds, computed with the same functions as the main analysis (\texttt{threshold\_sweep.py}, seed 0, 2,000 resamples of calls within market need). The one call that returned no parseable ideas is excluded from both ideas and tokens, as in the main analysis.
+
+\begin{longtable}[]{@{}lrrrr@{}}
+\caption{Experiment 1 yield (top ideas per 100k tokens, 95\% bootstrap interval) at four top-idea thresholds. In brackets under each threshold: the share of all ideas it keeps. Arms ordered as in Table~\ref{tab:yield}.}\label{tab:threshold-sweep}\tabularnewline
+\toprule\noalign{}
+Arm & $\geq$ 3.5 (59.9\%) & $\geq$ 3.75 (33.6\%) & $\geq$ 4.0 (12.3\%) & $\geq$ 4.25 (2.4\%) \\
+\midrule\noalign{}
+\endfirsthead
+\caption*{Table~\thetable{} (continued)}\tabularnewline
+\toprule\noalign{}
+Arm & $\geq$ 3.5 (59.9\%) & $\geq$ 3.75 (33.6\%) & $\geq$ 4.0 (12.3\%) & $\geq$ 4.25 (2.4\%) \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+B \textperiodcentered{} Slice \textperiodcentered{} medium & 37.8 [34.9--40.5] & 20.5 [18.4--22.8] & 8.8 [7.0--10.8] & 1.8 [0.9--2.7] \\
+B \textperiodcentered{} Slice \textperiodcentered{} low & 32.3 [29.2--35.1] & 18.8 [16.4--21.4] & 7.0 [5.5--8.5] & 0.9 [0.2--1.6] \\
+C \textperiodcentered{} Control \textperiodcentered{} high & 38.5 [36.1--40.9] & 22.9 [20.4--25.4] & 6.4 [5.2--7.6] & 0.8 [0.2--1.5] \\
+B \textperiodcentered{} Slice \textperiodcentered{} high & 28.7 [27.1--30.4] & 16.6 [15.0--18.3] & 5.9 [4.9--7.1] & 0.9 [0.4--1.4] \\
+R \textperiodcentered{} Random \textperiodcentered{} high & 25.4 [23.7--27.1] & 14.1 [12.4--15.7] & 4.1 [3.2--5.2] & 0.4 [0.0--0.8] \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} medium & 19.4 [18.4--20.3] & 9.8 [8.8--10.7] & 3.2 [2.5--4.1] & 1.0 [0.6--1.6] \\
+B \textperiodcentered{} Slice \textperiodcentered{} xhigh (6 needs) & 11.2 [10.2--12.2] & 6.6 [5.5--7.5] & 3.1 [2.4--3.9] & 0.8 [0.3--1.3] \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} high & 14.8 [13.8--15.9] & 8.2 [7.4--9.1] & 3.1 [2.4--3.7] & 0.7 [0.4--1.1] \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} low & 15.5 [14.1--16.7] & 8.2 [7.1--9.3] & 2.9 [2.2--3.7] & 0.2 [0.0--0.5] \\
+A \textperiodcentered{} Full Graph \textperiodcentered{} xhigh (6 needs) & 8.3 [7.6--9.0] & 5.2 [4.5--6.0] & 2.6 [2.1--3.1] & 0.8 [0.4--1.3] \\
+\end{longtable}
+
+What holds at every threshold up to 4.0: every full-graph arm yields less than no graph, and the slice at medium effort out-yields the best full-graph arm (by 1.95$\times$ at 3.5, 2.10$\times$ at 3.75 and 2.73$\times$ at 4.0; 1.72$\times$ at 4.25). What does not hold: the order of the slice and no graph, which flips with the threshold. No graph is ahead at 3.5 and 3.75, with intervals that do not overlap at high effort, and the slice is ahead at 4.0 and 4.25 with overlapping intervals. At 4.25 too few ideas remain (2--11 per arm) to separate any arms.
+
 \hypertarget{change-from-the-pilot}{%
 \subsubsection{Change from the pilot}\label{change-from-the-pilot}}
 
@@ -1961,7 +1995,7 @@ The pilot (2 market needs $\times$ 3 replicates) found the full graph winning 17
 \item
   \textbf{Budget curves assume independent calls} within a market need and use a small-sample estimate of each market need's success rate; they are a model, not observed sequences.
 \item
-  \textbf{R and C were run only at high effort;} R vs C was not judged pairwise, so whether a random slice beats no graph on whole sets is unknown.
+  \textbf{R and C were run only at high effort;} R vs C was not judged pairwise, so whether a random slice beats no graph on whole sets is unknown, and the slice's best yield (8.8, medium effort) has no no-graph comparison.
 \item
   \textbf{Relevance vs size rests on the tail measure:} the pairwise judging found no difference between B and R.
 \item
@@ -1971,7 +2005,9 @@ The pilot (2 market needs $\times$ 3 replicates) found the full graph winning 17
 \item
   \textbf{xhigh covers 6 of 13 market needs,} which are slightly easier than average for top ideas; see the matched-needs results.
 \item
-  \textbf{One product, one operator, one prompt.} The microwave oven is a familiar product that the models have probably seen described at length in training, so a graph may add more for less familiar products. The worked example comes from the M8 branch of the graph, which may favour ideas in that area.
+  \textbf{One product, one operator, one prompt.} The microwave oven is a familiar product that the models have probably seen described at length in training, so a graph may add more for less familiar products. The worked example comes from the M8 branch of the graph, which may favour ideas in that area; M8 shows the largest advantage of the slice over the full graph (4.7$\times$), and without M8 and M16 the sign test is not significant (8 of 10, p = 0.11).
+\item
+  \textbf{Experiment 2 is not independent of Experiment 1.} Its single market need was chosen because it already showed Experiment 1's ordering, so the full graph ranking last in Experiment 2 is partly built into the selection; the ratios between models were computed on the same need and may be inflated for the same reason. The selection favoured the slice over no graph, so the finding that the two are indistinguishable in Experiment 2 is conservative.
 \item
   \textbf{Per-market-need results} rest on 5 calls or pairs each and should be read as patterns; the slice-size effect is exploratory (13 market needs, $p \approx 0.04$--$0.13$).
 \end{itemize}
@@ -1988,13 +2024,13 @@ The short answer is that, for finding top ideas, the knowledge graph did not pay
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  \textbf{The full graph never paid off.} In Experiment 1 it yielded about 3 top ideas per 100k tokens at every effort, against 8.8 for the market-need slice at medium effort and 6.4 for no graph; the slice was more efficient on 10 of 13 market needs (sign test p = 0.039). In Experiment 2 it was the least efficient representation for all three models, at about half the yield per token of the slice or no graph for Haiku and Fable.
+  \textbf{The full graph never paid off.} In Experiment 1 the full graph yielded about 3 top ideas per 100k tokens at every effort; the market-need slice yielded about three times as much at medium effort (8.8) and 5.9 at high effort, where no graph yielded 6.4 (no graph was not run at medium). The slice was more efficient on 10 of 13 market needs (sign test p = 0.039; 8 of 10, p = 0.11, without M8 and M16, which overlap the prompt's worked example). In Experiment 2, on one need chosen to match the pooled ordering, the full graph was the least efficient representation for all three models, clearly so for Haiku and Fable, at about half the yield per token of the slice or no graph.
 \item
   \textbf{A relevant slice removes the penalty but adds no gain.} If a graph is given, the market-need slice is the most efficient form, and its lead over the full graph looks largest where the slice is small (exploratory). It is not clearly better than giving no graph: in Experiment 1 no graph was run at high effort only, and in Experiment 2, with every representation at the same effort, the slice and no graph were indistinguishable for Haiku, Opus and Fable alike.
 \item
   \textbf{More context buys better average sets, not more great ideas.} Judged as whole sets, the full graph beats the slice (64\%) and no graph (74\%), mainly by being more specific. But its top-idea rate is no higher than the slice's, and its calls cost about twice as much. For Opus and Fable the full graph did not lower the share of top ideas at all; its whole penalty was the cost of the extra input.
 \item
-  \textbf{Irrelevant context hurts the small model.} For Haiku, a random slice of the same size as the market-need slice is less efficient than both the slice and no graph (5.9 and 6.4 against 4.1 at high effort; no graph beats it on 10 of 12 market needs, p = 0.039), although whole-set judging cannot tell the two slices apart. For Opus a random slice cost nothing against no graph, and for Fable less than the full graph did; whether this means that stronger models are less affected is open (Section~\ref{rq4}).
+  \textbf{Irrelevant context hurts the small model.} For Haiku, a random slice of the same size as the market-need slice is less efficient than both the slice and no graph (5.9 and 6.4 against 4.1 at high effort; no graph beats it on 10 of 12 market needs, p = 0.039; 8 of 10, p = 0.11, without M8 and M16), although whole-set judging cannot tell the two slices apart. For Opus a random slice cost nothing against no graph, and for Fable less than the full graph did; whether this means that stronger models are less affected is open (Section~\ref{rq4}).
 \item
   \textbf{Thinking effort raises quality, not efficiency.} High effort beats low in about 93\% of set comparisons, and extra-high effort gives the highest top-idea rates (19--21\%). But each call costs proportionally more, so yield does not rise with effort: the full graph stays at about 3 top ideas per 100k tokens from low to extra-high, and the slice peaks at medium.
 \item

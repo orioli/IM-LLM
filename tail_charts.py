@@ -61,7 +61,7 @@ SPREAD_REFERENCE = ("C", "high")
 # each note: (condition, effort of the row it sits on, centre x in slope units, text)
 SPREAD_NOTE_WORSE = ("A", "low", 8.0, "Adding the full knowledge graph to the prompt made top-idea generation "
                                       "less efficient than no graph at all")
-SPREAD_NOTE_BETTER = ("B", "low", 2.0, "Giving a partial view of the graph improved top-idea generation efficiency")
+SPREAD_NOTE_BETTER = ("B", "low", 2.0, "Giving only the relevant slice was more efficient than giving the full graph")
 SPREAD_NOTE_WRAP = 30            # characters per line in the notes
 # y-axis names in the slope-spread charts (8b, 8c); other charts keep the letter codes
 SPREAD_THUMB_RIGHT = 0.73       # chart 8c: right edge of the plot when the thumbnail column is added
