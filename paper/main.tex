@@ -54,10 +54,7 @@
 % ---- characters used in the text ----
 \input{unicode_chars}
 
-\title{Do LLMs Brainstorm Better with Knowledge Graphs?\\[0.4em]
-
-{\large\mdseries }%
-\thanks{Code, data, evaluation traces, and interactive visualizers: \url{https://github.com/orioli/IM-LLM}}}
+\title{Do LLMs Brainstorm Better with Knowledge Graphs?}
 
 \author{Jose Berengueres$^{1}$ \quad
         Almubdi Muitakan$^{1}$\quad 
@@ -69,6 +66,7 @@
 \date{}
 \begin{document}
 \maketitle
+{\let\thefootnote\relax\footnotetext{Code, data, evaluation traces, and interactive visualizers: \url{https://github.com/orioli/IM-LLM}}}
 \begin{abstract}
 
 In AI-assisted product ideation, a knowledge graph is an attractive way to represent the solution space for LLM-powered combinatorial search, yet few studies ask how the form of the graph given to the model affects what it produces, and at what cost. We test this on a microwave oven described as a graph (123 nodes, 246 edges) linking user needs to functions, parts and technologies. For each of 13 needs, Claude Haiku got the whole graph, the slice relevant to that need, a random slice of the same size, or no graph, at four effort levels; Claude Sonnet scored the 2,892 ideas blind, and we counted top ideas (roughly the best 12\%) per 100k tokens. A follow-up asked Haiku, Opus and Fable for 50 ideas per call on one need at medium effort (6,091 ideas).
