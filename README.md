@@ -138,8 +138,5 @@ python compare_runs_chart.py                  # all runs side by side (--unit do
 
 ## Citation
 
-Paper under submission; preprint link to follow.
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23703404.svg)](https://doi.org/10.5281/zenodo.23703404)
 
-## License
-
-[To be chosen: for example MIT for the code, and CC BY 4.0 for the data and paper.]
