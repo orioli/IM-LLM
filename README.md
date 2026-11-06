@@ -138,5 +138,4 @@ python compare_runs_chart.py                  # all runs side by side (--unit do
 
 ## Citation
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23703404.svg)](https://doi.org/10.5281/zenodo.23703404)
-
+[![DOI](https://img.shields.io/badge/DOI-10.2139%2Fssrn.7676699-blue)](https://doi.org/10.2139/ssrn.7676699)
