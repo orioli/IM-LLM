@@ -21,18 +21,31 @@ ROOT = HERE.parent                                 # the main study (read only)
 # (GEN_MODEL=opus ./run_all.sh generate). Each model gets its own run log and results folder; the codebook,
 # prompts, judge and coder are shared, so the models are compared on the same terms.
 GEN_MODELS = {"haiku": "claude-haiku-5-5", "opus": "claude-opus-5-5", "sonnet": "claude-sonnet-5-5",
-              "fable": "claude-fable-5-1"}
+              "fable": "claude-fable-5-1",
+              # Chinese budget models through OpenRouter (added 2026-11-12, exploratory; README, "Chinese models").
+              # Each is pinned to one host endpoint (GEN_HOSTS) so all its calls run on the same weights.
+              "deepseek": "deepseek/deepseek-v4.1-flash", "qwen": "qwen/qwen3.8-flash", "glm": "z-ai/glm-5.3-flash",
+              "deepseekpro": "deepseek/deepseek-v4-pro-0813"}       # DeepSeek's flagship (GA release)
+GEN_HOSTS = {"deepseek": "deepinfra/fp8", "qwen": "alibaba", "glm": "z-ai/fp8",   # OpenRouter endpoint tags
+             "deepseekpro": "baidu/fp8"}   # DeepSeek's own endpoint trains on prompts: refused by the account's privacy setting
 GEN_MODEL = os.environ.get("GEN_MODEL", "haiku")
 if GEN_MODEL not in GEN_MODELS:
     sys.exit(f"GEN_MODEL={GEN_MODEL!r}: use one of {sorted(GEN_MODELS)}")
 GEN_MODEL_ID = GEN_MODELS[GEN_MODEL]
 GEN_SUFFIX = "" if GEN_MODEL == "haiku" else f"_{GEN_MODEL}"   # haiku keeps the first run's file names
 RUNS = HERE / "runs" / f"m6_50ideas{GEN_SUFFIX}.jsonl"          # this study: 50 ideas per call
+# RUN_TAG=confirm: a second, separate set of calls of the same model (replicates 11-20, a confirmation run);
+# its run log is runs/m6_50ideas[_<model>]_confirm.jsonl and its results go to results[/<model>]/confirm/
+RUN_TAG = os.environ.get("RUN_TAG", "")
+if RUN_TAG:
+    RUNS = HERE / "runs" / f"m6_50ideas{GEN_SUFFIX}_{RUN_TAG}.jsonl"
 REF_LOGS = [ROOT / "runs" / "rq1_full.jsonl"]      # the main study: 5 ideas per call (the reference)
 N_IDEAS = 50
 PERSONA = "engineer50"                              # the main study's engineer sentence, verbatim (personas_50ideas.yaml);
                                                     # the name only keeps run ids apart from the main study's
 RESULTS = HERE / "results" if GEN_MODEL == "haiku" else HERE / "results" / GEN_MODEL
+if RUN_TAG:
+    RESULTS = RESULTS / RUN_TAG
 CODEBOOK_DIR = HERE / "codebook"
 CODEBOOK = CODEBOOK_DIR / "codebook.yaml"
 MOVES = RESULTS / "moves.jsonl"
@@ -190,19 +203,46 @@ def parse_json(text: str):
 
 
 _client = None
+# Where the Claude judge / coder is called. "anthropic" (default): the Anthropic API, as in the paper's runs.
+# "openrouter": the same model through OpenRouter's Anthropic-compatible Messages API (OPENROUTER_API_KEY),
+# pinned to Anthropic as the provider, with the same request body (system, user, max_tokens, output_config.effort).
+JUDGE_API = os.environ.get("JUDGE_API", "anthropic")
+if JUDGE_API not in ("anthropic", "openrouter"):
+    sys.exit(f"JUDGE_API={JUDGE_API!r}: use anthropic or openrouter")
+OPENROUTER_API = "https://openrouter.ai/api"
+OPENROUTER_CLAUDE = {"claude-sonnet-5-5": "anthropic/claude-sonnet-5.5", "claude-opus-5-5": "anthropic/claude-opus-5.5",
+                     "claude-haiku-5-5": "anthropic/claude-haiku-5.5", "claude-fable-5-1": "anthropic/claude-fable-5.1"}
+
+
+def openrouter_claude_body(effort: str) -> dict:
+    """What an OpenRouter Messages request adds to the paper's request: nothing the model sees.
+    The provider pin keeps the call on Anthropic's own API (not Bedrock or Vertex). `thinking` restates
+    Anthropic's default for Sonnet 5.5 (adaptive, thinking text not returned); without it OpenRouter would
+    ask for a thinking summary, which changes nothing in the answer but is not what the paper's calls did."""
+    return {"output_config": {"effort": effort}, "thinking": {"type": "adaptive", "display": "omitted"},
+            "provider": {"only": ["anthropic"], "allow_fallbacks": False}}
 
 
 def call_claude(system: str, user: str, model: str, effort: str, max_tokens: int) -> tuple[str, dict]:
     """Streaming call with effort sent explicitly, as in the main study. Returns (text, usage)."""
     global _client
+    extra = {"output_config": {"effort": effort}}
+    if JUDGE_API == "openrouter":
+        model, extra = OPENROUTER_CLAUDE.get(model, model), openrouter_claude_body(effort)
     if _client is None:
         import anthropic                                   # only needed for real calls
-        _client = anthropic.Anthropic(max_retries=5)
+        if JUDGE_API == "openrouter":
+            key = os.environ.get("OPENROUTER_API_KEY") or sys.exit("OPENROUTER_API_KEY is not set")
+            _client = anthropic.Anthropic(base_url=OPENROUTER_API, auth_token=key, max_retries=5)
+        else:
+            _client = anthropic.Anthropic(max_retries=5)
     t0 = time.perf_counter()
     with _client.messages.stream(model=model, max_tokens=max_tokens, system=system,
-                                 messages=[{"role": "user", "content": user}],
-                                 extra_body={"output_config": {"effort": effort}}) as s:
+                                 messages=[{"role": "user", "content": user}], extra_body=extra) as s:
         resp = s.get_final_message()
     text = "".join(b.text for b in resp.content if getattr(b, "type", "") == "text")
-    return text, {"input_tokens": resp.usage.input_tokens, "output_tokens": resp.usage.output_tokens,
-                  "latency_s": round(time.perf_counter() - t0, 2), "stop_reason": resp.stop_reason}
+    usage = {"input_tokens": resp.usage.input_tokens, "output_tokens": resp.usage.output_tokens,
+             "latency_s": round(time.perf_counter() - t0, 2), "stop_reason": resp.stop_reason}
+    if JUDGE_API == "openrouter":
+        usage["judge_api"] = "openrouter"
+    return text, usage

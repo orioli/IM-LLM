@@ -10,19 +10,28 @@ ROOT=..
 # Each model has its own run log (runs/m6_50ideas[_opus].jsonl) and results folder (results/ or results/opus/);
 # codebook, prompts, judge (Sonnet) and coder are shared. Prefix every step of a run with the same GEN_MODEL.
 export GEN_MODEL="${GEN_MODEL:-haiku}"
+# Chinese models (deepseek, qwen, glm) go through OpenRouter (OPENROUTER_API_KEY), each pinned to one host
+# endpoint (HOST, no fallback); keep in step with GEN_MODELS / GEN_HOSTS in common.py. The judge stays Sonnet.
+HOST=""
 case "$GEN_MODEL" in
-  haiku)  MODEL_ID=claude-haiku-5-5;  SUF="" ;;
-  opus)   MODEL_ID=claude-opus-5-5;   SUF=_opus ;;
-  sonnet) MODEL_ID=claude-sonnet-5-5; SUF=_sonnet ;;
-  fable)  MODEL_ID=claude-fable-5-1;  SUF=_fable ;;
-  *) echo "GEN_MODEL must be haiku, opus, sonnet or fable"; exit 1 ;;
+  haiku)    MODEL_ID=claude-haiku-5-5;  SUF="" ;;
+  opus)     MODEL_ID=claude-opus-5-5;   SUF=_opus ;;
+  sonnet)   MODEL_ID=claude-sonnet-5-5; SUF=_sonnet ;;
+  fable)    MODEL_ID=claude-fable-5-1;  SUF=_fable ;;
+  deepseek) MODEL_ID=deepseek/deepseek-v4.1-flash; SUF=_deepseek; HOST=deepinfra/fp8 ;;
+  qwen)     MODEL_ID=qwen/qwen3.8-flash;           SUF=_qwen;     HOST=alibaba ;;
+  glm)      MODEL_ID=z-ai/glm-5.3-flash;           SUF=_glm;      HOST=z-ai/fp8 ;;
+  deepseekpro) MODEL_ID=deepseek/deepseek-v4-pro-0813; SUF=_deepseekpro; HOST=baidu/fp8 ;;
+  *) echo "GEN_MODEL must be haiku, opus, sonnet, fable, deepseek, deepseekpro, qwen or glm"; exit 1 ;;
 esac
 # 50 ideas per call, 10 calls per condition (2,000 ideas). The persona file holds the main study's
 # engineer sentence verbatim; its name only prefixes the run ids (engineer50_A_M6_medium_r01).
 GEN=(--graph $ROOT/microwave_base_graph.yaml --manifest $ROOT/slices/manifest.csv
      --template $ROOT/template_prompt.txt --needs M6 --conditions A B R C --effort medium
      --n-ideas 50 --reps 10 --persona engineer50 --personas-file personas_50ideas.yaml
-     --r-seed 1 --max-tokens 48000 --order-seed 6 --model $MODEL_ID --out runs/m6_50ideas$SUF.jsonl)
+     --r-seed 1 --max-tokens 48000 --order-seed 6 --model $MODEL_ID --out runs/m6_50ideas$SUF.jsonl
+     --workers "${WORKERS:-4}")
+if [ -n "$HOST" ]; then GEN+=(--or-host "$HOST"); fi
 
 case "${1:-help}" in
   # ── before any generation call ─────────────────────────────────────
@@ -38,6 +47,13 @@ case "${1:-help}" in
     echo "Edit codebook/codebook_draft.yaml (or codebook_template.yaml) into codebook/codebook.yaml:"
     echo "  merge/split moves, check definitions and categories, then set status: final and version: 1." ;;
   # ── generation and scoring ─────────────────────────────────────────
+  smoke)      # one full-graph call (the longest prompt) to a separate log; checks the model can deliver 50 ideas
+    python $ROOT/KG_informed_brainstorm_AB_Test.py "${GEN[@]}" --conditions A --reps 1 --out runs/smoke$SUF.jsonl
+    python smoke_check.py runs/smoke$SUF.jsonl ${HOST:+--host "$HOST"} ;;
+  confirm)    # confirmation run (CHINESE_REPLICATION.md, Section 4): 10 fresh calls, replicates 11-20, of the
+    # arms named in CONFIRM (e.g. CONFIRM="A C"), into a separate run log; then score with RUN_TAG=confirm
+    python $ROOT/KG_informed_brainstorm_AB_Test.py "${GEN[@]}" --conditions ${CONFIRM:?set CONFIRM, e.g. CONFIRM="A C"} \
+           --first-rep 11 --order-seed 7 --out runs/m6_50ideas${SUF}_confirm.jsonl ;;
   generate)   # 40 calls of 50 ideas (about 1M tokens; each call takes a few minutes)
     python $ROOT/KG_informed_brainstorm_AB_Test.py "${GEN[@]}" ;;
   score)      # quality scores with the main study's judge prompt, 5 ideas per request; cost tables
@@ -45,6 +61,15 @@ case "${1:-help}" in
     python score_ideas.py table
     # ../analyze.py always writes to ./results/, so a non-Haiku run computes its tables in results/<model>/stats/
     # (-> results/<model>/stats/results/calls.csv ...), leaving the Haiku tables in results/ untouched
+    HERE="$(pwd)"; STATS=.
+    if [ "$GEN_MODEL" != haiku ]; then STATS=results/$GEN_MODEL/stats; mkdir -p "$STATS"; fi
+    (cd "$STATS" && python "$HERE/$ROOT/analyze.py" stats --logs "$HERE/runs/m6_50ideas$SUF.jsonl" \
+           --graph "$HERE/$ROOT/microwave_base_graph.yaml" --manifest "$HERE/$ROOT/slices/manifest.csv") ;;
+  score-batch) # the same judge requests through OpenRouter's Batch API (Sonnet 5.5 on Anthropic, half price):
+    # submit, wait (most batches finish in minutes; safe to interrupt and run again), then the tables as `score`
+    python judge_batch.py submit
+    python judge_batch.py wait
+    python score_ideas.py table
     HERE="$(pwd)"; STATS=.
     if [ "$GEN_MODEL" != haiku ]; then STATS=results/$GEN_MODEL/stats; mkdir -p "$STATS"; fi
     (cd "$STATS" && python "$HERE/$ROOT/analyze.py" stats --logs "$HERE/runs/m6_50ideas$SUF.jsonl" \
