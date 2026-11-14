@@ -77,6 +77,41 @@ conditions within a panel rather than heights across the 5-idea and 50-idea pane
 
 Details, hypotheses and every step: [`M6_50ideas/README.md`](M6_50ideas/README.md).
 
+### Replication with Chinese models (November 2026)
+
+We repeated Experiment 2 with DeepSeek V4.1 Flash, Qwen3.8 Flash and DeepSeek V4 Pro to see whether the
+claims above hold for models from another family. The prompts, settings and Sonnet judge are the same (the
+judge was reached through OpenRouter, and re-scoring 596 ideas the paper had already scored showed no
+shift). What would count as breaking each claim was written down before any call: see
+[`M6_50ideas/CHINESE_REPLICATION.md`](M6_50ideas/CHINESE_REPLICATION.md), with frozen copies and their
+SHA-256 hashes in `M6_50ideas/prereg/`.
+
+The claims held. The full graph was the lowest or tied for lowest for every model, and no representation
+beat no graph. One contrast went the other way on its first 10 calls (DeepSeek V4.1 Flash, slice above no
+graph), and it reversed on 10 fresh calls.
+
+| Top ideas per 100k tokens | DeepSeek V4.1 Flash | DeepSeek V4 Pro | Qwen3.8 Flash |
+| --- | --- | --- | --- |
+| Full graph | 11.9 | 12.5 | 6.2 |
+| Need slice | 23.1 | 20.2 | 7.7 |
+| Random slice | 18.1 | 20.9 | 4.4 |
+| No graph | 14.1 | 19.6 | 11.0 |
+
+| Yield ratio [95% CI], pooled over models | Claude (3) | Chinese (3) | All six |
+| --- | --- | --- | --- |
+| Full graph / no graph | 0.55 [0.40-0.77] | 0.60 [0.47-0.77] | 0.57 [0.48-0.68] |
+| Need slice / no graph | 1.00 [0.85-1.18] | 1.04 [0.81-1.34] | 1.01 [0.88-1.16] |
+
+No Chinese model came close to Opus or Fable on the share of top ideas (4% to 6% against 14% to 15%), and a
+DeepSeek judge ranks the six models in the same order as Sonnet, so the cost conclusions held too. Two judges
+from different families also rank the four representations the same way, though they agree on which
+individual ideas are top barely above chance. This was a pilot on one need with 10 calls per representation
+and a $10 budget. What it can't show, and what a full experiment would take, is in
+[`M6_50ideas/FULL_EXPERIMENT_PLAN.md`](M6_50ideas/FULL_EXPERIMENT_PLAN.md). The costs, including the
+paper's own logged calls priced the same way, are in `M6_50ideas/results/cost_breakdown.md`.
+
+![Top ideas per dollar and per token, Haiku, Opus and Fable with the three Chinese models added](M6_50ideas/results/charts/compare_stack_all_bootstrap_dollars__M6_calls_tokens__opus_fable_deepseek_deepseekpro_qwen.png)
+
 ![Microwave innovation matrix demo](innovation_matrix_demo.gif)
 
 ## Repository layout
@@ -94,7 +129,7 @@ Details, hypotheses and every step: [`M6_50ideas/README.md`](M6_50ideas/README.m
 | `runs/`                                                          | every generation call (prompt metadata, raw response, token counts)                               |
 | `results/`                                                       | judge outputs, tables, charts, results write-up                                                   |
 | `persona_as_factor/`                                             | exploratory follow-up: three personas × B, C × 3 market needs × 2 efforts                      |
-| `M6_50ideas/`                                                    | follow-up: 50 ideas per call on market need M6, four conditions × three models (Haiku, Opus, Fable), yield per token and per dollar, move coding |
+| `M6_50ideas/`                                                    | follow-up: 50 ideas per call on market need M6, four conditions × three models (Haiku, Opus, Fable), yield per token and per dollar, move coding; pilot replication with three Chinese models through OpenRouter (`CHINESE_REPLICATION.md`) and the plan for a full one (`FULL_EXPERIMENT_PLAN.md`) |
 | `paper/`                                                         | LaTeX source of the paper (`main.tex`; built from Markdown drafts by `build_paper.py`)        |
 
 ## Reproducing
@@ -125,7 +160,9 @@ python figure_innovation_matrix.py
 Every number in the paper's results is regenerated from `runs/` and `results/` by steps 3 and 4. Re-running the generation produces new samples, so individual ideas will differ.
 
 The follow-up runs from its own folder, one step at a time; `GEN_MODEL` picks the generator
-(`haiku` by default, `opus`, `fable`):
+(`haiku` by default, `opus`, `fable`; and the Chinese budget models `deepseek`, `qwen`, `glm` through
+OpenRouter, which need `OPENROUTER_API_KEY` and a passing `smoke` call first; see
+[`M6_50ideas/README.md`](M6_50ideas/README.md), *Chinese models*):
 
 ```bash
 cd M6_50ideas
@@ -134,6 +171,9 @@ GEN_MODEL=opus bash run_all.sh generate       # 40 calls of 50 ideas
 GEN_MODEL=opus bash run_all.sh score          # blind judge
 GEN_MODEL=opus bash run_all.sh chart          # Figure 8 for this run
 python compare_runs_chart.py                  # all runs side by side (--unit dollars for per dollar)
+
+GEN_MODEL=qwen bash run_all.sh smoke          # Chinese models: one test call, must PASS before generate
+python compare_runs_chart.py --models opus deepseek qwen glm   # Claude and Chinese models side by side
 ```
 
 ## Citation
