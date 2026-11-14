@@ -1,0 +1,5 @@
+condition,effort,n_calls,parse_rate,five_ideas_rate,truncated_rate,input_tokens,output_tokens,total_tokens,latency_s,hallucinated_anchor_share,anchor_not_in_prompt_share,anchor_outside_need_slice_share,new_nodes_per_idea,invalid_edge_type_share,ideas_echoing_example,set_words,words_per_idea
+A,medium,10,1.0,0.0,0.0,8258,16504.4,24762.4,255.63,0.0,0.0,0.7,1.76,0.0,4.5,2201.3,44.06
+B,medium,10,1.0,0.0,0.0,2083,16765.4,18848.4,259.88,0.0,0.0,0.0,1.62,0.0,4.9,2041.4,40.83
+C,medium,10,1.0,0.0,0.0,673,12561.4,13234.4,195.08,0.2,0.0,0.0,1.86,0.0,4.3,1933.5,38.79
+R,medium,10,1.0,0.0,0.0,1683,13135,14818,212.47,0.0,0.0,0.48,1.69,0.0,3.5,2007.6,41.68
