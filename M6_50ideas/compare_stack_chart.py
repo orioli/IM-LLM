@@ -45,12 +45,13 @@ def main() -> None:
     ap.add_argument("--top", type=spec, default=("all", "bootstrap", "dollars"))
     ap.add_argument("--bottom", type=spec, default=("M6", "calls", "tokens"))
     ap.add_argument("--threshold", type=float, default=4.0)
+    cr.models_arg(ap)          # e.g. --models opus deepseek qwen glm; the file then gets the suffix __<models>
     args = ap.parse_args()
     th = args.threshold
 
     rows = []
     for needs, box, unit in (args.top, args.bottom):
-        panels, stats = cr.compute(needs, box, unit == "dollars", th)
+        panels, stats = cr.compute(needs, box, unit == "dollars", th, args.models)
         rows.append((needs, box, unit, panels, stats))
     n = max(len(r[3]) for r in rows)
 
@@ -70,7 +71,8 @@ def main() -> None:
         fig.text(0.06, head, f"{'AB'[k]}  {row_title(needs, box, unit)}", fontsize=13, fontweight="bold",
                  color=tc.INK, va="bottom")
         fig.text(0.06, head - 0.018, cr.describe(box, unit == "dollars"), fontsize=8.5, color=tc.INK2, va="bottom")
-        cr.write_csv(stats, cr.HERE / "results" / f"compare_stack_row{'AB'[k]}_{needs}_{box}_{unit}.csv")
+        cr.write_csv(stats, cr.HERE / "results" / f"compare_stack_row{'AB'[k]}_{needs}_{box}_{unit}"
+                                                  f"{cr.models_suffix(args.models)}.csv")
     # one "what each prompt contains" panel for the whole figure: the four M6 prompts of the 50-idea runs
     tc.THUMB = m6_thumb.path()
     left = plots_right + 0.025
@@ -79,11 +81,12 @@ def main() -> None:
     models = " vs ".join(dict.fromkeys(t.split(" · ")[0] for t, _ in max((r[3] for r in rows), key=len)))
     fig.text(0.06, 0.985, f"Top ideas per token and per dollar: 5 vs 50 ideas per call, {models}", fontsize=15,
              fontweight="bold", color=tc.INK, va="top")
-    notes = cr.EFFORT_NOTE + ("\n" + cr.PRICE_NOTE if any(r[2] == "dollars" for r in rows) else "")
+    notes = cr.EFFORT_NOTE + ("\n" + cr.price_note(max((r[3] for r in rows), key=len))
+                              if any(r[2] == "dollars" for r in rows) else "")
     fig.text(0.06, 0.962, notes, fontsize=9, color=tc.INK2, va="top", linespacing=1.4)
     fig.legend(handles=cr.legend_handles(), loc="lower center", ncol=5, frameon=False, fontsize=10,
                bbox_to_anchor=((0.06 + plots_right) / 2, 0.005))
-    tag = "__".join("_".join(r[:3]) for r in rows)
+    tag = "__".join("_".join(r[:3]) for r in rows) + cr.models_suffix(args.models)
     out = cr.HERE / "results" / "charts" / f"compare_stack_{tag}.png"
     out.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out, dpi=200, facecolor=tc.SURFACE)

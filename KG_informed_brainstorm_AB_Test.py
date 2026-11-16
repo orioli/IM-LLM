@@ -177,6 +177,91 @@ def call_model(client, job: dict, args) -> dict:
     return rec
 
 
+# ── One API call, OpenRouter (non-Claude models, e.g. deepseek/deepseek-v4.1-flash) ──
+OPENROUTER_URL = "https://openrouter.ai/api/v1"
+FINISH_TO_STOP = {"stop": "end_turn", "length": "max_tokens"}   # Anthropic names, so analyze.py's checks still work
+
+
+def _extra(obj, key):
+    """A field OpenRouter adds to the OpenAI schema (provider, cost, error): kept by the SDK as an extra."""
+    return (getattr(obj, "model_extra", None) or {}).get(key, getattr(obj, key, None))
+
+
+def call_openrouter(client, job: dict, args) -> dict:
+    """Same prompt, same log record as call_model, through OpenRouter's OpenAI-compatible endpoint.
+
+    The system and user prompts are sent unchanged as two chat messages. No temperature/top_p is sent
+    (provider defaults, as with Claude). Effort goes through OpenRouter's normalised `reasoning.effort`;
+    reasoning tokens count against max_tokens and are included in output_tokens, as Claude's thinking is.
+    No response_format: JSON is asked for by the prompt only, as in the Claude runs. With --or-host the
+    call is pinned to one host endpoint (no fallback), so every call of a run is served by the same weights
+    and quantisation; the host that actually served it is logged in served_by."""
+    rec = {k: job[k] for k in ("run_id", "persona", "condition", "target_need", "effort", "rep", "slice_id",
+                               "slice_sha256", "slice_n_nodes", "prompt_sha256")}
+    rec.update(model=args.model, max_tokens=args.max_tokens, cache=False, api="openrouter",
+               host_pin=args.or_host, ts_start=datetime.now(timezone.utc).isoformat())
+    body = {"reasoning": {"effort": job["effort"]}, "usage": {"include": True}}
+    if args.or_host:
+        body["provider"] = {"only": [args.or_host], "allow_fallbacks": False}
+    t0 = time.perf_counter()
+    try:
+        stream = client.chat.completions.create(
+            model=args.model, max_tokens=args.max_tokens, stream=True, stream_options={"include_usage": True},
+            messages=[{"role": "system", "content": job["system"]}, {"role": "user", "content": job["user"]}],
+            extra_body=body)
+        parts, usage, finish, served, version, gen_id = [], None, None, None, None, None
+        for chunk in stream:
+            if _extra(chunk, "error"):
+                raise RuntimeError(f"stream error: {_extra(chunk, 'error')}")
+            served = _extra(chunk, "provider") or served
+            version, gen_id = chunk.model or version, chunk.id or gen_id
+            if chunk.choices:
+                ch = chunk.choices[0]
+                if ch.delta is not None and ch.delta.content:          # reasoning arrives in delta.reasoning: not kept
+                    parts.append(ch.delta.content)
+                finish = ch.finish_reason or finish
+            if chunk.usage:
+                usage = chunk.usage
+        if finish == "error":
+            raise RuntimeError("provider ended the stream with finish_reason=error")
+        if usage is None:
+            raise RuntimeError("stream ended without usage (incomplete response)")
+        text = "".join(parts)
+        if not text.strip() and finish != "length":            # empty but not truncated: a glitch, retried on re-run
+            raise RuntimeError(f"empty answer (finish_reason={finish})")
+        ideas = parse_ideas(text)
+        det_out, det_in = usage.completion_tokens_details, usage.prompt_tokens_details
+        cost = _extra(usage, "cost")
+        rec.update(
+            ok=True, latency_s=round(time.perf_counter() - t0, 3),
+            stop_reason=FINISH_TO_STOP.get(finish, finish), finish_reason=finish,
+            input_tokens=usage.prompt_tokens, output_tokens=usage.completion_tokens,
+            reasoning_tokens=(getattr(det_out, "reasoning_tokens", None) or 0) if det_out else 0,
+            cache_read_tokens=(getattr(det_in, "cached_tokens", None) or 0) if det_in else 0,
+            cache_write_tokens=0, cost_usd_billed=float(cost) if cost is not None else None,
+            served_by=served, model_version=version, generation_id=gen_id,
+            parse_ok=ideas is not None, n_ideas=len(ideas) if ideas else 0,
+            ideas=ideas, raw_text=text)
+    except Exception as exc:                               # logged, not raised: the run continues
+        rec.update(ok=False, latency_s=round(time.perf_counter() - t0, 3),
+                   error=f"{type(exc).__name__}: {exc}")
+    return rec
+
+
+def make_client(args):
+    """(client, call function) for the chosen API. Only the SDK that is needed is imported."""
+    if args.api == "openrouter":
+        import os
+        key = os.environ.get("OPENROUTER_API_KEY")
+        if not key:
+            sys.exit("OPENROUTER_API_KEY is not set (export it in this terminal, then run the same command again)")
+        import openai
+        # long answers (50 ideas + reasoning) can take many minutes; the timeout is per read, not per call
+        return openai.OpenAI(base_url=OPENROUTER_URL, api_key=key, max_retries=5, timeout=900), call_openrouter
+    import anthropic
+    return anthropic.Anthropic(max_retries=5), call_model   # SDK retries 429/5xx with backoff
+
+
 # ── Main ────────────────────────────────────────────────────────────
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -186,6 +271,8 @@ def main() -> None:
     ap.add_argument("--needs", nargs="+", default=DEFAULT_NEEDS)
     ap.add_argument("--conditions", nargs="+", default=["A", "B", "R", "C"], choices=["A", "B", "R", "C"])
     ap.add_argument("--reps", type=int, default=10)
+    ap.add_argument("--first-rep", type=int, default=1,
+                    help="number of the first replicate (default 1); e.g. --first-rep 11 --reps 10 runs r11-r20")
     ap.add_argument("--r-seed", type=int, default=1, help="which random slice to use for condition R")
     ap.add_argument("--product-name", default="microwave")
     ap.add_argument("--operator-name", default=DEFAULT_OPERATOR_NAME)
@@ -195,7 +282,13 @@ def main() -> None:
                     help="one or more personas; each becomes its own set of calls (default: engineer)")
     ap.add_argument("--personas-file", type=Path, default=None,
                     help="YAML with persona descriptions (name -> system_intro)")
-    ap.add_argument("--model", default="claude-haiku-5-5")
+    ap.add_argument("--model", default="claude-haiku-5-5",
+                    help="a Claude id (Anthropic API), or an OpenRouter id 'vendor/model' (needs OPENROUTER_API_KEY)")
+    ap.add_argument("--api", choices=["auto", "anthropic", "openrouter"], default="auto",
+                    help="auto (default): OpenRouter if the model id contains '/', else Anthropic")
+    ap.add_argument("--or-host", default=None,
+                    help="OpenRouter only: pin every call to this host endpoint, no fallback "
+                         "(e.g. alibaba, z-ai/fp8, deepinfra/fp8)")
     ap.add_argument("--effort", nargs="+", choices=["low", "medium", "high", "xhigh", "max"],
                     default=["medium"],
                     help="one or more thinking-effort levels; each becomes its own set of calls "
@@ -208,6 +301,12 @@ def main() -> None:
     ap.add_argument("--out", type=Path, default=Path("runs/rq1_runs.jsonl"))
     ap.add_argument("--dry-run", action="store_true", help="write prompts to runs/dry_run/, no API calls")
     args = ap.parse_args()
+    if args.api == "auto":
+        args.api = "openrouter" if "/" in args.model else "anthropic"
+    if args.or_host and args.api != "openrouter":
+        sys.exit("--or-host only applies to OpenRouter models")
+    if args.cache and args.api == "openrouter":
+        sys.exit("--cache is Anthropic-only (the OpenRouter runs are sent uncached)")
 
     system_t, user_t = load_template(args.template)
     personas = load_personas(args.personas_file)
@@ -237,7 +336,8 @@ def main() -> None:
                           "n_ideas": args.n_ideas, "graph_yaml": graph_yaml.rstrip()}
                 system, user = fill(system_t, values), fill(user_t, values)
                 prompt_sha = hashlib.sha256((system + "\n\n" + user).encode("utf-8")).hexdigest()
-                for effort, rep in ((e, r) for e in args.effort for r in range(1, args.reps + 1)):
+                for effort, rep in ((e, r) for e in args.effort
+                                    for r in range(args.first_rep, args.first_rep + args.reps)):
                     jobs.append({"run_id": run_id_for(persona, cond, need, effort, rep), "persona": persona,
                                  "effort": effort, "condition": cond, "target_need": need,
                                  "rep": rep, "slice_id": sid, "slice_sha256": row["sha256"],
@@ -288,12 +388,11 @@ def main() -> None:
     if not todo:
         return
 
-    import anthropic
-    client = anthropic.Anthropic(max_retries=5)           # SDK retries 429/5xx with backoff
+    client, call = make_client(args)
 
     lock, n_ok, n_fail = threading.Lock(), 0, 0
     with args.out.open("a", encoding="utf-8") as fh, ThreadPoolExecutor(max_workers=args.workers) as pool:
-        futures = [pool.submit(call_model, client, j, args) for j in todo]
+        futures = [pool.submit(call, client, j, args) for j in todo]
         for i, fut in enumerate(as_completed(futures), 1):
             rec = fut.result()
             with lock:

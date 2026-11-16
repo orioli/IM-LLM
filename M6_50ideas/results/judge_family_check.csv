@@ -1,0 +1,7 @@
+run,family,ideas,mean_sonnet,mean_deepseek,top_share_sonnet,top_share_deepseek_matched
+Haiku 5.5,Claude,772,3.1289,3.6435,0.0622,0.0402
+Opus 5.5,Claude,788,3.3912,3.8871,0.1256,0.099
+Fable 5.1,Claude,764,3.4274,3.9116,0.1597,0.1217
+DeepSeek V4.1 Flash,Chinese,786,3.2029,3.8012,0.0534,0.0598
+DeepSeek V4 Pro,Chinese,785,3.0433,3.5379,0.065,0.0459
+Qwen3.8 Flash,Chinese,800,3.1391,3.6913,0.0488,0.0537

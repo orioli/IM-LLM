@@ -1,0 +1,21 @@
+panel,condition,effort,needs,calls,ideas,top_ideas,tokens,cost_usd,yield_per_100k,yield_lo,yield_hi
+Haiku · 5 ideas/call,A,medium,1,5,25,5,79108.0,,6.32,1.245,12.77
+Haiku · 5 ideas/call,B,medium,1,5,25,10,39589.0,,25.26,15.1,35.495
+Haiku · 5 ideas/call,R,high,1,5,25,3,51617.0,,5.812,1.901,9.875
+Haiku · 5 ideas/call,C,high,1,5,25,3,40747.0,,7.363,2.268,13.102
+Haiku · 50 ideas/call,A,medium,1,10,517,28,297939,,9.398,6.36,13.304
+Haiku · 50 ideas/call,B,medium,1,10,525,42,206178,,20.371,14.573,27.818
+Haiku · 50 ideas/call,R,medium,1,10,513,19,174153,,10.91,6.869,16.927
+Haiku · 50 ideas/call,C,medium,1,10,525,37,166561,,22.214,17.036,28.085
+DeepSeek Flash · 50 ideas/call,A,medium,1,10,501,27,227082,,11.89,9.202,14.997
+DeepSeek Flash · 50 ideas/call,B,medium,1,10,511,37,160061,,23.116,16.618,30.486
+DeepSeek Flash · 50 ideas/call,R,medium,1,10,528,28,154903,,18.076,13.363,23.371
+DeepSeek Flash · 50 ideas/call,C,medium,1,10,500,17,120966,,14.054,9.651,19.199
+DeepSeek Pro · 50 ideas/call,A,medium,1,10,499,31,247624,,12.519,8.379,17.513
+DeepSeek Pro · 50 ideas/call,B,medium,1,10,500,38,188484,,20.161,15.651,26.099
+DeepSeek Pro · 50 ideas/call,R,medium,1,10,483,31,148180,,20.921,12.416,31.529
+DeepSeek Pro · 50 ideas/call,C,medium,1,10,499,26,132344,,19.646,11.469,28.404
+Qwen Flash · 50 ideas/call,A,medium,1,10,500,24,388884,,6.172,4.75,7.978
+Qwen Flash · 50 ideas/call,B,medium,1,10,500,24,310376,,7.733,3.698,13.202
+Qwen Flash · 50 ideas/call,R,medium,1,10,500,12,274690,,4.369,1.933,7.59
+Qwen Flash · 50 ideas/call,C,medium,1,10,500,22,199230,,11.043,7.81,14.295

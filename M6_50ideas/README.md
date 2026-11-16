@@ -104,11 +104,115 @@ the environment variable `GEN_MODEL` (`haiku`, the default, `opus`, `sonnet` or 
 | `haiku` (default) | `claude-haiku-5-5` | `runs/m6_50ideas.jsonl` | `results/` |
 | `opus` | `claude-opus-5-5` | `runs/m6_50ideas_opus.jsonl` | `results/opus/` |
 | `fable` | `claude-fable-5-1` | `runs/m6_50ideas_fable.jsonl` | `results/fable/` |
+| `deepseek` | `deepseek/deepseek-v4.1-flash` (OpenRouter) | `runs/m6_50ideas_deepseek.jsonl` | `results/deepseek/` |
+| `deepseekpro` | `deepseek/deepseek-v4-pro-0813` (OpenRouter) | `runs/m6_50ideas_deepseekpro.jsonl` | `results/deepseekpro/` |
+| `qwen` | `qwen/qwen3.8-flash` (OpenRouter) | `runs/m6_50ideas_qwen.jsonl` | `results/qwen/` |
+| `glm` | `z-ai/glm-5.3-flash` (OpenRouter; smoke call only, not run) | `runs/m6_50ideas_glm.jsonl` | `results/glm/` |
 
 Prefix every step of a run with the same `GEN_MODEL`, e.g. `GEN_MODEL=opus bash run_all.sh score`.
 The cost tables of `../analyze.py stats` go to `results/<model>/stats/results/` for the added models,
 so the Haiku tables in `results/` are not overwritten. The hypotheses H12–H15 refer to the Haiku run;
 the other models are compared descriptively.
+
+**Chinese models** (run on 2026-11-12). The same 40 calls were repeated with three models from Chinese
+labs, to see whether the paper's claims hold for models from another family. Which claims we tested, what
+would count as breaking each one, the models and the order of work were written down before any call
+(`prereg/`, with SHA-256 hashes). The deviations and results are in
+[`CHINESE_REPLICATION.md`](CHINESE_REPLICATION.md); this section is about how the runs were made.
+
+| `GEN_MODEL` | Model | Host endpoint, pinned | USD per M tokens, in / out |
+| --- | --- | --- | --- |
+| `deepseek` | DeepSeek V4.1 Flash (small, Haiku's price tier) | `deepinfra/fp8` | 0.14 / 0.42 |
+| `qwen` | Qwen3.8 Flash (small, Haiku's price tier) | `alibaba` (first party) | 0.15 / 0.47 |
+| `deepseekpro` | DeepSeek V4 Pro 0813 (DeepSeek's flagship) | `baidu/fp8` | 0.659 / 1.976 |
+| `glm` | GLM-5.3 Flash (reserve: passed its smoke call, not run for lack of budget) | `z-ai/fp8` (first party) | 0.15 / 0.50 |
+
+*What is the same as in the Claude runs, and what is not.*
+
+- Same prompts word for word (`check_prompts.py` passes for every `GEN_MODEL`), same order, same
+  `max_tokens` (48,000, reasoning included, as Claude's thinking is), same judge model, prompt and effort.
+- The models are reached through OpenRouter (`OPENROUTER_API_KEY`). The system and user prompts go as two
+  chat messages; no temperature is sent (provider defaults, as with Claude); JSON is asked for by the
+  prompt only, with no structured-output mode.
+- Effort `medium` is sent as OpenRouter's `reasoning.effort`. Each lab maps it to its own reasoning budget,
+  so "medium" is the same setting in name only: per call, Qwen3.8 Flash reasoned for about 12,400 tokens
+  and the DeepSeek models for 3,600 to 5,200. `reasoning_tokens` is logged per call.
+- Each call is pinned to one host endpoint with no fallback (`--or-host`), so all calls of a run use the
+  same weights and quantisation. Cheaper listings exist, but on fp4 hosts. The log records the host that
+  served the call (`served_by`), the model version (`model_version`) and the price actually billed
+  (`cost_usd_billed`). The per-dollar charts use the table's list prices, like the Claude runs.
+- A call that ends empty without hitting `max_tokens`, or that the provider breaks off, is logged as failed
+  and retried by the next `generate`; a call cut off at `max_tokens` is a result, as before.
+- **The judge** is the paper's (`claude-sonnet-5-5`, effort medium, the main study's prompt, 5 ideas per
+  request), but reached through OpenRouter instead of the Anthropic API: `JUDGE_API=openrouter` routes
+  `score_ideas.py` through OpenRouter's Messages API, and `judge_batch.py` (step `score-batch`) sends the
+  same requests through its Batch API at about half price. Both are pinned to Anthropic as the provider.
+  `judge_route_check.py` scored 596 ideas a second time through the new route: mean score 3.35 → 3.34,
+  share of top ideas 12.8% → 11.7% (`results/judge_route_check.md`). In batch requests the output cap is
+  2,000 tokens instead of 16,000, because OpenRouter reserves requests × cap against the key until a batch
+  finishes; the judge's longest answer in about 2,800 requests was 530 tokens.
+
+*Cost.* All of it ran on one OpenRouter key limited to USD 10: generation $0.23 (DeepSeek V4.1 Flash),
+$0.49 (Qwen3.8 Flash) and $1.18 (DeepSeek V4 Pro), judging about $1.20 per model at batch price.
+`python cost_breakdown.py` itemizes every call from the logs, prices the paper's own logged calls on the
+same basis, and estimates a next round (`results/cost_breakdown.md`).
+
+*Steps*, per model (shown for `qwen`):
+
+```bash
+export OPENROUTER_API_KEY=...             # generation and judge;  echo ${OPENROUTER_API_KEY:+set}
+GEN_MODEL=qwen bash run_all.sh prompts    # dry run + prompt check, free
+GEN_MODEL=qwen bash run_all.sh smoke      # ONE full-graph call -> runs/smoke_qwen.jsonl; must print PASS
+GEN_MODEL=qwen bash run_all.sh generate   # the 40 calls
+GEN_MODEL=qwen bash run_all.sh score-batch   # blind Sonnet judge by batch (submit, wait, tables)
+GEN_MODEL=qwen bash run_all.sh chart      # Figure 8 for this run
+```
+
+With an Anthropic key, `score` works as before (`ANTHROPIC_API_KEY`); `JUDGE_API=openrouter bash
+run_all.sh score` sends the same calls one by one through OpenRouter at list price. `smoke` sends the
+longest prompt (full graph) once and checks that the answer parses, is not cut off, has at least 44 ideas,
+each with a title, new elements and a rationale, and was served by the pinned host; it also prints the
+projected cost of the run. A model that fails is replaced, not tuned. Smoke calls are kept apart from the
+run logs and are not analysed. Do not edit `run_all.sh` while a step is running: bash reads the script
+as it goes.
+
+*Reading the runs.* No API calls:
+
+```bash
+python replication_report.py      # verdict per claim and model, yields, contrasts -> results/replication_report.md
+python netcost_table.py           # the paper's net-cost table with a row per model -> results/netcost_table.{csv,md,tex}
+python compare_stack_chart.py --models opus fable deepseek deepseekpro qwen   # the paper's yield figure with the new models added
+python compare_runs_chart.py  --models opus fable deepseek deepseekpro qwen --unit dollars
+python judge_family_check.py      # does the Claude judge prefer Claude-written ideas? -> results/judge_family_check.md
+python cost_breakdown.py          # costs, from the logs -> results/cost_breakdown.md
+```
+
+The charts in `results/charts/` and `results/<model>/charts/` were drawn with this repository's chart code,
+unchanged, and with Inter as matplotlib's default font, as in the paper's figures (the code doesn't set a
+font, so on a machine without Inter they come out in DejaVu Sans). One difference from the paper's copy
+of this figure: it was saved before the "standard labels" commit (2f23ffc), so its legend still reads "Full
+graph, Slice, ..." where the current code writes "A · full graph, B · need slice, ...".
+
+`compare_stack_chart.py` redraws the paper's yield figure (per dollar above, per token below) with one more
+panel per new model on the same axes, so the Chinese models are read against Haiku, Opus and Fable
+directly. The comparison charts draw the Chinese models only when asked with `--models`, and then write
+files with the suffix `__<models>`, so the default figures (the Claude runs, used in the paper) never
+change. `netcost_table.py` is the paper's last results table of Experiment 2, *net cost per top idea for a
+given screening cost per idea*: generation only, screened by the automated judge (its measured cost, about
+$0.0012 per idea), and screened by a person ($0.50 per idea). It has a row for every model that has been
+run and scored, with bootstrap intervals, the cheapest model of each column in bold, and for each model
+the screening cost at which it becomes cheaper than Haiku; for the three Claude models it reproduces the
+paper's table.
+
+*Confirmation runs.* A contrast that contradicts the paper is re-tested with 10 fresh calls per arm
+(replicates 11 to 20), kept apart from the run: `CONFIRM="B C" GEN_MODEL=deepseek bash run_all.sh confirm`,
+then every scoring step with `RUN_TAG=confirm` (run log `runs/m6_50ideas_<model>_confirm.jsonl`, results
+in `results/<model>/confirm/`). `replication_report.py` reads them.
+
+*Second judge.* `second_judge.py` scores a run's ideas again with a model from another family, with the
+paper's judge prompt, and compares the ranking of the representations under the two judges
+(`results[/<model>]/second_judge/<judge>/report.md`). With `--sample-per-arm N` it scores a random N requests
+per representation instead of all of them, which is what `judge_family_check.py` uses.
 
 **Prompts.** `check_prompts.py` checks that each prompt is the main study's, word for word, except
 the one line "Return exactly 5 ideas" → "Return exactly 50 ideas". It does this by putting the 5 back
@@ -296,6 +400,7 @@ comments from this README after a command; zsh reads them as arguments.
 | `export` | the main study's 250 M6 ideas, blind, for the codebook |
 | `draft` | optional model draft of the codebook |
 | `codebook` | *hand*: edit into `codebook/codebook.yaml`, `status: final` |
+| `smoke` | one test call (full graph) to `runs/smoke_<model>.jsonl`, checked by `smoke_check.py`; for new models, before `generate` |
 | `generate` | the 40 calls of 50 ideas |
 | `score` | quality scores (the main study's judge, 5 ideas per request), cost tables |
 | `code` | code the new ideas and the main study's M6 ideas into moves |
@@ -326,6 +431,7 @@ same step again, which retries only what failed.
 | `... --unit dollars` | top ideas per dollar at list price (log axis) |
 | `... --box calls` | one dot per call instead of bootstrap boxes (zeros shown on a symlog axis with dollars) |
 | `python compare_stack_chart.py` | two of those charts stacked, one legend, model titles once; rows set with `--top` / `--bottom NEEDS:BOX:UNIT`, e.g. `--top all:bootstrap:dollars --bottom all:bootstrap:tokens` |
+| `python netcost_table.py` | not a chart: the net-cost table (cost per top idea at a given screening cost per idea) for every model run and scored; `--models`, `--screen` |
 | `python m6_thumb.py` | the "what each prompt contains" panel for M6 (full graph, no graph, random slice, slice); built automatically by the charts |
 
 ## Outputs
@@ -350,7 +456,7 @@ same step again, which retries only what failed.
 
 ## Files
 
-`common.py` (shared helpers, the `GEN_MODEL` switch), `personas_50ideas.yaml`, `check_prompts.py`,
+`common.py` (shared helpers, the `GEN_MODEL` switch), `personas_50ideas.yaml`, `check_prompts.py`, `smoke_check.py`,
 `export_old_ideas.py`, `draft_codebook.py`, `score_ideas.py`, `code_moves.py`, `discovery_analysis.py`,
 `yield_chart.py` (Figure 8 per run, reusing `../tail_charts.py`), `compare_runs_chart.py` and
 `compare_stack_chart.py` (comparisons across runs), `m6_thumb.py`, `prompts/` (coding and drafting

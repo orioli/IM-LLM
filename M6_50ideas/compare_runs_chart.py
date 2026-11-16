@@ -13,6 +13,9 @@ Panels (each arm: full graph, slice, random graph, no graph):
   Haiku · 50 ideas/call   this study, runs/m6_50ideas.jsonl + results/ideas_scored.csv, medium, 10 calls per arm
   Opus · 50 ideas/call    this study, runs/m6_50ideas_opus.jsonl + results/opus/ideas_scored.csv, medium, 10 calls
   Sonnet / Fable · 50     added automatically once runs/m6_50ideas_<model>.jsonl and results/<model>/ideas_scored.csv exist
+  DeepSeek / Qwen / GLM   the Chinese models (OpenRouter), only when asked for with --models, e.g.
+                          --models opus deepseek deepseekpro qwen; the figure then gets the suffix __<models>, so the
+                          default (Claude-only) figures used in the paper are never changed
 
 Slope = top ideas (score >= 4.0) per 100k tokens. By default each box holds the arm's 2,000 bootstrap slopes
 (calls resampled within need, as chart 8b): box = middle 50%, whiskers = 95% CI. The triangle and the number
@@ -48,11 +51,27 @@ ORDER = ["A", "B", "R", "C"]                                  # same order in ev
 MAIN_EFFORT = {"A": "medium", "B": "medium", "R": "high", "C": "high"}
 OUT_PNG = HERE / "results" / "charts" / "compare_slopes_haiku5_haiku50_opus50.png"   # name kept when Fable is added
 OUT_CSV = HERE / "results" / "compare_slopes.csv"
-EXTRA_MODELS = [("opus", "Opus"), ("sonnet", "Sonnet"), ("fable", "Fable")]   # GEN_MODEL key, panel name
+EXTRA_MODELS = [("opus", "Opus"), ("sonnet", "Sonnet"), ("fable", "Fable"),       # GEN_MODEL key, panel name
+                ("deepseek", "DeepSeek Flash"), ("deepseekpro", "DeepSeek Pro"), ("qwen", "Qwen Flash"),
+                ("glm", "GLM Flash")]
+DEFAULT_MODELS = ["opus", "sonnet", "fable"]      # the panels drawn without --models (the paper's figures)
 # standard API list prices, USD per million tokens (input, output), from
 # https://platform.claude.com/docs/en/about-claude/pricing (Haiku: prompts up to 100k tokens)
 PRICES = {"claude-haiku-5-5": (0.10, 0.50), "claude-sonnet-5-5": (2.0, 10.0), "claude-opus-5-5": (4.0, 20.0),
-          "claude-fable-5-1": (10.0, 50.0)}
+          "claude-fable-5-1": (10.0, 50.0),
+          # OpenRouter, the pinned host endpoint's standard price on 2026-11-12 (GEN_HOSTS in common.py);
+          # the price actually billed per call is logged as cost_usd_billed
+          "deepseek/deepseek-v4.1-flash": (0.14, 0.42),   # deepinfra/fp8
+          "qwen/qwen3.8-flash": (0.15, 0.47),             # alibaba
+          "z-ai/glm-5.3-flash": (0.15, 0.50),             # z-ai/fp8
+          # baidu/fp8, off-peak: the price our calls were billed at (12 Nov 2026, 17-18 h UTC). DeepSeek V4 Pro
+          # costs twice this (1.32 / 3.96) at peak hours, 01-04 and 06-10 h UTC on weekdays
+          "deepseek/deepseek-v4-pro-0813": (0.659, 1.976)}
+PRICE_LABEL = {"claude-haiku-5-5": r"Haiku \$0.10 / \$0.50", "claude-sonnet-5-5": r"Sonnet \$2 / \$10",
+               "claude-opus-5-5": r"Opus \$4 / \$20", "claude-fable-5-1": r"Fable \$10 / \$50",
+               "deepseek/deepseek-v4.1-flash": r"DeepSeek Flash \$0.14 / \$0.42",
+               "deepseek/deepseek-v4-pro-0813": r"DeepSeek Pro \$0.66 / \$1.98",
+               "qwen/qwen3.8-flash": r"Qwen Flash \$0.15 / \$0.47", "z-ai/glm-5.3-flash": r"GLM Flash \$0.15 / \$0.50"}
 PLOTS_RIGHT = None                                          # right edge of the 3 box panels; thumbnail after
 
 
@@ -96,12 +115,16 @@ def from_study(runs: Path, scores: Path) -> dict:
     return calls
 
 
-def compute(n5_needs: str, box: str, usd: bool, th: float):
-    """The panels (title, calls) and one stats dict per panel x arm; "_box" holds what the box plot draws."""
+def compute(n5_needs: str, box: str, usd: bool, th: float, models: list[str] | None = None):
+    """The panels (title, calls) and one stats dict per panel x arm; "_box" holds what the box plot draws.
+    models: the GEN_MODEL keys of the 50-idea panels after Haiku's (default DEFAULT_MODELS), each drawn if run."""
+    models = DEFAULT_MODELS if models is None else models
     panels = [("Haiku · 5 ideas/call", from_main(ROOT / "results" / "ideas_ranked.csv", n5_needs)),
               ("Haiku · 50 ideas/call", from_study(HERE / "runs" / "m6_50ideas.jsonl",
                                                    HERE / "results" / "ideas_scored.csv"))]
-    for key, name in EXTRA_MODELS:                     # a panel for every further model that has been run and scored
+    for key, name in sorted(EXTRA_MODELS, key=lambda m: models.index(m[0]) if m[0] in models else 99):
+        if key not in models:
+            continue                                   # a panel for every chosen model that has been run and scored
         runs, scores = HERE / "runs" / f"m6_50ideas_{key}.jsonl", HERE / "results" / key / "ideas_scored.csv"
         if runs.exists() and scores.exists():
             panels.append((f"{name} · 50 ideas/call", from_study(runs, scores)))
@@ -221,6 +244,27 @@ def describe(box: str, usd: bool) -> str:
 
 PRICE_NOTE = (r"cost = tokens at API list price per million tokens (input / output): Haiku \$0.10 / \$0.50, "
               r"Opus \$4 / \$20, Fable \$10 / \$50; no batch or caching discount")
+
+
+def price_note(panels) -> str:
+    """PRICE_NOTE for the models actually drawn (the default figures keep the original wording)."""
+    ids = list(dict.fromkeys(x["model"] for _, calls in panels for x in calls.values()))
+    if all(i in ("claude-haiku-5-5", "claude-opus-5-5", "claude-fable-5-1") for i in ids):
+        return PRICE_NOTE
+    return (r"cost = tokens at API list price per million tokens (input / output): "
+            + ", ".join(PRICE_LABEL.get(i, i) for i in ids)
+            + "; no batch or caching discount; OpenRouter models at their pinned host's price")
+
+
+def models_arg(ap) -> None:
+    keys = [k for k, _ in EXTRA_MODELS]
+    ap.add_argument("--models", nargs="+", choices=keys, default=None,
+                    help=f"50-idea panels after Haiku's, in this order (default: {' '.join(DEFAULT_MODELS)}); "
+                         "e.g. --models opus deepseek qwen glm")
+
+
+def models_suffix(models: list[str] | None) -> str:
+    return "" if models is None else "__" + "_".join(models)
 EFFORT_NOTE = ("efforts: 50-idea runs at medium; in the 5-idea run full graph and slice at medium, "
                "random graph and no graph at high (the only effort they were run at)")
 GRID_THUMB = ROOT / "results" / "charts" / "0b_slices_grid_thumb.png"
@@ -241,10 +285,11 @@ def main() -> None:
     ap.add_argument("--box", choices=["bootstrap", "calls"], default="bootstrap")
     ap.add_argument("--unit", choices=["tokens", "dollars"], default="tokens",
                     help="cost unit: top ideas per 100k tokens (default) or per US dollar at list price")
+    models_arg(ap)
     args = ap.parse_args()
     th = args.threshold
     usd = args.unit == "dollars"
-    panels, stats = compute(args.n5_needs, args.box, usd, th)
+    panels, stats = compute(args.n5_needs, args.box, usd, th, args.models)
 
     fig, axes = plt.subplots(1, len(panels), figsize=(4.3 * len(panels) + 3.1, 6.0), sharey=True)
     fig.patch.set_facecolor(tc.SURFACE)
@@ -255,7 +300,7 @@ def main() -> None:
     fig.text(0.05, 0.975, ("Top ideas per dollar" if usd else "Top ideas per token") + ": 5 vs 50 ideas per call, "
              + " vs ".join(dict.fromkeys(t.split(" · ")[0] for t, _ in panels)), fontsize=14,
              fontweight="bold", color=tc.INK, va="top")
-    fig.text(0.05, 0.925, describe(args.box, usd) + "\n" + (PRICE_NOTE + "\n" if usd else "") + EFFORT_NOTE,
+    fig.text(0.05, 0.925, describe(args.box, usd) + "\n" + (price_note(panels) + "\n" if usd else "") + EFFORT_NOTE,
              fontsize=9, color=tc.INK2, va="top", linespacing=1.4)
     top = 0.74 if usd else 0.76
     fig.subplots_adjust(left=0.05, right=plots_right, top=top, bottom=0.12, wspace=0.08)
@@ -270,6 +315,7 @@ def main() -> None:
         name = name.with_name(name.stem + "_n5allneeds.png")
     if usd:
         name = name.with_name(name.stem + "_usd.png")
+    name = name.with_name(name.stem + models_suffix(args.models) + ".png")
     fig.savefig(name, dpi=200, facecolor=tc.SURFACE)
     plt.close(fig)
 

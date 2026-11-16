@@ -56,9 +56,14 @@ def done_keys() -> set:
     return keys
 
 
+def judge_prompt(ch: dict) -> str:
+    """The user prompt for one request of up to 5 ideas (also used by judge_batch.py)."""
+    return JUDGE_USER.format(product="microwave", need_id=NEED, need_label=need_label(), operator=OPERATOR,
+                             ideas=render_for_judge(ch["ideas"]))
+
+
 def score_chunk(ch: dict, args) -> dict:
-    prompt = JUDGE_USER.format(product="microwave", need_id=NEED, need_label=need_label(), operator=OPERATOR,
-                               ideas=render_for_judge(ch["ideas"]))
+    prompt = judge_prompt(ch)
     rec = {"run_id": ch["run_id"], "start": ch["start"], "n": len(ch["ideas"]), "judge_model": args.model,
            "ts": datetime.now(timezone.utc).isoformat()}
     try:
