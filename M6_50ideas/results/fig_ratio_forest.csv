@@ -1,0 +1,16 @@
+row,condition,ratio_to_no_graph,lo,hi
+Haiku · 5 ideas/call,A,0.508,0.358,0.701
+Haiku · 5 ideas/call,B,1.388,1.023,1.851
+Haiku · 5 ideas/call,R,0.65,0.471,0.886
+Haiku · 50 ideas/call,A,0.423,0.264,0.652
+Haiku · 50 ideas/call,B,0.917,0.598,1.354
+Haiku · 50 ideas/call,R,0.491,0.284,0.812
+Opus · 50 ideas/call,A,0.758,0.558,1.005
+Opus · 50 ideas/call,B,1.148,0.821,1.582
+Opus · 50 ideas/call,R,1.07,0.78,1.496
+Fable · 50 ideas/call,A,0.492,0.392,0.629
+Fable · 50 ideas/call,B,0.959,0.776,1.189
+Fable · 50 ideas/call,R,0.692,0.488,0.926
+"Pooled, all 50-idea runs (3)",A,0.551,0.395,0.769
+"Pooled, all 50-idea runs (3)",B,0.996,0.845,1.174
+"Pooled, all 50-idea runs (3)",R,0.741,0.491,1.118

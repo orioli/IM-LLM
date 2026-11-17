@@ -1,0 +1,57 @@
+panel,run,condition,yield,lo,hi
+A,Haiku · 5 ideas/call,A,139.906,103.069,178.361
+A,Haiku · 5 ideas/call,B,272.765,212.952,333.969
+A,Haiku · 5 ideas/call,R,104.671,79.736,130.797
+A,Haiku · 5 ideas/call,C,142.012,115.36,170.393
+A,Haiku · 50 ideas/call,A,265.832,174.03,372.507
+A,Haiku · 50 ideas/call,B,459.373,324.337,634.133
+A,Haiku · 50 ideas/call,R,245.705,151.954,383.134
+A,Haiku · 50 ideas/call,C,467.878,363.434,588.471
+A,Opus · 50 ideas/call,A,19.349,15.872,22.681
+A,Opus · 50 ideas/call,B,22.883,18.146,28.087
+A,Opus · 50 ideas/call,R,21.149,17.002,25.556
+A,Opus · 50 ideas/call,C,18.201,14.122,23.39
+A,Fable · 50 ideas/call,A,7.478,6.248,8.709
+A,Fable · 50 ideas/call,B,11.909,10.422,13.485
+A,Fable · 50 ideas/call,R,8.462,6.36,10.735
+A,Fable · 50 ideas/call,C,11.426,9.385,13.513
+A,DeepSeek Flash · 50 ideas/call,A,374.069,283.739,467.689
+A,DeepSeek Flash · 50 ideas/call,B,603.388,440.265,808.043
+A,DeepSeek Flash · 50 ideas/call,R,464.545,345.791,604.85
+A,DeepSeek Flash · 50 ideas/call,C,348.015,238.844,479.424
+A,DeepSeek Pro · 50 ideas/call,A,81.462,53.28,117.652
+A,DeepSeek Pro · 50 ideas/call,B,110.141,85.375,142.163
+A,DeepSeek Pro · 50 ideas/call,R,114.544,65.489,170.028
+A,DeepSeek Pro · 50 ideas/call,C,102.91,58.488,152.889
+A,Qwen Flash · 50 ideas/call,A,155.617,121.127,199.313
+A,Qwen Flash · 50 ideas/call,B,173.1,81.84,295.811
+A,Qwen Flash · 50 ideas/call,R,97.347,45.097,172.023
+A,Qwen Flash · 50 ideas/call,C,241.187,166.809,316.18
+B,Haiku · 5 ideas/call,A,3.227,2.375,4.097
+B,Haiku · 5 ideas/call,B,8.817,6.867,10.811
+B,Haiku · 5 ideas/call,R,4.13,3.143,5.153
+B,Haiku · 5 ideas/call,C,6.351,5.157,7.608
+B,Haiku · 50 ideas/call,A,9.398,6.177,13.226
+B,Haiku · 50 ideas/call,B,20.371,14.422,28.037
+B,Haiku · 50 ideas/call,R,10.91,6.712,17.033
+B,Haiku · 50 ideas/call,C,22.214,17.291,27.951
+B,Opus · 50 ideas/call,A,26.341,21.454,31.13
+B,Opus · 50 ideas/call,B,39.928,31.667,48.994
+B,Opus · 50 ideas/call,R,37.187,29.917,44.974
+B,Opus · 50 ideas/call,C,34.766,27.061,44.53
+B,Fable · 50 ideas/call,A,26.362,22.118,30.376
+B,Fable · 50 ideas/call,B,51.348,44.804,57.975
+B,Fable · 50 ideas/call,R,37.042,27.991,46.828
+B,Fable · 50 ideas/call,C,53.559,44.038,63.261
+B,DeepSeek Flash · 50 ideas/call,A,11.89,9.066,14.783
+B,DeepSeek Flash · 50 ideas/call,B,23.116,16.81,30.794
+B,DeepSeek Flash · 50 ideas/call,R,18.076,13.477,23.442
+B,DeepSeek Flash · 50 ideas/call,C,14.054,9.655,19.335
+B,DeepSeek Pro · 50 ideas/call,A,12.519,8.33,17.739
+B,DeepSeek Pro · 50 ideas/call,B,20.161,15.673,25.861
+B,DeepSeek Pro · 50 ideas/call,R,20.921,12.054,30.819
+B,DeepSeek Pro · 50 ideas/call,C,19.646,11.232,29.115
+B,Qwen Flash · 50 ideas/call,A,6.172,4.778,7.999
+B,Qwen Flash · 50 ideas/call,B,7.733,3.65,13.208
+B,Qwen Flash · 50 ideas/call,R,4.369,2.031,7.71
+B,Qwen Flash · 50 ideas/call,C,11.043,7.634,14.491
