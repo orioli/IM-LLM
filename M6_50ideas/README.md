@@ -204,6 +204,13 @@ run and scored, with bootstrap intervals, the cheapest model of each column in b
 the screening cost at which it becomes cheaper than Haiku; for the three Claude models it reproduces the
 paper's table.
 
+*Easier-to-read version of the comparison figure.* With seven runs the stacked box-plot figure gets too wide
+to read, so `compare_dotplot_chart.py` draws the same numbers with one row per run on a shared axis:
+`fig_yield_dotplot*.png` (A per dollar, B per 100k tokens, each representation a dot with its 95% bootstrap
+interval) and `fig_ratio_forest*.png` (each representation's yield divided by no graph's, per run and pooled
+over runs). Same colours as the other figures, plus a marker shape per representation. `--models` works as
+for the other comparison charts; without it the figures show only the paper's three runs.
+
 *Confirmation runs.* A contrast that contradicts the paper is re-tested with 10 fresh calls per arm
 (replicates 11 to 20), kept apart from the run: `CONFIRM="B C" GEN_MODEL=deepseek bash run_all.sh confirm`,
 then every scoring step with `RUN_TAG=confirm` (run log `runs/m6_50ideas_<model>_confirm.jsonl`, results
